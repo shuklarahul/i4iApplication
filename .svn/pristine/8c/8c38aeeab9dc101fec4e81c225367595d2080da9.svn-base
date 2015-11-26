@@ -1,0 +1,2100 @@
+﻿@model IEnumerable<WorldRef.Models.WorldRefExcelDataModel>
+@{
+    Layout = "~/Views/Shared/LayoutChild.cshtml";
+}
+@{
+    var msg = TempData["msg"] ?? string.Empty;
+    TempData["msg"] = "";
+    var msgColor = TempData["vColor"] ?? string.Empty;
+    TempData["vColor"] = "";
+    var msgsucc = TempData["SuccessMessage"] ?? string.Empty;
+    TempData["SuccessMessage"] = "";
+}
+
+   
+    <style type="text/css">
+        .lp label {
+            padding-left: 11px;
+        }
+
+        #loading {
+            width: 100%;
+            height: 100%;
+            top: 0px;
+            left: 0px;
+            position: fixed;
+            display: block;
+            opacity: 0.8;
+            background-color: #fff;
+            z-index: 99;
+            text-align: center;
+        }
+
+        #loading-image {
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            z-index: 100;
+        }
+    </style>
+    <script>
+        var message = '@msgsucc';
+
+        if (message != "") {
+            alert(message);
+        }
+
+        $(document).ready(function () {
+            var $filter = $('#filter'),
+                $paragraphs = $('#content table tbody tr');
+            $("#filter").keyup(function () {
+                var value = $filter.val(),
+                matcher = new RegExp('\\b' + value, 'i');
+                $paragraphs.each(function () {
+                    var $p = $(this),
+                        content = $p.text();
+                    if (matcher.test(content)) {
+                        $p.show();
+                    } else {
+                        $p.hide();
+                    }
+                });
+            });
+        });
+        function ShowDataAgain() {
+            document.getElementById('tblData').innerHTML = "";
+            $.ajax({
+                url: "/WorldRef/ListExcelProjectsAdminJason",
+                type: 'POST',
+                data: JSON.stringify({}),
+                contentType: 'application/json; charset=utf-8',
+                success: function (response) {
+                    var Result = "";
+                    $.each(response, function (id, model) {
+                        //  alert('Method called');
+                        //   alert(model.Createdon);
+                        var date;
+                        if (model.Createdon != null) {
+                            date = new Date(parseInt(model.Createdon.substr(6))).toLocaleDateString();
+                            //  var formatdate = date.format("dd-mm-yyyy");
+                        }
+                        Result += '<tr><td>' + model.OrganizationName + '</td>';
+                        Result += '<td>' + model.CustomerName + '</td>';
+                        Result += '<td>' + model.ProjectName + '</td>';
+                        Result += '<td>' + model.Type + '</td>';
+                        Result += '<td>' + model.Year + '</td>';
+                        Result += '<td>' + model.Country + '</td>';
+                        //    Result += '<td>' + model.EmailId + '</td>';
+                        Result += '<td>' + date + '</td>';
+                        Result += '<td><input type="checkbox" name="ids" value="' + model.Id + '"/>';
+                        Result += '<input type="button" id="' + model.Id + '" name="Disapprove" value="Disapprove" onclick="showmodalpopup(this.id);"/></td></tr>';
+                    });
+                    Result += '</table>';
+                    $("#tblData").html(Result);
+                },
+                error: function () {
+                    alert("Failed! Please try again.");
+                }
+            });
+        }
+
+
+        function GetTotalUnPublishedReview(id) {
+            $("#loading").show();
+            $.ajax({
+                url: "/WorldRef/TotalUnpblishedReview",
+                type: 'POST',
+                data: JSON.stringify({ "id": id }),
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+
+                    if (data == "") {
+                        var Result = "<div style='width:480px;'><h4 style='margin:0 0 7px 0;'>Unpublished Testimonial</h4>";
+                        Result += " <div class='noRecord fW'>No Testimonial Available. </div></div>";
+                        var foo = $("#ReviewList").html(Result);
+                        $.fancybox(foo);
+                        $("#loading").hide();
+
+                    }
+
+                    else {
+                        var Result = "<div style='width:480px;'><h4 style='margin:0 0 7px 0;'>Unpublished Testimonial</h4>";
+                        for (i = 0; i < data.length; i++) {
+                            if (i % 2 == 0) {
+                                Result += '<div class="noreview">';
+                            }
+                            else {
+                                Result += '<li class="mbColor1">';
+                            }
+
+                            Result += "<span style='font-weight:bold;color: #636262;'></span>" + data[i].Review + "</li>";
+
+                        }
+
+                        var foo = $("#ReviewList").html(Result);
+                        $.fancybox(foo);
+                        $("#loading").hide();
+                    }
+                },
+
+                error: function () {
+                    $("#loading").hide();
+                    alert("Failed! Please try again.");
+                }
+            });
+
+        }
+
+
+
+        function GetTotalPublishedReview(id) {
+            $("#loading").show();
+            $.ajax({
+                url: "/WorldRef/TotalpblishedReview",
+                type: 'POST',
+                data: JSON.stringify({ "id": id }),
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+
+                    if (data == "") {
+                        var Result = "<div style='width:480px;'><h4 style='margin:0 0 7px 0;'>Published Testimonial</h4>";
+                        Result += " <div class='noRecord fW'>No Testimonial Available. </div></div>";
+                        var foo = $("#ReviewList").html(Result);
+                        $.fancybox(foo);
+                        $("#loading").hide();
+                        // $.fancybox("#inline12");
+                    }
+                        //CommentList
+                    else {
+                        var Result = "<div style='width:480px;'><h4 style='margin:0 0 7px 0;'>Published Testimonial</h4>";
+                        for (i = 0; i < data.length; i++) {
+                            if (i % 2 == 0) {
+                                Result += '<div class="noreview">';
+                            }
+                            else {
+                                Result += '<li class="mbColor1">';
+                            }
+
+                            Result += "<span style='font-weight:bold;color: #636262;'></span>" + data[i].Review + "</li>";
+
+                        }
+
+                        var foo = $("#ReviewList").html(Result);
+                        $.fancybox(foo);
+                        $("#loading").hide();
+                    }
+                },
+                //var foo = $("#ModelpopUp").html(response);
+                //$.fancybox(foo);
+                //$("#loading").hide();
+
+                error: function () {
+                    $("#loading").hide();
+                    alert("Failed! Please try again.");
+                }
+            });
+
+        }
+        function ShowApprovedData() {
+            $("#loading").show();
+            $("#showApproved").removeClass("badge1 activeApproveShow");
+            $("#apprvCount").hide();
+            $("#AllProjects").removeClass("active");
+            $("#showDisapproved").removeClass("active");
+            $("#hideDisapproved").removeClass("active");
+            document.getElementById('ModelData').innerHTML = "";
+            $.ajax({
+                url: "/WorldRef/ListExcelProjectsUserApproved",
+                type: 'POST',
+                data: JSON.stringify({}),
+                contentType: 'application/json; charset=utf-8',
+                success: function (response) {
+
+
+                    var Result = "";
+                    $.each(response, function (id, model) {
+                        //alert(model.IsAdminAuthorized)
+                        if (model.IsAdminAuthorized == true) {
+                            Result += '<li class="project one-fourth"><div class="proj-description responsiveQ" style="background-color: #F3C6C6;color: white;" ><div class="title-hydro" style="text-align: left;height:250px; padding: 2% 4%;"> <div class="scroll-hydro" style="margin-bottom: 10px;">';
+                            Result += ' <span class="projectuser-text">Project Name </span>: ' + model.ProjectName + '   <br />';
+                            Result += ' <span class="projectuser-text">By </span>: ' + model.OrganizationName + '<br />';
+                            Result += ' <span class="projectuser-text">For </span>: ' + model.CustomerName + '<br />';
+                            Result += ' <span class="projectuser-text">For Industry </span>: ' + model.CustomerIndustryType + ' <br />';
+                            Result += ' <span class="projectuser-text">Contribution </span>: ' + model.Type + ' <br />';
+                            Result += ' <span class="projectuser-text">Country of Execution </span>: ' + model.Country + ' <br />';
+                            Result += ' <span class="projectuser-text">Status </span>: ' + model.Status + ' <br />';
+                            Result += ' <span class="projectuser-text">Year of Execution </span>: ' + model.Year + ' <br />';
+                            if (model.Description == null) {
+                                model.Description = "";
+                            }
+                            Result += ' <span class="projectuser-text">Description </span>: ' + model.Description + ' <br />';
+                            Result += ' <span class="projectuser-text">We are </span>: <span style="padding-left: 11px;">' + model.UserType + ' </span><br />';
+                            Result += '<div class="colorStrip fW" style=" background-color: #E4A5A5;">';
+                            if (model.creditM == 1) {
+                                Result += '<span class="projectimg-icon"><a href="javascript:void(0)" onclick="OpenCreditPopUp(' + model.id + ')"><img src="/Content/images/creditred.png" title="Approve their Contribution" /></a></span>';
+                            }
+                            else {
+                                Result += '<span class="projectimg-icon">' +
+                                    '<a href="javascript:void(0)" onclick="OpenCreditPopUp(' + model.id + ')">' +
+                                       ' <img src="/Content/images/credit.png" title="Approve their Contribution" /> </a> </span>';
+                            }
+                            Result += '<span class="projectimg-icon">' +
+                                                        '<a href="javascript:void(0)" onclick="OpenApprovedCreditPopUp(' + model.id + ')">' +
+                                                            '<img src="/Content/images/viewcredits.png" title="View Contributors" /> </a></span>';
+                            if (model.reviewFag != "0") {
+                                Result += '<span class="projectimg-icon">' +
+                                   '<a href="javascript:void(0)" onclick="OpenUserReview(' + model.id + ')">' +
+                                        '<img src="/Content/WorldRef/images/red-docs.png" id="showR" title="Approve Testimonial"></a> </span>';
+                            }
+                            else {
+                                Result += '<span class="projectimg-icon">' +
+                                   '<a href="javascript:void(0)" onclick="OpenUserReview(' + model.id + ')">' +
+                                        '<img src="/Content/WorldRef/images/Comment.png" title="View Testimonial" id="showB"> </a> </span>';
+                            }
+
+                            if (model.countflg == "True") {
+                                Result += '<span class="projectimg-icon">' +
+                                   '<a href="javascript:void(0)" class="fancybox" onclick = "GetLikedUserOnProject(' + model.id + ')">' +
+                                      '<img src="/Content/WorldRef/images/like-button.png" title="Total Likes" id="show">' +
+                                       '<img src="/Content/WorldRef/images/like-20.png" style="display: none;" title="Total Likes" id="hide">' +
+                                        '<label class="like-color">' + model.countApprove + '</label></a></span>';
+                            }
+                            else {
+                                Result += '<span class="projectimg-icon">' +
+                                   '<a href="javascript:void(0)" class="fancybox" onclick = "GetLikedUserOnProject(' + model.id + ')">' +
+                                       '<img src="/Content/WorldRef/images/like-20.png" title="Total Likes">' +
+                                        '<label class="like-color">' + model.countApprove + '</label></a> </span>';
+                            }
+
+                            Result += '<span class="projectimg-icon">' +
+                                  '<a href="javascript:void(0)" class="fancybox" onclick = "GetTotalPublishedReview(' + model.id + ')">' +
+                                      '<img src="/Content/WorldRef/images/revew.png" title="Total Published Testimonial"></a> </span>';
+
+                            Result += '<span class="projectimg-icon">' +
+                               '<a href="javascript:void(0)" class="fancybox" onclick = "GetTotalUnPublishedReview(' + model.id + ')">' +
+                                   '<img src="/Content/images/unpublished.png" title="Total UnPublished Testimonial"></a> </span>';
+
+
+
+                            Result += '</div>';
+                        }
+                        else {
+                            var date;
+                            if (model.Createdon != null) {
+                                date = new Date(parseInt(model.Createdon.substr(6))).toLocaleDateString();
+                            }
+                            Result += '<li class="project one-fourth"><div class="proj-description responsiveQ" style="background-color: #9ACA9A;color: white;" ><div class="title-hydro" style="text-align: left;height:250px; padding: 2% 4%;"> <div class="scroll-hydro" style="margin-bottom: 10px;">';
+                            Result += ' <span class="projectuser-text">Project Name </span>: ' + model.ProjectName + '   <br />';
+                            Result += ' <span class="projectuser-text">By </span>: ' + model.OrganizationName + '<br />';
+                            Result += ' <span class="projectuser-text">For </span>: ' + model.CustomerName + '<br />';
+                            Result += ' <span class="projectuser-text">For Industry </span>: ' + model.CustomerIndustryType + ' <br />';
+                            Result += ' <span class="projectuser-text">Contribution </span>: ' + model.Type + ' <br />';
+                            Result += ' <span class="projectuser-text">Country of Execution </span>: ' + model.Country + ' <br />';
+                            Result += ' <span class="projectuser-text">Status </span>: ' + model.Status + ' <br />';
+                            Result += ' <span class="projectuser-text">Year of Execution </span>: ' + model.Year + ' <br />';
+                            if (model.Description == null) {
+                                model.Description = "";
+                            }
+                            Result += ' <span class="projectuser-text">Description </span>: ' + model.Description + ' <br />';
+                            Result += ' <span class="projectuser-text">We are </span>: <span style="padding-left: 11px;">' + model.UserType + ' </span><br />';
+                            Result += '<div class="colorStrip fW" style=" background-color: #90BD90;">';
+                            if (model.creditM == 1) {
+                                Result += '<span class="projectimg-icon"><a href="javascript:void(0)" onclick="OpenCreditPopUp(' + model.id + ')"><img src="/Content/images/creditred.png" title="Approve their Contribution" /></a></span>';
+                            }
+                            else {
+                                Result += '<span class="projectimg-icon">' +
+                                    '<a href="javascript:void(0)" onclick="OpenCreditPopUp(' + model.id + ')">' +
+                                       ' <img src="/Content/images/credit.png" title="Approve their Contribution" /> </a> </span>';
+                            }
+                            Result += '<span class="projectimg-icon">' +
+                                                        '<a href="javascript:void(0)" onclick="OpenApprovedCreditPopUp(' + model.id + ')">' +
+                                                            '<img src="/Content/images/viewcredits.png" title="View Contributors" /> </a></span>';
+                            if (model.reviewFag != "0") {
+                                Result += '<span class="projectimg-icon">' +
+                                   '<a href="javascript:void(0)" onclick="OpenUserReview(' + model.id + ')">' +
+                                        '<img src="/Content/WorldRef/images/red-docs.png" id="showR" title="Approve Testimonial"></a> </span>';
+                            }
+                            else {
+                                Result += '<span class="projectimg-icon">' +
+                                   '<a href="javascript:void(0)" onclick="OpenUserReview(' + model.id + ')">' +
+                                        '<img src="/Content/WorldRef/images/Comment.png" title="View Testimonial" id="showB"> </a> </span>';
+                            }
+
+                            if (model.countflg == "True") {
+                                Result += '<span class="projectimg-icon">' +
+                                   '<a href="javascript:void(0)" class="fancybox" onclick = "GetLikedUserOnProject(' + model.id + ')">' +
+                                      '<img src="/Content/WorldRef/images/like-button.png" title="Total Likes" id="show">' +
+                                       '<img src="/Content/WorldRef/images/like-20.png" style="display: none;" title="Total Likes" id="hide">' +
+                                        '<label class="like-color">' + model.countApprove + '</label></a></span>';
+                            }
+                            else {
+                                Result += '<span class="projectimg-icon">' +
+                                   '<a href="javascript:void(0)" class="fancybox" onclick = "GetLikedUserOnProject(' + model.id + ')">' +
+                                       '<img src="/Content/WorldRef/images/like-20.png" title="Total Likes">' +
+                                        '<label class="like-color">' + model.countApprove + '</label></a> </span>';
+                            }
+
+                            Result += '<span class="projectimg-icon">' +
+                                  '<a href="javascript:void(0)" class="fancybox" onclick = "GetTotalPublishedReview(' + model.id + ')">' +
+                                      '<img src="/Content/WorldRef/images/revew.png" title="Total Published Testimonial"></a> </span>';
+
+                            Result += '<span class="projectimg-icon">' +
+                               '<a href="javascript:void(0)" class="fancybox" onclick = "GetTotalUnPublishedReview(' + model.id + ')">' +
+                                   '<img src="/Content/images/unpublished.png" title="Total UnPublished Testimonial"></a> </span>';
+
+
+
+                            Result += '</div>';
+                        }
+                        // end code for show notifications.
+                    });
+                    Result += "</div></div></div></li>";
+                    $("#ModelData").html(Result);
+                    $("#loading").hide();
+                },
+                error: function () {
+                    $("#loading").hide();
+                    alert("Failed! Please try again.");
+                }
+            });
+        }
+        function ShowDisApprovedData() {
+            $("#loading").show();
+            $("#showApproved").removeClass("active");
+            $("#hideApproved").removeClass("active");
+            $("#disAppCount").hide();
+            $("#AllProjects").removeClass("active");
+            $("#showDisapproved").removeClass("badge2 activeDisApproveShow");
+            document.getElementById('ModelData').innerHTML = "";
+            $.ajax({
+                url: "/WorldRef/ListExcelProjectsUserDisApproved",
+                type: 'POST',
+                data: JSON.stringify({}),
+                contentType: 'application/json; charset=utf-8',
+                success: function (response) {
+                    var Result = "";
+                    $.each(response, function (id, model) {
+                        //alert(model.IsAdminUnAuthorized);
+                        if (model.IsAdminUnAuthorized == true) {
+                            var date;
+                            if (model.Createdon != null) {
+                                date = new Date(parseInt(model.Createdon.substr(6))).toDateString();
+                            }
+                            Result += '<li class="project one-fourth"><div class="proj-description responsiveQ" style="  background-color:  #F3C6C6;color: white;" ><div class="title-hydro" style="text-align: left; padding:2% 4%;"> <div class="scroll-hydro" style="margin-bottom: 10px;">';
+                            Result += ' <span class="projectuser-text">Project Name </span>:' + model.ProjectName + '   <br />';
+                            Result += ' <span class="projectuser-text">By </span>:' + model.OrganizationName + '<br />';
+                            Result += ' <span class="projectuser-text">For </span>:' + model.CustomerName + '<br />';
+                            Result += ' <span class="projectuser-text">For Industry </span>:' + model.CustomerIndustryType + ' <br />';
+                            Result += ' <span class="projectuser-text">Contribution </span>: ' + model.Type + ' <br />';
+                            Result += ' <span class="projectuser-text">Country of Execution </span>: ' + model.Country + ' <br />';
+                            Result += ' <span class="projectuser-text">Status </span>: ' + model.Status + ' <br />';
+                            Result += ' <span class="projectuser-text">Year of Execution </span>: ' + model.Year + ' <br />';
+                            if (model.Description == null) {
+                                model.Description = "";
+                            }
+                            Result += ' <span class="projectuser-text">Description </span>: ' + model.Description + ' <br />';
+                            Result += ' <span class="projectuser-text">We are </span>: <span style="padding-left: 11px;">' + model.UserType + ' </span><br />';
+                            Result += ' <span class="projectuser-text">DisApproved Reason </span>: ' + model.DisApproveReason + ' <br /> </div>';
+                        }
+                        else {
+                            var date;
+                            if (model.Createdon != null) {
+                                date = new Date(parseInt(model.Createdon.substr(6))).toDateString();
+                            }
+                            Result += '<li class="project one-fourth"><div class="proj-description responsiveQ" style="  background-color: #D07580;color: #FFF;" ><div class="title-hydro" style="text-align: left; padding:2% 4%;"> <div class="scroll-hydro" style="margin-bottom: 10px;">';
+                            Result += ' <span class="projectuser-text">Project Name </span>:' + model.ProjectName + '   <br />';
+                            Result += ' <span class="projectuser-text">By </span>:' + model.OrganizationName + '<br />';
+                            Result += ' <span class="projectuser-text">For </span>:' + model.CustomerName + '<br />';
+                            Result += ' <span class="projectuser-text">For Industry </span>:' + model.CustomerIndustryType + ' <br />';
+                            Result += ' <span class="projectuser-text">Contribution </span>: ' + model.Type + ' <br />';
+                            Result += ' <span class="projectuser-text">Country of Execution </span>: ' + model.Country + ' <br />';
+                            Result += ' <span class="projectuser-text">Status </span>: ' + model.Status + ' <br />';
+                            Result += ' <span class="projectuser-text">Year of Execution </span>: ' + model.Year + ' <br />';
+                            if (model.Description == null) {
+                                model.Description = "";
+                            }
+                            Result += ' <span class="projectuser-text">Description </span>: ' + model.Description + ' <br />';
+                            Result += ' <span class="projectuser-text">We are </span>: <span style="padding-left: 11px;">' + model.UserType + ' </span><br />';
+                            Result += ' <span class="projectuser-text">DisApproved Reason </span>: ' + model.DisApproveReason + ' <br /> </div>';
+                        }
+                    });
+                    Result += '</div></div></li>';
+                    $("#ModelData").html(Result);
+                    $("#loading").hide();
+                },
+                error: function () {
+                    $("#loading").hide();
+                    alert("Failed! Please try again.");
+                }
+            });
+        }
+        function GetData(id) {
+            $(".ui-dialog").hide();
+            $(".ui-widget-overlay").hide();
+            var s1 = document.getElementById('txt' + id).value;
+
+            $.ajax({
+                url: "/WorldRef/DisApprove",
+                type: 'POST',
+                data: JSON.stringify({ "id": id, "Reason": s1 }),
+                contentType: 'application/json; charset=utf-8',
+                success: function (response) {
+                    ShowDataAgain();
+                },
+                error: function () {
+                    alert("Failed! Please try again.");
+                }
+            });
+
+        }
+
+        function SaveDescription(id) {
+            y = document.getElementById(id).value;
+            $.ajax({
+                url: "/WorldRef/SaveDescription",
+                type: 'POST',
+                data: JSON.stringify({ "id": id, "DescriptionString": y }),
+                contentType: 'application/json; charset=utf-8',
+                success: function (response) {
+                    alert("Description Added Successfully")
+                    window.location.href = '/worldref/ListExcelProjectsUser';
+                },
+                error: function () {
+                    alert("Failed! Please try again.");
+                }
+            });
+
+        }
+        function showmodalpopup(id) {
+            var url = "/WorldRef/AddProjectImages?ProjectId=" + id;
+            window.location.href = url;
+        };
+        function showmodalpopup2(id) {
+            var url = "/WorldRef/EditProject?projectId=" + id;
+            window.location.href = url;
+        };
+        function showmodalpopup1(id) {
+            var url = "/WorldRef/ViewImages?ProjectId=" + id;
+            window.location.href = url;
+
+        };
+        $(document).ready(function () {
+            $('.fancybox').fancybox();
+            var $filter = $('#filter'),
+            $paragraphs = $('#ModelData li');
+
+            $("#filter").keyup(function () {
+
+                var value = $filter.val(),
+                matcher = new RegExp('\\b' + value, 'i');
+                $paragraphs.each(function () {
+                    var $p = $(this),
+                    content = $p.text();
+
+                    if (matcher.test(content)) {
+                        $p.show();
+                    } else {
+                        $p.hide();
+                    }
+                });
+            });
+        });
+
+
+        function OpenPopUp(id) {
+
+            $("#loading").show();
+
+            $.ajax({
+                url: "/WorldRef/EditparticularProject",
+                type: 'POST',
+                data: JSON.stringify({ "projectId": id }),
+                contentType: 'application/json; charset=utf-8',
+                success: function (response) {
+
+                    var foo = $("#ModelpopUp").html(response);
+                    $.fancybox(foo);
+                    $("#loading").hide();
+                },
+                error: function () {
+                    $("#loading").hide();
+                    alert("Failed! Please try again.");
+                }
+            });
+        }
+        function OpenPopUpImages(id) {
+
+            $("#loading").show();
+            $.ajax({
+                url: "/WorldRef/_addProjectImage",
+                type: 'POST',
+                data: JSON.stringify({ "projectId": id }),
+                contentType: 'application/json; charset=utf-8',
+                success: function (response) {
+                    var foo = $("#ModelpopUp").html(response);
+
+                    $.fancybox(foo);
+                    $("#loading").hide();
+
+
+                },
+                error: function () {
+                    alert("Failed! Please try again.");
+                }
+            });
+        }
+        function OpenPopUpDeleteImages(id) {
+
+            $("#loading").show();
+            $.ajax({
+                url: "/WorldRef/_deleteProjectImage",
+                type: 'POST',
+                data: JSON.stringify({ "ProjectId": id }),
+                contentType: 'application/json; charset=utf-8',
+                success: function (response) {
+                    var foo = $("#ModelpopUp").html(response);
+                    $.fancybox(foo);
+                    $("#loading").hide();
+
+
+                },
+                error: function () {
+                    $("#loading").hide();
+                    alert("Failed! Please try again.");
+                }
+            });
+        }
+
+        function OpenPopUpAddProject() {
+            $.ajax({
+                url: "/WorldRef/AddProjects",
+                type: 'POST',
+                data: JSON.stringify({}),
+                contentType: 'application/json; charset=utf-8',
+                success: function (response) {
+
+                    var foo = $("#ModelpopUp").html(response);
+                    $.fancybox(foo);
+
+                },
+                error: function () {
+                    alert("Failed! Please try again.");
+                }
+            });
+        }
+        function OpenCreditPopUp(id) {
+            $("#loading").show();
+            $.ajax({
+                url: "/WorldRef/ShowCreditForApprove",
+                type: 'POST',
+                data: JSON.stringify({ "projectId": id }),
+                contentType: 'application/json; charset=utf-8',
+                success: function (response) {
+
+                    var foo = $("#ModelpopUp").html(response);
+                    $.fancybox(foo);
+                    $("#loading").hide();
+                },
+                error: function () {
+                    $("#loading").hide();
+                    alert("Failed! Please try again.");
+                }
+            });
+
+
+        }
+
+        function OpenPopUpCertificates(id) {
+            $("#loading").show();
+            $.ajax({
+                url: "/WorldRef/AddMoreCertificates",
+                type: 'POST',
+                data: JSON.stringify({ "projectId": id }),
+                contentType: 'application/json; charset=utf-8',
+                success: function (response) {
+                    var foo = $("#ModelpopUp").html(response);
+                    $.fancybox(foo);
+                    $("#loading").hide();
+
+
+                },
+                error: function () {
+                    $("#loading").hide();
+                    alert("Failed! Please try again.");
+                }
+            });
+        }
+        function OpenApprovedCreditPopUp(id) {
+
+            $("#loading").show();
+            $.ajax({
+                url: "/WorldRef/ListOfApprovedCredit",
+                type: 'POST',
+                data: JSON.stringify({ "projectId": id }),
+                contentType: 'application/json; charset=utf-8',
+                success: function (response) {
+
+                    var foo = $("#ModelpopUp").html(response);
+                    $.fancybox(foo);
+                    $("#loading").hide();
+                },
+                error: function () {
+                    $("#loading").hide();
+                    alert("Failed! Please try again.");
+                }
+            });
+
+
+        }
+
+    </script>
+    <script type="text/javascript">
+
+        function ShowAllReview(projectId) {
+            $("#showR").hide();
+            $("#showB").show();
+            $("#loading").show();
+            $.ajax({
+                type: "POST",
+                url: '/WorldRef/GetAllComents',
+                data: JSON.stringify({ "projectId": projectId }),
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    if (data == "") {
+                        var Result = "<div style='width:480px;'><h4 style='margin:0 0 7px 0;'>Testimonials</h4>";
+                        Result += " <div class='noRecord fW'>No Testimonial Available. </div></div>";
+                        var foo = $("#ReviewList").html(Result);
+                        $.fancybox(foo);
+                        $("#loading").hide();
+                        // $.fancybox("#inline12");
+                    }
+                        //CommentList
+                    else {
+                        var Result = "<div style='width:480px;'><h4 style='margin:0 0 7px 0;'>Testimonial</h4>";
+                        for (i = 0; i < data.length; i++) {
+                            if (i % 2 == 0) {
+                                Result += '<div class="noreview">';
+                            }
+                            else {
+                                Result += '<li class="mbColor1">';
+                            }
+                            if (data[i].ContactPerson == "i4i Testimonial") {
+                                Result += "<span style='font-weight:bold;color: #636262;'>" + data[i].ContactPerson + "</span> : <span style='font-weight:600;color: #636262;'> " + data[i].Review + " </span></div>";
+                            }
+                            else {
+                                Result += "<span style='font-weight:bold;color: #636262;'>" + data[i].ContactPerson + "</span> : " + data[i].Review + "</li>";
+                            }
+                        }
+
+                        var foo = $("#ReviewList").html(Result);
+                        $.fancybox(foo);
+                        $("#loading").hide();
+                    }
+                },
+                error: function () {
+                    $("#loading").hide();
+                    alert("Failed! Please try again.");
+                }
+            });
+
+
+        }
+
+
+    </script>
+    <script type="text/javascript">
+        /* <![CDATA[ */
+        var megamenu = { "fade_speed": "fast", "slide_speed": "fast", "timeout": "300" };
+        /* ]]> */
+    </script>
+<script src="~/Scripts/NewScript/jquery-1.8.2.js"></script>
+<link rel='stylesheet' id='megamenu-css' href='http://www.i4i.co.in/wp-admin/admin-ajax.php?action=megamenu_css&#038;ver=1.3.2' type='text/css' media='all' />
+<link href="~/Content/WorldRef/worldRefInner/css/dashicons.min.css" rel="stylesheet" />
+<link href="~/Content/WorldRef/worldRefInner/css/foundation-icons.min.css" rel="stylesheet" />
+<link href="~/Content/WorldRef/worldRefInner/css/font-awesome.min.css" rel="stylesheet" />
+<link href="~/Content/WorldRef/worldRefInner/css/jquery.fancybox.css" rel="stylesheet" />
+<link href="~/Content/WorldRef/worldRefInner/css/red.css" rel="stylesheet" />
+<link href="~/Content/WorldRef/worldRefInner/css/style.css" rel="stylesheet" />
+<script src="~/Content/WorldRef/worldRefInner/js/html5lightbox.js"></script>
+<script src="~/Content/WorldRef/worldRefInner/js/html5highlight.js"></script>
+<script src="~/Content/WorldRef/worldRefInner/js/public.js"></script>
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
+    <script type="text/javascript">
+        function OpenUserReview(id) {
+            $.ajax({
+                url: "/WorldRef/AdminReviewList1",
+                type: 'POST',
+                data: JSON.stringify({ "projectId": id }),
+                contentType: 'application/json; charset=utf-8',
+                success: function (response) {
+
+
+                    var foo = $("#ReviewList").html(response);
+                    $.fancybox(foo);
+
+                },
+                error: function () {
+                    alert("Failed! Please try again.");
+                }
+            });
+        }
+        function PublishProjectReview(id, trid) {
+            // alert(id);
+            var review = document.getElementById('rvr' + id).value;
+            //  alert(review);
+            $.ajax({
+                url: "/WorldRef/PublishProjectReview",
+                type: 'POST',
+                data: JSON.stringify({ "id": id, "Show": "true", "review": review }),
+                contentType: 'application/json; charset=utf-8',
+                success: function (response) {
+
+                    $("#SH" + trid).html("");
+                    alert("Testimonial Publish Successfully");
+                    window.location.href = "../Worldref/ListExcelProjectsUser";
+                },
+                error: function () {
+                    alert("Failed! Please try again.");
+                }
+            });
+        }
+    </script>
+    <!-- <link href="~/Content/WorldRef/worldRefInner/font_icon/fontstyle.css" rel="stylesheet"/>-->
+ <style type="text/css">
+        .profile_part2 {
+            float: left;
+            padding: 0px;
+            width: 100%;
+            margin: 0;
+        }
+
+        .profile_part21 {
+            float: left;
+            padding: 0px;
+            width: 100%;
+            margin: 0;
+        }
+
+        .profile_part2 label.lp {
+            width: 65%; /*edit project pop up*/
+            text-align: center;
+            text-transform: capitalize;
+            color: rgb(255, 92, 33);
+        }
+
+        #shwErrorMesgProfile {
+            color: red;
+            margin-bottom: 5px;
+            width: 340px;
+            font-size: 12px;
+        }
+        /*.profile_part2 ul.pE li span {
+                 width:30%;
+        border-bottom:1px solid #ddd;
+            }*/
+        .profile_part2 ul.pE li {
+            text-align: center;
+        }
+
+        .noRecord {
+            text-transform: capitalize;
+            background-color: #E4E4E4;
+            padding: 5px;
+            text-align: center;
+        }
+
+        .noreview {
+            text-transform: capitalize;
+            padding: 5px 0;
+        }
+
+        .fullWiBox {
+            width: 90%;
+        }
+
+        .profile_part2 ul.pE li span.colHead {
+            width: 32%;
+            /*border-bottom: 1px solid #ddd; for credit popup */
+            font-weight: bold;
+            color: #000;
+        }
+
+        .profile_part2 ul.pE li {
+            margin-bottom: 10px;
+        }
+
+            /*.addW {
+            width: 500px;
+        }*/
+
+            .profile_part2 ul.pE li span.pEdit {
+                text-align: left;
+            }
+
+            .profile_part2 ul.pE li label input[type=text] {
+                width: 95%; /*edit project pop up*/
+                padding: 3px 4px;
+            }
+
+            .profile_part2 ul.pE li span.colRow {
+                width: 32%;
+                display: inline-table;
+            }
+
+        .profile_part2 ul li span {
+            margin-right: 0;
+        }
+
+        span.halfType {
+            width: 45% !important;
+            float: left;
+            text-align: left;
+            margin-left: 20px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+        }
+
+        p.hello {
+            font-size: 12px;
+            color: #666;
+        }
+
+        p.hello {
+            text-align: right;
+            float: right;
+            clear: both;
+        }
+
+        body {
+            top: 0px !important;
+        }
+
+        a#AddProject:focus {
+            background-color: #eee;
+        }
+
+        ul.pE {
+            padding: 10px;
+            border: 1px solid #E4E4E4;
+            background-color: #fff;
+            float: left;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .fancybox-inner {
+            width: auto !important;
+            height: auto !important;
+        }
+
+        .title-hydro {
+            text-align: left;
+            padding: 2% 4%;
+            height: 370px;
+            position: relative;
+            overflow-y: auto;
+        }
+
+        .colorStrip {
+            background-color: #fff;
+            padding: 3px 0 0 0;
+            border-radius: 4px;
+            bottom: 10px;
+            position: absolute;
+            width: 92% !important;
+            text-align: center;
+        }
+    </style>
+
+ <style type="text/css" id="custom-background-css">
+        body.custom-background {
+            background-image: url('http://www.i4i.co.in/wp-content/themes/i4i/images/body-bg.jpg');
+            background-repeat: repeat;
+            background-position: top left;
+            background-attachment: scroll;
+        }
+
+        .privacy-btn {
+            display: block;
+            float: left;
+            margin-left: 10px;
+        }
+
+        .fancybox-margin {
+            margin-right: 17px;
+        }
+
+        .fW {
+            width: 100%;
+            box-sizing: border-box;
+            float: left;
+        }
+
+        span.projectimg-icon {
+            margin: 4px;
+        }
+
+            span.projectimg-icon img {
+                width: 20px;
+                /*padding: 10px 0px;  for grid bottom view */
+                margin: 0;
+            }
+
+            span.projectimg-icon a {
+                display: inline;
+            }
+
+            span.projectimg-icon img {
+                opacity: 1;
+                padding: 2px 0px;
+            }
+
+                span.projectimg-icon img:hover {
+                    opacity: 0.8;
+                }
+
+
+        .like-color {
+            color: #fff;
+            background-color: #368B92;
+            padding: 0px 5px;
+            border-radius: 4px;
+            vertical-align: 17px;
+            margin-left: -4px;
+        }
+
+        span.projectuser-text {
+            font-weight: 600;
+        }
+
+        .centreAlign {
+            width: 100%;
+            float: left;
+            text-align: center; /*for this page only*/
+        }
+    </style>
+
+ <script type="text/javascript">
+        $(document).ready(function () {
+
+            $(".fancybox").fancybox();
+            var message = '@msg';
+            if (message != "") {
+                $.fancybox("#ModelpopUp");
+            }
+        });
+        function GetUserProfileName() {
+            $.ajax({
+                url: "/WorldRef/GetUserProfileName",
+                type: 'POST',
+                data: JSON.stringify({}),
+                contentType: 'application/json; charset=utf-8',
+                success: function (response) {
+                    if (response == "") {
+
+                    }
+                    else {
+                        document.getElementById("txtUrl").value = response;
+                    }
+                },
+                error: function () {
+                    alert("Failed! Please try again.");
+                }
+            });
+
+        }
+        function ShowAllLikes(projectId) {
+
+            $.ajax({
+                type: "POST",
+                url: '/WorldRef/GetAllComents',
+                data: JSON.stringify({ "projectId": projectId }),
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    if (data == "") {
+                        var Result = "<li style='color=black;font-size: 17px;color: rgb(116, 110, 110);font-weight: 600;margin-bottom: 20px;'>Testimonial</li>";
+                        Result += "<span style='font-weight:bold;color: #636261;'>No Testimonial Available. </span></li>";
+                        var foo = $("#ReviewList").html(Result);
+                        $.fancybox(foo);
+                        // $.fancybox("#inline12");
+                    }
+                        //CommentList
+                    else {
+                        var Result = "<li style='color=black;font-size: 17px;color: rgb(116, 110, 110);font-weight: 600;margin-bottom: 20px;'>Testimonial</li>";
+                        for (i = 0; i < data.length; i++) {
+                            if (i % 2 == 0) {
+                                Result += '<li class="mbColor2">';
+                            }
+                            else {
+                                Result += '<li class="mbColor1">';
+                            }
+                            if (data[i].ContactPerson == "i4i Testimonial") {
+                                Result += "<span style='font-weight:bold;color: #636261;'>" + data[i].ContactPerson + "</span> : <span style='font-weight:600;'> " + data[i].Review + " </span></li>";
+                            }
+                            else {
+                                Result += "<span style='font-weight:bold; color: #636261;'>" + data[i].ContactPerson + "</span> : " + data[i].Review + "</li>";
+                            }
+                        }
+
+                        var foo = $("#ReviewList").html(Result);
+                        $.fancybox(foo);
+                    }
+                },
+                error: function () {
+                    alert("Failed! Please try again.");
+                }
+            });
+
+        }
+    </script>
+
+ <script type="text/javascript">
+
+        function GetLikedUserOnProject(projectId) {
+            $("#show").hide();
+            $("#hide").show();
+            $("#loading").show();
+            $.ajax({
+                type: "POST",
+                url: '/WorldRef/GetProjectLikeUserOnProject',
+                data: JSON.stringify({ "projectId": projectId }),
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {//CommentList
+                    var Result = "<ul class='pE'><div style='width:480px;'><h4 style='margin:0 0 7px 0;'>Users Who Liked This Project</h4>";
+                    for (i = 0; i < data.length; i++) {
+                        if (i % 2 == 0) {
+                            Result += '<div class="noreview mbColor2">';
+                        }
+                        else {
+                            Result += '<div class="noreview mbColor1">';
+                        }
+
+                        Result += "<span style='font-weight:bold;color: #636261;'>" + data[i];
+                    }
+                    Result += "</div></div></ul>";
+
+                    var foo = $("#LikedUser").html(Result);
+                    $.fancybox(foo);
+                    $("#loading").hide();
+                    //$("#LikedUser").html(Result);
+                    //$.fancybox("#LikedUser");
+                },
+                error: function () {
+                    $("#loading").hide();
+                    alert("Failed! Please try again.");
+                }
+            });
+        }
+
+    </script>
+
+ <style type="text/css">
+        .form-control {
+            width: 169px;
+            margin-left: 10px;
+            font-size: 10px;
+            height: 13px;
+        }
+
+        #AddProject i {
+            color: #fff;
+            padding-right: 8px;
+        }
+
+        .action-field {
+            top: 57PX;
+            right: 209px;
+        }
+    </style>
+
+ <script>
+        $(document).ready(function () {
+            $("#info").click(function () {
+                $(".action-field").toggle();
+            });
+            $(document).click(function (e) {
+                if (e.target.id != 'info' && !$('#info').find(e.target).length) {
+                    $(".action-field").hide();
+                }
+            });
+        });
+    </script>
+
+ <script>
+        function lnksuccess(url) {
+            alert("url = " + url + "  shared successfully");
+        }
+        function lnkerror(url) {
+            alert("something goes wrong in url sharing");
+        }
+    </script>
+
+ <div id="ModelpopUp" style="display: none">
+        <p id="PModelpopUp" style="padding: 10px; color: red;">
+            @msg
+        </p>
+    </div>  
+
+ <div id="content-wrapper" class="side-left">
+            <style>
+                .project {
+                    margin-bottom: 28px;
+                }
+
+                .one-fourth > .proj-description > .button {
+                    display: block;
+                    left: 0px;
+                    margin: 0px auto;
+                    position: absolute;
+                    width: 50%;
+                    bottom: 6%;
+                    right: 0px;
+                }
+
+                .proj-description {
+                    min-height: 260px;
+                }
+
+                li.project.one-fourth:hover {
+                    box-shadow: 0 0 8px rgba(0,0,0, .5);
+                }
+
+                .one-fourth {
+                    margin-left: 1.4%;
+                    margin-right: 1.4%;
+                    width: 30.3% !important;
+                }
+
+                .title-hydro li {
+                    line-height: 15px;
+                    font-size: 11px;
+                    list-style-type: circle;
+                }
+
+                .active {
+                    background-color: #ddd !important;
+                    color: #5E5D5D !important;
+                }
+
+                .activeApproveShow {
+                    color: #13965F !important;
+                }
+
+                .activeDisApproveShow {
+                    color: red !important;
+                }
+            </style>
+            <script>
+                $(document).ready(function () {
+                    var str = location.href.toLowerCase();
+                    $(".navigation li a").each(function () {
+                        if (str.indexOf(this.href.toLowerCase()) > -1) {
+                            $("li.highlight").removeClass("highlight");
+                            $(this).parent().addClass("highlight");
+                        }
+                    });
+                })
+            </script>
+            <script type="text/javascript">
+                function saveWorldrefProfileUrl() {
+                    var textValue = document.getElementById("txtUrl").value;
+                    if (textValue == "") {
+                        alert('Please enter profile name.');
+                        document.getElementById('txtUrl').focus();
+                        return false;
+                    }
+                    $.ajax({
+                        url: "/WorldRef/SaveProfileUrl",
+                        type: 'POST',
+                        data: JSON.stringify({ "txtUrl": textValue }),
+                        contentType: 'application/json; charset=utf-8',
+                        success: function (response) {
+                            if (response == "exist") {
+                                $('#shwErrorMesgProfile').empty().html("Profile name already exist. Please try another profile name.");
+                            }
+                            else if (response == "done") {
+                                document.getElementById("txtUrl").value = "";
+                                alert("Successfully saved.");
+                                $('#shwErrorMesgProfile').empty().html();
+                                $.fancybox.close();
+                            }
+                            else {
+                                document.getElementById("txtUrl").value = "";
+                                $('#shwErrorMesgProfile').empty().html("There have been some error. Please try again.");
+                            }
+                        },
+                        error: function () {
+                            alert("Failed! Please try again.");
+                        }
+                    });
+                }
+            </script>
+            <style type="text/css">
+                .badge1 {
+                    position: relative;
+                }
+
+                    .badge1[data-badge]:after {
+                        content: attr(data-badge);
+                        position: absolute;
+                        top: 0px;
+                        right: 0px;
+                        font-size: 11px;
+                        background: green;
+                        color: white;
+                        width: 18px;
+                        height: 18px;
+                        text-align: center;
+                        font-weight: bold;
+                        line-height: 18px;
+                        border-radius: 50%;
+                    }
+
+                .badge2 {
+                    position: relative;
+                }
+
+                    .badge2[data-badge]:after {
+                        content: attr(data-badge);
+                        position: absolute;
+                        top: 0px;
+                        right: 0px;
+                        font-size: 11px;
+                        background: rgb(223, 117, 117);
+                        color: white;
+                        width: 18px;
+                        height: 18px;
+                        font-weight: bold;
+                        text-align: center;
+                        line-height: 18px;
+                        border-radius: 50%;
+                    }
+            </style>
+            <div id="">
+                <section id="main-content" role="main">
+                    <div id="loading" style="display: none;">
+                        <img id="loading-image" src="/Content/WorldRef/images/ringUploader.gif" alt="Loading..." />
+                    </div>
+                    <div>
+                        <div style="float:left;width:50%">
+                            <h2>My Projects</h2>
+                        </div>
+                        <div style="float:right;width:50%;text-align:right;">
+                            @Html.TextBox("filter", "", null, new
+                                                                  {
+                                                                      autocomplete = "On",
+                                                                      onChange = "$('form').submit()",
+                                                                      placeholder = "Search"
+                                                                  })
+                        </div>
+                    </div>
+                    <div class="filter_list_search">
+                        <div class="project_mainbox" style="float: left;">
+                            <ul>
+
+                                <li><a href='@Url.Action("ListExcelProjectsUser", "WorldRef")' class="active" id="AllProjects">All References</a></li>
+
+                                @if (@ViewBag.approveCount > 0)
+                                {
+                                    <li id="badgeData">
+                                        <a href="javascript:void(0)" id="showApproved" onclick="ShowApprovedData()" class="badge1 activeApproveShow" data-badge="@ViewBag.approveCount">Live in Search</a>
+
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li>
+                                        <a href="javascript:void(0)" id="hideApproved" onclick="ShowApprovedData()">Live in Search</a>
+                                    </li>
+                                }
+
+                                @if (@ViewBag.DisapproveCount > 0)
+                                {
+                                    <li>
+                                        <a href="javascript:void(0)" id="showDisapproved" onclick="ShowDisApprovedData()" class="badge2 activeDisApproveShow" data-badge="@ViewBag.DisapproveCount">Review and Resubmit </a>
+
+
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li>
+                                        <a href="javascript:void(0)" id="hideDisapproved" onclick="ShowDisApprovedData()">Review and Resubmit </a>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+
+                        <div style="float: right;">
+                            <a href="javascript:void(0)" id="AddProject" onclick="OpenPopUpAddProject()" class="pEButton"><i class="fa fa-plus"></i>Add Reference</a>
+
+                            @*<input type="text" id="Search" placeholder="Search" />*@
+                        </div>
+                    </div>
+
+
+
+                    @*  @if (msg != "")
+                        {
+
+                            <span style="color: red;">@msg</span>
+
+                        }*@
+
+                    @using (Html.BeginForm("ListExcelProjectsUser", "WorldRef", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        int k = 0;
+                        <ul class="projects-slider" id="ModelData">
+
+                            @foreach (var item in Model)
+                            {
+                                int i = 0;
+                                int j = 0;
+                                if (item.IsAuthorized == 0)
+                                {
+                                    <li class="project one-fourth">
+                                        <div class="proj-description responsiveQ fW">
+
+
+                                            <div class="title-hydro fW" style="text-align: left; padding: 2% 4%;">
+                                                <div class="scroll-hydro fW" style="margin-bottom: 10px;">
+                                                    <span class="projectuser-text">Reference Name </span>:  @Html.DisplayFor(modelItem => item.ProjectName)
+                                                    <br />
+                                                    <span class="projectuser-text">By </span>:  @Html.DisplayFor(modelItem => item.OrganizationName)
+                                                    <br />
+                                                    <span class="projectuser-text">For </span>:   @Html.DisplayFor(modelItem => item.CustomerName)
+                                                    <br />
+                                                    <span class="projectuser-text">For Industry </span>:       @Html.DisplayFor(modelItem => item.CustomerIndustryType)
+                                                    <br />
+                                                    <span class="projectuser-text">Contribution </span>:         @Html.DisplayFor(modelItem => item.Type)
+                                                    <br />
+                                                    <span class="projectuser-text">Country of Execution </span>:          @Html.DisplayFor(modelItem => item.Country)
+                                                    <br />
+                                                    <span class="projectuser-text">Status </span>:       @Html.DisplayFor(modelItem => item.Status)
+                                                    <br />
+                                                    <span class="projectuser-text">Year of Execution </span>:       @Html.DisplayFor(modelItem => item.Year)
+                                                    <br />
+
+
+                                                    <span class="projectuser-text">We Are </span>:       <span style="    padding-left: 11px;">@Html.DisplayFor(modelItem => item.UserType)</span>
+                                                    <br />
+                                                    <span class="projectuser-text">Search Keywords </span>:@Html.DisplayFor(modelItem => item.SearchKeywords)
+                                                    <br />
+                                                    @{
+                                    if (string.IsNullOrEmpty(item.Description))
+                                    {
+                                        <span class="projectuser-text">Description :</span><textarea rows="4" cols="50" id="@item.id" style="width: 169px; height: 13px !important; margin-left: 10px; font-size: 10px;" placeholder="Write more about this reference"></textarea>
+                                                        <input type="button" style="float:right; margin-top: 10px;" onclick="SaveDescription(@item.id)" value="Save" />
+                                                        <br />
+                                    }
+                                    else
+                                    {
+                                        <span class="projectuser-text">Description :</span>
+                                                        @Html.TextAreaFor(model => item.Description, new { @class = "form-control", Description = item.Description, id = @item.id, placeholder = "Write more about this reference" })
+                                                        <input type="button" style="float:right; margin-top: 10px;" onclick="SaveDescription(@item.id)" value="Save" />
+                                                        <br />
+
+
+                                                        @*<span class="projectuser-text">Description :</span><input type="text" id="@item.id" style="width: 169px; margin-left:10px;font-size:10px;" placeholder="Write more about this reference" />*@
+
+                                                        @*<span class="projectuser-text">Description :&nbsp;</span>@Html.DisplayFor(modelItem => item.Description);
+                                                            <br />*@
+                                    }
+                                                    }
+                                                </div>
+                                                <div class="colorStrip fW">
+                                                    <span class="projectimg-icon">
+                                                        <a href="javascript:void(0)" onclick="OpenPopUpImages(@item.id)">
+                                                            <img src="~/Content/WorldRef/images/addImages.png" title="Add images/videos" />
+                                                        </a>
+                                                    </span>
+
+                                                    @foreach (var img in item.listOfImages)
+                                                    {
+
+                                                        if (j == 0)
+                                                        {
+                                                            <span class="projectimg-icon">
+                                                                <a href="~/uploads/@img.ImagePath" data-thumbnail="~/uploads/@img.ImagePath" class="html5lightbox" data-group="@k">
+
+                                                                    <img src="~/Content/WorldRef/images/viewimages.png" title="View images/videos" />
+
+                                                                </a>
+                                                            </span>
+                                                            <span class="projectimg-icon">
+                                                                <a href="javascript:void(0)" onclick="OpenPopUpDeleteImages(@item.id)">
+                                                                    <img src="~/Content/WorldRef/images/deleteImg.png" title="Delete images/videos" />
+
+                                                                </a>
+                                                            </span>
+                                                            j++;
+                                                        }
+                                                    }
+                                                    <span class="projectimg-icon">
+                                                        <a href="javascript:void(0)" onclick="OpenPopUp(@item.id)">
+                                                            <img src="~/Content/WorldRef/images/edit-project.png" title="Edit Project" />
+                                                        </a>
+                                                    </span>
+                                                    @*  @if (item.creditM == 1)
+                                                        {
+                                                            <span class="projectimg-icon">
+                                                                <a href="javascript:void(0)" onclick="OpenCreditPopUp(@item.id)">
+                                                                    <img src="~/Content/images/creditred.png" title="Approve their Contribution" />
+
+                                                                </a>
+
+                                                            </span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="projectimg-icon">
+                                                                <a href="javascript:void(0)" onclick="OpenCreditPopUp(@item.id)">
+                                                                    <img src="~/Content/images/credit.png" title="Approve their Contribution" />
+
+                                                                </a>
+                                                            </span>
+                                                        }
+                                                        <span class="projectimg-icon">
+                                                            <a href="javascript:void(0)" onclick="OpenApprovedCreditPopUp(@item.id)">
+                                                                <img src="~/Content/images/viewcredits.png" title="View Contributors" />
+
+                                                            </a>
+                                                        </span>
+
+                                                        <span class="projectimg-icon">
+                                                            <a href="javascript:void(0)" onclick="OpenPopUpCertificates(@item.id)">
+                                                                <img src="~/Content/images/btUpload.png" title="Upload Certificates" />
+
+                                                            </a>
+                                                        </span>
+
+
+                                                        @if (item.reviewFag != "0")
+                                                        {
+                                                            <span class="projectimg-icon">
+                                                                <a href="javascript:void(0)" onclick="OpenUserReview(@item.id)">
+                                                                    <img src="/Content/WorldRef/images/red-docs.png" id="showR" title="Approve Review">
+                                                                </a>
+
+                                                            </span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="projectimg-icon">
+                                                                <a href="javascript:void(0)" onclick="OpenUserReview(@item.id)">
+                                                                    <img src="/Content/WorldRef/images/Comment.png" title="View Review" id="showB">
+                                                                </a>
+                                                            </span>
+                                                        }
+
+
+
+                                                        @if (@item.countflg == "True")
+                                                        {
+                                                            <span class="projectimg-icon">
+                                                                <a href="javascript:void(0)" class="fancybox" onclick = "GetLikedUserOnProject(@item.id)">
+                                                                    <img src="/Content/WorldRef/images/like-button.png" title="Total Likes" id="show">
+                                                                    <img src="/Content/WorldRef/images/like-20.png" style="display: none;" title="Total Likes" id="hide">
+                                                                    <label class="like-color">@item.countApprove</label>
+                                                                </a>
+
+                                                            </span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="projectimg-icon">
+                                                                <a href="javascript:void(0)" class="fancybox" onclick = "GetLikedUserOnProject(@item.id)">
+                                                                    <img src="/Content/WorldRef/images/like-20.png" title="Total Likes">
+                                                                    <label class="like-color">@item.countApprove</label>
+                                                                </a>
+
+                                                            </span>
+
+
+                                                        }
+                                                    *@
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @foreach (var img in item.listOfImages)
+                                        {
+
+                                            if (img.ImagePath.Contains(".png") || img.ImagePath.Contains(".bmp") || img.ImagePath.Contains(".jpg"))
+                                            {
+                                                if (i == 0)
+                                                {
+                                                    <div class="image_tn" style="display: none">
+                                                        <a href="~/uploads/@img.ImagePath" data-thumbnail="~/uploads/@img.ImagePath" class="html5lightbox" data-group="@k">
+                                                            <img id="imageDisplay" src="~/uploads/@img.ImagePath" width="288" height="170">
+                                                        </a>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="image_tn" style="display: none">
+                                                        <a href="~/uploads/@img.ImagePath" data-thumbnail="~/uploads/@img.ImagePath" class="html5lightbox" data-group="@k">
+                                                            <img src="~/uploads/@img.ImagePath" width="288" height="170">
+                                                        </a>
+                                                    </div>
+                                                }
+                                                i++;
+                                            }
+                                            else if (img.Link == false)
+                                            {
+                                                if (i == 0)
+                                                {
+                                                    <div class="image_tn" style="display: none">
+                                                        <a href="~/uploads/@img.ImagePath" data-thumbnail="~/uploads/@img.ImagePath" class="html5lightbox" data-group="@k">
+                                                            <img id="imageDisplay1" src="~/uploads/video-play-2.gif" width="288" height="170">
+                                                        </a>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="image_tn" style="display: none">
+                                                        <a href="~/uploads/@img.ImagePath" data-thumbnail="~/uploads/@img.ImagePath" class="html5lightbox" data-group="@k">
+                                                            <img src="~/uploads/video-play-2.gif" width="288" height="170">
+                                                        </a>
+                                                    </div>
+                                                }
+
+                                            }
+                                            else
+                                            {
+                                                if (i == 0)
+                                                {
+                                                    <div class="image_tn" style="display: none">
+                                                        <a href="@img.ImagePath" data-thumbnail="~/uploads/@img.ImagePath" class="html5lightbox" data-group="@k">
+                                                            <img id="imageDisplay2" src="~/uploads/video-play-2.gif">
+                                                        </a>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="image_tn" style="display: none">
+                                                        <a href="@img.ImagePath" data-thumbnail="~/uploads/@img.ImagePath" class="html5lightbox" data-group="@k">
+                                                            <img src="~/uploads/video-play-2.gif" width="288" height="170">
+                                                        </a>
+                                                    </div>
+                                                }
+                                            }
+                                        }
+                                    </li>
+                                }
+                                else if (item.IsAuthorized == 1)
+                                {
+                                    <li class="project one-fourth">
+                                        <div class="proj-description responsiveQ fW" style="background-color: #9ACA9A;color: white;">
+                                            <div class="title-hydro fW" style="text-align: left; padding: 2% 4%;">
+                                                <div class="scroll-hydro fW" style="margin-bottom: 10px;">
+                                                    <span class="projectuser-text">Reference Name </span>:  @Html.DisplayFor(modelItem => item.ProjectName)
+                                                    <br />
+                                                    <span class="projectuser-text">By </span>:  @Html.DisplayFor(modelItem => item.OrganizationName)
+                                                    <br />
+                                                    <span class="projectuser-text">For </span>:   @Html.DisplayFor(modelItem => item.CustomerName)
+                                                    <br />
+                                                    <span class="projectuser-text">For Industry </span>:       @Html.DisplayFor(modelItem => item.CustomerIndustryType)
+                                                    <br />
+                                                    <span class="projectuser-text">Contribution </span>:         @Html.DisplayFor(modelItem => item.Type)
+                                                    <br />
+                                                    <span class="projectuser-text">Country of Execution </span>:          @Html.DisplayFor(modelItem => item.Country)
+                                                    <br />
+                                                    <span class="projectuser-text">Status </span>:       @Html.DisplayFor(modelItem => item.Status)
+                                                    <br />
+                                                    <span class="projectuser-text">Year of Execution </span>:       @Html.DisplayFor(modelItem => item.Year)
+                                                    <br />
+
+
+                                                    <span class="projectuser-text">We Are </span>:       <span style="    padding-left: 11px;">@Html.DisplayFor(modelItem => item.UserType)</span>
+                                                    <br />
+                                                    <span class="projectuser-text">Search Keywords </span>:@Html.DisplayFor(modelItem => item.SearchKeywords)
+                                                    <br />
+                                                    @{
+                                    if (string.IsNullOrEmpty(item.Description))
+                                    {
+                                        <span class="projectuser-text">Description :</span><textarea rows="4" cols="50" id="@item.id" style="width: 169px; height: 13px !important; margin-left: 10px; font-size: 10px;" placeholder="Write more about this reference"></textarea>
+                                                        <input type="button" style="float:right; margin-top: 10px;" onclick="SaveDescription(@item.id)" value="Save" />
+                                                        <br />
+                                    }
+                                    else
+                                    {
+                                        <span class="projectuser-text">Description :</span>
+                                                        @Html.TextAreaFor(model => item.Description, new { @class = "form-control", Description = item.Description, id = @item.id, placeholder = "Write more about this reference" })
+                                                        <input type="button" style="float:right; margin-top: 10px;" onclick="SaveDescription(@item.id)" value="Save" />
+                                                        <br />
+
+
+                                                        @*<span class="projectuser-text">Description :</span><input type="text" id="@item.id" style="width: 169px; margin-left:10px;font-size:10px;" placeholder="Write more about this reference" />*@
+
+                                                        @*<span class="projectuser-text">Description :&nbsp;</span>@Html.DisplayFor(modelItem => item.Description);
+                                                            <br />*@
+                                    }
+                                                    }
+                                                </div>
+                                                <div class="colorStrip fW" style=" background-color: #90BD90;">
+                                                    <span class="projectimg-icon">
+                                                        <a href="javascript:void(0)" onclick="OpenPopUpImages(@item.id)">
+                                                            <img src="~/Content/WorldRef/images/addImages.png" title="Add images/videos" />
+                                                        </a>
+
+                                                    </span>
+
+                                                    @foreach (var img in item.listOfImages)
+                                                    {
+
+                                                        if (j == 0)
+                                                        {
+                                                            <span class="projectimg-icon">
+                                                                <a href="~/uploads/@img.ImagePath" data-thumbnail="~/uploads/@img.ImagePath" class="html5lightbox" data-group="@k">
+
+                                                                    <img src="~/Content/WorldRef/images/viewimages.png" title="View images/videos" />
+
+                                                                </a>
+                                                            </span>
+                                                            <span class="projectimg-icon">
+                                                                <a href="javascript:void(0)" onclick="OpenPopUpDeleteImages(@item.id)">
+                                                                    <img src="~/Content/WorldRef/images/deleteImg.png" title="Delete images/videos" />
+
+                                                                </a>
+                                                            </span>
+                                                            j++;
+                                                        }
+                                                    }
+                                                    <span class="projectimg-icon">
+                                                        <a href="javascript:void(0)" onclick="OpenPopUp(@item.id)">
+                                                            <img src="~/Content/WorldRef/images/edit-project.png" title="Edit Project" />
+                                                        </a>
+                                                    </span>
+
+                                                      @*@if (item.creditM == 1)
+                                                        {
+                                                            <span class="projectimg-icon">
+                                                                <a href="javascript:void(0)" onclick="OpenCreditPopUp(@item.id)">
+                                                                    <img src="~/Content/images/creditred.png" title="Approve their Contribution" />
+
+                                                                </a>
+
+                                                            </span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="projectimg-icon">
+                                                                <a href="javascript:void(0)" onclick="OpenCreditPopUp(@item.id)">
+                                                                    <img src="~/Content/images/credit.png" title="Approve their Contribution" />
+
+                                                                </a>
+                                                            </span>
+                                                        }
+                                                        <span class="projectimg-icon">
+                                                            <a href="javascript:void(0)" onclick="OpenApprovedCreditPopUp(@item.id)">
+                                                                <img src="~/Content/images/viewcredits.png" title="View Contributors" />
+
+                                                            </a>
+                                                        </span>
+
+                                                        <span class="projectimg-icon">
+                                                            <a href="javascript:void(0)" onclick="OpenPopUpCertificates(@item.id)">
+                                                                <img src="~/Content/images/btUpload.png" title="Upload Certificates" />
+
+                                                            </a>
+                                                        </span>
+
+
+                                                        @if (item.reviewFag != "0")
+                                                        {
+                                                            <span class="projectimg-icon">
+                                                                <a href="javascript:void(0)" onclick="OpenUserReview(@item.id)">
+                                                                    <img src="/Content/WorldRef/images/red-docs.png" id="showR" title="Approve Review">
+                                                                </a>
+
+                                                            </span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="projectimg-icon">
+                                                                <a href="javascript:void(0)" onclick="OpenUserReview(@item.id)">
+                                                                    <img src="/Content/WorldRef/images/Comment.png" title="View Review" id="showB">
+                                                                </a>
+                                                            </span>
+                                                        }*@
+
+
+
+                                                        @*@if (@item.countflg == "True")
+                                                        {
+                                                            <span class="projectimg-icon">
+                                                                <a href="javascript:void(0)" class="fancybox" onclick = "GetLikedUserOnProject(@item.id)">
+                                                                    <img src="/Content/WorldRef/images/like-button.png" title="Total Likes" id="show">
+                                                                    <img src="/Content/WorldRef/images/like-20.png" style="display: none;" title="Total Likes" id="hide">
+                                                                    <label class="like-color">@item.countApprove</label>
+                                                                </a>
+
+                                                            </span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="projectimg-icon">
+                                                                <a href="javascript:void(0)" class="fancybox" onclick = "GetLikedUserOnProject(@item.id)">
+                                                                    <img src="/Content/WorldRef/images/like-20.png" title="Total Likes">
+                                                                    <label class="like-color">@item.countApprove</label>
+                                                                </a>
+
+                                                            </span>
+
+
+                                                        }*@ 
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @foreach (var img in item.listOfImages)
+                                        {
+
+                                            if (img.ImagePath.Contains(".png") || img.ImagePath.Contains(".bmp") || img.ImagePath.Contains(".jpg"))
+                                            {
+                                                if (i == 0)
+                                                {
+                                                    <div class="image_tn" style="display: none">
+                                                        <a href="~/uploads/@img.ImagePath" data-thumbnail="~/uploads/@img.ImagePath" class="html5lightbox" data-group="@k">
+                                                            <img id="imageDisplay" src="~/uploads/@img.ImagePath" width="288" height="170">
+                                                        </a>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="image_tn" style="display: none">
+                                                        <a href="~/uploads/@img.ImagePath" data-thumbnail="~/uploads/@img.ImagePath" class="html5lightbox" data-group="@k">
+                                                            <img src="~/uploads/@img.ImagePath" width="288" height="170">
+                                                        </a>
+                                                    </div>
+                                                }
+                                                i++;
+                                            }
+                                            else if (img.Link == false)
+                                            {
+                                                if (i == 0)
+                                                {
+                                                    <div class="image_tn" style="display: none">
+                                                        <a href="~/uploads/@img.ImagePath" data-thumbnail="~/uploads/@img.ImagePath" class="html5lightbox" data-group="@k">
+                                                            <img id="imageDisplay1" src="~/uploads/video-play-2.gif" width="288" height="170">
+                                                        </a>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="image_tn" style="display: none">
+                                                        <a href="~/uploads/@img.ImagePath" data-thumbnail="~/uploads/@img.ImagePath" class="html5lightbox" data-group="@k">
+                                                            <img src="~/uploads/video-play-2.gif" width="288" height="170">
+                                                        </a>
+                                                    </div>
+                                                }
+
+                                            }
+                                            else
+                                            {
+                                                if (i == 0)
+                                                {
+                                                    <div class="image_tn" style="display: none">
+                                                        <a href="@img.ImagePath" data-thumbnail="~/uploads/@img.ImagePath" class="html5lightbox" data-group="@k">
+                                                            <img id="imageDisplay2" src="~/uploads/video-play-2.gif">
+                                                        </a>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="image_tn" style="display: none">
+                                                        <a href="@img.ImagePath" data-thumbnail="~/uploads/@img.ImagePath" class="html5lightbox" data-group="@k">
+                                                            <img src="~/uploads/video-play-2.gif" width="288" height="170">
+                                                        </a>
+                                                    </div>
+                                                }
+                                            }
+                                        }
+                                    </li>
+
+                                }
+                                else
+                                {
+                                    <li class="project one-fourth">
+                                        <div class="proj-description responsiveQ fW" style="background-color: #F3C6C6; color: white; ">
+
+
+                                            <div class="title-hydro fW" style="text-align: left; padding: 2% 4%;">
+                                                <div class="scroll-hydro fW" style="margin-bottom: 10px;">
+                                                    <span class="projectuser-text">Reference Name </span>:  @Html.DisplayFor(modelItem => item.ProjectName)
+                                                    <br />
+                                                    <span class="projectuser-text">By </span>:  @Html.DisplayFor(modelItem => item.OrganizationName)
+                                                    <br />
+                                                    <span class="projectuser-text">For </span>:   @Html.DisplayFor(modelItem => item.CustomerName)
+                                                    <br />
+                                                    <span class="projectuser-text">For Industry </span>:       @Html.DisplayFor(modelItem => item.CustomerIndustryType)
+                                                    <br />
+                                                    <span class="projectuser-text">Contribution </span>:         @Html.DisplayFor(modelItem => item.Type)
+                                                    <br />
+                                                    <span class="projectuser-text">Country of Execution </span>:          @Html.DisplayFor(modelItem => item.Country)
+                                                    <br />
+                                                    <span class="projectuser-text">Status </span>:       @Html.DisplayFor(modelItem => item.Status)
+                                                    <br />
+                                                    <span class="projectuser-text">Year of Execution </span>:       @Html.DisplayFor(modelItem => item.Year)
+                                                    <br />
+
+
+                                                    <span class="projectuser-text">We Are </span>:       <span style="    padding-left: 11px;">@Html.DisplayFor(modelItem => item.UserType)</span>
+                                                    <br />
+                                                    <span class="projectuser-text">Search Keywords </span>:@Html.DisplayFor(modelItem => item.SearchKeywords)
+                                                    <br />
+                                                    @{
+                                    if (string.IsNullOrEmpty(item.Description))
+                                    {
+                                        <span class="projectuser-text">Description :</span><textarea rows="4" cols="50" id="@item.id" style="width: 169px; height: 13px !important; margin-left: 10px; font-size: 10px;" placeholder="Write more about this reference"></textarea>
+                                                        <input type="button" style="float:right; margin-top: 10px;" onclick="SaveDescription(@item.id)" value="Save" />
+                                                        <br />
+                                    }
+                                    else
+                                    {
+                                        <span class="projectuser-text">Description :</span>
+                                                        @Html.TextAreaFor(model => item.Description, new { @class = "form-control", Description = item.Description, id = @item.id, placeholder = "Write more about this reference" })
+                                                        <input type="button" style="float:right; margin-top: 10px;" onclick="SaveDescription(@item.id)" value="Save" />
+                                                        <br />
+
+
+                                                        @*<span class="projectuser-text">Description :</span><input type="text" id="@item.id" style="width: 169px; margin-left:10px;font-size:10px;" placeholder="Write more about this reference" />*@
+
+                                                        @*<span class="projectuser-text">Description :&nbsp;</span>@Html.DisplayFor(modelItem => item.Description);
+                                                            <br />*@
+                                    }
+                                                    }
+                                                </div>
+                                                <div class="colorStrip fW" style=" background-color: #E4A5A5;">
+                                                    <span class="projectimg-icon">
+                                                        <a href="javascript:void(0)" onclick="OpenPopUpImages(@item.id)">
+                                                            <img src="~/Content/WorldRef/images/addImages.png" title="Add images/videos" />
+                                                        </a>
+                                                    </span>
+
+                                                    @foreach (var img in item.listOfImages)
+                                                    {
+
+                                                        if (j == 0)
+                                                        {
+                                                            <span class="projectimg-icon">
+                                                                <a href="~/uploads/@img.ImagePath" data-thumbnail="~/uploads/@img.ImagePath" class="html5lightbox" data-group="@k">
+
+                                                                    <img src="~/Content/WorldRef/images/viewimages.png" title="View images/videos" />
+
+                                                                </a>
+                                                            </span>
+                                                            <span class="projectimg-icon">
+                                                                <a href="javascript:void(0)" onclick="OpenPopUpDeleteImages(@item.id)">
+                                                                    <img src="~/Content/WorldRef/images/deleteImg.png" title="Delete images/videos" />
+
+                                                                </a>
+                                                            </span>
+                                                            j++;
+                                                        }
+                                                    }
+                                                    <span class="projectimg-icon">
+                                                        <a href="javascript:void(0)" onclick="OpenPopUp(@item.id)">
+                                                            <img src="~/Content/WorldRef/images/edit-project.png" title="Edit Project" />
+                                                        </a>
+                                                    </span>
+                                                      @if (item.creditM == 1)
+                                                                    {
+                                                                        <span class="projectimg-icon">
+                                                                            <a href="javascript:void(0)" onclick="OpenCreditPopUp(@item.id)">
+                                                                                <img src="~/Content/images/creditred.png" title="Approve their Contribution" />
+
+                                                                            </a>
+
+                                                                        </span>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <span class="projectimg-icon">
+                                                                            <a href="javascript:void(0)" onclick="OpenCreditPopUp(@item.id)">
+                                                                                <img src="~/Content/images/credit.png" title="Approve their Contribution" />
+
+                                                                            </a>
+                                                                        </span>
+                                                                    }
+                                                                    <span class="projectimg-icon">
+                                                                        <a href="javascript:void(0)" onclick="OpenApprovedCreditPopUp(@item.id)">
+                                                                            <img src="~/Content/images/viewcredits.png" title="View Contributors" />
+
+                                                                        </a>
+                                                                    </span>
+
+                                                                    <span class="projectimg-icon">
+                                                                        <a href="javascript:void(0)" onclick="OpenPopUpCertificates(@item.id)">
+                                                                            <img src="~/Content/images/btUpload.png" title="Upload Certificates" />
+
+                                                                        </a>
+                                                                    </span>
+
+
+                                                                    @if (item.reviewFag != "0")
+                                                                    {
+                                                                        <span class="projectimg-icon">
+                                                                            <a href="javascript:void(0)" onclick="OpenUserReview(@item.id)">
+                                                                                <img src="/Content/WorldRef/images/red-docs.png" id="showR" title="Approve Review">
+                                                                            </a>
+
+                                                                        </span>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <span class="projectimg-icon">
+                                                                            <a href="javascript:void(0)" onclick="OpenUserReview(@item.id)">
+                                                                                <img src="/Content/WorldRef/images/Comment.png" title="View Review" id="showB">
+                                                                            </a>
+                                                                        </span>
+                                                                    }
+
+
+
+                                                                    @if (@item.countflg == "True")
+                                                                    {
+                                                                        <span class="projectimg-icon">
+                                                                            <a href="javascript:void(0)" class="fancybox" onclick = "GetLikedUserOnProject(@item.id)">
+                                                                                <img src="/Content/WorldRef/images/like-button.png" title="Total Likes" id="show">
+                                                                                <img src="/Content/WorldRef/images/like-20.png" style="display: none;" title="Total Likes" id="hide">
+                                                                                <label class="like-color">@item.countApprove</label>
+                                                                            </a>
+
+                                                                        </span>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <span class="projectimg-icon">
+                                                                            <a href="javascript:void(0)" class="fancybox" onclick = "GetLikedUserOnProject(@item.id)">
+                                                                                <img src="/Content/WorldRef/images/like-20.png" title="Total Likes">
+                                                                                <label class="like-color">@item.countApprove</label>
+                                                                            </a>
+
+                                                                        </span>
+                                                        <script src="//platform.linkedin.com/in.js" type="text/javascript"> lang: en_US</script>
+                                                        <script type="IN/Share"></script>
+
+                                                                    }
+                                                    
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @foreach (var img in item.listOfImages)
+                                        {
+
+                                            if (img.ImagePath.Contains(".png") || img.ImagePath.Contains(".bmp") || img.ImagePath.Contains(".jpg"))
+                                            {
+                                                if (i == 0)
+                                                {
+                                                    <div class="image_tn" style="display: none">
+                                                        <a href="~/uploads/@img.ImagePath" data-thumbnail="~/uploads/@img.ImagePath" class="html5lightbox" data-group="@k">
+                                                            <img id="imageDisplay" src="~/uploads/@img.ImagePath" width="288" height="170">
+                                                        </a>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="image_tn" style="display: none">
+                                                        <a href="~/uploads/@img.ImagePath" data-thumbnail="~/uploads/@img.ImagePath" class="html5lightbox" data-group="@k">
+                                                            <img src="~/uploads/@img.ImagePath" width="288" height="170">
+                                                        </a>
+                                                    </div>
+                                                }
+                                                i++;
+                                            }
+                                            else if (img.Link == false)
+                                            {
+                                                if (i == 0)
+                                                {
+                                                    <div class="image_tn" style="display: none">
+                                                        <a href="~/uploads/@img.ImagePath" data-thumbnail="~/uploads/@img.ImagePath" class="html5lightbox" data-group="@k">
+                                                            <img id="imageDisplay1" src="~/uploads/video-play-2.gif" width="288" height="170">
+                                                        </a>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="image_tn" style="display: none">
+                                                        <a href="~/uploads/@img.ImagePath" data-thumbnail="~/uploads/@img.ImagePath" class="html5lightbox" data-group="@k">
+                                                            <img src="~/uploads/video-play-2.gif" width="288" height="170">
+                                                        </a>
+                                                    </div>
+                                                }
+
+                                            }
+                                            else
+                                            {
+                                                if (i == 0)
+                                                {
+                                                    <div class="image_tn" style="display: none">
+                                                        <a href="@img.ImagePath" data-thumbnail="~/uploads/@img.ImagePath" class="html5lightbox" data-group="@k">
+                                                            <img id="imageDisplay2" src="~/uploads/video-play-2.gif">
+                                                        </a>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="image_tn" style="display: none">
+                                                        <a href="@img.ImagePath" data-thumbnail="~/uploads/@img.ImagePath" class="html5lightbox" data-group="@k">
+                                                            <img src="~/uploads/video-play-2.gif" width="288" height="170">
+                                                        </a>
+                                                    </div>
+                                                }
+                                            }
+                                        }
+                                    </li>
+
+                                }
+
+
+                                k++;
+                            }
+                        </ul>
+                    }
+
+                    <div id="LikedUser" style="display: none;">
+                    </div>
+
+                    <br class="clear">
+
+                    <!-- /article -->
+
+                </section>
+            </div>
+            <div id="popupdiv" title="Reason For Disapprove" style="display: none;">
+            </div>
+            <div id="inline12" style="display: none;">
+                <div class="profile_part2" style="width: 100%;">
+                    <ul class="pE heigt" id="ReviewList"></ul>
+                </div>
+            </div>
+            <div id="inline4" style="display: none;">
+
+                <div class="profile_part2" style="width: 100%;">
+                    <h4 class="fW" style="margin: 7px 0;">Create Profile Url</h4>
+                    <ul class="pE heigt" id="CommentList" style="margin-bottom: 10px;">
+                        <li>
+
+                            <div id="shwErrorMesgProfile"></div>
+                            <span>www.worldref.org/</span>
+
+                            <input type="text" id="txtUrl" name="Url" placeholder="e.g. Thomos" />
+                        </li>
+                    </ul>
+                    <div class="centreAlign">
+                        <label class="lp">
+                            <input class="pEButton" type="submit" value="Save" onclick="saveWorldrefProfileUrl();" />
+
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+       

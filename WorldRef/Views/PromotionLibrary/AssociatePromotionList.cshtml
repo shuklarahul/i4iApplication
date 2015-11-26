@@ -1,0 +1,103 @@
+﻿@model List<WorldRef.Models.PromotionLibraryModels.PromotionLibraryDAO>
+@{
+    ViewBag.Title = "AssociatePromotionList";
+    Layout = "~/Views/Shared/_LayoutAssociate.cshtml";
+}
+<div id="content-wrapper">
+<link href="~/Content/themes/jquery-ui.css" rel="stylesheet" />
+<script src="~/Scripts/NewScript/jquery-ui.js"></script>
+<link href="~/Content/Trainingfile/css/styles-core.css" rel="stylesheet" />
+<style type="text/css">
+    /*Here we will add css for style webgrid*/
+    .dis_project{text-align: left;  height: 137px;overflow: auto;  border: 1px solid lightgrey;
+  padding: 9px;
+  margin: 10px;
+  box-shadow: 0px 3px 15px 1px #ddd;}
+
+   
+  .one-fourth {
+   margin: 1% 0.4% 2% .4%;
+  width: 32.5% !important;
+  list-style-type:none;
+}
+  .title-hydro li {
+  line-height: 15px;
+  font-size: 11px;
+  list-style-type: none;
+}
+  .proj-description {
+  min-height: 166px;
+   
+}
+  .title-hydro li > span, .projectuser-text {
+  font-weight: 700;
+}
+  li.project.one-fourth:hover {
+  box-shadow: 0 0 8px rgba(0,0,0, .5);
+}
+    .project_mainbox > ul > li{
+        float: left;
+        width: 120px;
+        text-align: center;
+        line-height: 21px;
+        margin-right: 3px;
+         border: 1px solid rgb(226, 226, 226);
+		 list-style:none;
+
+    }
+    .leftlid {
+        width: 49%;
+        float: left;
+    }
+    .leftlid label {
+        width: 33%;
+    }
+    .leftportion {
+        padding-bottom: 10px;
+    }
+	 .active {    background-color: #ddd !important;
+  color: #FFFFFF !important;
+             }
+</style>
+<section>                                
+<h3>Associate Promotion List</h3>
+<div >    
+    @using (Html.BeginForm("AssociatePromotionList", "PromotionLibrary"))
+    {
+        <form>
+
+        <ul class="projects-slider" id="ModelData" style="margin-left:0px;">
+                  
+				  	   @for (var i = 0; i < Model.Count; i++)
+                {
+						  <li class="project one-fourth" >
+                       
+                        <div class="proj-description">
+                      
+							 <ul class="title-hydro dis_project">
+							     <li><span>Name :</span> @Model[i].PName</li>	
+                               @*  <li><span>EmailId:</span>@Model[i].PEmailId</li>	
+                                 <li><span>Contact No. :</span> @Model[i].PContactNumber</li>*@
+                                 <li><span>Reference List:</span><a href="~/Content/PromotionFile/@Model[i].PReference" target="_blank">@Model[i].PReference</a></li>	
+                                 <li><span>Company Profile :</span><a href="~/Content/PromotionFile/@Model[i].PCompanyProfile" target="_blank">@Model[i].PCompanyProfile</a></li>	
+                               <li><span>Details :</span> <a href="~/PromotionLibrary/AssociatePromotionDetails?PromotionID=@Model[i].PromotionLibraryID" target="_blank"> View Details</a></li>	
+                               </ul>							 
+							
+							
+                        </div>
+						</li> 
+                }
+
+        </ul>
+
+       
+        <div id="ApprovedTable">
+        </div>
+       
+    </form>
+ 
+     
+    }
+</div>
+    </section> 
+    </div>

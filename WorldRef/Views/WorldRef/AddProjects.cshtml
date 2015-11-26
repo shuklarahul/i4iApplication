@@ -1,0 +1,119 @@
+﻿@using (Html.BeginForm("AddProject", "WorldRef", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+    <div class="profile_part2 popBoxWidth_fix border_design">
+
+        <h4 class="fancyCu_h4">Add Project</h4>
+        <div class="guid-content">
+            <ul class="pE" style="padding: 20px;">
+                <li>
+                    <span class="manage-search">Reference Name :</span><label class="lp">
+
+                        @Html.TextBox("Project")
+
+                    </label>
+                </li>
+                <li>
+                    <span class="manage-search">By : </span>
+                    <label class="lp">
+                        @Html.TextBox("OrganizationName")
+                    </label>
+                </li>
+                <li>
+                    <span class="manage-search">For : </span>
+                    <label class="lp">
+                        @Html.TextBox("CustomerName")
+                    </label>
+                </li>
+
+                <li>
+                    <span class="manage-search">For Industry : </span>
+                    <label class="lp">
+                        @Html.TextBox("CustomerIndustryType")
+
+                    </label>
+                </li>
+
+                <li>
+                    <span class="manage-search">Contribution : </span>
+                    <label class="lp">
+                        @Html.TextBox("Type")
+
+                    </label>
+                </li>
+
+
+                <li>
+                    <span class="manage-search">Country of Execution : </span>
+                    <label class="lp">
+                        @Html.TextBox("Country")
+
+                    </label>
+                </li>
+
+                <li>
+                    <span class="manage-search">Status : </span>
+                    <label class="lp">
+                        @Html.TextBox("Status")
+
+                    </label>
+                </li>
+
+                <li>
+                    <span class="manage-search">Year of Execution :</span><label class="lp">
+                        @Html.TextBox("Year")
+
+                    </label>
+                </li>
+                <li>
+                    <span class="manage-search">Description :</span><label class="lp">
+                        @Html.TextBox("Description")
+
+                    </label>
+                </li>
+                <li>
+                    <span class="manage-search privacy-btn" style="font-size: 13px; font-weight: bold;display: flex;">Privacy : </span>
+                    <span> Select, whatever you do not want users to see in the search.</span>
+                    <span class="halfType">
+                        <input type="checkbox" id="Project" name="chkProject" value="Name of Project">Name of Project<br />
+                        <input type="checkbox" id="Status" name="chkStatus" value="Status">Status<br />
+                        <input type="checkbox" id="Year" name="chkYear" value="Year of Execution/Installation/Commissioning">Year of Execution
+
+                    </span>
+                    <span class="halfType">
+                        <input type="checkbox" id="Customer" name="chkCustomer" value="Customer Name">For (The Customer's Name)<br />
+                        <input type="checkbox" id="Organization" name="chkOrganization" value="Organization">By (The contributor’s Name)
+                    </span>
+                </li>
+
+            </ul>
+            <div class="button_box">
+                <button class="fancy_button" id="otherButton" onclick="return ValidateForm()">Submit</button>
+            </div>
+        </div>
+    </div>
+
+}
+<script>
+    $("#otherButton").bind("click", function () {
+        return validateForm();
+    });
+    function validateForm() {
+        var projectName = document.getElementById("Project").value;
+        var Orag = document.getElementById("OrganizationName").value;
+        var Customer = document.getElementById("CustomerName").value;
+        var Ctype = document.getElementById("CustomerIndustryType").value;
+        var type = document.getElementById("Type").value;
+        var country = document.getElementById("Country").value;
+        var status = document.getElementById("Status").value;
+        var year = document.getElementById("Year").value;
+
+        if ((projectName == null || projectName == "") && (Orag == null || Orag == "") && (Customer == null || Customer == "") && (Ctype == null || Ctype == "") &&
+            (type == null || type == "") && (country == null || country == "") && (status == null || status == "") &&
+            (year == null || year == "")) {
+            alert("Please enter  At least one field");
+            return false;
+        }
+
+    }
+</script>

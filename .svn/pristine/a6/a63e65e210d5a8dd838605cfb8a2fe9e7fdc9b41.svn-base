@@ -1,0 +1,656 @@
+﻿@model WorldRef.DataLayer.SignUpWorldRefModel
+@{
+    ViewBag.Title = "WorldRefIndex";
+    Layout = "~/Views/Shared/LayoutSearch.cshtml";
+}
+@{
+    var msg = TempData["ErrorMessage"] ?? string.Empty;
+    TempData["ErrorMessage"] = "";
+    var displayMessage = TempData["DisplayMessage"] ?? string.Empty;
+    TempData["DisplayMessage"] = "";
+}
+<script src="~/Content/js/jquery-1.10.1.min.js"></script>
+
+<script type="text/javascript">
+    var message = '@msg';
+
+    if (message != "") {
+        alert(message);
+        // openFancybox();
+    }
+    function MovetoSignUpTab() {//e2
+        $("#tabs1-html").removeClass("active");
+        $("#tabs1-js").addClass("active");
+        $("#e1").removeClass("active");
+        $("#e2").addClass("active");
+        $("#tabs1-html").css("display", "none");
+        $("#tabs1-js").css("display", "block");
+        $("#into1").addClass("active");
+        $("#into2").removeClass("active");
+        $("#into3").removeClass("active");
+        $("#intoOpen1").addClass("active");
+        $("#intoOpen2").removeClass("active");
+        $("#intoOpen3").removeClass("active");
+        $("#intoOpen1").css("display", "block");
+        $("#intoOpen2").css("display", "none");
+        $("#intoOpen3").css("display", "none");
+        openFancybox();
+    }
+    function MovetoLoginTab() {//e1
+
+        $("#tabs1-html").addClass("active");
+        $("#tabs1-js").removeClass("active");
+        $("#e1").addClass("active");
+        $("#e2").removeClass("active");
+        $("#tabs1-html").css("display", "block");
+        $("#tabs1-js").css("display", "none");
+        $("#intoOpen1").css("display", "none");
+        $("#intoOpen2").css("display", "none");
+        $("#intoOpen3").css("display", "none");
+        openFancybox();
+    }
+    function byd() {//into1
+        $("#into1").addClass("active");
+        $("#into2").removeClass("active");
+        $("#into3").removeClass("active");
+        $("#intoOpen1").addClass("active");
+        $("#intoOpen2").removeClass("active");
+        $("#intoOpen3").removeClass("active");
+        $("#intoOpen1").css("display", "block");
+        $("#intoOpen2").css("display", "none");
+        $("#intoOpen3").css("display", "none");
+    }
+    function MovetoGeneralTab() {//into2
+        $("#into1").removeClass("active");
+        $("#into2").addClass("active");
+        $("#into3").removeClass("active");
+        $("#intoOpen1").removeClass("active");
+        $("#intoOpen2").addClass("active");
+        $("#intoOpen3").removeClass("active");
+        $("#intoOpen1").css("display", "none");
+        $("#intoOpen2").css("display", "block");
+        $("#intoOpen3").css("display", "none");
+    }
+    function MovetoRecruitersTab() {//into3
+        $("#into1").removeClass("active");
+        $("#into2").removeClass("active");
+        $("#into3").addClass("active");
+        $("#intoOpen1").removeClass("active");
+        $("#intoOpen2").removeClass("active");
+        $("#intoOpen3").addClass("active");
+        $("#intoOpen1").css("display", "none");
+        $("#intoOpen2").css("display", "none");
+        $("#intoOpen3").css("display", "block");
+    }
+
+   
+    var addmail = 1;
+    var no = 1;
+    $(document).ready(function () {
+        $('#Password').keypress(function (e) {
+            if (e.keyCode == 13) {
+                Login();
+            }
+        });
+        $('#PasswordRegGU').keypress(function (e) {
+            if (e.keyCode == 13) {
+                CommonUserSignUp();
+            }
+        });
+        $("#info").click(function () {
+            $(".action-field").toggle();
+        });
+        $(document).click(function (e) {
+            if (e.target.id != 'info' && !$('#info').find(e.target).length) {
+                $(".action-field").hide();
+            }
+        });
+        $("#searchValue").focusin(function () {
+            if ($("#searchValue").val() == "")
+                $("#searchValue").css("border", "1px solid #57B3CC");
+        });
+        $("#searchValue").focusout(function () {
+            if ($("#searchValue").val() == "")
+                $("#searchValue").css("border", "1px solid #ddd");
+        });
+        $("#searchValue").val = "";
+        $('#Type').multipleSelect();
+        $('#Industry').multipleSelect();
+        $('#IndustriesID').multipleSelect();
+        $(".content-3").mCustomScrollbar({
+            scrollButtons: { enable: true },
+            theme: "light-thick",
+            scrollbarPosition: "outside"
+        });
+        $("#ParentOrganisationName").show();
+        $("#BusinessUnitName").hide();
+        $("input:radio[name='ProfileReason']").click(function () {
+            debugger;
+            if ($("#rdoCompany").prop("checked")) {
+                $("#ParentOrganisationName").show();
+                $("#BusinessUnitName").hide();
+            }
+            else {
+                $("#ParentOrganisationName").show();
+                $("#BusinessUnitName").show();
+            }
+        });
+        $("#AddEmailID").click(function () {
+            $("#EmailCnt").append('<div><input class="sign-up-input fullinput" id="Email' + addmail + '" placeholder="Email ID" type="text" ><i class="fa fa-trash-o" style="cursor: pointer; font-size: 24px; vertical-align: -4px;padding-left: 5px;" title="Delete"></i></div>');
+            addmail++;
+        });
+        $(document).on('click', '.fa-trash-o', function () {
+            $(this).parent().remove();
+        });
+        $("#AddContactNo").click(function () {
+            var areacode = $("#areacode").val();
+            $("#addMoreNo").append('<div><input class="sign-up-input forWidth1" id="ContactCode" name="ContactCode' + no + '" placeholder="Area Code" readonly="readonly" type="text" value="' + areacode + '"><input class="sign-up-input forWidth2" id="ContactNumber' + no + '" name="ContactNumber" placeholder="Mobile Number" style="width: 77%;" type="text"><i class="fa fa-trash-o" style="cursor: pointer; font-size: 24px; vertical-align: -4px;padding-left: 5px;" title="Delete"></i></div>');
+        });
+        var message = '@displayMessage';
+
+        if (message != "") {
+            $.fancybox("#ModelpopUp");
+        }
+
+        $('#tab-container').easytabs({ updateHash: false });
+        $('#SearchValue').keypress(function (e) {
+           // alert("Called");
+            var key = e.which;
+            if (key == 13)  // the enter key code
+            {
+                Search();
+            }
+        });
+        $("#Country").change(function () {
+            // alert($('option:selected', $(this)).text());
+            getCountryCode($('option:selected', $(this)).text());
+        });
+        $('#ContactNumber').keypress(function (evt) {
+            var charCode = 0;
+            charCode = (evt.which) ? evt.which : event.keyCode;
+            if (((charCode > 47) && (charCode < 58)) || (charCode == 8) || (charCode == 9) || (charCode == 46) || (charCode == 0))
+                return true;
+
+            return false;
+        });
+        $("#OtherType").hide();
+        $("#DropdownType").change(function () {
+            if ($(this).val() == "Others") {
+                $("#OtherType").show();
+            }
+            else {
+                $("#OtherType").hide();
+            }
+        });
+        $("#OtherIndustryName").hide();
+        $("#Industry").change(function () {
+            if ($("#Industry option:selected").text() == "Other") {
+                $("#OtherIndustryName").show();
+            }
+            else {
+                $("#OtherIndustryName").hide();
+            }
+        });
+        
+    });
+    function runScript(e) {
+        if (e.keyCode == 13) {
+            Search();
+        }
+    }
+    function getCountryCode(countryname) {
+        $.ajax({
+            url: "/WorldRef/GetCountryCode",
+            type: 'POST',
+            data: JSON.stringify({ "Countryname": countryname }),
+            contentType: 'application/json; charset=utf-8',
+            success: function (response) {
+                $('.area').val("+"+response);
+                $("#areacode").val("+"+response);
+            },
+            error: function () {
+                alert("Failed! Please try again.");
+            }
+        });
+    }
+    function isNumberKey(evt) {
+        var charCode = 0;
+        charCode = (evt.which) ? evt.which : event.keyCode;
+        if (((charCode > 47) && (charCode < 58)) || (charCode == 8) || (charCode == 9) || (charCode == 46) || (charCode == 0))
+            return true;
+
+        return false;
+    }
+    function getCookie(cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') c = c.substring(1);
+            if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+        }
+        return "";
+    }
+    function checkCookie() {
+        var user = getCookie("UserId");
+        if (user != "") {
+            //alert("Welcome again " + user);
+            return true;
+        }
+        return false;
+    }
+    function UploadDocument() {
+        var cookieValue = document.cookie;
+        if (checkCookie() == false) {
+            openFancybox();
+        }
+        else if (cookieValue == null || cookieValue == 'undefined' || cookieValue == "") {
+            openFancybox();
+        }
+        else {
+            window.location.href = '/Uploader/UploadExcel';
+        }
+    }
+    function openFancybox() {
+        $.fancybox({
+            'autoScale': true,
+            'transitionIn': 'elastic',
+            'transitionOut': 'elastic',
+            'speedIn': 500,
+            'speedOut': 300,
+            'autoDimensions': true,
+            'centerOnScroll': true,
+            'href': '#inline1'
+        });
+    }
+    function Search() {
+        y = document.getElementById("searchValue").value;
+        if (y == null || y == "") {
+            alert("Please enter search value");
+            document.getElementById("searchValue").focus();
+            return false;
+        }
+        $.ajax({
+            url: "/WorldRef/MoveToSearchPage",
+            type: 'POST',
+            data: JSON.stringify({ "searchResult": y }),
+            contentType: 'application/json; charset=utf-8',
+            success: function (response) {
+                window.location.href = response;
+            },
+            error: function () {
+                alert("Failed! Please try again.");
+            }
+        });
+    }
+
+    function FormValidation() {
+        var y;
+        y = document.getElementById("UserName").value;
+        if (y == null || y == "") {
+            alert("Please enter User Name");
+            document.getElementById("UserName").focus();
+            return false;
+        }
+        var y;
+        y = document.getElementById("Password").value;
+        if (y == null || y == "") {
+            alert("Please enter Password");
+            document.getElementById("Password").focus();
+            return false;
+        }
+        return true;
+    }
+    function ValidateUserProfile() {
+        var textValue = document.getElementById("ProfileUrl").value;
+        if (textValue == "") {
+            alert('Please enter profile name.');
+            document.getElementById('ProfileUrl').focus();
+            return false;
+        }
+        $.ajax({
+            url: "/WorldRef/SaveProfileUrlFromSignUp",
+            type: 'POST',
+            data: JSON.stringify({ "txtUrl": textValue }),
+            contentType: 'application/json; charset=utf-8',
+            success: function (response) {
+                if (response == "exist") {
+                    alert("Profile name already exist. Please try another profile name.");
+                    document.getElementById("ProfileUrl").value = "";
+                    return false;
+                }
+                else if (response == "done") {
+                    return true;
+                }
+                else {
+                    document.getElementById("ProfileUrl").value = "";
+                    alert("There have been some error. Please try again.");
+                    document.getElementById("ProfileUrl").value = "";
+                    return false;
+                }
+            },
+            error: function () {
+                alert("Failed! Please try again.");
+                document.getElementById("ProfileUrl").value = "";
+                return false;
+            }
+        });
+    }
+
+    function SignUpFormValidation() {
+
+        if ($("#DropdownType").val() == "0") {
+            alert("Please Select Type");
+            document.getElementById("DropdownType").focus();
+            return false;
+        }
+
+        if ($("#DropdownType").val() == "Others") {
+            var y1;
+            y1 = document.getElementById("OtherType").value;
+            if (y1 == null || y1 == "") {
+                alert("Please enter Type ");
+                document.getElementById("OtherType").focus();
+                return false;
+            }
+        }
+        var y;
+        y = document.getElementById("Name").value;
+        if (y == null || y == "") {
+            alert("Please enter Name");
+            document.getElementById("Name").focus();
+            return false;
+        }
+        var Contain = "";
+        $("#TextBoxContain :text").each(function () {
+            Contain += $(this).val();
+        });
+        y = document.getElementById("Industry").value;
+        if ((y == null || y == "") && Contain == "") {
+            alert("Please select  Industry or Add your Industry");
+            document.getElementById("Industry").focus();
+            return false;
+        }
+        var x;
+        x = document.getElementById("ProfileUrl").value;
+        if (x == null || x == "") {
+            alert("Please enter ProfileUrl");
+            document.getElementById("ProfileUrl").focus();
+            return false;
+        }
+        //  return ValidateUserProfile();
+        var y;
+        y = document.getElementById("Email").value;
+        if (y == null || y == "") {
+            alert("Please enter Email");
+            document.getElementById("Email").focus();
+            return false;
+        }
+        var y;
+        y = document.getElementById("AlternateEmail").value;
+        if (y == null || y == "") {
+            alert("Please enter Alternate Email");
+            document.getElementById("AlternateEmail").focus();
+            return false;
+        }
+
+        if (document.getElementById('Country').selectedIndex == 0) {
+            alert("Please Select Country");
+            return false;
+        }
+        var y;
+
+        y = document.getElementById("ContactNumber").value;
+        if (y == null || y == "") {
+            alert("Please enter Contact Number");
+            document.getElementById("ContactNumber").focus();
+            return false;
+        }
+        var y = document.getElementById("fileUp").value;
+        if (y == null || y == "") {
+            alert("Please Select Company Profile");
+            document.getElementById("fileUp").focus();
+            return false;
+        }
+        var y = document.getElementById("Logo").value;
+        if (y == null || y == "") {
+            alert("Please Select Company Logo");
+            document.getElementById("Logo").focus();
+            return false;
+        }
+    }
+
+
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.fancybox').fancybox();
+    });
+</script>
+<script type="text/javascript">
+    function Login() {
+        if (FormValidation() == true) {
+            var uName = document.getElementById("UserName").value;
+            var uPassword = document.getElementById("Password").value;
+
+            $.ajax({
+                url: "/WorldRef/LoginIndex",
+                type: 'POST',
+                async: false,
+                data: JSON.stringify({ "UserName": uName, "Password": uPassword }),
+                contentType: 'application/json; charset=utf-8',
+                success: function (response) {
+                    // alert(response);
+                    if (response == "wi") {
+                        window.location.href = '/WorldRef/WorldrefIndex';
+                    }
+                    else if (response == "ue") {
+                        window.location.href = '/Uploader/UploadExcel';
+                    }
+                    else if (response == "re") {
+                        window.location.href = '/WorldRef/WorldrefIndex';
+                    }
+                    else if (response == "nr") {
+                        alert("Invalid username/password.");
+                        // document.getElementById("UserName").value = "";
+                        document.getElementById("Password").value = "";
+                    }
+                    else {
+
+                    }
+                },
+
+                error: function () {
+                    alert("Failed! Please try again.");
+                }
+            });
+        }
+        else { return false; }
+    }
+</script>
+<style type="text/css">
+    .body {
+        background: none repeat scroll 0 0 rgb(218, 218, 218);
+    }
+
+    .boxCircle:hover {
+        background-color: #E16C6C !important;
+        color: #fff;
+    }
+
+    ul.menu a:hover {
+        color: #000 !important;
+    }
+
+    div.content p, div.content ul {
+        padding: 0 !important;
+    }
+
+    #adown-test {
+    }
+
+    .fancybox-inner {
+        overflow-y: auto;
+    }
+
+    .lightbox-wid {
+        width: 500px;
+        overflow-y: auto;
+    }
+
+    .image-back {
+        background-image: url('http://www.i4i.co.in/wp-content/themes/i4i/images/body-bg.jpg');
+        background-repeat: repeat;
+        background-position: top left;
+        background-attachment: scroll;
+    }
+
+    *, *:before, *:after {
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+    header::before {
+        content: "";
+        position: absolute;
+        height: 5px;
+        width: 100%;
+        top: 0;
+        left: 0;
+    }
+
+    nav ul li li {
+        padding: 2px 10px 5px 10px !important;
+    }
+
+    .forWidth1 {
+        width: 15%;
+        margin-right: 1%;
+    }
+
+    .forWidth2 {
+        width: 84%;
+    }
+
+
+    .fancybox-skin {
+    }
+
+    .divsubmain2 {
+        margin: 0px;
+    }
+
+    li.pE.main-test {
+        /*margin-bottom: 10px;*/
+    }
+
+    .single-line {
+        width: 100%;
+        padding: 6px;
+        outline: 0;
+    }
+
+    ul.pE {
+        list-style: none;
+        padding: 0;
+    }
+
+    .thnku {
+        color: #404040;
+        font-weight: 600;
+        line-height: 1.5em;
+        margin-bottom: 1em;
+        text-transform: capitalize;
+        font-size: 16px;
+        text-align: center;
+    }
+
+    a.indexAnchor {
+        color: #446FD6;
+    }
+
+        a.indexAnchor:hover {
+            color: #000;
+        }
+</style>
+
+<script>
+    function Search() {
+        y = document.getElementById("searchValue").value;
+        if (y == null || y == "") {
+            alert("Please enter search value");
+            document.getElementById("searchValue").focus();
+            return false;
+        }
+        $.ajax({
+            url: "/WorldRef/MoveToSearchPage",
+            type: 'POST',
+            data: JSON.stringify({ "searchResult": y }),
+            contentType: 'application/json; charset=utf-8',
+            success: function (response) {
+                window.location.href = response;
+            },
+            error: function () {
+                alert("Failed! Please try again.");
+            }
+        });
+    }
+</script>
+
+<div class="boxWrapper">
+    <div class="centerlogo">
+        <img src="~/Content/images/worldref-logo1.png" width="160px;" />
+    </div>
+</div>
+<div class="searchfullwidth">
+    <div class="boxWrapper">
+        <div class="divBoxContainer">
+            <div class="divsubmain2">
+                <div class="div_box" id="btn">
+                    <input type="text" id="searchValue" name="search-box" placeholder="Project / Vendor-Manufacturer-Consultant-Contractor / Keywords / Machine-Equipment / Country, Certificates etc " onkeypress="return runScript(event)" class="worldref-search-box">
+                </div>
+            </div>
+            <!--divsubmain-->
+        </div>
+    </div>
+</div>
+<nav class="navigationMenu">
+    @if (Request.Cookies["UserId"] != null)
+    {
+        <ul class="menu">
+            @if (Request.Cookies["UserRole"].Value == "P" || Request.Cookies["UserRole"].Value == "L" || Request.Cookies["UserRole"].Value == "C" || Request.Cookies["UserRole"].Value == "F" || Request.Cookies["UserRole"].Value == "G")
+            {
+                <li>
+                    <button class="pEButton referButton" title="Search Engineering References" value="Search" onclick="Search()">Search</button>
+                </li>
+            }
+            else
+            {
+                <li>
+                    <button class="pEButton referButton" title="Search Engineering References" value="Search" onclick="Search()">Search</button>
+                </li>
+                <li>
+                    <button class="pEButton referButton" title="Upload Your Engineering References" value="Search" onclick="UploadDocument()">Upload</button>
+                </li>
+            }
+        </ul>
+    }
+    else
+    {
+        <ul class="menu">
+            <li>
+                <button class="pEButton referButton" title="Search Engineering References" value="Search" onclick="Search()">Search</button>
+            </li>
+            <li>
+                <button class="pEButton referButton" title="Upload Your Engineering References" value="Search" onclick="UploadDocument()">Upload</button>
+            </li>
+
+        </ul>
+
+    }
+</nav>
+
+<div id="inline1" class="lightbox-wid" style="display: none;">
+    @Html.Partial("_SignIN")
+</div> 

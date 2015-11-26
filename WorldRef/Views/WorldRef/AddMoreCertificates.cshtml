@@ -1,0 +1,26 @@
+﻿@model WorldRef.Models.ProjectImageModel
+
+@using (Html.BeginForm("AddCertificate", "WorldRef", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="profile_part2 popBoxWidth_fix border_design">
+        <h4 class="fancyCu_h4">Upload Certificate</h4>
+        <div class="list_wrapper">
+            <div class="fullWidth margin5">
+                <input type="file" id="files" class="fullWidth" name="files" multiple="multiple" style="width: 82%;">
+            </div>
+            <div id="TextBoxContainImages"></div>
+        </div>
+
+        <div class="button_box">
+            <button class="fancy_button" value="Submit">Submit</button>
+        </div>
+    </div>
+
+}
+
+            <style>
+                .file-upload {
+                    margin-top: 10px !important;
+                }
+            </style>
+

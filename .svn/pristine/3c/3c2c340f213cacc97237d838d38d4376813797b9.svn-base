@@ -1,0 +1,279 @@
+﻿@{
+    ViewBag.Title = "UploadExcel";
+  Layout = "~/Views/Shared/LayoutSearch.cshtml";
+  //  Layout = "~/Views/Shared/LayoutChild.cshtml";
+}
+@{
+    var msg = TempData["ErrorMessage"] ?? string.Empty;
+    TempData["ErrorMessage"] = "";
+}
+<script src="~/Content/WorldRef/worldRefInner/js/html5lightbox.js"></script>
+<script src="~/Content/WorldRef/worldRefInner/js/html5highlight.js"></script>
+<script src="~/Content/WorldRef/worldRefInner/js/public.js"></script>
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+
+
+<script src="~/Content/js/jquery-1.10.1.min.js"></script>
+<script>
+        //ModelpopUp
+        $(document).ready(function () {
+            $('.fancybox').fancybox();
+            var message = '@msg';
+            if (message != "") {
+                var foo = $("#ModelpopUp").html(message);
+                $.fancybox(foo);
+            }
+            $("#uploadText").hide();
+            $('#fileUp').bind('change', function () {
+                DisplayMessage();
+            });
+        });
+        function ValidateForm() {
+            var y = document.getElementById("fileUp").value;
+            if (y == null || y == "") {
+                alert("Please Select Excel Sheet");
+                document.getElementById("fileUp").focus();
+                return false;
+            }
+        }
+        function myFunction() {
+            var x;
+            if (confirm("Please make sure that you are uploading the reference list in the same format in the left side.") == true) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        function DisplayMessage() {
+            var y = document.getElementById("fileUp").value;
+            if (y == null || y == "") {
+                $("#uploadText").hide();
+            } else {
+                $("#uploadText").show();
+            }
+        }
+        function GetUserProfileName() {
+            $.ajax({
+                url: "/WorldRef/GetUserProfileName",
+                type: 'POST',
+                data: JSON.stringify({}),
+                contentType: 'application/json; charset=utf-8',
+                success: function (response) {
+                    if (response == "") {
+
+                    }
+                    else {
+                        document.getElementById("txtUrl").value = response;
+                    }
+                },
+                error: function () {
+                    alert("Failed! Please try again.");
+                }
+            });
+
+        }
+
+        function saveWorldrefProfileUrl() {
+            var textValue = document.getElementById("txtUrl").value;
+            if (textValue == "") {
+                alert('Please enter profile name.');
+                document.getElementById('txtUrl').focus();
+                return false;
+            }
+            $.ajax({
+                url: "/WorldRef/SaveProfileUrl",
+                type: 'POST',
+                data: JSON.stringify({ "txtUrl": textValue }),
+                contentType: 'application/json; charset=utf-8',
+                success: function (response) {
+                    if (response == "exist") {
+                        $('#shwErrorMesgProfile').empty().html("Profile name already exist. Please try another profile name.");
+                    }
+                    else if (response == "done") {
+                        document.getElementById("txtUrl").value = "";
+                        alert("Successfully saved.");
+                        $('#shwErrorMesgProfile').empty().html();
+                        $.fancybox.close();
+                    }
+                    else {
+                        document.getElementById("txtUrl").value = "";
+                        $('#shwErrorMesgProfile').empty().html("There have been some error. Please try again.");
+                    }
+                },
+                error: function () {
+                    alert("Failed! Please try again.");
+                }
+            });
+        }
+
+</script>
+<section id="main-content" role="main">
+
+    <h2>Upload Reference List</h2>
+    <article id="post-501" class="post-501 page type-page status-publish hentry">
+
+
+        @using (Html.BeginForm("DownLoadAttachment", "WorldRef"))
+        {
+            <ul style="width: 26%; float: left;">
+                <li>
+                    <span class="pEdit manage-search"></span>
+                    <label class="lp">
+                        <a href="/WorldRef/DownLoadAttachment" style="font-size: 13px; font-weight: bold;">
+                            Reference List Format &nbsp;
+                            <img src="~/Content/images/excel.jpg" style="vertical-align: bottom;" title="Download" />
+                        </a>
+                    </label>
+                </li>
+                <li>
+                    @*<span> Guidlines :</span>*@
+                    <a href="#inline2" class="fancybox" style="font-size: 13px; font-weight: bold;">View Guidlines </a>&nbsp;
+                    <a href="/WorldRef/DownLoadGuidlines" style="font-size: 13px; font-weight: bold;">
+                        <img src="~/Content/images/Word.png" style="vertical-align: bottom;" title="Download Guidlines" />
+                    </a>
+                </li>
+            </ul>
+            <div id="inline2" style="display: none; padding: 20px; width: 600px;">
+                <div class="guid-content">
+                    <span class="guid-title">Column A: BY (Executor/Supplier Name)</span>
+                    <p>
+                        Your name if you are the contributor for the project/product. If you are a plant/project owner, it should be your name of your vendor. This is mandatory field, even if it is the same for every project/product.
+                    </p>
+                    <span class="guid-title">Column B: FOR (Customer Name)</span>
+                    <p>
+                        Name of customer or main contractor for whom you may be a sub-contractor/supplier. This is mandatory field, even if it is the same for every project/product.
+                    </p>
+                    <span class="guid-title">Column C: For Industry (Customer's/Project's Industry Type)</span>
+                    <p>
+                        Name of Industry of your operation/supply. For example: Oil and Gas, Pharmaceutical, Sugar, Plastic etc. This is mandatory field, even if it is the same for every project/product.
+                    </p>
+
+                    <span class="guid-title">Column D: Project/Product Reference Name</span>
+                    <p>
+                        Name of the executed Project or Product. For example: Thane Power Station, Drying Machine etc. This is mandatory field, even if it is the same for every project/product.
+                    </p>
+
+
+                    <span class="guid-title">Column E: Nature of Contribution</span>
+                    <p>
+                        Nature of your contribution in referred project in terms of Supply/Erection/Investment/Consulting etc. Following are some examples:
+                    <p>
+                        <ul class="b">
+                            <li>Engineering/Design/Consulting</li>
+                            <li>OR, Civil Work</li>
+                            <li>OR, Manufacturing of XYZ Equipment/Machinery</li>
+                            <li>OR, Supply of XYZ Equipment/Machinery</li>
+                            <li>OR, EPC - Engineering Procurement & Construction</li>
+                            <li>OR, Investment</li>
+                            <li>OR, Development of the Project</li>
+                            <li>OR, Erection</li>
+                            <li>OR, Erection & Commisioning</li>
+                            <li>OR, Fabrication of XYZ</li>
+                            <li>OR, Supply of XYZ Raw Material</li>
+                            <li>OR, Local Works</li>
+                            <li>OR, Private Equity Investment</li>
+                            <li>OR, Loan/Debt</li>
+                            <li>If Other, please mention</li>
+                            <li>This is mandatory field, even if it is the same for every project/product.</li>
+                        </ul>
+                        <span class="guid-title">Column F: Status</span>
+                    <p>
+                        In this column, please mention the status (which you can keep changing from editing after upload). That will make your project references look more complete.
+                    </p>
+                    <ul class="b">
+                        <li>Feasibility Study Completed</li>
+                        <li>OR, Signed Contract,</li>
+                        <li>OR, Ongoing,</li>
+                        <li>OR, Completed,</li>
+                        <li>OR, Commissioned,</li>
+                        <li>If Others, please mention</li>
+                    </ul>
+                    <span class="guid-title">Column G: Year of Execution</span>
+                    <p>Year during which project was executed, or product was supplied.</p>
+
+                    <span class="guid-title">Column H: Country of Execution</span>
+                    <p>Country of the execution of the project, or supply of product.</p>
+                    <span class="guid-title">Column I: Project/Product Highlights</span>
+                    <p>
+                        Key features/highlights of project/product.
+                    </p>
+
+                    <span class="guid-title">
+                        Column J: Keywords for Better Search
+                    </span>
+                    <p>
+                        Relevant keywords related to the project/product for better search experience. Keywords relevant to the project/product will improve your chances to feature in relevant search query. For example: If your company has a reference in Hydropower Project, you can mention keywords such as: Renewable, Green Energy, Power, Hydro etc. This is a very important field, hence mandatory.
+                    </p>
+                    PLEASE DO NOT FORGET TO UPLOAD RELEVANT/ATTRACTIVE PICTURES AND VIDEOS AFTER YOUR UPLOAD.
+                </div>
+
+            </div>
+        }
+        @using (Html.BeginForm("UploadExcel", "WorldRef", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <div class="profile_part2">
+                <ul class="pE">
+                    <li>
+                        <span class="pEdit manage-search" style="font-size: 13px; font-weight: bold;">Upload Reference List</span>
+                        <input type="file" id="fileUp" name="img">
+                        <span id="uploadText" style="color: red">Please Make sure that you are uploading the reference list in the same format in the left Side.</span>
+                    </li>
+                    <li>
+                        <span class="pEdit manage-search privacy-btn" style="font-size: 13px; font-weight: bold;">Privacy</span>
+                        <span style="color: green; width: 100%; margin-bottom: 7px;">Please select, whatever you do not want users to see in the search.</span>
+
+
+                        <label class="lp">
+                            <input type="checkbox" id="Customer" name="Customer" value="Customer Name">For (The Customer's Name)
+                        </label>
+                        <br />
+                        <label class="lp">
+                            <input type="checkbox" id="Organization" name="Organization" value="Organization">By (The contributor’s Name)
+                        </label>
+                        <br />
+                        <label class="lp">
+                            <input type="checkbox" id="Project" name="Project" value="Name of Project">Reference
+                        </label><br />
+                        <label class="lp">
+                            <input type="checkbox" id="Status" name="Status" value="Status">Status
+                        </label><br />
+                        <label class="lp">
+                            <input type="checkbox" id="Year" name="Year" value="Year of Execution/Installation/Commissioning">Year of Execution
+                        </label><br />
+
+                    </li>
+                    <li>
+                        <span class="pEdit manage-search">
+                            <button class="pEButton" value="Submit" onclick="return ValidateForm();">Submit</button>
+                        </span>
+                        <label class="lp">
+                        </label>
+                    </li>
+                </ul>
+            </div>
+        }
+        <br class="clear">
+        <div id="inline4" style="display: none;">
+
+            <div class="profile_part2" style="width: 100%;">
+                <span>Create Profile Url</span>
+                <ul class="pE heigt" id="CommentList">
+                    <li>
+                        <div id="shwErrorMesgProfile"></div>
+                        <span>www.worldref.org/</span>
+
+                        <input type="text" id="txtUrl" name="Url" placeholder="e.g. Thomos" />
+                    </li>
+                    <li>
+                        <input class="pEButton" type="submit" value="Save" onclick="saveWorldrefProfileUrl();" />
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </article>
+    <!-- /article -->
+</section>
+
+
+

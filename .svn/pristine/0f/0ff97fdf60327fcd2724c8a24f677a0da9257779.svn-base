@@ -1,0 +1,107 @@
+﻿@model WorldRef.Models.ProjectSearchModel
+<style>
+    #content-wrapper {
+        padding: 0;
+    }
+
+    .review-title_ser {
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    table {
+        width: 100%;
+        float: left;
+        margin-top: 0;
+        padding: 10px;
+        border: 1px solid #D3D3D3;
+        background-color: white;
+        display: table;
+        max-height: 250px;
+        overflow: auto;
+    }
+
+        table th {
+            box-sizing: border-box;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+            display: table-cell;
+        }
+
+        table td {
+            box-sizing: border-box;
+            border-bottom: none;
+            text-align: left;
+            display: table-cell;
+        }
+</style>
+
+
+<div id="content-wrapper" class="side-left">
+
+    <article>
+        <h4 class="fW" style="  margin:0 0 7px 0;"> Delete images & videos</h4>
+        @using (Html.BeginForm("DeleteImages", "WorldRef", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.Hidden("ProjectId", Model.id, "");
+            <table id="tblData" class="myTable webgrid-table">
+                <thead>
+                    <tr>
+                        <th>
+                            Image name
+                        </th>
+                        <th>
+                            Image / Link
+                        </th>
+                        <th>
+                            Select
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.ListOfImages)
+                    {
+
+                        <tr>
+                            <td>
+                                <label>@item.ImageName</label>
+                            </td>
+                            <td>
+                                <img id="imageDisplay" src="~/uploads/@item.ImagePath" width="70">
+                            </td>
+                            <td>
+                                <input type="checkbox" name="ids" value="@item.ImagePath" />
+                            </td>
+                        </tr>
+                    }
+                    @foreach (var item in Model.ListOfVideos)
+                    {
+                        <tr class="noMargin">
+                            <td>
+                                <label>@item.ImageName</label>
+                            </td>
+                            <td>
+                                <label>@item.ImagePath</label>
+                            </td>
+                            <td>
+                                <input type="checkbox" name="ids" value="@item.ImagePath" />
+                            </td>
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+            <div class="centreAlign">
+                @if (Model.ListOfImages.Count() > 0 || Model.ListOfVideos.Count() > 0)
+                {
+                    <input class="pEButton" type="submit" value="Delete" id="btnSave" />
+                }
+            </div>
+        }
+    </article>
+
+
+</div>
+
+
+

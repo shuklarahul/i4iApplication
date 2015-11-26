@@ -1,0 +1,79 @@
+﻿
+@model IEnumerable<WorldRef.LinkedInUser>
+<script type="text/javascript">
+    function UpdateCredit(linkedid) {
+        var desig = document.getElementById('txtdesig' + linkedid).value;
+        if (desig == "") {
+            alert('Please enter designation.');
+            document.getElementById('txtdesig' + linkedid).focus();
+            return false;
+        }
+        $.ajax({
+            url: "/WorldRef/UpdateForApproveCredit",
+            type: 'POST',
+            data: JSON.stringify({ "linkedid": linkedid, "Designation": desig }),
+            contentType: 'application/json; charset=utf-8',
+            success: function (response) {
+                var url = "/WorldRef/ListExcelProjectsUser";
+                window.location.href = url;
+                //var foo = $("#ModelPopUp").html(response);
+                //$.fancybox(foo);
+            },
+            error: function () {
+                alert("Failed! Please try again.");
+            }
+        });
+
+
+    }
+
+</script>
+<style>
+    .profile_part2 ul.pE li {
+        text-align: left !important;
+    }
+</style>
+<div class="profile_part2">
+    <h4 class="fW" style="  margin:0 0 7px 0;">Contributor's Request</h4>
+    @if (Model.Any())
+    {
+
+        <ul class="pE">
+            <li style="border-bottom: 1px solid #ddd;">
+                <span class="colHead">Name</span>
+                <span class="colHead" style="width:46%;">Designation</span>
+                <span class="colHead" style="width:19%;">Action</span>
+            </li>
+
+            @foreach (var item in Model)
+            {
+                <li>
+                    <span class="colRow">
+                        @String.Concat(item.FirstName, " ", item.LastName)
+                        @*@Html.DisplayFor(m => item.FirstName, "FirstName")*@
+                    </span>
+                    <span class="colRow" style="width:46%;">
+                        <input type="text" class="fullWiBox" id="@("txtdesig" + item.LinkedinUserID)" />
+                    </span>
+
+                    @*<li>
+                            <span class="pEdit manage-search">For : </span><label class="lp">
+                                @Html.TextBox("CustomerName")
+                            </label>
+                        </li>*@
+                    <span class="colRow" style="width:19%;">
+                        <input type="submit" class="pEButton" value="Credit'em" id="otherButton" onclick="UpdateCredit('@item.LinkedinUserID')" />
+                        <input type="hidden" id="@item.Industry" name="@item.Industry" value="@item.LinkedinUserID" />
+                    </span>
+                </li>
+            }
+        </ul>
+
+    }
+    else
+    {
+        <div class="noRecord fW">No Contributor's Request</div>
+    }
+
+</div>
+

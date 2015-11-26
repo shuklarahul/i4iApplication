@@ -1,0 +1,198 @@
+﻿@model WorldRef.DataLayer.SignUpWorldRefModel
+
+@{
+    ViewBag.Title = "WorldRefIndex";
+    Layout = "~/Views/Shared/LayoutSearch.cshtml";
+}
+<link href="~/Content/scrollbar/jquery.mCustomScrollbar.css" rel="stylesheet" />
+<link href="~/Content/MultipleSelect/multiple-select.css" rel="stylesheet" />
+<script src="~/Content/js/jquery-1.10.1.min.js"></script>
+<script src="~/Content/scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+<script src="~/Content/MultipleSelect/jquery.multiple.select.js"></script>
+<script type="text/javascript" src="http://platform.linkedin.com/in.js">
+    api_key: 75ngf8ppx3c4pk
+    authorize: true
+    onLoad: onLinkedInLoad
+    scope: r_basicprofile r_emailaddress
+</script>
+<script type="text/javascript">
+    function Login() {
+        if (FormValidation() == true) {
+            var uName = document.getElementById("UserName").value;
+            var uPassword = document.getElementById("Password").value;
+
+            $.ajax({
+                url: "/WorldRef/LoginIndex",
+                type: 'POST',
+                async: false,
+                data: JSON.stringify({ "UserName": uName, "Password": uPassword }),
+                contentType: 'application/json; charset=utf-8',
+                success: function (response) {
+                    // alert(response);
+                    if (response == "wi") {
+                        window.location.href = '/WorldRef/WorldrefIndex';
+                    }
+                    else if (response == "ue") {
+                        window.location.href = '/uploader/UploadExcel';
+                    }
+                    else if (response == "re") {
+                        window.location.href = '/WorldRef/WorldrefIndex';
+                    }
+                    else if (response == "nr") {
+                        alert("Invalid username/password.");
+                        // document.getElementById("UserName").value = "";
+                        document.getElementById("Password").value = "";
+                    }
+                    else {
+
+                    }
+                },
+
+                error: function () {
+                    alert("Failed! Please try again.");
+                }
+            });
+        }
+        else { return false; }
+    }
+    function FormValidation() {
+        var y;
+        y = document.getElementById("UserName").value;
+        if (y == null || y == "") {
+            alert("Please enter User Name");
+            document.getElementById("UserName").focus();
+            return false;
+        }
+        var y;
+        y = document.getElementById("Password").value;
+        if (y == null || y == "") {
+            alert("Please enter Password");
+            document.getElementById("Password").focus();
+            return false;
+        }
+        return true;
+    }
+</script>
+<script>
+    var addmail = 1;
+    var no = 1;
+    $(document).ready(function () {
+        $(".content-3").mCustomScrollbar({
+            scrollButtons: { enable: true },
+            theme: "light-thick",
+            scrollbarPosition: "outside"
+        });
+        $("#info").click(function () {
+            $(".action-field").toggle();
+        });
+        $(document).click(function (e) {
+            if (e.target.id != 'info' && !$('#info').find(e.target).length) {
+                $(".action-field").hide();
+            }
+        });
+        $('#Type').multipleSelect();
+        $('#Industry').multipleSelect();
+        $('#IndustriesID').multipleSelect();
+        $("#ParentOrganisationName").show();
+        $("#BusinessUnitName").hide();
+        $("input:radio[name='ProfileReason']").click(function () {
+            if ($("#rdoCompany").prop("checked")) {
+                $("#ParentOrganisationName").show();
+                $("#BusinessUnitName").hide();
+            }
+            else {
+                $("#ParentOrganisationName").show();
+                $("#BusinessUnitName").show();
+            }
+        });
+        $("#AddEmailID").click(function () {
+            $("#EmailCnt").append('<div><input class="sign-up-input fullinput" id="Email' + addmail + '" placeholder="Email ID" type="text" ><i class="fa fa-trash-o" style="cursor: pointer; font-size: 24px; vertical-align: -4px;padding-left: 5px;" title="Delete"></i></div>');
+            addmail++;
+        });
+        $(document).on('click', '.fa-trash-o', function(){
+            $(this).parent().remove();
+        });
+        $("#AddContactNo").click(function () {
+            var areacode = $("#areacode").val();
+            $("#addMoreNo").append('<div><input class="sign-up-input forWidth1" id="ContactCode" name="ContactCode' + no + '" placeholder="Area Code" readonly="readonly" type="text" value="' + areacode + '"><input class="sign-up-input forWidth2" id="ContactNumber'+no+'" name="ContactNumber" placeholder="Mobile Number" style="width: 77%;" type="text"><i class="fa fa-trash-o" style="cursor: pointer; font-size: 24px; vertical-align: -4px;padding-left: 5px;" title="Delete"></i></div>');
+        });
+        $("#Country").change(function () {
+            getCountryCode($('option:selected', $(this)).text());
+        });
+        $('#Password').keypress(function (e) {
+            if (e.keyCode == 13) {
+                Login();
+            }
+        });
+        function getCountryCode(countryname) {
+            $.ajax({
+                url: "/WorldRef/GetCountryCode",
+                type: 'POST',
+                data: JSON.stringify({ "Countryname": countryname }),
+                contentType: 'application/json; charset=utf-8',
+                success: function (response) {
+                    $('.area').val("+"+response);
+                    $("#areacode").val("+"+response);
+                },
+                error: function () {
+                    alert("Failed! Please try again.");
+                }
+            });
+        }
+    });
+</script>
+
+<div class="boxWrapper">
+    <div class="centerlogo">
+        <img src="~/Content/images/worldref-logo1.png" width="160px" />
+    </div>
+</div>
+<div class="searchfullwidth">
+    <div class="boxWrapper">
+        <div class="divBoxContainer">
+            <div class="divsubmain2">
+                <div class="div_box" id="btn">
+                    <input type="text" id="searchValue" name="search-box" placeholder="Project / Vendor-Manufacturer-Consultant-Contractor / Keywords / Machine-Equipment / Country, Certificates etc " onkeypress="return runScript(event)" class="worldref-search-box">
+                </div>
+            </div>
+            <!--divsubmain-->
+        </div>
+    </div>
+</div>
+<nav class="navigationMenu">
+    @if (Request.Cookies["UserId"] != null)
+    {
+        <ul class="menu">
+            @if (Request.Cookies["UserRole"].Value == "P" || Request.Cookies["UserRole"].Value == "L" || Request.Cookies["UserRole"].Value == "C" || Request.Cookies["UserRole"].Value == "F" || Request.Cookies["UserRole"].Value == "G")
+            {
+                <li>
+                    <button class="pEButton referButton" title="Search Engineering References" value="Search" onclick="Search()">Search</button>
+                </li>
+            }
+            else
+            {
+                <li>
+                    <button class="pEButton referButton" title="Search Engineering References" value="Search" onclick="Search()">Search</button>
+                </li>
+                <li>
+                    <button class="pEButton referButton" title="Upload Your Engineering References" value="Search" onclick="UploadDocument()">Upload</button>
+                </li>
+            }
+        </ul>
+    }
+    else
+    {
+        <ul class="menu">
+            <li>
+                <button class="pEButton referButton" title="Search Engineering References" value="Search" onclick="Search()">Search</button>
+            </li>
+            <li>
+                <button class="pEButton referButton" title="Upload Your Engineering References" value="Search" onclick="UploadDocument()">Upload</button>
+            </li>
+
+        </ul>
+
+    }
+</nav>
+
+

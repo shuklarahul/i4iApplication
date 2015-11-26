@@ -1,0 +1,8 @@
+﻿
+@{
+    ViewBag.Title = "Search";
+    Layout = "~/Views/Shared/LayoutSearch.cshtml";
+}
+
+
+

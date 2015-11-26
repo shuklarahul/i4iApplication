@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <link href="~/Content/css/font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link rel="shortcut icon" type="image/x-icon" href="~/Content/WorldRef/images/favicon.png">
+    <link href="~/Content/css/css/form-css.css" rel="stylesheet" />
+    <link href="~/Content/css/css/css.css" rel="stylesheet" />
+    <link href="~/Content/css/css/jquery.fancybox.css" rel="stylesheet" />
+</head>
+<body style="height: 100%; overflow: hidden;background-color:#fff;">
+    <section class="stiky">
+        <div>
+            @RenderBody()
+        </div>
+        <div class="footer_social">
+            <ul>
+                <li><span></span></li>
+                <li><span></span></li>
+                <li><span></span></li>
+            </ul>
+        </div>
+    </section>
+
+
+    <div id="about" style="display: none; width: 500px;">
+        <h2 class="about-popup_title">About WorldRef</h2>
+        <p class="about-popup_content" style="">
+            <span style="font-weight: 600;">For the Project Owners:</span> WorldRef is a tool to search and find the rightmost possible partners for your Industrial needs. Also they can tell the world about the projects they have accomplished along with the partners’ review with whom they have accomplished it.
+            <br />
+            <br />
+            <span style="font-weight: 600;">For the Manufacturers, Contractors, Consultants, Developers, Investors, Fabricators & Trading Companies;</span>
+            WorldRef is a place to glorify their contribution for the worldwide projects they have executed.
+
+        </p>
+    </div>
+    <div class="footer-bottom fo_stiky">
+        <div class="block">
+            <ul>
+                <li><a href="#about" class="fancybox" id="footer-hyp">About WorldRef </a></li>
+                |
+                <li><a href="#" class="" id="footer-hyp">Advertise & Get Featured</a></li>
+                |
+                <li><a href="#" class="" id="footer-hyp">Terms</a></li>
+                |
+                <li><a href="#" class="" id="footer-hyp">Policy & Guidelines</a></li>
+                |
+                <li><a href="#" class="" id="footer-hyp">Help & Support</a></li>
+            </ul>
+        </div>
+        <div>
+            <p style="font-style: italic; font-size: 11px; text-align: center; margin: 0;">
+                &copy; 2015 i4i. &nbsp;&nbsp; | &nbsp;&nbsp;
+                <span>Worldref is a tool for search and promotion of engineering products and Services.  </span>&nbsp;&nbsp; | &nbsp;&nbsp;<span><b>Powered by : </b>i4i engineering</span>
+            </p>
+        </div>
+    </div>
+
+    <script src="~/Content/js/jquery-1.10.1.min.js"></script>
+    <script src="~/Content/js/jquery.fancybox.js"></script>
+    <script src="~/Content/js/jquery.easytabs.min.js"></script>
+    <script src="~/Content/js/jquery.hashchange.min.js"></script>
+    <script src="~/Content/js/CheckCookie.js"></script>
+</body>
+</html>

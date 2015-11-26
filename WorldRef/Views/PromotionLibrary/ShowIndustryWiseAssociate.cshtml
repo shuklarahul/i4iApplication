@@ -1,0 +1,194 @@
+﻿@model WorldRef.Models.PromotionLibraryModels.PromotionLibraryDAO
+@{
+    ViewBag.Title = "ShowIndustryWiseAssociates";
+    Layout = "~/Views/Shared/_I4ILayout.cshtml";
+}
+@{
+    var msg = TempData["msg"] ?? string.Empty;
+    TempData["msg"] = "";
+    var msgColor = TempData["vColor"] ?? string.Empty;
+    TempData["vColor"] = "";
+    var data = TempData["Data"] ?? string.Empty;
+    TempData["Data"] = "";
+}
+<script type="text/javascript">
+    function Getvalue1() {
+        var selI = $("#IndustriesID").val();
+        var svpI = $("#IndustriesID").find('option:selected').val();
+        document.getElementById('IndustriesName').value = svpI;
+        
+        $.ajax({
+            url: "/PromotionLibrary/ShowListOfAssociates",
+            type: 'POST',
+            data: JSON.stringify({
+                ID: svpI
+                
+            }),
+            contentType: 'application/json; charset=utf-8',
+            success: function (response) {
+
+                var Result = "";
+                Result += '<table class="myTable webgrid-table"><thead><tr>' +
+                    '<th>UserNo</th>' +
+                    '<th>Associate Name</th>' +
+                    '<th>Country Name</th></tr></thead>';
+
+
+
+                $.each(response, function (Id, model) {
+
+                    Result += '<tr><td><input type="checkbox" name="ids" value="' + model.Id + '"/>' + model.USerNo + '</td>';
+                    Result += '<td> ' + model.UserFirstName + '</td>';
+                    Result += '<td>' + model.CountryName + '</td></tr>';
+
+
+
+                });
+                Result += '</table>';
+                $("#ApprovedTable").html(Result);
+            },
+            error: function () {
+                alert("Failed! Please try again.");
+            }
+
+
+        });
+    }
+</script>
+<style type="text/css">
+    /*Here we will add css for style webgrid*/
+  .webgrid-table {
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+        font-size: 1.2em;
+        width: 100%;
+        display: table;
+        border-collapse: separate;
+        background-color: white;
+        border-bottom: 1px solid #F47D7D;
+    }
+
+        .webgrid-table tbody tr {
+            border-bottom: 1px solid #F47D7D;
+        }
+
+            .webgrid-table tbody tr td {
+                border-bottom: none;
+                border-left: 1px solid #F47D7D;
+                font-size: 14px !important;
+            }
+
+    table th {
+        background: #E47E7E !important;
+        color: #fff !important;
+    }
+
+        table th a {
+            color: #fff !important;
+        }
+
+            table th a:hover {
+                color: #fff !important;
+            }
+
+    .webgrid-table td, th {
+        border-top: 1px solid #F47D7D;
+        border-left: 1px solid #F47D7D;
+        padding: 3px 7px 2px;
+    }
+
+        .webgrid-table td:last-child, th:last-child {
+            border-right: 1px solid #F47D7D;
+        }
+
+    .webgrid-header {
+        background-color: #A7C942;
+        color: #FFFFFF;
+        padding-bottom: 4px;
+        padding-top: 5px;
+        text-align: left;
+    }
+
+    .webgrid-footer {
+    }
+
+    .webgrid-row-style {
+        padding: 3px 7px 2px;
+    }
+
+    .webgrid-alternating-row {
+        background-color: #EAF2D3;
+        padding: 3px 7px 2px;
+    }
+
+    #filter {
+        height: 15px;
+        margin-top: 10px;
+        width: 130px !important;
+    }
+
+    #search-cus {
+        font-weight: 600;
+        margin-left: 7px;
+    }
+
+    #proposal {
+        font-size: 18px;
+        font-weight: 600;
+        margin-left: 160px;
+    }
+
+    .myTable {
+        width: 100%;
+    }
+
+        .myTable tr:nth-child(even) {
+            background: #EAF2D3;
+        }
+
+        .myTable tr:nth-child(odd) {
+            background: #fff;
+        }
+</style>
+<h2 style="text-align:center; ">Promote with Associate</h2>
+<div style="min-height:200px;">
+<div  class="profile_part2 forget_box" style="padding: 20px;">
+ @using (Html.BeginForm("Save", "PromotionLibrary"))
+    {
+      @Html.HiddenFor(m => m.IndustriesName)
+     <div>
+      <ul class="pE">
+                @if (msg != "")
+                {
+                    <li style="color: @msgColor;">
+                        <label></label>
+                        @msg
+                    </li>
+                }
+          </ul>
+          </div>
+<ul class="pE">
+  <li>
+                 <span class="pEdit manage-search" style="width:94px;" >Industry<span style="color: red;">*</span></span>                                     
+                 <label class="lp">       @Html.DropDownListFor(model => model.IndustriesID, new MultiSelectList(Model.IndustriesListModel, "Value", "Text", Model.IndustriesListModel),
+                         new
+                         {
+                             @onchange = "Getvalue1()"
+
+
+                         })
+                       
+                  </label>
+                  
+                </li>
+    </ul>
+     
+        <div id="ApprovedTable">
+        </div>
+     <div style="margin-left: 19%;">
+  
+            <input class="button red" type="submit" value="Promote" id="btnSave" />
+        </div>
+    }
+	</div>
+</div>	
+	

@@ -1,0 +1,176 @@
+﻿
+@{
+    ViewBag.Title = "Refer";
+    Layout = "~/Views/Shared/LayoutChild.cshtml";
+}
+@{
+    var msg = TempData["ErrorMessage"] ?? string.Empty;
+    TempData["ErrorMessage"] = "";
+}
+
+<script>
+    function ValidateForm() {
+        var y = document.getElementById("EmailAddress").value;
+        if (y == null || y == "") {
+            alert("Please Enter Email Address");
+            document.getElementById("EmailAddress").focus();
+            return false;
+        }
+
+    }
+    var txtCounter = 1;
+    function AddDynamicTxtbox() {
+        var str;
+        str = "<li id = 'spacetxt'><input class='width46'  type='text' name='txt" + txtCounter + "' id='txt" + txtCounter + "' /><input type = 'Image' src='/Content/WorldRef/images/delete.png' alt='Delete' id = 'img" + txtCounter + "' onclick = 'return DeleteCompanyTab(" + txtCounter + ")' style=' vertical-align: text-bottom; margin: 0% 0 0 3%;'/></li>";
+        var newApnd = document.getElementById("TextBoxContain");
+        $("#TextBoxContain").append(str);
+        txtCounter++;
+    }
+
+    function DeleteCompanyTab(imgid) {
+
+        // document.getElementById("TextBoxContainer").removeChild(imgid.parentNode);
+        var imgId = "img" + (imgid).toString();
+        var imgId1 = "img" + (imgid - 1).toString();
+        var child = document.getElementById(imgId);
+        var parent = document.getElementById('TextBoxContain');
+        parent.removeChild(child.parentNode);
+        var child1 = document.getElementById("txt" + imgid)
+        parent.removeChild(child1.parentNode);
+        if (imgid != 0) {
+            document.getElementById(imgId1).style.display = "block";
+            document.getElementById('ContentPlaceHolder1_hdniValue').value = imgid;
+        }
+        else {
+            document.getElementById('ContentPlaceHolder1_hdniValue').value = 0;
+        }
+        //   txtCounter--;
+        return false;
+
+    }
+</script>
+<style type="text/css">
+    p.hello {
+        font-size: 12px;
+        color: #666;
+    }
+
+    p.hello {
+        text-align: right;
+        float: right;
+        clear: both;
+    }
+
+    .action-field {
+        top: 57PX;
+        right: 209px;
+    }
+
+    body {
+        top: 0px !important;
+    }
+</style>
+<style type="text/css" id="custom-background-css">
+    body.custom-background {
+        background-image: url('http://www.i4i.co.in/wp-content/themes/i4i/images/body-bg.jpg');
+        background-repeat: repeat;
+        background-position: top left;
+        background-attachment: scroll;
+    }
+
+    .manage-search {
+        width: 27% !important;
+    }
+
+    .privacy-btn {
+        display: block;
+        float: left;
+    }
+</style>
+<style type="text/css">
+    .fancybox-margin {
+        margin-right: 17px;
+    }
+
+    .referM ul li:last-child {
+        text-align: left !important;
+    }
+
+    .refer-form {
+        margin: 0 0 0 14%;
+    }
+
+    .width40 {
+        width: 40%;
+    }
+
+    .width46 {
+        width: 46%;
+    }
+</style>
+<script>
+    $(document).ready(function () {
+        $("#info").click(function () {
+            $(".action-field").toggle();
+        });
+        $(document).click(function (e) {
+            if (e.target.id != 'info' && !$('#info').find(e.target).length) {
+                $(".action-field").hide();
+            }
+        });
+    });
+</script>
+<div id="content-wrapper" class="side-left">
+
+    <div id="">
+        <section id="main-content" role="main">
+
+            <h2>Refer & Help Other</h2>
+            @if (msg != "")
+            {
+                <li>
+                    <label></label>
+                    @msg
+                </li>
+            }
+
+            <!-- article -->
+            <article id="post-501" class="post-501 page type-page status-publish hentry">
+
+                @using (Html.BeginForm("Refer", "WorldRef", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <div class="profile_part2 referM " style="min-height: 250px;margin-bottom: 20px;">
+                        <!--  <p style="color:#215867;">You can help another organisation in pushing their references among the world as well and bringing their achievements in the sight of world.</p>-->
+                        <p style="color:#215867;">Refer Your friends who are in Engineering Business. Let them also be a part of WorldRef</p>
+                        <div class="forget_box">
+
+                            <ul class="pE ">
+                                <li>
+                                    <span class="spr"> Enter Email Address</span>  @Html.TextBox("EmailAddress", "", "", new { @class = "tText width40", placeholder = "Please Mention" }) <a href="javascript:void(0)" onclick="AddDynamicTxtbox()"><img src="~/Content/WorldRef/images/more.png" title="Add More" style="vertical-align: text-bottom;margin: 0% 0 0 2%;" /></a>
+
+
+                                </li>
+                            </ul>
+                            <ul id="TextBoxContain" class="pE refer-form "></ul>
+                            <ul class="pE ">
+
+
+                                <li><span class="spr">&nbsp;</span>  <button class="pEButton referButton" value="SEND" onclick="return ValidateForm();" style="margin-left: 13%;">Submit</button></li>
+                            </ul>
+                        </div>
+                    </div>
+                }
+
+
+
+                <br class="clear">
+            </article>
+            <!-- /article -->
+
+
+
+        </section>
+    </div>
+
+
+</div>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="33c7706b29c44cbd91eb23ea20079020" Name="Diagram1">
+        <EntityTypeShape EntityType="I4IDBModel.AppointmentDiary" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="I4IDBModel.AssociateProjectIndustry" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="I4IDBModel.AssociateProject" Width="1.5" PointX="2.75" PointY="3.75" />
+        <EntityTypeShape EntityType="I4IDBModel.AssociateRefferal" Width="1.5" PointX="4.75" PointY="0.75" />
+        <EntityTypeShape EntityType="I4IDBModel.Board_Management" Width="1.5" PointX="4.75" PointY="3.75" />
+        <EntityTypeShape EntityType="I4IDBModel.Certificate" Width="1.5" PointX="6.75" PointY="0.75" />
+        <EntityTypeShape EntityType="I4IDBModel.Comp_profile_MultiLang" Width="1.5" PointX="6.75" PointY="5.75" />
+        <EntityTypeShape EntityType="I4IDBModel.CompanyInfo" Width="1.5" PointX="8.75" PointY="0.75" />
+        <EntityTypeShape EntityType="I4IDBModel.CompHistory" Width="1.5" PointX="8.75" PointY="4.75" />
+        <EntityTypeShape EntityType="I4IDBModel.CompProfile" Width="1.5" PointX="4.75" PointY="8.75" />
+        <EntityTypeShape EntityType="I4IDBModel.ContactBook" Width="1.5" PointX="6.75" PointY="8.75" />
+        <EntityTypeShape EntityType="I4IDBModel.Conversation" Width="1.5" PointX="8.75" PointY="7.75" />
+        <EntityTypeShape EntityType="I4IDBModel.Country" Width="1.5" PointX="10.75" PointY="0.75" />
+        <EntityTypeShape EntityType="I4IDBModel.CountryOld" Width="1.5" PointX="10.75" PointY="3.75" />
+        <EntityTypeShape EntityType="I4IDBModel.CurrentYear" Width="1.5" PointX="10.75" PointY="6.75" />
+        <EntityTypeShape EntityType="I4IDBModel.Customer_Details" Width="1.5" PointX="10.75" PointY="9.75" />
+        <EntityTypeShape EntityType="I4IDBModel.FactoryOffice" Width="1.5" PointX="0.75" PointY="11.75" />
+        <EntityTypeShape EntityType="I4IDBModel.FollowUp" Width="1.5" PointX="2.75" PointY="11.75" />
+        <EntityTypeShape EntityType="I4IDBModel.ForwardQuery" Width="1.5" PointX="4.75" PointY="11.75" />
+        <EntityTypeShape EntityType="I4IDBModel.I4IForwardQuery" Width="1.5" PointX="6.75" PointY="11.75" />
+        <EntityTypeShape EntityType="I4IDBModel.ImageLikeAndComment" Width="1.5" PointX="12.75" PointY="0.75" />
+        <EntityTypeShape EntityType="I4IDBModel.Industry" Width="1.5" PointX="12.75" PointY="4.75" />
+        <EntityTypeShape EntityType="I4IDBModel.IndustryCategory" Width="1.5" PointX="12.75" PointY="7.75" />
+        <EntityTypeShape EntityType="I4IDBModel.IndustrySubCategory" Width="1.5" PointX="12.75" PointY="10.75" />
+        <EntityTypeShape EntityType="I4IDBModel.InputQueryData" Width="1.5" PointX="8.75" PointY="13.75" />
+        <EntityTypeShape EntityType="I4IDBModel.ISO" Width="1.5" PointX="10.75" PointY="13.75" />
+        <EntityTypeShape EntityType="I4IDBModel.KnowledgeQuery" Width="1.5" PointX="12.75" PointY="13.75" />
+        <EntityTypeShape EntityType="I4IDBModel.KnowledgeQueryAnswer" Width="1.5" PointX="14.75" PointY="0.75" />
+        <EntityTypeShape EntityType="I4IDBModel.Language" Width="1.5" PointX="2.75" PointY="14.75" />
+        <EntityTypeShape EntityType="I4IDBModel.LinkedInUser" Width="1.5" PointX="14.75" PointY="3.75" />
+        <EntityTypeShape EntityType="I4IDBModel.LoginDetailWorldRef" Width="1.5" PointX="4.75" PointY="14.75" />
+        <EntityTypeShape EntityType="I4IDBModel.ManageDocument" Width="1.5" PointX="14.75" PointY="8.75" />
+        <EntityTypeShape EntityType="I4IDBModel.OfficeDetails_RegCorpHead" Width="1.5" PointX="14.75" PointY="13.75" />
+        <EntityTypeShape EntityType="I4IDBModel.OHSA" Width="1.5" PointX="16.75" PointY="0.75" />
+        <EntityTypeShape EntityType="I4IDBModel.partners_Associates" Width="1.5" PointX="16.75" PointY="3.75" />
+        <EntityTypeShape EntityType="I4IDBModel.Preferred_Country" Width="1.5" PointX="16.75" PointY="7.75" />
+        <EntityTypeShape EntityType="I4IDBModel.PriceCurrency" Width="1.5" PointX="16.75" PointY="10.75" />
+        <EntityTypeShape EntityType="I4IDBModel.ProductDetail" Width="1.5" PointX="16.75" PointY="13.75" />
+        <EntityTypeShape EntityType="I4IDBModel.ProductImagesVideo" Width="1.5" PointX="16.75" PointY="16.75" />
+        <EntityTypeShape EntityType="I4IDBModel.Product" Width="1.5" PointX="0.75" PointY="17.75" />
+        <EntityTypeShape EntityType="I4IDBModel.ProjectContactDetail" Width="1.5" PointX="6.75" PointY="17.75" />
+        <EntityTypeShape EntityType="I4IDBModel.ProjectImageLikeHistory" Width="1.5" PointX="8.75" PointY="17.75" />
+        <EntityTypeShape EntityType="I4IDBModel.ProjectImage" Width="1.5" PointX="10.75" PointY="17.75" />
+        <EntityTypeShape EntityType="I4IDBModel.ProjectImagesVideosLike" Width="1.5" PointX="18.75" PointY="0.75" />
+        <EntityTypeShape EntityType="I4IDBModel.ProjectImageVideoComment" Width="1.5" PointX="18.75" PointY="3.75" />
+        <EntityTypeShape EntityType="I4IDBModel.ProjectLikeComment" Width="1.5" PointX="18.75" PointY="7.75" />
+        <EntityTypeShape EntityType="I4IDBModel.ProjectLikedIP" Width="1.5" PointX="18.75" PointY="10.75" />
+        <EntityTypeShape EntityType="I4IDBModel.ProjectLikeDisLike" Width="1.5" PointX="12.75" PointY="18.75" />
+        <EntityTypeShape EntityType="I4IDBModel.ProjectLikeHistory" Width="1.5" PointX="18.75" PointY="13.75" />
+        <EntityTypeShape EntityType="I4IDBModel.ProjectLinkedInMember" Width="1.5" PointX="18.75" PointY="16.75" />
+        <EntityTypeShape EntityType="I4IDBModel.ProjectRating" Width="1.5" PointX="2.75" PointY="19.75" />
+        <EntityTypeShape EntityType="I4IDBModel.ProjectRatingHistory" Width="1.5" PointX="14.75" PointY="19.75" />
+        <EntityTypeShape EntityType="I4IDBModel.ProjectReview" Width="1.5" PointX="16.75" PointY="19.75" />
+        <EntityTypeShape EntityType="I4IDBModel.ProjectSearchKeyword" Width="1.5" PointX="18.75" PointY="19.75" />
+        <EntityTypeShape EntityType="I4IDBModel.Promote_Associate" Width="1.5" PointX="20.75" PointY="0.75" />
+        <EntityTypeShape EntityType="I4IDBModel.PromotionCertificate" Width="1.5" PointX="20.75" PointY="3.75" />
+        <EntityTypeShape EntityType="I4IDBModel.PromotionIndustry" Width="1.5" PointX="20.75" PointY="6.75" />
+        <EntityTypeShape EntityType="I4IDBModel.PromotionLibrary" Width="1.5" PointX="20.75" PointY="9.75" />
+        <EntityTypeShape EntityType="I4IDBModel.PromotionOtherDocument" Width="1.5" PointX="20.75" PointY="13.75" />
+        <EntityTypeShape EntityType="I4IDBModel.PromotionProductList" Width="1.5" PointX="20.75" PointY="16.75" />
+        <EntityTypeShape EntityType="I4IDBModel.RegionalOffice" Width="1.5" PointX="20.75" PointY="19.75" />
+        <EntityTypeShape EntityType="I4IDBModel.RegisterUser" Width="1.5" PointX="4.75" PointY="21.75" />
+        <EntityTypeShape EntityType="I4IDBModel.RepresentationRefferal" Width="1.5" PointX="6.75" PointY="21.75" />
+        <EntityTypeShape EntityType="I4IDBModel.RepresentativeDocument" Width="1.5" PointX="8.75" PointY="21.75" />
+        <EntityTypeShape EntityType="I4IDBModel.RepresentativeOffice" Width="1.5" PointX="10.75" PointY="21.75" />
+        <EntityTypeShape EntityType="I4IDBModel.Service" Width="1.5" PointX="22.75" PointY="0.75" />
+        <EntityTypeShape EntityType="I4IDBModel.Story" Width="1.5" PointX="0.75" PointY="22.75" />
+        <EntityTypeShape EntityType="I4IDBModel.Supplier" Width="1.5" PointX="22.75" PointY="3.75" />
+        <EntityTypeShape EntityType="I4IDBModel.SupplierProposal" Width="1.5" PointX="22.75" PointY="7.75" />
+        <EntityTypeShape EntityType="I4IDBModel.SuppMailDetail" Width="1.5" PointX="22.75" PointY="11.75" />
+        <EntityTypeShape EntityType="I4IDBModel.TopicIndustry" Width="1.5" PointX="12.75" PointY="22.75" />
+        <EntityTypeShape EntityType="I4IDBModel.TopicTimeDuration" Width="1.5" PointX="22.75" PointY="14.75" />
+        <EntityTypeShape EntityType="I4IDBModel.Trainer_Profile" Width="1.5" PointX="22.75" PointY="17.75" />
+        <EntityTypeShape EntityType="I4IDBModel.TrainerBook" Width="1.5" PointX="14.75" PointY="23.75" />
+        <EntityTypeShape EntityType="I4IDBModel.TrainerSample" Width="1.5" PointX="16.75" PointY="23.75" />
+        <EntityTypeShape EntityType="I4IDBModel.TrainingSampleOrder" Width="1.5" PointX="24.75" PointY="0.75" />
+        <EntityTypeShape EntityType="I4IDBModel.User_Certificates" Width="1.5" PointX="24.75" PointY="4.75" />
+        <EntityTypeShape EntityType="I4IDBModel.User_Details" Width="1.5" PointX="6.75" PointY="24.75" />
+        <EntityTypeShape EntityType="I4IDBModel.User_ProductCertificates" Width="1.5" PointX="24.75" PointY="7.75" />
+        <EntityTypeShape EntityType="I4IDBModel.User_Rewards" Width="1.5" PointX="24.75" PointY="11.75" />
+        <EntityTypeShape EntityType="I4IDBModel.UserIndustry" Width="1.5" PointX="24.75" PointY="14.75" />
+        <EntityTypeShape EntityType="I4IDBModel.UserProfile_Edit" Width="1.5" PointX="24.75" PointY="17.75" />
+        <EntityTypeShape EntityType="I4IDBModel.VideosLikeAndComment" Width="1.5" PointX="18.75" PointY="24.75" />
+        <EntityTypeShape EntityType="I4IDBModel.WorldRefExcelDataProject" Width="1.5" PointX="24.75" PointY="22.75" />
+        <EntityTypeShape EntityType="I4IDBModel.User_Certificate_DrpValue" Width="1.5" PointX="0.75" PointY="25.75" />
+        <EntityTypeShape EntityType="I4IDBModel.User_Certificate_DrpValue_Common" Width="1.5" PointX="20.75" PointY="25.75" />
+        <EntityTypeShape EntityType="I4IDBModel.VisitUserProfile" Width="1.5" PointX="26.75" PointY="0.75" />
+        <EntityTypeShape EntityType="I4IDBModel.SearchImageView" Width="1.5" PointX="26.75" PointY="3.75" />
+        <EntityTypeShape EntityType="I4IDBModel.SearchImageView2" Width="1.5" PointX="8.75" PointY="26.75" />
+        <EntityTypeShape EntityType="I4IDBModel.SearchViewNew" Width="1.5" PointX="10.75" PointY="26.75" />
+        <EntityTypeShape EntityType="I4IDBModel.SearchViewVideo" Width="1.5" PointX="26.75" PointY="12.75" />
+        <EntityTypeShape EntityType="I4IDBModel.SearchViewVideo2" Width="1.5" PointX="26.75" PointY="21.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

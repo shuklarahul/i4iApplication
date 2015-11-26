@@ -1,0 +1,109 @@
+﻿
+@model WorldRef.Models.ProjectImageModel
+<script>
+    $(document).ready(function () {
+        AddDynamicTxtbox();
+    });
+    function ValidateForm() {
+        var y = document.getElementById("files").value;
+        var Contain = document.getElementById("txt0").value;
+        //$("#TextBoxContain :text").each(function () {
+        //    Contain += $(this).val();
+        //});
+
+        if ((y == null || y == "") && Contain == "") {
+            alert("Please Select Image Or Video");
+            document.getElementById("files").focus();
+            return false;
+        }
+        return true;
+    }
+    var txtCounter = 1;
+    var fileCounter = 1;
+    function AddDynamicTxtbox() {
+
+        var str;
+        str = "<div id = 'spacetxt'  class='fullWidth margin5'><input style='width: 82%;' type='text' class='sign-up-input' name='txt" + txtCounter + "' id='txt" + txtCounter + "' /><a href=''class='fa fa-minus-circle' id = 'img" + txtCounter + "' onclick = 'return DeleteCompanyTab(" + txtCounter + ")'></a></div>";
+        var newApnd = document.getElementById("TextBoxContain");
+        $("#TextBoxContain").append(str);
+        txtCounter++;
+    }
+
+    function DeleteCompanyTab(imgid) {
+
+        var imgId = "img" + (imgid).toString();
+        var imgId1 = "img" + (imgid - 1).toString();
+        var child = document.getElementById(imgId);
+        var parent = document.getElementById('TextBoxContain');
+        parent.removeChild(child.parentNode);
+        var child1 = document.getElementById("txt" + imgid)
+        parent.removeChild(child1.parentNode);
+        if (imgid != 0) {
+            document.getElementById(imgId1).style.display = "block";
+            document.getElementById('ContentPlaceHolder1_hdniValue').value = imgid;
+        }
+        else {
+            document.getElementById('ContentPlaceHolder1_hdniValue').value = 0;
+        }
+        //   txtCounter--;
+        return false;
+
+    }
+    function AddDynamicTxtboxImages() {
+        var str;
+        str = "<div id = 'spacetxt' class='fullWidth margin5'><input style='width: 82%;' type='file' name='file" + fileCounter + "' id='file" + fileCounter + "' multiple='multiple'/><a href=''class='fa fa-minus-circle' alt='' id = 'img" + fileCounter + "' onclick = 'return DeleteCompanyTabImages(" + fileCounter + ")'/></a></div>";
+        var newApnd = document.getElementById("TextBoxContainImages");
+        $("#TextBoxContainImages").append(str);
+        fileCounter++;
+    }
+    function DeleteCompanyTabImages(imgid) {
+        var imgId = "img" + (imgid).toString();
+        var imgId1 = "img" + (imgid - 1).toString();
+        var child = document.getElementById(imgId);
+        var parent = document.getElementById('TextBoxContainImages');
+        parent.removeChild(child.parentNode);
+        var child1 = document.getElementById("file" + imgid)
+        parent.removeChild(child1.parentNode);
+        if (imgid != 0) {
+            document.getElementById(imgId1).style.display = "block";
+            document.getElementById('ContentPlaceHolder1_hdniValue').value = imgid;
+        }
+        else {
+            document.getElementById('ContentPlaceHolder1_hdniValue').value = 0;
+        }
+        return false;
+
+    }
+</script>
+@using (Html.BeginForm("AddProjectImages", "WorldRef", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.HiddenFor(x => x.ProjectId, Model.ProjectId);
+    <div class="profile_part2 popBoxWidth_fix">
+        <h4 class="fancyCu_h4">Upload Images/Videos</h4>
+        <div class="list_wrapper">
+            <div class="fullWidth margin5">
+                <input type="file" id="files" name="files" multiple="multiple" class="fullWidth" style="width: 82%;">
+                <a href="javascript:void(0)" class="fa fa-plus-circle" onclick="AddDynamicTxtboxImages()">
+
+                </a>
+            </div>
+            <div id="TextBoxContainImages" class="fullWidth"></div>
+        </div>
+        <div class="cler"></div>
+        <div class="cler"></div>
+        <h4 class="fullWidth fancyCu_h4">Add Video Links</h4>
+        <div class="list_wrapper">
+            <div class="fullWidth">
+                <input class="sign-up-input" type='text' name='txt0' id='txt0' style="width: 82%;" />
+                <a href="javascript:void(0)" class="fa fa-plus-circle" style="padding-left:4px;" onclick="AddDynamicTxtbox()">
+                </a>
+            </div>
+            <div id="TextBoxContain" class="fullWidth"></div>
+        </div>
+        <div class="button_box">
+            <button class="fancy_button" value="Submit" onclick=" return ValidateForm()">Submit</button>
+        </div>
+    </div>
+
+}
+

@@ -1,0 +1,528 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using WorldRef.DataLayer;
+using WorldRef.Models;
+using WorldRef.BusinessLayer;
+using System.Web.Security;
+using System.Text;
+using System.IO;
+using System.Runtime.Serialization.Json;
+using System.Net;
+using System.Configuration;
+using Facebook;
+using System.Security.Cryptography;
+namespace WorldRef.Controllers
+{
+    public class WorldRefController : Controller
+    {
+        public I4IDBEntities context=new I4IDBEntities();
+        public ActionResult WorldRefIndex()
+        {
+            SignUpWorldRefModel signUpModel = new SignUpWorldRefModel();
+            signUpModel=GetAllSignUpDetails();
+           
+            return View(signUpModel);
+        }
+
+        #region All SignUp Details
+        private SignUpWorldRefModel GetAllSignUpDetails()
+        {
+            SignUpWorldRefModel signUpModel = new SignUpWorldRefModel();
+            List<SelectListItem> selectListCountry = new List<SelectListItem>();
+            List<SelectListItem> selectList = new List<SelectListItem>();//Developer, Investor, Fabricator, Procurement Staff, Others
+            selectList.Add(new SelectListItem() { Text = "I am", Value = "0" });
+            selectList.Add(new SelectListItem() { Text = "Manufacturer", Value = "Manufacturer" });
+            selectList.Add(new SelectListItem() { Text = "Contractor", Value = "Contractor" });
+            selectList.Add(new SelectListItem() { Text = "Consultant", Value = "Consultant" });
+            selectList.Add(new SelectListItem() { Text = "Trading Company", Value = "Trading Company" });
+            selectList.Add(new SelectListItem() { Text = "Project Owner’s/Procurement Staff", Value = "Project Owner’s/Procurement Staff" });
+            selectList.Add(new SelectListItem() { Text = "Developer", Value = "Developer" });
+            selectList.Add(new SelectListItem() { Text = "Investor", Value = "Investor" });
+            selectList.Add(new SelectListItem() { Text = "Fabricator", Value = "Fabricator" });
+            selectList.Add(new SelectListItem() { Text = "Raw Material Supplier", Value = "Raw Material Supplier" });
+            selectList.Add(new SelectListItem() { Text = "Others", Value = "Others" });
+            signUpModel.TypeList = selectList;
+
+            var content = (from p in context.Countries
+                           select new { p.CountryID, p.CountryName }).AsEnumerable();
+
+            selectListCountry.Add(new SelectListItem() { Text = "Select Country", Value = "0" });
+
+            foreach (var item in content)
+            {
+                selectListCountry.Add(new SelectListItem() { Text = item.CountryName, Value = item.CountryName });
+
+            }
+            signUpModel.CountryList = selectListCountry;
+            KnowledgeLogic knowIndustry = new KnowledgeLogic();
+            signUpModel.IndustryList = knowIndustry.GetIndustry();
+            List<SelectListItem> selectList1 = new List<SelectListItem>();
+            selectList1.Add(new SelectListItem() { Text = "Type of Recruitment", Value = "0" });
+            selectList1.Add(new SelectListItem() { Text = "I recruit for my Organisation only", Value = "I recruit for my Organisation only" });
+            selectList1.Add(new SelectListItem() { Text = "I recruit for Other Organisations only", Value = "I recruit for Other Organisations only" });
+            selectList1.Add(new SelectListItem() { Text = "Both: I recruit for my and other organisations", Value = "Both: I recruit for my and other organisations" });
+            signUpModel.RecruitersTypeList = selectList1;
+            return signUpModel;
+        }
+        #endregion
+
+        #region Partial View for Sign in
+        public ActionResult _SignIN()
+        {
+            return PartialView();
+        }
+        #endregion
+
+        #region code for login uploader in WorldrefIndex added by Rahul  Shukla Date :29/09/2015
+
+        public JsonResult LoginIndex(string UserName, string Password, string returnUrl)
+        {
+            SignUpWorldRef signup = new SignUpWorldRef();
+            SignUpWorldRefModel signWorldModel = signup.Login(UserName, Password);
+            if (signWorldModel != null)
+            {
+                HttpCookie userNameCookies = new HttpCookie("username");
+                userNameCookies.Value = signWorldModel.Name;
+                Response.Cookies.Add(userNameCookies);
+
+                HttpCookie userNameCookiesq = new HttpCookie("UsrNo");
+                userNameCookiesq.Value = signWorldModel.UserNo;
+                Response.Cookies.Add(userNameCookiesq);
+
+
+
+
+                HttpCookie genraluserPhoto = new HttpCookie("GenuserPhoto");
+                genraluserPhoto.Value = signWorldModel.PhotoAttach;
+                Response.Cookies.Add(genraluserPhoto);
+
+                HttpCookie userNoCookies = new HttpCookie("UName");
+                userNoCookies.Value = UserName;
+                Response.Cookies.Add(userNoCookies);
+
+                HttpCookie userNameCookies1 = new HttpCookie("UserId");
+                userNameCookies1.Value = signWorldModel.Id.ToString();
+                Response.Cookies.Add(userNameCookies1);
+
+
+
+                HttpCookie userNameCookies2 = new HttpCookie("UserRole");
+                userNameCookies2.Value = signWorldModel.UserRole.ToString();
+                Response.Cookies.Add(userNameCookies2);
+
+                if (signWorldModel.UserRole == "W")
+
+                    return Json("ue", JsonRequestBehavior.AllowGet);
+                else
+                    return Json("re", JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                signWorldModel = signup.SignInCommonUser(UserName, Password);
+                if (signWorldModel != null)
+                {
+                    HttpCookie userNameCookies = new HttpCookie("Cusername");
+                    userNameCookies.Value = signWorldModel.Name;
+                    Response.Cookies.Add(userNameCookies);
+
+                    HttpCookie userNameCookies1 = new HttpCookie("CUserId");
+                    userNameCookies1.Value = signWorldModel.Id.ToString();
+                    Response.Cookies.Add(userNameCookies1);
+                    return Json("wi", JsonRequestBehavior.AllowGet);
+
+                }
+                else
+                {
+
+                    TempData.Clear();
+
+                    return Json("nr", JsonRequestBehavior.AllowGet);
+                }
+            }
+            
+        }
+        #endregion
+
+        #region code for sign out  added by rahul shukla modified date: 29/09/2015
+        public ActionResult SignOut()
+        {
+            Response.Cookies.Clear();
+            FormsAuthentication.SignOut();
+
+            string[] myCookie = Request.Cookies.AllKeys;
+            foreach (string cookie in myCookie)
+            {
+                Response.Cookies[cookie].Expires = DateTime.Now.AddDays(-1);
+            }
+
+            Session.Clear();
+
+            return RedirectToAction("WorldrefIndex");
+        }
+        #endregion
+
+        #region sociallogin
+
+        [ValidateInput(false)]
+        public ActionResult FacebookWorldRef()
+        {
+            try
+            {
+                var fb = new FacebookClient();
+                var loginUrl = fb.GetLoginUrl(new
+                {
+                    client_id = ConfigurationManager.AppSettings["facebookAppID"].ToString(),
+                    client_secret = ConfigurationManager.AppSettings["facebookAppSecret"].ToString(),
+                    redirect_uri = "http://182.73.96.52:94/WorldRef/FacebookCallback?rturl=",
+                    response_type = "code",
+                    scope = "email,user_friends" // Add other permissions as needed
+                });
+
+                return Redirect(loginUrl.AbsoluteUri);
+            }
+            catch (Exception ex)
+            {
+                return Redirect("/login");
+            }
+        }
+
+
+        [ValidateInput(false)]
+        public ActionResult FacebookCallback(string code)
+        {
+            try
+            {
+                var fb = new FacebookClient();
+                dynamic result = fb.Post("oauth/access_token", new
+                {
+                    client_id = ConfigurationManager.AppSettings["facebookAppID"].ToString(),
+                    client_secret = ConfigurationManager.AppSettings["facebookAppSecret"].ToString(),
+                    grant_type = "authorization_code",
+                    redirect_uri = Request.Url.AbsoluteUri,
+                    code = code
+                });
+
+                var accessToken = result.access_token;
+
+                // Store the access token in the session
+                System.Web.HttpContext.Current.Session["AccessToken"] = accessToken;
+
+                // update the facebook client with the access token so 
+                // we can make requests on behalf of the user
+                fb.AccessToken = accessToken;
+
+                try
+                {
+                    // Get the user's information
+                    dynamic me = fb.Get("me?fields=name,first_name,last_name,id,email,birthday,gender,link,picture");
+                    string UserNo = getUserNo();
+                    string password = GeneratePassword();
+                    RegisterUser objregister = new RegisterUser();
+                    objregister.UserFirstName = me.first_name != "" ? me.first_name : "";
+                    objregister.Email = me.email != "" ? me.email : "";
+                    objregister.UserLastName = me.last_name != "" ? me.last_name : "";
+                    objregister.UserNo = UserNo;
+                    objregister.Password = password;
+                    objregister.UserRole = "F";
+                    CheckCookie(objregister, "F", UserNo);
+                    return RedirectToAction("Worldrefindex");
+                }
+                catch
+                {
+                }
+            }
+            catch
+            {
+            }
+            return View();
+        }
+
+
+
+        public ActionResult oauth2callback(string state, string code, string error, string rturl)
+        {
+            string clientID = ConfigurationManager.AppSettings["gmailclientid"].ToString().Trim();
+            string clientSecret = ConfigurationManager.AppSettings["gmailclientsecret"].ToString().Trim();
+            string redirectURIs = ConfigurationManager.AppSettings["gmailredirecturl"].ToString().Trim();
+            GoogleId gId;
+            string url = string.Empty;
+            if (error != null)
+            {
+                ViewBag.error = error;
+                return RedirectToAction("/Worldrefindex");
+            }
+            GoogleResponse responseFromServer = new GoogleResponse();
+            try
+            {
+                HttpWebRequest requestToken = (HttpWebRequest)WebRequest.Create("https://accounts.google.com/o/oauth2/token");
+                requestToken.Method = "POST";
+                string postData = string.Format(
+                    "code={0}&client_id={1}&client_secret={2}&redirect_uri={3}&grant_type=authorization_code",
+                    code, clientID, clientSecret, redirectURIs
+                );
+                byte[] byteArray = Encoding.UTF8.GetBytes(postData);
+                requestToken.ContentType = "application/x-www-form-urlencoded";
+                requestToken.ContentLength = byteArray.Length;
+                using (Stream dataStream = requestToken.GetRequestStream())
+                {
+                    dataStream.Write(byteArray, 0, byteArray.Length);
+                    dataStream.Close();
+                    WebResponse response = null;
+                    try
+                    {
+                        response = requestToken.GetResponse();
+                    }
+                    catch (WebException ex)
+                    {
+                        //log.LogMe(ex);
+                        return RedirectPermanent("/Worldrefindex");
+                    }
+
+                    if (((HttpWebResponse)response).StatusCode == HttpStatusCode.OK)
+                    {
+                        using (StreamReader reader = new StreamReader(response.GetResponseStream()))
+                        {
+                            responseFromServer = Deserialise<GoogleResponse>(reader.ReadToEnd());
+                            reader.Close();
+                            dataStream.Close();
+                            response.Close();
+                        }
+                    }
+                    else
+                    {
+                        dataStream.Close();
+                        response.Close();
+                        ViewBag.error = ((HttpWebResponse)response).StatusDescription;
+                        return RedirectToAction("/Worldrefindex");
+                    }
+                }
+                if (responseFromServer != null && !string.IsNullOrEmpty(responseFromServer.access_token))
+                {
+                    url = string.Format("https://www.googleapis.com/oauth2/v1/userinfo?access_token={0}", responseFromServer.access_token);
+
+                    HttpWebRequest requestUserInfo = (HttpWebRequest)WebRequest.Create(url);
+                    HttpWebResponse responseUserInfo = null;
+                    try
+                    {
+                        responseUserInfo = (HttpWebResponse)requestUserInfo.GetResponse();
+                    }
+                    catch (WebException ex)
+                    {
+
+                        return RedirectPermanent("/Worldrefindex");
+                    }
+                    if (((HttpWebResponse)responseUserInfo).StatusCode == HttpStatusCode.OK)
+                    {
+                        using (Stream receiveStream = responseUserInfo.GetResponseStream())
+                        {
+                            Encoding encode = System.Text.Encoding.GetEncoding("utf-8");
+                            using (StreamReader readStream = new StreamReader(receiveStream, encode))
+                            {
+                                gId = Deserialise<GoogleId>(readStream.ReadToEnd());
+                                responseUserInfo.Close();
+                                readStream.Close();
+
+                                #region codeforgettingooglefriendlist
+
+                                //try
+                                //{
+                                //    List<FetchContactsModel> contactDetails = new List<FetchContactsModel>();
+                                //    string App_Name = "MyNetwork Web Application!";
+                                //    ContactsQuery query = new ContactsQuery(ContactsQuery.CreateContactsUri("default"));
+                                //    RequestSettings rs = new RequestSettings(App_Name, parameters);
+                                //    rs.AutoPaging = true;
+                                //    ContactsRequest cr = new ContactsRequest(rs);
+                                //    Feed<Google.Contacts.Contact> f = cr.GetContacts();
+
+                                //    int count = 0;
+                                //    if (f.Entries != null)
+                                //    {
+                                //        Feed<Google.Contacts.Contact> feed = cr.GetContacts();
+                                //        foreach (Google.Contacts.Contact entry in feed.Entries)
+                                //        {
+                                //            FetchContactsModel contact = new FetchContactsModel
+                                //            {
+                                //                Name = !string.IsNullOrEmpty(entry.Name.FullName) ? entry.Name.FullName : "",
+                                //                EmailId = entry.Emails.Count >= 1 ? entry.Emails[0].Address : "",
+                                //                SecondaryEmail = entry.Emails.Count >= 2 ? entry.Emails[1].Address : "",
+                                //                Phonenumber = entry.Phonenumbers.Count >= 1 ? entry.Phonenumbers[0].Value : "",
+                                //                Source = "Wap",
+                                //            };
+
+                                //            contactDetails.Add(contact);
+                                //        }
+                                //    }
+
+                                //    TempData["gousers"] = contactDetails;
+                                //}
+                                //catch (Exception ex) { }
+                                #endregion
+
+                                string UserNo = getUserNo();
+                                string password = GeneratePassword();
+                                RegisterUser objregister = new RegisterUser();
+                                objregister.UserFirstName = !string.IsNullOrEmpty(gId.given_name) ? gId.given_name.Trim() : "";
+                                objregister.Email = !string.IsNullOrEmpty(gId.email) ? gId.email.Trim() : "";
+                                objregister.UserLastName = !string.IsNullOrEmpty(gId.family_name) ? gId.family_name.Trim() : "";
+                                objregister.UserNo = UserNo;
+                                objregister.Password = password;
+                                objregister.UserRole = "G";
+                                CheckCookie(objregister, "G", UserNo);
+                                return RedirectToAction("Worldrefindex");
+
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+            return View();
+        }
+
+        public static T Deserialise<T>(string json)
+        {
+            using (var ms = new MemoryStream(Encoding.Unicode.GetBytes(json)))
+            {
+                var serialiser = new DataContractJsonSerializer(typeof(T));
+                return (T)serialiser.ReadObject(ms);
+            }
+        }
+
+
+        public void CheckCookie(RegisterUser objregister, string logintype, string UserNo)
+        {
+            string email = objregister.Email != "" ? objregister.Email : "";
+            var userId = (from x in context.RegisterUsers
+                          where x.Email == email && x.UserRole == logintype
+                          select x.Email).Count();
+
+
+            var model = (from x in context.RegisterUsers
+                         where x.Email == email && x.UserRole == logintype
+                         select new { x.UserNo, x.Id, x.UserRole }).SingleOrDefault();
+
+            if (userId > 0)
+            {
+                //var model = (from x in context.RegisterUsers
+                //             where x.Email == email && x.UserRole == logintype
+                //             select new { x.UserNo, x.Id, x.UserRole }).SingleOrDefault();
+                string UserNumber = model.UserNo.ToString();
+                string Uid = model.Id.ToString();
+                string urole = model.UserRole.ToString();
+                string UsName = UserNumber;
+                HttpCookie userNoCookies = new HttpCookie("UserName");
+                userNoCookies.Value = UsName;
+                Response.Cookies.Add(userNoCookies);
+                Response.Cookies.Set(userNoCookies);
+
+
+                HttpCookie userNameCookies1 = new HttpCookie("UserId");
+                userNameCookies1.Value = Uid;
+                Response.Cookies.Add(userNameCookies1);
+
+                HttpCookie userNameCookies4 = new HttpCookie("UName");
+                userNameCookies4.Value = model.UserNo;
+                Response.Cookies.Add(userNameCookies4);
+
+
+                HttpCookie userNameCookies2 = new HttpCookie("UserRole");
+                userNameCookies2.Value = urole;
+                Response.Cookies.Add(userNameCookies2);
+            }
+            else
+            {
+                context.RegisterUsers.Add(objregister);
+                context.SaveChanges();
+                string UsName = UserNo;
+                HttpCookie userNoCookies = new HttpCookie("UserName");
+                userNoCookies.Value = UsName;
+                Response.Cookies.Add(userNoCookies);
+                Response.Cookies.Set(userNoCookies);
+
+                var Userid = objregister.Id;
+
+                HttpCookie userNameCookies1 = new HttpCookie("UserId");
+                userNameCookies1.Value = Userid.ToString();
+                Response.Cookies.Add(userNameCookies1);
+
+                HttpCookie userNameCookies4 = new HttpCookie("UName");
+                userNameCookies4.Value = model.UserNo;
+                Response.Cookies.Add(userNameCookies4);
+                HttpCookie userNameCookies2 = new HttpCookie("UserRole");
+                userNameCookies2.Value = logintype;
+                Response.Cookies.Add(userNameCookies2);
+            }
+        }
+        #endregion
+
+        #region common methods
+        private string getUserNo()
+        {
+            string UserName = string.Empty;
+
+            UserName = GetUniqueKey(7);
+            using (I4IDBEntities context = new I4IDBEntities())
+            {
+                var isexistKey = context.RegisterUsers.Where(m => m.UserNo == UserName).FirstOrDefault();
+                if (isexistKey != null)
+                {
+                    getUserNo();
+                }
+            }
+            return UserName;
+        }
+        public static string GetUniqueKey(int maxSize)
+        {
+            char[] chars = new char[62];
+            chars =
+            "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890".ToCharArray();
+            byte[] data = new byte[1];
+            RNGCryptoServiceProvider crypto = new RNGCryptoServiceProvider();
+            crypto.GetNonZeroBytes(data);
+            data = new byte[maxSize];
+            crypto.GetNonZeroBytes(data);
+            StringBuilder result = new StringBuilder(maxSize);
+            foreach (byte b in data)
+            {
+                result.Append(chars[b % (chars.Length)]);
+            }
+            return result.ToString();
+        }
+        private string GeneratePassword()
+        {
+            string strPwdchar = "abcdefghijklmnopqrstuvwxyz0123456789#+@&$ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            string strPwd = "";
+            Random rnd = new Random();
+            for (int i = 0; i <= 7; i++)
+            {
+                int iRandom = rnd.Next(0, strPwdchar.Length - 1);
+                strPwd += strPwdchar.Substring(iRandom, 1);
+            }
+            return strPwd;
+        }
+        #endregion
+
+        #region get country code
+        public JsonResult GetCountryCode(string Countryname)
+        {
+            var content = (from p in context.Countries
+                           where p.CountryName.ToLower() == Countryname.ToLower()
+                           select new { p.Code }).FirstOrDefault();
+
+            string CountryCode = string.Empty;
+
+            if (content != null)
+            {
+                CountryCode = content.Code;
+            }
+
+            return Json(CountryCode, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+    }
+}

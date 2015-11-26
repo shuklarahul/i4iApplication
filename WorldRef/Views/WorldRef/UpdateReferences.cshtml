@@ -1,0 +1,276 @@
+﻿
+@{
+    ViewBag.Title = "UpdateReferences";
+    Layout = "~/Views/Shared/LayoutSearch.cshtml";
+}
+
+@{
+    var msg = TempData["ErrorMessage"] ?? string.Empty;
+    TempData["ErrorMessage"] = "";
+}
+
+<style>
+    .modalh3 {
+        margin-top: 0;
+        text-align: center;
+        border-bottom: 1px solid #E6E6E6;
+        font-size: 16px;
+        letter-spacing: 0.05em;
+        padding-bottom: 5px;
+        margin-bottom: 10px;
+    }
+</style>
+
+<script>
+
+    $('#SearchValue').keypress(function (e) {
+        // alert("Called");
+        var key = e.which;
+        if (key == 13)  // the enter key code
+        {
+            Search();
+        }
+    });
+</script>
+<link href="~/Content/css/Fancy/jquery.fancybox.css" rel="stylesheet" />
+<script src="~/Content/css/Fancy/jquery.fancybox.js"></script>
+
+<section id="main-content" role="main" class="upload_container">
+           <h2 class="uph2">Update Reference List</h2>
+       
+        <article id="post-501" class="contBox1">
+
+            @using (Html.BeginForm("DownLoadAttachment", "WorldRef"))
+        {
+                
+                <div class="upload_co1">
+            @*<span class="pEdit manage-search"></span>*@
+            <span class="width100">
+                <label class="lp ">
+                    Reference List Format
+                </label>
+            </span>
+            <span class="width100">
+                <a href="/Uploader/DownLoadAttachment" class="downloadup">
+                    Download
+                    <i class="fa fa-file-excel-o"></i>
+                </a>
+            </span>
+            @*<span> Guidlines :</span>*@
+            <span class="width100">
+                <a href="#inline2" class="downloadup1 fancybox">View Guidlines </a>
+            </span>
+            <span class="width100">
+                <a href="/Uploader/DownLoadGuidlines" class="downloadup">
+                    Download <i class="fa fa-file-word-o"></i>
+                </a>
+            </span>
+            <div id="inline2" style="display: none;" class="profile_part2 popBoxWidth_fix border_design">
+                <h4 class="fancyCu_h4">Guidelines for Upload Excel</h4>
+                <div class="guid-content">
+                    <span class="guid-title">Column A: BY (Executor/Supplier Name)</span>
+                    <p>
+                        Your name if you are the contributor for the project/product. If you are a plant/project owner, it should be your name of your vendor. This is mandatory field, even if it is the same for every project/product.
+                    </p>
+                    <span class="guid-title">Column B: FOR (Customer Name)</span>
+                    <p>
+                        Name of customer or main contractor for whom you may be a sub-contractor/supplier. This is mandatory field, even if it is the same for every project/product.
+                    </p>
+                    <span class="guid-title">Column C: For Industry (Customer's/Project's Industry Type)</span>
+                    <p>
+                        Name of Industry of your operation/supply. For example: Oil and Gas, Pharmaceutical, Sugar, Plastic etc. This is mandatory field, even if it is the same for every project/product.
+                    </p>
+
+                    <span class="guid-title">Column D: Project/Product Reference Name</span>
+                    <p>
+                        Name of the executed Project or Product. For example: Thane Power Station, Drying Machine etc. This is mandatory field, even if it is the same for every project/product.
+                    </p>
+
+
+                    <span class="guid-title">Column E: Nature of Contribution</span>
+                    <p>
+                        Nature of your contribution in referred project in terms of Supply/Erection/Investment/Consulting etc. Following are some examples:
+                    <p>
+                        <ul class="b">
+                            <li>Engineering/Design/Consulting</li>
+                            <li>OR, Civil Work</li>
+                            <li>OR, Manufacturing of XYZ Equipment/Machinery</li>
+                            <li>OR, Supply of XYZ Equipment/Machinery</li>
+                            <li>OR, EPC - Engineering Procurement & Construction</li>
+                            <li>OR, Investment</li>
+                            <li>OR, Development of the Project</li>
+                            <li>OR, Erection</li>
+                            <li>OR, Erection & Commisioning</li>
+                            <li>OR, Fabrication of XYZ</li>
+                            <li>OR, Supply of XYZ Raw Material</li>
+                            <li>OR, Local Works</li>
+                            <li>OR, Private Equity Investment</li>
+                            <li>OR, Loan/Debt</li>
+                            <li>If Other, please mention</li>
+                            <li>This is mandatory field, even if it is the same for every project/product.</li>
+                        </ul>
+                        <span class="guid-title">Column F: Status</span>
+                    <p>
+                        In this column, please mention the status (which you can keep changing from editing after upload). That will make your project references look more complete.
+                    </p>
+                    <ul class="b">
+                        <li>Feasibility Study Completed</li>
+                        <li>OR, Signed Contract,</li>
+                        <li>OR, Ongoing,</li>
+                        <li>OR, Completed,</li>
+                        <li>OR, Commissioned,</li>
+                        <li>If Others, please mention</li>
+                    </ul>
+                    <span class="guid-title">Column G: Year of Execution</span>
+                    <p>Year during which project was executed, or product was supplied.</p>
+
+                    <span class="guid-title">Column H: Country of Execution</span>
+                    <p>Country of the execution of the project, or supply of product.</p>
+                    <span class="guid-title">Column I: Project/Product Highlights</span>
+                    <p>
+                        Key features/highlights of project/product.
+                    </p>
+
+                    <span class="guid-title">
+                        Column J: Keywords for Better Search
+                    </span>
+                    <p>
+                        Relevant keywords related to the project/product for better search experience. Keywords relevant to the project/product will improve your chances to feature in relevant search query. For example: If your company has a reference in Hydropower Project, you can mention keywords such as: Renewable, Green Energy, Power, Hydro etc. This is a very important field, hence mandatory.
+                    </p>
+                    PLEASE DO NOT FORGET TO UPLOAD RELEVANT/ATTRACTIVE PICTURES AND VIDEOS AFTER YOUR UPLOAD.
+                </div>
+
+            </div>
+        </div>
+        }
+            @using (Html.BeginForm("UploadExcel", "WorldRef", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {<div class="upload_co2">
+             <div>
+                 <span class="width100">
+                     <label class="lp ">
+                         Upload Reference List
+                     </label>
+                 </span>
+                 <span class="width100">
+                     <input type="file" id="fileUp" name="img">
+                     <span id="uploadText" class="width100" style="color: red">( Please Make sure that you are uploading the reference list in the same format in the left Side. )</span>
+                 </span>
+                
+                 <p style="font-size: 14px; font-weight: 500; color: #000; margin: 0;">
+                     You can add more refernces to your already uploaded references. please take the following steps:- <br /><br />
+                     Step 1:- Download reference list format.<br />
+                     Step 2:- Fill the download excel sheet.<br />
+                     Step 3:- Upload the excel sheet.<br /><br />
+                     (Note :- Please do not upload already uploaded reference again.)
+
+                 </p>
+
+
+                 <span class="pEdit manage-search">
+                     <button class="pEButton" value="Submit" onclick="return ValidateForm();">Submit</button>
+                 </span>
+             </div>
+           
+            @*<div class="profile_part2">
+                    <ul class="pE">
+                        <li>
+                            <span class="pEdit manage-search privacy-btn" style="font-size: 14px; font-weight: bold;">Privacy </span>
+                            <span style="color: green; width: 100%; margin-bottom: 7px;">&nbsp;( Please select, whatever you do not want users to see in the search. )</span>
+
+                            <label class="lp width100">
+                                <input type="checkbox" id="Customer" name="Customer" value="Customer Name">&nbsp;For (The Customer's Name)
+                            </label>
+                            <label class="lp width100">
+                                <input type="checkbox" id="Organization" name="Organization" value="Organization">&nbsp;By (The contributor’s Name)
+                            </label>
+                            <label class="lp width100">
+                                <input type="checkbox" id="Project" name="Project" value="Name of Project">&nbsp;Reference
+                            </label>
+                            <label class="lp width100">
+                                <input type="checkbox" id="Status" name="Status" value="Status">&nbsp;Status
+                            </label>
+                            <label class="lp width100">
+                                <input type="checkbox" id="Year" name="Year" value="Year of Execution/Installation/Commissioning">&nbsp;Year of Execution
+                            </label>
+
+                        </li>
+                        <li>
+                            <span class="pEdit manage-search">
+                                <button class="pEButton" value="Submit" onclick="return ValidateForm();">Submit</button>
+                            </span>
+                            <label class="lp">
+                            </label>
+                        </li>
+                    </ul>
+                </div>*@
+        </div>
+        }
+            <br class="clear">
+            @*<div id="inline4" style="display: none;">
+
+                    <div class="profile_part2" style="width: 100%;">
+                        <span>Create Profile Url</span>
+                        <ul class="pE heigt" id="CommentList">
+                            <li>
+                                <div id="shwErrorMesgProfile"></div>
+                                <span>www.worldref.org/</span>
+
+                                <input type="text" id="txtUrl" name="Url" placeholder="e.g. Thomos" />
+                            </li>
+                            <li>
+                                <input class="pEButton" type="submit" value="Save" onclick="saveWorldrefProfileUrl();" />
+                            </li>
+                        </ul>
+                    </div>
+                </div>*@
+        </article>
+        <!-- /article -->
+    </section>
+<script>
+
+    $('.fancybox').fancybox();
+
+        var message = '@msg';
+        if (message != "") {
+            var foo = $("#ModelpopUp").html(message);
+            $.fancybox(foo);
+        }
+        $("#uploadText").hide();
+        $('#fileUp').bind('change', function () {
+            DisplayMessage();
+        });
+
+
+    function ValidateForm() {
+        var y = document.getElementById("fileUp").value;
+        if (y == null || y == "") {
+            alert("Please Select Excel Sheet");
+            document.getElementById("fileUp").focus();
+            return false;
+        }
+    }
+    function myFunction() {
+        var x;
+        if (confirm("Please make sure that you are uploading the reference list in the same format in the left side.") == true) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function DisplayMessage() {
+        var y = document.getElementById("fileUp").value;
+        if (y == null || y == "") {
+            $("#uploadText").hide();
+        } else {
+            $("#uploadText").show();
+        }
+    }
+  
+
+    
+
+</script>
+
+
+

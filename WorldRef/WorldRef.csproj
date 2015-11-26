@@ -1,0 +1,1292 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D289DFBB-8A9F-45F8-9BE1-6F8B2691EE65}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>WorldRef</RootNamespace>
+    <AssemblyName>WorldRef</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Facebook">
+      <HintPath>..\packages\Facebook.7.0.6\lib\net45\Facebook.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Web.Razor">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.0.0\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Webpages">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.0.0\lib\net45\System.Web.Webpages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Webpages.Deployment">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.0.0\lib\net45\System.Web.Webpages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Webpages.Razor">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.0.0\lib\net45\System.Web.Webpages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Helpers">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.0.0\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.0.0\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\System.Web.Helpers.dll" />
+    <Content Include="bin\System.Web.Mvc.dll" />
+    <Content Include="bin\System.Web.Razor.dll" />
+    <Content Include="bin\System.Web.Webpages.Deployment.dll" />
+    <Content Include="bin\System.Web.Webpages.dll" />
+    <Content Include="bin\System.Web.Webpages.Razor.dll" />
+    <Content Include="bin\WorldRef.dll" />
+    <Content Include="bin\WorldRef.pdb" />
+    <Content Include="Content\css\css\admin-ajax.css" />
+    <Content Include="Content\css\css\BootstrapProgresbar.css" />
+    <Content Include="Content\css\css\css.css" />
+    <Content Include="Content\css\css\dashicons.min.css" />
+    <Content Include="Content\css\css\fancybox_loading%402x.gif" />
+    <Content Include="Content\css\css\fancybox_loading.gif" />
+    <Content Include="Content\css\css\fancybox_overlay.png" />
+    <Content Include="Content\css\css\fancybox_sprite%402x.png" />
+    <Content Include="Content\css\css\fancybox_sprite.png" />
+    <Content Include="Content\css\css\form-css.css" />
+    <Content Include="Content\css\css\foundation-icons.min.css" />
+    <Content Include="Content\css\css\jquery.fancybox.css" />
+    <Content Include="Content\css\css\login.css" />
+    <Content Include="Content\css\css\profile.css" />
+    <Content Include="Content\css\css\rating.css" />
+    <Content Include="Content\css\css\red.css" />
+    <Content Include="Content\css\css\style.css" />
+    <Content Include="Content\css\Fancy\blank.gif" />
+    <Content Include="Content\css\Fancy\fancybox_loading%402x.gif" />
+    <Content Include="Content\css\Fancy\fancybox_loading.gif" />
+    <Content Include="Content\css\Fancy\fancybox_overlay.png" />
+    <Content Include="Content\css\Fancy\fancybox_sprite%402x.png" />
+    <Content Include="Content\css\Fancy\fancybox_sprite.png" />
+    <Content Include="Content\css\Fancy\helpers\fancybox_buttons.png" />
+    <Content Include="Content\css\Fancy\helpers\jquery.fancybox-buttons.css" />
+    <Content Include="Content\css\Fancy\helpers\jquery.fancybox-buttons.js" />
+    <Content Include="Content\css\Fancy\helpers\jquery.fancybox-media.js" />
+    <Content Include="Content\css\Fancy\helpers\jquery.fancybox-thumbs.css" />
+    <Content Include="Content\css\Fancy\helpers\jquery.fancybox-thumbs.js" />
+    <Content Include="Content\css\Fancy\jquery-1.10.1.min.js" />
+    <Content Include="Content\css\Fancy\jquery-1.9.0.min.js" />
+    <Content Include="Content\css\Fancy\jquery.fancybox.css" />
+    <Content Include="Content\css\Fancy\jquery.fancybox.js" />
+    <Content Include="Content\css\Fancy\jquery.fancybox.pack.js" />
+    <Content Include="Content\css\Fancy\jquery.mousewheel-3.0.6.pack.js" />
+    <Content Include="Content\css\font-awesome-4.1.0\css\font-awesome.css" />
+    <Content Include="Content\css\font-awesome-4.1.0\css\font-awesome.min.css" />
+    <Content Include="Content\css\font-awesome-4.1.0\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\css\images\abdz-black-x.png" />
+    <Content Include="Content\css\images\abdz-black.png" />
+    <Content Include="Content\css\images\add-project.png" />
+    <Content Include="Content\css\images\addImages.png" />
+    <Content Include="Content\css\images\add_image.png" />
+    <Content Include="Content\css\images\all-02.png" />
+    <Content Include="Content\css\images\all-03.png" />
+    <Content Include="Content\css\images\all-04.png" />
+    <Content Include="Content\css\images\arrow-left.png" />
+    <Content Include="Content\css\images\arrow-right.png" />
+    <Content Include="Content\css\images\Comment.png" />
+    <Content Include="Content\css\images\comment_private.png" />
+    <Content Include="Content\css\images\CompanyProfile.png" />
+    <Content Include="Content\css\images\connect.png" />
+    <Content Include="Content\css\images\crosP.png" />
+    <Content Include="Content\css\images\cross.png" />
+    <Content Include="Content\css\images\delete.png" />
+    <Content Include="Content\css\images\deleteImg.png" />
+    <Content Include="Content\css\images\down.png" />
+    <Content Include="Content\css\images\drop.png" />
+    <Content Include="Content\css\images\edit-project.png" />
+    <Content Include="Content\css\images\edit.png" />
+    <Content Include="Content\css\images\excel.jpg" />
+    <Content Include="Content\css\images\favicon.png" />
+    <Content Include="Content\css\images\fb.png" />
+    <Content Include="Content\css\images\icon-05.png" />
+    <Content Include="Content\css\images\image-05.png" />
+    <Content Include="Content\css\images\it-08.png" />
+    <Content Include="Content\css\images\like-20.png" />
+    <Content Include="Content\css\images\like-button.png" />
+    <Content Include="Content\css\images\linkedin.png" />
+    <Content Include="Content\css\images\logo.png" />
+    <Content Include="Content\css\images\menu.png" />
+    <Content Include="Content\css\images\more.png" />
+    <Content Include="Content\css\images\no-image.png" />
+    <Content Include="Content\css\images\no-image.svg" />
+    <Content Include="Content\css\images\no-image1111.png" />
+    <Content Include="Content\css\images\pages.png" />
+    <Content Include="Content\css\images\rating.png" />
+    <Content Include="Content\css\images\red-docs.png" />
+    <Content Include="Content\css\images\revew.png" />
+    <Content Include="Content\css\images\review.png" />
+    <Content Include="Content\css\images\ringUploader.gif" />
+    <Content Include="Content\css\images\twi.png" />
+    <Content Include="Content\css\images\Unlike-20.png" />
+    <Content Include="Content\css\images\view.png" />
+    <Content Include="Content\css\images\viewimages.png" />
+    <Content Include="Content\css\images\watts-01.svg" />
+    <Content Include="Content\css\images\Word.png" />
+    <Content Include="Content\css\images\world-refhome.png" />
+    <Content Include="Content\css\images\worldref-logo.png" />
+    <Content Include="Content\css\images\worldref-logo1.png" />
+    <Content Include="Content\css\images\wref-watts-01.png" />
+    <Content Include="Content\css\js\drupal.js" />
+    <Content Include="Content\css\js\hideshare.min.js" />
+    <Content Include="Content\css\js\jquery-1.10.1.min.js" />
+    <Content Include="Content\css\js\jquery.easytabs.min.js" />
+    <Content Include="Content\css\js\jquery.fancybox.js" />
+    <Content Include="Content\css\js\jquery.hashchange.min.js" />
+    <Content Include="Content\css\js\jquery.js" />
+    <Content Include="Content\css\js\jquery.transit.min.js" />
+    <Content Include="Content\css\js\script.js" />
+    <Content Include="Content\css\rating.js" />
+    <Content Include="Content\css\style.css" />
+    <Content Include="Content\css\worldRefInner\css\admin-ajax.css" />
+    <Content Include="Content\css\worldRefInner\css\dashicons.min.css" />
+    <Content Include="Content\css\worldRefInner\css\font-awesome.min.css" />
+    <Content Include="Content\css\worldRefInner\css\foundation-icons.min.css" />
+    <Content Include="Content\css\worldRefInner\css\jquery.fancybox.css" />
+    <Content Include="Content\css\worldRefInner\css\red.css" />
+    <Content Include="Content\css\worldRefInner\css\style.css" />
+    <Content Include="Content\css\worldRefInner\font_icon\fontstyle.css" />
+    <Content Include="Content\css\worldRefInner\font_icon\icomoon.svg" />
+    <Content Include="Content\css\worldRefInner\images\approved.png" />
+    <Content Include="Content\css\worldRefInner\images\basic.jpg" />
+    <Content Include="Content\css\worldRefInner\images\Cancel.png" />
+    <Content Include="Content\css\worldRefInner\images\edit.png" />
+    <Content Include="Content\css\worldRefInner\images\enggi.jpg" />
+    <Content Include="Content\css\worldRefInner\images\fancybox_overlay.png" />
+    <Content Include="Content\css\worldRefInner\images\i4iknowledge.jpg" />
+    <Content Include="Content\css\worldRefInner\images\i4itraining.jpg" />
+    <Content Include="Content\css\worldRefInner\images\logo.png" />
+    <Content Include="Content\css\worldRefInner\images\noprofile.png" />
+    <Content Include="Content\css\worldRefInner\images\pending.jpg" />
+    <Content Include="Content\css\worldRefInner\images\pending.png" />
+    <Content Include="Content\css\worldRefInner\images\powered-logo.png" />
+    <Content Include="Content\css\worldRefInner\images\social-icons.png" />
+    <Content Include="Content\css\worldRefInner\images\upload.png" />
+    <Content Include="Content\css\worldRefInner\js\hoverIntent.min.js" />
+    <Content Include="Content\css\worldRefInner\js\html5highlight.js" />
+    <Content Include="Content\css\worldRefInner\js\html5lightbox.js" />
+    <Content Include="Content\css\worldRefInner\js\jquery.fancybox.js" />
+    <Content Include="Content\css\worldRefInner\js\jquery.js" />
+    <Content Include="Content\css\worldRefInner\js\public.js" />
+    <Content Include="Content\css\worldRefInner\js\skins\default\html5boxplayer_playpause.png" />
+    <Content Include="Content\css\worldRefInner\js\skins\default\lightbox-close.png" />
+    <Content Include="Content\css\worldRefInner\js\skins\default\lightbox-next.png" />
+    <Content Include="Content\css\worldRefInner\js\skins\default\lightbox-prev.png" />
+    <Content Include="Content\css\WorldRefSearch\css\search.css" />
+    <Content Include="Content\css\WorldRefSearch\img\checklist32.png" />
+    <Content Include="Content\css\WorldRefSearch\img\empty_filter.png" />
+    <Content Include="Content\css\WorldRefSearch\img\menu-logo.png" />
+    <Content Include="Content\css\WorldRefSearch\img\menu.png" />
+    <Content Include="Content\css\WorldRefSearch\img\s1.png" />
+    <Content Include="Content\css\WorldRefSearch\img\s3.png" />
+    <Content Include="Content\css\WorldRefSearch\img\search.png" />
+    <Content Include="Content\css\WorldRefSearch\img\searchbtn_28.png" />
+    <Content Include="Content\css\WorldRef\css\fancybox_loading%402x.gif" />
+    <Content Include="Content\css\WorldRef\css\fancybox_loading.gif" />
+    <Content Include="Content\css\WorldRef\css\fancybox_overlay.png" />
+    <Content Include="Content\css\WorldRef\css\fancybox_sprite%402x.png" />
+    <Content Include="Content\css\WorldRef\css\fancybox_sprite.png" />
+    <Content Include="Content\css\WorldRef\css\fontr.css" />
+    <Content Include="Content\css\WorldRef\css\jquery.fancybox.css" />
+    <Content Include="Content\css\WorldRef\css\StyleSheet1.css" />
+    <Content Include="Content\css\WorldRef\images\abdz-black.png" />
+    <Content Include="Content\css\WorldRef\images\all-02.png" />
+    <Content Include="Content\css\WorldRef\images\all-03.png" />
+    <Content Include="Content\css\WorldRef\images\all-04.png" />
+    <Content Include="Content\css\WorldRef\images\delete.png" />
+    <Content Include="Content\css\WorldRef\images\down.png" />
+    <Content Include="Content\css\WorldRef\images\drop.png" />
+    <Content Include="Content\css\WorldRef\images\fb.png" />
+    <Content Include="Content\css\WorldRef\images\image-05.png" />
+    <Content Include="Content\css\WorldRef\images\linkedin.png" />
+    <Content Include="Content\css\WorldRef\images\logo.png" />
+    <Content Include="Content\css\WorldRef\images\menu.png" />
+    <Content Include="Content\css\WorldRef\images\noComments.png" />
+    <Content Include="Content\css\WorldRef\images\twi.png" />
+    <Content Include="Content\css\WorldRef\js\drupal.js" />
+    <Content Include="Content\css\WorldRef\js\hideshare.min.js" />
+    <Content Include="Content\css\WorldRef\js\jquery-1.10.1.min.js" />
+    <Content Include="Content\css\WorldRef\js\jquery.easytabs.min.js" />
+    <Content Include="Content\css\WorldRef\js\jquery.fancybox.js" />
+    <Content Include="Content\css\WorldRef\js\jquery.hashchange.min.js" />
+    <Content Include="Content\css\WorldRef\js\jquery.js" />
+    <Content Include="Content\css\WorldRef\js\jquery.transit.min.js" />
+    <Content Include="Content\css\WorldRef\js\script.js" />
+    <Content Include="Content\css\WorldRef\worldRefInner\css\admin-ajax.css" />
+    <Content Include="Content\css\WorldRef\worldRefInner\css\dashicons.min.css" />
+    <Content Include="Content\css\WorldRef\worldRefInner\css\font-awesome.min.css" />
+    <Content Include="Content\css\WorldRef\worldRefInner\css\foundation-icons.min.css" />
+    <Content Include="Content\css\WorldRef\worldRefInner\css\jquery.fancybox.css" />
+    <Content Include="Content\css\WorldRef\worldRefInner\css\red.css" />
+    <Content Include="Content\css\WorldRef\worldRefInner\css\style.css" />
+    <Content Include="Content\css\WorldRef\worldRefInner\images\approved.png" />
+    <Content Include="Content\css\WorldRef\worldRefInner\images\basic.jpg" />
+    <Content Include="Content\css\WorldRef\worldRefInner\images\Cancel.png" />
+    <Content Include="Content\css\WorldRef\worldRefInner\images\edit.png" />
+    <Content Include="Content\css\WorldRef\worldRefInner\images\enggi.jpg" />
+    <Content Include="Content\css\WorldRef\worldRefInner\images\i4iknowledge.jpg" />
+    <Content Include="Content\css\WorldRef\worldRefInner\images\i4itraining.jpg" />
+    <Content Include="Content\css\WorldRef\worldRefInner\images\logo.png" />
+    <Content Include="Content\css\WorldRef\worldRefInner\images\noprofile.png" />
+    <Content Include="Content\css\WorldRef\worldRefInner\images\pending.jpg" />
+    <Content Include="Content\css\WorldRef\worldRefInner\images\pending.png" />
+    <Content Include="Content\css\WorldRef\worldRefInner\images\upload.png" />
+    <Content Include="Content\css\WorldRef\worldRefInner\js\hoverIntent.min.js" />
+    <Content Include="Content\css\WorldRef\worldRefInner\js\jquery.fancybox.js" />
+    <Content Include="Content\css\WorldRef\worldRefInner\js\jquery.js" />
+    <Content Include="Content\css\WorldRef\worldRefInner\js\public.js" />
+    <Content Include="Content\css\WorldRef\WorldRefSearch\css\search.css" />
+    <Content Include="Content\css\WorldRef\WorldRefSearch\img\checklist32.png" />
+    <Content Include="Content\css\WorldRef\WorldRefSearch\img\empty_filter.png" />
+    <Content Include="Content\css\WorldRef\WorldRefSearch\img\menu-logo.png" />
+    <Content Include="Content\css\WorldRef\WorldRefSearch\img\menu.png" />
+    <Content Include="Content\css\WorldRef\WorldRefSearch\img\searchbtn_28.png" />
+    <Content Include="Content\font-awesome-4.1.0\css\font-awesome.css" />
+    <Content Include="Content\font-awesome-4.1.0\css\font-awesome.min.css" />
+    <Content Include="Content\font-awesome-4.1.0\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\images\1440503355_Excel_15.png" />
+    <Content Include="Content\images\add-msg.png" />
+    <Content Include="Content\images\add.png" />
+    <Content Include="Content\images\arrow-right.png" />
+    <Content Include="Content\images\arw-01.png" />
+    <Content Include="Content\images\arw-02.png" />
+    <Content Include="Content\images\associate.JPG" />
+    <Content Include="Content\images\back_disabled.jpg" />
+    <Content Include="Content\images\back_disabled.png" />
+    <Content Include="Content\images\back_enabled.jpg" />
+    <Content Include="Content\images\back_enabled.png" />
+    <Content Include="Content\images\back_enabled_hover.png" />
+    <Content Include="Content\images\banner2.jpg" />
+    <Content Include="Content\images\btUpload.png" />
+    <Content Include="Content\images\cancel.png" />
+    <Content Include="Content\images\chat.png" />
+    <Content Include="Content\images\close.png" />
+    <Content Include="Content\images\cloud.svg" />
+    <Content Include="Content\images\comingsoon.png" />
+    <Content Include="Content\images\Comment.png" />
+    <Content Include="Content\images\company.png" />
+    <Content Include="Content\images\contact.svg" />
+    <Content Include="Content\images\controls.png" />
+    <Content Include="Content\images\credit.png" />
+    <Content Include="Content\images\creditm.png" />
+    <Content Include="Content\images\creditred.png" />
+    <Content Include="Content\images\delete .png" />
+    <Content Include="Content\images\diss.png" />
+    <Content Include="Content\images\edit-date.png" />
+    <Content Include="Content\images\edit.png" />
+    <Content Include="Content\images\excel.jpg" />
+    <Content Include="Content\images\favicon.ico" />
+    <Content Include="Content\images\favicon.png" />
+    <Content Include="Content\images\forward_disabled.jpg" />
+    <Content Include="Content\images\forward_disabled.png" />
+    <Content Include="Content\images\forward_enabled.jpg" />
+    <Content Include="Content\images\forward_enabled.png" />
+    <Content Include="Content\images\forward_enabled_hover.png" />
+    <Content Include="Content\images\good.svg" />
+    <Content Include="Content\images\home.png" />
+    <Content Include="Content\images\home1.png" />
+    <Content Include="Content\images\i4iicon.png" />
+    <Content Include="Content\images\i4iknowledge.jpg" />
+    <Content Include="Content\images\interview-01.svg" />
+    <Content Include="Content\images\interview.svg" />
+    <Content Include="Content\images\KM_VC_1.jpg" />
+    <Content Include="Content\images\logo.png" />
+    <Content Include="Content\images\map.jpg" />
+    <Content Include="Content\images\map.png" />
+    <Content Include="Content\images\media.svg" />
+    <Content Include="Content\images\news.png" />
+    <Content Include="Content\images\notify.png" />
+    <Content Include="Content\images\noti_icon.png" />
+    <Content Include="Content\images\offer.png" />
+    <Content Include="Content\images\profile_icon.png" />
+    <Content Include="Content\images\project-status.png" />
+    <Content Include="Content\images\reminder.svg" />
+    <Content Include="Content\images\search_.png" />
+    <Content Include="Content\images\search_img.png" />
+    <Content Include="Content\images\search_vdo.png" />
+    <Content Include="Content\images\social-icons.png" />
+    <Content Include="Content\images\sort_asc.png" />
+    <Content Include="Content\images\sort_asc_disabled.png" />
+    <Content Include="Content\images\sort_both.png" />
+    <Content Include="Content\images\sort_desc.png" />
+    <Content Include="Content\images\sort_desc_disabled.png" />
+    <Content Include="Content\images\start-chat.png" />
+    <Content Include="Content\images\submit-offer.png" />
+    <Content Include="Content\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\images\unpublished.png" />
+    <Content Include="Content\images\update.png" />
+    <Content Include="Content\images\url.png" />
+    <Content Include="Content\images\user.png" />
+    <Content Include="Content\images\view-chat.png" />
+    <Content Include="Content\images\view.png" />
+    <Content Include="Content\images\viewcredits.png" />
+    <Content Include="Content\images\Word.png" />
+    <Content Include="Content\images\worldref-logo1.png" />
+    <Content Include="Content\images\worldref-logoWhite.png" />
+    <Content Include="Content\js\bootstrap-2.3.2.min.js" />
+    <Content Include="Content\js\bootstrap-multiselect.js" />
+    <Content Include="Content\js\bootstrap.min.js" />
+    <Content Include="Content\js\CheckCookie.js" />
+    <Content Include="Content\js\custom.js" />
+    <Content Include="Content\js\drupal.js" />
+    <Content Include="Content\js\hideshare.min.js" />
+    <Content Include="Content\js\hovermap.js" />
+    <Content Include="Content\js\JavaScript1.js" />
+    <Content Include="Content\js\javascripts.js" />
+    <Content Include="Content\js\jquery-1.10.1.min.js" />
+    <Content Include="Content\js\jquery-1.8.2.js" />
+    <Content Include="Content\js\jquery-ui.js" />
+    <Content Include="Content\js\jquery-ui.min.js" />
+    <Content Include="Content\js\jquery.easytabs.min.js" />
+    <Content Include="Content\js\jquery.fancybox.js" />
+    <Content Include="Content\js\jquery.flexslider-min.js" />
+    <Content Include="Content\js\jquery.fn jquery.sortElements.js" />
+    <Content Include="Content\js\jquery.hashchange.min.js" />
+    <Content Include="Content\js\jquery.iconmenu.js" />
+    <Content Include="Content\js\jquery.js" />
+    <Content Include="Content\js\jquery.min.js" />
+    <Content Include="Content\js\jquery.tools.min.js" />
+    <Content Include="Content\js\jquery.transit.min.js" />
+    <Content Include="Content\js\jsvalidation.js" />
+    <Content Include="Content\js\modernizr.min.js" />
+    <Content Include="Content\js\responsive-tabs.js" />
+    <Content Include="Content\js\script.js" />
+    <Content Include="Content\js\scripts.js" />
+    <Content Include="Content\js\SearchFunction.js" />
+    <Content Include="Content\js\tinynav.min.js" />
+    <Content Include="Content\modal\remodal-default-theme.css" />
+    <Content Include="Content\modal\remodal.css" />
+    <Content Include="Content\modal\remodal.js" />
+    <Content Include="Content\MultipleSelect\jquery.multiple.select.js" />
+    <Content Include="Content\MultipleSelect\multiple-select.css" />
+    <Content Include="Content\MultipleSelect\multiple-select.png" />
+    <Content Include="Content\scrollbar\jquery.mCustomScrollbar.concat.min.js" />
+    <Content Include="Content\scrollbar\jquery.mCustomScrollbar.css" />
+    <Content Include="Content\scrollbar\style.css" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Content\style.css" />
+    <Content Include="Content\WorldRef\css\css.css" />
+    <Content Include="Content\WorldRef\css\fancybox_loading%402x.gif" />
+    <Content Include="Content\WorldRef\css\fancybox_loading.gif" />
+    <Content Include="Content\WorldRef\css\fancybox_overlay.png" />
+    <Content Include="Content\WorldRef\css\fancybox_sprite%402x.png" />
+    <Content Include="Content\WorldRef\css\fancybox_sprite.png" />
+    <Content Include="Content\WorldRef\css\form-css.css" />
+    <Content Include="Content\WorldRef\css\jquery.fancybox.css" />
+    <Content Include="Content\WorldRef\css\profile.css" />
+    <Content Include="Content\WorldRef\EmptyStar.png" />
+    <Content Include="Content\WorldRef\Fancy\blank.gif" />
+    <Content Include="Content\WorldRef\Fancy\fancybox_loading%402x.gif" />
+    <Content Include="Content\WorldRef\Fancy\fancybox_loading.gif" />
+    <Content Include="Content\WorldRef\Fancy\fancybox_overlay.png" />
+    <Content Include="Content\WorldRef\Fancy\fancybox_sprite%402x.png" />
+    <Content Include="Content\WorldRef\Fancy\fancybox_sprite.png" />
+    <Content Include="Content\WorldRef\Fancy\helpers\fancybox_buttons.png" />
+    <Content Include="Content\WorldRef\Fancy\helpers\jquery.fancybox-buttons.css" />
+    <Content Include="Content\WorldRef\Fancy\helpers\jquery.fancybox-buttons.js" />
+    <Content Include="Content\WorldRef\Fancy\helpers\jquery.fancybox-media.js" />
+    <Content Include="Content\WorldRef\Fancy\helpers\jquery.fancybox-thumbs.css" />
+    <Content Include="Content\WorldRef\Fancy\helpers\jquery.fancybox-thumbs.js" />
+    <Content Include="Content\WorldRef\Fancy\jquery-1.10.1.min.js" />
+    <Content Include="Content\WorldRef\Fancy\jquery-1.9.0.min.js" />
+    <Content Include="Content\WorldRef\Fancy\jquery.fancybox.css" />
+    <Content Include="Content\WorldRef\Fancy\jquery.fancybox.js" />
+    <Content Include="Content\WorldRef\Fancy\jquery.fancybox.pack.js" />
+    <Content Include="Content\WorldRef\Fancy\jquery.mousewheel-3.0.6.pack.js" />
+    <Content Include="Content\WorldRef\FilledStar.png" />
+    <Content Include="Content\WorldRef\images\abdz-black-x.png" />
+    <Content Include="Content\WorldRef\images\abdz-black.png" />
+    <Content Include="Content\WorldRef\images\add-project.png" />
+    <Content Include="Content\WorldRef\images\addImages.png" />
+    <Content Include="Content\WorldRef\images\add_image.png" />
+    <Content Include="Content\WorldRef\images\all-02.png" />
+    <Content Include="Content\WorldRef\images\all-03.png" />
+    <Content Include="Content\WorldRef\images\all-04.png" />
+    <Content Include="Content\WorldRef\images\arrow-left.png" />
+    <Content Include="Content\WorldRef\images\arrow-right.png" />
+    <Content Include="Content\WorldRef\images\Comment.png" />
+    <Content Include="Content\WorldRef\images\comment_private.png" />
+    <Content Include="Content\WorldRef\images\CompanyProfile.png" />
+    <Content Include="Content\WorldRef\images\connect.png" />
+    <Content Include="Content\WorldRef\images\crosP.png" />
+    <Content Include="Content\WorldRef\images\cross.png" />
+    <Content Include="Content\WorldRef\images\delete.png" />
+    <Content Include="Content\WorldRef\images\deleteImg.png" />
+    <Content Include="Content\WorldRef\images\down.png" />
+    <Content Include="Content\WorldRef\images\drop.png" />
+    <Content Include="Content\WorldRef\images\edit-project.png" />
+    <Content Include="Content\WorldRef\images\edit.png" />
+    <Content Include="Content\WorldRef\images\excel.jpg" />
+    <Content Include="Content\WorldRef\images\favicon.png" />
+    <Content Include="Content\WorldRef\images\fb.png" />
+    <Content Include="Content\WorldRef\images\icon-05.png" />
+    <Content Include="Content\WorldRef\images\image-05.png" />
+    <Content Include="Content\WorldRef\images\it-08.png" />
+    <Content Include="Content\WorldRef\images\like-20.png" />
+    <Content Include="Content\WorldRef\images\like-button.png" />
+    <Content Include="Content\WorldRef\images\linkedin.png" />
+    <Content Include="Content\WorldRef\images\logo.png" />
+    <Content Include="Content\WorldRef\images\menu.png" />
+    <Content Include="Content\WorldRef\images\more.png" />
+    <Content Include="Content\WorldRef\images\no-image.png" />
+    <Content Include="Content\WorldRef\images\no-image.svg" />
+    <Content Include="Content\WorldRef\images\no-image1111.png" />
+    <Content Include="Content\WorldRef\images\pages.png" />
+    <Content Include="Content\WorldRef\images\rating.png" />
+    <Content Include="Content\WorldRef\images\red-docs.png" />
+    <Content Include="Content\WorldRef\images\revew.png" />
+    <Content Include="Content\WorldRef\images\review.png" />
+    <Content Include="Content\WorldRef\images\ringUploader.gif" />
+    <Content Include="Content\WorldRef\images\twi.png" />
+    <Content Include="Content\WorldRef\images\Unlike-20.png" />
+    <Content Include="Content\WorldRef\images\Uploader.gif" />
+    <Content Include="Content\WorldRef\images\view.png" />
+    <Content Include="Content\WorldRef\images\viewimages.png" />
+    <Content Include="Content\WorldRef\images\Word.png" />
+    <Content Include="Content\WorldRef\images\world-refhome.png" />
+    <Content Include="Content\WorldRef\images\worldref-logo.png" />
+    <Content Include="Content\WorldRef\images\worldref-logo1.png" />
+    <Content Include="Content\WorldRef\js\bootstrap-2.3.2.min.js" />
+    <Content Include="Content\WorldRef\js\bootstrap-multiselect.js" />
+    <Content Include="Content\WorldRef\js\bootstrap.min.js" />
+    <Content Include="Content\WorldRef\js\CheckCookie.js" />
+    <Content Include="Content\WorldRef\js\custom.js" />
+    <Content Include="Content\WorldRef\js\drupal.js" />
+    <Content Include="Content\WorldRef\js\hideshare.min.js" />
+    <Content Include="Content\WorldRef\js\hovermap.js" />
+    <Content Include="Content\WorldRef\js\JavaScript1.js" />
+    <Content Include="Content\WorldRef\js\javascripts.js" />
+    <Content Include="Content\WorldRef\js\jquery-1.10.1.min.js" />
+    <Content Include="Content\WorldRef\js\jquery-1.8.2.js" />
+    <Content Include="Content\WorldRef\js\jquery-ui.js" />
+    <Content Include="Content\WorldRef\js\jquery-ui.min.js" />
+    <Content Include="Content\WorldRef\js\jquery.easytabs.min.js" />
+    <Content Include="Content\WorldRef\js\jquery.fancybox.js" />
+    <Content Include="Content\WorldRef\js\jquery.flexslider-min.js" />
+    <Content Include="Content\WorldRef\js\jquery.fn jquery.sortElements.js" />
+    <Content Include="Content\WorldRef\js\jquery.hashchange.min.js" />
+    <Content Include="Content\WorldRef\js\jquery.iconmenu.js" />
+    <Content Include="Content\WorldRef\js\jquery.js" />
+    <Content Include="Content\WorldRef\js\jquery.min.js" />
+    <Content Include="Content\WorldRef\js\jquery.tools.min.js" />
+    <Content Include="Content\WorldRef\js\jquery.transit.min.js" />
+    <Content Include="Content\WorldRef\js\jsvalidation.js" />
+    <Content Include="Content\WorldRef\js\modernizr.min.js" />
+    <Content Include="Content\WorldRef\js\responsive-tabs.js" />
+    <Content Include="Content\WorldRef\js\script.js" />
+    <Content Include="Content\WorldRef\js\scripts.js" />
+    <Content Include="Content\WorldRef\js\SearchFunction.js" />
+    <Content Include="Content\WorldRef\js\tinynav.min.js" />
+    <Content Include="Content\WorldRef\rating.css" />
+    <Content Include="Content\WorldRef\rating.js" />
+    <Content Include="Content\WorldRef\worldRefInner\css\admin-ajax.css" />
+    <Content Include="Content\WorldRef\worldRefInner\css\dashicons.min.css" />
+    <Content Include="Content\WorldRef\worldRefInner\css\font-awesome.min.css" />
+    <Content Include="Content\WorldRef\worldRefInner\css\foundation-icons.min.css" />
+    <Content Include="Content\WorldRef\worldRefInner\css\jquery.fancybox.css" />
+    <Content Include="Content\WorldRef\worldRefInner\css\red.css" />
+    <Content Include="Content\WorldRef\worldRefInner\css\style.css" />
+    <Content Include="Content\WorldRef\worldRefInner\font_icon\fontstyle.css" />
+    <Content Include="Content\WorldRef\worldRefInner\font_icon\icomoon.svg" />
+    <Content Include="Content\WorldRef\worldRefInner\images\approved.png" />
+    <Content Include="Content\WorldRef\worldRefInner\images\basic.jpg" />
+    <Content Include="Content\WorldRef\worldRefInner\images\Cancel.png" />
+    <Content Include="Content\WorldRef\worldRefInner\images\edit.png" />
+    <Content Include="Content\WorldRef\worldRefInner\images\enggi.jpg" />
+    <Content Include="Content\WorldRef\worldRefInner\images\fancybox_overlay.png" />
+    <Content Include="Content\WorldRef\worldRefInner\images\i4iknowledge.jpg" />
+    <Content Include="Content\WorldRef\worldRefInner\images\i4itraining.jpg" />
+    <Content Include="Content\WorldRef\worldRefInner\images\logo.png" />
+    <Content Include="Content\WorldRef\worldRefInner\images\noprofile.png" />
+    <Content Include="Content\WorldRef\worldRefInner\images\pending.jpg" />
+    <Content Include="Content\WorldRef\worldRefInner\images\pending.png" />
+    <Content Include="Content\WorldRef\worldRefInner\images\powered-logo.png" />
+    <Content Include="Content\WorldRef\worldRefInner\images\social-icons.png" />
+    <Content Include="Content\WorldRef\worldRefInner\images\upload.png" />
+    <Content Include="Content\WorldRef\worldRefInner\js\hoverIntent.min.js" />
+    <Content Include="Content\WorldRef\worldRefInner\js\html5highlight.js" />
+    <Content Include="Content\WorldRef\worldRefInner\js\html5lightbox.js" />
+    <Content Include="Content\WorldRef\worldRefInner\js\jquery.fancybox.js" />
+    <Content Include="Content\WorldRef\worldRefInner\js\jquery.js" />
+    <Content Include="Content\WorldRef\worldRefInner\js\public.js" />
+    <Content Include="Content\WorldRef\worldRefInner\js\skins\default\html5boxplayer_playpause.png" />
+    <Content Include="Content\WorldRef\worldRefInner\js\skins\default\lightbox-close.png" />
+    <Content Include="Content\WorldRef\worldRefInner\js\skins\default\lightbox-next.png" />
+    <Content Include="Content\WorldRef\worldRefInner\js\skins\default\lightbox-prev.png" />
+    <Content Include="Content\WorldRef\WorldRefSearch\css\search.css" />
+    <Content Include="Content\WorldRef\WorldRefSearch\img\checklist32.png" />
+    <Content Include="Content\WorldRef\WorldRefSearch\img\empty_filter.png" />
+    <Content Include="Content\WorldRef\WorldRefSearch\img\menu-logo.png" />
+    <Content Include="Content\WorldRef\WorldRefSearch\img\menu.png" />
+    <Content Include="Content\WorldRef\WorldRefSearch\img\s1.png" />
+    <Content Include="Content\WorldRef\WorldRefSearch\img\s3.png" />
+    <Content Include="Content\WorldRef\WorldRefSearch\img\search.png" />
+    <Content Include="Content\WorldRef\WorldRefSearch\img\searchbtn_28.png" />
+    <Content Include="Content\WorldRef\WorldRef\css\css.css" />
+    <Content Include="Content\WorldRef\WorldRef\css\fancybox_loading%402x.gif" />
+    <Content Include="Content\WorldRef\WorldRef\css\fancybox_loading.gif" />
+    <Content Include="Content\WorldRef\WorldRef\css\fancybox_overlay.png" />
+    <Content Include="Content\WorldRef\WorldRef\css\fancybox_sprite%402x.png" />
+    <Content Include="Content\WorldRef\WorldRef\css\fancybox_sprite.png" />
+    <Content Include="Content\WorldRef\WorldRef\css\fontr.css" />
+    <Content Include="Content\WorldRef\WorldRef\css\form-css.css" />
+    <Content Include="Content\WorldRef\WorldRef\css\jquery.fancybox.css" />
+    <Content Include="Content\WorldRef\WorldRef\css\StyleSheet1.css" />
+    <Content Include="Content\WorldRef\WorldRef\images\abdz-black.png" />
+    <Content Include="Content\WorldRef\WorldRef\images\all-02.png" />
+    <Content Include="Content\WorldRef\WorldRef\images\all-03.png" />
+    <Content Include="Content\WorldRef\WorldRef\images\all-04.png" />
+    <Content Include="Content\WorldRef\WorldRef\images\delete.png" />
+    <Content Include="Content\WorldRef\WorldRef\images\down.png" />
+    <Content Include="Content\WorldRef\WorldRef\images\drop.png" />
+    <Content Include="Content\WorldRef\WorldRef\images\fb.png" />
+    <Content Include="Content\WorldRef\WorldRef\images\image-05.png" />
+    <Content Include="Content\WorldRef\WorldRef\images\linkedin.png" />
+    <Content Include="Content\WorldRef\WorldRef\images\logo.png" />
+    <Content Include="Content\WorldRef\WorldRef\images\menu.png" />
+    <Content Include="Content\WorldRef\WorldRef\images\noComments.png" />
+    <Content Include="Content\WorldRef\WorldRef\images\twi.png" />
+    <Content Include="Content\WorldRef\WorldRef\js\drupal.js" />
+    <Content Include="Content\WorldRef\WorldRef\js\hideshare.min.js" />
+    <Content Include="Content\WorldRef\WorldRef\js\jquery-1.10.1.min.js" />
+    <Content Include="Content\WorldRef\WorldRef\js\jquery.easytabs.min.js" />
+    <Content Include="Content\WorldRef\WorldRef\js\jquery.fancybox.js" />
+    <Content Include="Content\WorldRef\WorldRef\js\jquery.hashchange.min.js" />
+    <Content Include="Content\WorldRef\WorldRef\js\jquery.js" />
+    <Content Include="Content\WorldRef\WorldRef\js\jquery.transit.min.js" />
+    <Content Include="Content\WorldRef\WorldRef\js\script.js" />
+    <Content Include="Content\WorldRef\WorldRef\worldRefInner\css\admin-ajax.css" />
+    <Content Include="Content\WorldRef\WorldRef\worldRefInner\css\dashicons.min.css" />
+    <Content Include="Content\WorldRef\WorldRef\worldRefInner\css\font-awesome.min.css" />
+    <Content Include="Content\WorldRef\WorldRef\worldRefInner\css\foundation-icons.min.css" />
+    <Content Include="Content\WorldRef\WorldRef\worldRefInner\css\jquery.fancybox.css" />
+    <Content Include="Content\WorldRef\WorldRef\worldRefInner\css\red.css" />
+    <Content Include="Content\WorldRef\WorldRef\worldRefInner\css\style.css" />
+    <Content Include="Content\WorldRef\WorldRef\worldRefInner\images\approved.png" />
+    <Content Include="Content\WorldRef\WorldRef\worldRefInner\images\basic.jpg" />
+    <Content Include="Content\WorldRef\WorldRef\worldRefInner\images\Cancel.png" />
+    <Content Include="Content\WorldRef\WorldRef\worldRefInner\images\edit.png" />
+    <Content Include="Content\WorldRef\WorldRef\worldRefInner\images\enggi.jpg" />
+    <Content Include="Content\WorldRef\WorldRef\worldRefInner\images\i4iknowledge.jpg" />
+    <Content Include="Content\WorldRef\WorldRef\worldRefInner\images\i4itraining.jpg" />
+    <Content Include="Content\WorldRef\WorldRef\worldRefInner\images\logo.png" />
+    <Content Include="Content\WorldRef\WorldRef\worldRefInner\images\noprofile.png" />
+    <Content Include="Content\WorldRef\WorldRef\worldRefInner\images\pending.jpg" />
+    <Content Include="Content\WorldRef\WorldRef\worldRefInner\images\pending.png" />
+    <Content Include="Content\WorldRef\WorldRef\worldRefInner\images\upload.png" />
+    <Content Include="Content\WorldRef\WorldRef\worldRefInner\js\hoverIntent.min.js" />
+    <Content Include="Content\WorldRef\WorldRef\worldRefInner\js\jquery.fancybox.js" />
+    <Content Include="Content\WorldRef\WorldRef\worldRefInner\js\jquery.js" />
+    <Content Include="Content\WorldRef\WorldRef\worldRefInner\js\public.js" />
+    <Content Include="Content\WorldRef\WorldRef\WorldRefSearch\css\search.css" />
+    <Content Include="Content\WorldRef\WorldRef\WorldRefSearch\img\checklist32.png" />
+    <Content Include="Content\WorldRef\WorldRef\WorldRefSearch\img\empty_filter.png" />
+    <Content Include="Content\WorldRef\WorldRef\WorldRefSearch\img\menu-logo.png" />
+    <Content Include="Content\WorldRef\WorldRef\WorldRefSearch\img\menu.png" />
+    <Content Include="Content\WorldRef\WorldRef\WorldRefSearch\img\searchbtn_28.png" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\WorldRef\css\Thumbs.db" />
+    <Content Include="Content\WorldRef\Fancy\Thumbs.db" />
+    <Content Include="Content\WorldRef\images\Thumbs.db" />
+    <Content Include="Content\WorldRef\Thumbs.db" />
+    <Content Include="Content\WorldRef\worldRefInner\font_icon\icomoon.eot" />
+    <Content Include="Content\WorldRef\worldRefInner\font_icon\icomoon.ttf" />
+    <Content Include="Content\WorldRef\worldRefInner\font_icon\icomoon.woff" />
+    <Content Include="Content\images\Thumbs.db" />
+    <Content Include="Content\font-awesome-4.1.0\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\font-awesome-4.1.0\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\font-awesome-4.1.0\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\font-awesome-4.1.0\fonts\FontAwesome.otf" />
+    <Content Include="Content\font-awesome-4.1.0\less\bordered-pulled.less" />
+    <Content Include="Content\font-awesome-4.1.0\less\core.less" />
+    <Content Include="Content\font-awesome-4.1.0\less\fixed-width.less" />
+    <Content Include="Content\font-awesome-4.1.0\less\font-awesome.less" />
+    <Content Include="Content\font-awesome-4.1.0\less\icons.less" />
+    <Content Include="Content\font-awesome-4.1.0\less\larger.less" />
+    <Content Include="Content\font-awesome-4.1.0\less\list.less" />
+    <Content Include="Content\font-awesome-4.1.0\less\mixins.less" />
+    <Content Include="Content\font-awesome-4.1.0\less\path.less" />
+    <Content Include="Content\font-awesome-4.1.0\less\rotated-flipped.less" />
+    <Content Include="Content\font-awesome-4.1.0\less\spinning.less" />
+    <Content Include="Content\font-awesome-4.1.0\less\stacked.less" />
+    <Content Include="Content\font-awesome-4.1.0\less\variables.less" />
+    <Content Include="Content\font-awesome-4.1.0\scss\font-awesome.scss" />
+    <Content Include="Content\font-awesome-4.1.0\scss\_bordered-pulled.scss" />
+    <Content Include="Content\font-awesome-4.1.0\scss\_core.scss" />
+    <Content Include="Content\font-awesome-4.1.0\scss\_fixed-width.scss" />
+    <Content Include="Content\font-awesome-4.1.0\scss\_icons.scss" />
+    <Content Include="Content\font-awesome-4.1.0\scss\_larger.scss" />
+    <Content Include="Content\font-awesome-4.1.0\scss\_list.scss" />
+    <Content Include="Content\font-awesome-4.1.0\scss\_mixins.scss" />
+    <Content Include="Content\font-awesome-4.1.0\scss\_path.scss" />
+    <Content Include="Content\font-awesome-4.1.0\scss\_rotated-flipped.scss" />
+    <Content Include="Content\font-awesome-4.1.0\scss\_spinning.scss" />
+    <Content Include="Content\font-awesome-4.1.0\scss\_stacked.scss" />
+    <Content Include="Content\font-awesome-4.1.0\scss\_variables.scss" />
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\date.format.js" />
+    <Content Include="Scripts\index.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-1.11.1.min.js" />
+    <Content Include="Scripts\jquery-1.4.4.min.js" />
+    <None Include="Scripts\jquery-1.7.1.intellisense.js" />
+    <Content Include="Scripts\jquery-1.7.1.js" />
+    <Content Include="Scripts\jquery-1.7.1.min.js" />
+    <Content Include="Scripts\jquery-ui-1.8.20.js" />
+    <Content Include="Scripts\jquery-ui-1.8.20.min.js" />
+    <Content Include="Scripts\jquery.dataTables.min.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\knockout-2.1.0.debug.js" />
+    <Content Include="Scripts\knockout-2.1.0.js" />
+    <Content Include="Scripts\modernizr-2.5.3.js" />
+    <Content Include="Scripts\NewScript\jquery-1.8.2.js" />
+    <Content Include="Scripts\NewScript\jquery-ui-1.8.11.min.js" />
+    <Content Include="Scripts\NewScript\jquery-ui.css" />
+    <Content Include="Scripts\NewScript\jquery-ui.js" />
+    <None Include="Scripts\_references.js" />
+    <Content Include="uploads\1c5c8fd7-215d-4ac0-a3dd-a991779aa890.png" />
+    <Content Include="uploads\2025877b-fe61-4cab-a6cf-87d5fefd2438.png" />
+    <Content Include="uploads\25616794-515a-48f4-8d34-f9eb204192e3.png" />
+    <Content Include="uploads\374897b8-c7cd-41e7-bc86-a83d3a6efcdc.png" />
+    <Content Include="uploads\3757c512-cb8d-4bd9-977e-4c80134acca7.png" />
+    <Content Include="uploads\45338708-82fc-468b-a16b-52ac657aee26.png" />
+    <Content Include="uploads\464e90bb-8475-4d63-97d9-7045dd923919.png" />
+    <Content Include="uploads\552e23b9-9c11-4a3d-82d7-ce8213ba035b.png" />
+    <Content Include="uploads\5b4bd0af-caa3-4c62-8ca5-ea365197272e.png" />
+    <Content Include="uploads\65c21704-73fd-4e61-a2ea-feb1a3445e4e.png" />
+    <Content Include="uploads\66ce29c4-119a-4856-af10-9af1eb1b3131.png" />
+    <Content Include="uploads\7bd10a3d-ecb9-4d63-84cb-3a2099a777ff.png" />
+    <Content Include="uploads\817fc8a1-b83f-4370-a4e0-15354e72298c.png" />
+    <Content Include="uploads\9895ea6c-f923-455b-8283-16112b3e9fe4.png" />
+    <Content Include="uploads\abdaa94f-fba4-414b-bbea-940f18dfb15d.png" />
+    <Content Include="uploads\b0275970-b2e0-4a6a-9a02-fa0f10367e6b.png" />
+    <Content Include="uploads\b1021664-1910-4ac5-b55a-fe0538425232.png" />
+    <Content Include="uploads\b1c6aa18-6644-4cad-bc16-333a91633bf3.png" />
+    <Content Include="uploads\b7cca187-9248-4838-ba78-f02aa7d1fdba.png" />
+    <Content Include="uploads\c1b64a75-8bd4-4d57-8e39-373b8abeaf29.png" />
+    <Content Include="uploads\ec2b4e0a-1203-4589-b94a-844aad56a254.png" />
+    <Content Include="uploads\f3099118-40ff-4403-8fa5-9a9b9596f3b1.png" />
+    <Content Include="uploads\f6d3f5bb-fd77-4f5e-a635-9e8d28cf63f5.png" />
+    <Content Include="uploads\f7ba0c12-6405-4ebe-855d-4ee6a6f1bf53.png" />
+    <Content Include="uploads\ff2637e8-7c28-4295-81f4-213595ea3223.png" />
+    <Content Include="uploads\video-play-2.gif" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AppointmentDiary.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="AssociateProject.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AssociateProjectIndustry.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AssociateRefferal.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Board_Management.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BusinessLayer\BaseAccessor.cs" />
+    <Compile Include="BusinessLayer\Email.cs" />
+    <Compile Include="BusinessLayer\IknowledgeLogin.cs" />
+    <Compile Include="BusinessLayer\IKnowledgeLoginModel.cs" />
+    <Compile Include="BusinessLayer\IKnowledgeQuery.cs" />
+    <Compile Include="BusinessLayer\ImageStructure.cs" />
+    <Compile Include="BusinessLayer\IndustryCategory\IIndustryCategoryAccessor.cs" />
+    <Compile Include="BusinessLayer\IndustryCategory\IndustryCategoryAccessor.cs" />
+    <Compile Include="BusinessLayer\IndustryCategory\IndustryCategoryModel.cs" />
+    <Compile Include="BusinessLayer\IndustryKnowledge\KnowledgeQueryQuestion\IQueryQuestion.cs" />
+    <Compile Include="BusinessLayer\IndustryKnowledge\KnowledgeQueryQuestion\KnowledgeQueryModel.cs" />
+    <Compile Include="BusinessLayer\IndustryKnowledge\KnowledgeQueryQuestion\QueryQustion.cs" />
+    <Compile Include="BusinessLayer\IndustrySubCategory\IIndustrySubCatAccessor.cs" />
+    <Compile Include="BusinessLayer\IndustrySubCategory\IndustrySubCatAccessor.cs" />
+    <Compile Include="BusinessLayer\IndustrySubCategory\IndustrySubCatModel.cs" />
+    <Compile Include="BusinessLayer\KnowledgeException.cs" />
+    <Compile Include="BusinessLayer\KnowledgeLogic.cs" />
+    <Compile Include="BusinessLayer\KnowledgeLogin.cs" />
+    <Compile Include="BusinessLayer\KnowledgeQueryModel.cs" />
+    <Compile Include="BusinessLayer\LikeRating.cs" />
+    <Compile Include="BusinessLayer\ReadExcel.cs" />
+    <Compile Include="BusinessLayer\SearchWorldRef.cs" />
+    <Compile Include="BusinessLayer\SearchWorldRefExtension.cs" />
+    <Compile Include="Certificate.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CompanyInfo.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CompHistory.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CompProfile.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Comp_profile_MultiLang.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ContactBook.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\PromotionLibrarayi4i\PromotionLibraryController.cs" />
+    <Compile Include="Controllers\UploaderController.cs" />
+    <Compile Include="Controllers\WorldRefController.cs" />
+    <Compile Include="Conversation.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Country.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CountryOld.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CurrentYear.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Customer_Details.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataLayer\ISignUpWorldRef.cs" />
+    <Compile Include="DataLayer\SignUpWorldRef.cs" />
+    <Compile Include="DataLayer\SignUpWorldRefModel.cs" />
+    <Compile Include="DataLayer\Type.cs" />
+    <Compile Include="FactoryOffice.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FollowUp.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ForwardQuery.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetTrainerName_Result.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="I4IEntity.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>I4IEntity.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="I4IEntity.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="I4IEntity.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>I4IEntity.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="I4IForwardQuery.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ImageLikeAndComment.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Industry.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="IndustryCategory.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="IndustrySubCategory.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="InputQueryData.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ISO.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="KnowledgeQuery.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="KnowledgeQueryAnswer.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Language.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LinkedInUser.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LoginDetailWorldRef.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ManageDocument.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\AssociateProjectDAO.cs" />
+    <Compile Include="Models\AssociateReferralDAO.cs" />
+    <Compile Include="Models\ContactBookDAO.cs" />
+    <Compile Include="Models\ConversationDAO.cs" />
+    <Compile Include="Models\CurrentYearDAO.cs" />
+    <Compile Include="Models\Customer_DetailsDAO.cs" />
+    <Compile Include="Models\ExternalClassModel.cs" />
+    <Compile Include="Models\ForwardQueryDAO.cs" />
+    <Compile Include="Models\ImageLikeCommentDAO.cs" />
+    <Compile Include="Models\InputQueryDataDAO.cs" />
+    <Compile Include="Models\JQueryDataTableParamModel.cs" />
+    <Compile Include="Models\KnowledgeQueryModel.cs" />
+    <Compile Include="Models\ProjectImageModel.cs" />
+    <Compile Include="Models\ProjectSearchModel.cs" />
+    <Compile Include="Models\PromotionLibraryModels\PromotionIndustryDAO.cs" />
+    <Compile Include="Models\PromotionLibraryModels\PromotionLibraryDAO.cs" />
+    <Compile Include="Models\PromotionLibraryModels\PromotionProductListDAO.cs" />
+    <Compile Include="Models\RegisterUserDAO.cs" />
+    <Compile Include="Models\ReviewModel.cs" />
+    <Compile Include="Models\SendMailModels.cs" />
+    <Compile Include="Models\SupplierDAO.cs" />
+    <Compile Include="Models\TopicIndustryDAO.cs" />
+    <Compile Include="Models\TrainerBookDAO.cs" />
+    <Compile Include="Models\TrainerProfileDAO.cs" />
+    <Compile Include="Models\TrainerSampleDAO.cs" />
+    <Compile Include="Models\trainerSampleModel.cs" />
+    <Compile Include="Models\Trainer_profileDAO.cs" />
+    <Compile Include="Models\TrainingSampleOrderDAO.cs" />
+    <Compile Include="Models\Utils.cs" />
+    <Compile Include="Models\WorldRefExcelDataModel.cs" />
+    <Compile Include="Models\WorldRefModel.cs" />
+    <Compile Include="Models\WorldRefSearchModel.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
+    <Compile Include="OfficeDetails_RegCorpHead.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OHSA.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="partners_Associates.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Preferred_Country.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PriceCurrency.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Product.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProductDetail.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProductImagesVideo.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProjectContactDetail.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProjectImage.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProjectImageLikeHistory.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProjectImagesVideosLike.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProjectImageVideoComment.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProjectLikeComment.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProjectLikedIP.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProjectLikeDisLike.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProjectLikeHistory.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProjectLinkedInMember.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProjectRating.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProjectRatingHistory.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProjectReview.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProjectSearchKeyword.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Promote_Associate.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PromotionCertificate.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PromotionIndustry.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PromotionLibrary.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PromotionOtherDocument.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PromotionProductList.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RegionalOffice.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RegisterUser.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RepresentationRefferal.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RepresentativeDocument.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RepresentativeOffice.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SearchImageView.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SearchImageView2.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SearchViewNew.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SearchViewVideo.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SearchViewVideo2.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Service.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_GetAssociateIndustryProducts_Result.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_GetAssociateReferrals_Result.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_GetData_Result.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_GetTrainerDetails_Result.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_search_Project_Result.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SP_SendI4IMail_Result.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_topicDetails_Result.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Story.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Supplier.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SupplierProposal.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SuppMailDetail.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TopicIndustry.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TopicTimeDuration.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TrainerBook.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TrainerSample.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Trainer_Profile.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TrainingSampleOrder.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserIndustry.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserProfile_Edit.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="User_Certificates.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="User_Certificate_DrpValue.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="User_Certificate_DrpValue_Common.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="User_Details.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="User_ProductCertificates.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="User_Rewards.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VideosLikeAndComment.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VisitUserProfile.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WorldRefExcelDataProject.cs">
+      <DependentUpon>I4IEntity.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\css\font-awesome-4.1.0\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\css\font-awesome-4.1.0\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\css\font-awesome-4.1.0\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\css\font-awesome-4.1.0\fonts\FontAwesome.otf" />
+    <Content Include="Content\css\font-awesome-4.1.0\less\bordered-pulled.less" />
+    <Content Include="Content\css\font-awesome-4.1.0\less\core.less" />
+    <Content Include="Content\css\font-awesome-4.1.0\less\fixed-width.less" />
+    <Content Include="Content\css\font-awesome-4.1.0\less\font-awesome.less" />
+    <Content Include="Content\css\font-awesome-4.1.0\less\icons.less" />
+    <Content Include="Content\css\font-awesome-4.1.0\less\larger.less" />
+    <Content Include="Content\css\font-awesome-4.1.0\less\list.less" />
+    <Content Include="Content\css\font-awesome-4.1.0\less\mixins.less" />
+    <Content Include="Content\css\font-awesome-4.1.0\less\path.less" />
+    <Content Include="Content\css\font-awesome-4.1.0\less\rotated-flipped.less" />
+    <Content Include="Content\css\font-awesome-4.1.0\less\spinning.less" />
+    <Content Include="Content\css\font-awesome-4.1.0\less\stacked.less" />
+    <Content Include="Content\css\font-awesome-4.1.0\less\variables.less" />
+    <Content Include="Content\css\font-awesome-4.1.0\scss\font-awesome.scss" />
+    <Content Include="Content\css\font-awesome-4.1.0\scss\_bordered-pulled.scss" />
+    <Content Include="Content\css\font-awesome-4.1.0\scss\_core.scss" />
+    <Content Include="Content\css\font-awesome-4.1.0\scss\_fixed-width.scss" />
+    <Content Include="Content\css\font-awesome-4.1.0\scss\_icons.scss" />
+    <Content Include="Content\css\font-awesome-4.1.0\scss\_larger.scss" />
+    <Content Include="Content\css\font-awesome-4.1.0\scss\_list.scss" />
+    <Content Include="Content\css\font-awesome-4.1.0\scss\_mixins.scss" />
+    <Content Include="Content\css\font-awesome-4.1.0\scss\_path.scss" />
+    <Content Include="Content\css\font-awesome-4.1.0\scss\_rotated-flipped.scss" />
+    <Content Include="Content\css\font-awesome-4.1.0\scss\_spinning.scss" />
+    <Content Include="Content\css\font-awesome-4.1.0\scss\_stacked.scss" />
+    <Content Include="Content\css\font-awesome-4.1.0\scss\_variables.scss" />
+    <Content Include="Content\css\worldRefInner\font_icon\icomoon.eot" />
+    <Content Include="Content\css\worldRefInner\font_icon\icomoon.ttf" />
+    <Content Include="Content\css\worldRefInner\font_icon\icomoon.woff" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\LayoutSearch.cshtml" />
+    <Content Include="Views\web.config" />
+    <Content Include="Views\WorldRef\WorldRefIndex.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="obj\Debug\build.force" />
+    <Content Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
+    <EntityDeploy Include="I4IEntity.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>I4IEntity.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="I4IEntity.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>I4IEntity.edmx</DependentUpon>
+      <LastGenOutput>I4IEntity.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="I4IEntity.edmx.diagram">
+      <DependentUpon>I4IEntity.edmx</DependentUpon>
+    </Content>
+    <Content Include="I4IEntity.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>I4IEntity.edmx</DependentUpon>
+      <LastGenOutput>I4IEntity.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\LayoutChild.cshtml" />
+    <Content Include="Views\WorldRef\_SignIN.cshtml" />
+    <Content Include="Views\Uploader\UploadExcel.cshtml" />
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\WorldRef\WorldrefIndexImageSearch.cshtml" />
+    <Content Include="Views\WorldRef\WorldrefIndexVideosSearch.cshtml" />
+    <Content Include="Views\WorldRef\ListExcelProjectsUser.cshtml" />
+    <Content Include="Views\WorldRef\AddProjects.cshtml" />
+    <Content Include="Views\WorldRef\EditparticularProject.cshtml" />
+    <Content Include="Views\WorldRef\_addProjectImage.cshtml" />
+    <Content Include="Views\WorldRef\ShowCreditForApprove.cshtml" />
+    <Content Include="Views\WorldRef\ListOfApprovedCredit.cshtml" />
+    <Content Include="Views\WorldRef\AdminReviewList1.cshtml" />
+    <Content Include="Views\WorldRef\AddMoreCertificates.cshtml" />
+    <Content Include="Views\WorldRef\_deleteProjectImage.cshtml" />
+    <Content Include="Views\WorldRef\Refer.cshtml" />
+    <Content Include="Views\PromotionLibrary\AdminPromotionList.cshtml" />
+    <Content Include="Views\PromotionLibrary\AssociatePromotionDetails.cshtml" />
+    <Content Include="Views\PromotionLibrary\AssociatePromotionList.cshtml" />
+    <Content Include="Views\PromotionLibrary\PromotionDetails.cshtml" />
+    <Content Include="Views\PromotionLibrary\PromotionLibraryForm.cshtml" />
+    <Content Include="Views\PromotionLibrary\ShowIndustryWiseAssociate.cshtml" />
+    <Content Include="Views\PromotionLibrary\WorldRefPromotionDetails.cshtml" />
+    <Content Include="Views\PromotionLibrary\WorldRefPromotionList.cshtml" />
+    <Content Include="Views\Shared\PromotionalLayout.cshtml" />
+    <Content Include="Views\WorldRef\Recruiters.cshtml" />
+    <Content Include="Views\WorldRef\Search.cshtml" />
+    <Content Include="uploads\09eed63b-0bd3-43ee-b859-e2e53131aaa0" />
+    <Content Include="uploads\18532467-6f78-42fa-b662-a803179975d1" />
+    <Content Include="uploads\1a8a938e-cda8-4c5b-b01a-ec39b58c8764" />
+    <Content Include="uploads\43dacef8-d8b7-44c7-8858-0448b1bcda0c" />
+    <Content Include="uploads\51065477-91ba-4f8c-91ac-40e702ffa07e" />
+    <Content Include="uploads\5ec16a08-9912-4d22-8b5e-0212440e3e4a" />
+    <Content Include="uploads\87fbf3d6-439d-400c-b3e8-f2c49ed4d685" />
+    <Content Include="uploads\8af62333-b3bd-4672-815f-a73263035c41" />
+    <Content Include="uploads\8cb11996-245e-4c67-b925-7440dcc15ce3" />
+    <Content Include="uploads\d906c2c9-a8fe-47a8-b433-197889a367de" />
+    <Content Include="uploads\Guidelines.docx" />
+    <Content Include="uploads\Reference List Format.xlsx" />
+    <Content Include="Views\WorldRef\DownloadProfile.cshtml" />
+    <Content Include="Views\WorldRef\ShowCertificates.cshtml" />
+    <Content Include="Views\WorldRef\ChangeUserNameAndPassword.cshtml" />
+    <Content Include="Views\WorldRef\SearchImages.cshtml" />
+    <Content Include="uploads\080157b7-c216-4c13-9049-111a4b9fddbe.pdf" />
+    <Content Include="Views\WorldRef\LayoutSearch.cshtml" />
+    <Content Include="Views\WorldRef\SecondLevelSignUp.cshtml" />
+    <Content Include="Views\WorldRef\SearchVideos.cshtml" />
+    <Content Include="Views\WorldRef\UpdateReferences.cshtml" />
+    <Content Include="Views\WorldRef\Explore.cshtml" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="obj\Debug\TempPE\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>57345</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:57345/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

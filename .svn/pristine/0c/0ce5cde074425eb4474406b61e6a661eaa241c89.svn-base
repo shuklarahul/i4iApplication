@@ -1,0 +1,213 @@
+@font-face {
+	font-family: 'icomoon';
+	src:url('../font_icon/icomoon.eot?-n0uotc');
+	src:url('../font_icon/icomoon.eot?#iefix-n0uotc') format('embedded-opentype'),
+		url('../font_icon/icomoon.woff?-n0uotc') format('woff'),
+		url('../font_icon/icomoon.ttf?-n0uotc') format('truetype'),
+		url('../font_icon/icomoon.svg?-n0uotc#icomoon') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+a{
+text-decoration:none;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+	font-family: 'icomoon';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+   
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+[class^="icon-"], [class*=" icon-"] :before {
+    color: #797979;
+    font-size: 20px;
+}
+
+.icon-message:before {
+	content: "\e614";
+   
+}
+
+.icon-video-outline:before {
+	content: "\e615";
+}
+
+.icon-thumbs-up:before {
+	content: "\e616";
+    font-size: 22px;
+   
+}
+
+.icon-thumbs-down:before {
+	content: "\e617";
+  
+
+}
+
+.icon-assignment:before {
+	content: "\e618";
+}
+
+.icon-lock-outline:before {
+	content: "\e619";
+  
+}
+
+.icon-video:before {
+	content: "\e60c";
+ 
+}
+
+.icon-document-add:before {
+	content: "\e60d";
+  
+}
+
+.icon-thumb-down:before {
+	content: "\e600";
+  
+}
+
+.icon-thumb-up:before {
+	content: "\e601";
+  
+}
+
+.icon-comment:before {
+	content: "\e602";
+    
+}
+
+.icon-textsms:before {
+	content: "\e603";
+   
+}
+
+.icon-remove-red-eye:before {
+	content: "\e604";
+   
+}
+
+.icon-delete:before {
+	content: "\e605";
+   
+}
+
+.icon-border-color:before {
+	content: "\e606";
+    
+}
+
+.icon-image:before {
+	content: "\e607";
+   
+}
+
+.icon-insert-drive-file:before {
+	content: "\e60a";
+   
+}
+
+.icon-rate-review:before {
+	content: "\e60e";
+  
+}
+
+.icon-radio:before {
+	content: "\e60f";
+  
+}
+
+.icon-comments:before {
+	content: "\e61a";
+  
+}
+
+.icon-chat:before {
+	content: "\e61b";
+ 
+}
+
+.icon-locked:before {
+	content: "\e60b";
+  
+}
+
+.icon-camera:before {
+	content: "\e610";
+  
+}
+
+.icon-film:before {
+	content: "\e611";
+   
+}
+
+.icon-pictures:before {
+	content: "\e612";
+   
+}
+
+.icon-pictures2:before {
+	content: "\e613";
+    
+}
+
+.icon-v-card:before {
+	content: "\e61c";
+    
+}
+
+.icon-video2:before {
+	content: "\e61d";
+   
+}
+
+.icon-add-user:before {
+	content: "\e61e";
+    
+}
+
+.icon-music:before {
+	content: "\e61f";
+   
+}
+
+.icon-new-message:before {
+	content: "\e620";
+   
+}
+
+.icon-news:before {
+	content: "\e621";
+    
+}
+
+.icon-link:before {
+	content: "\e608";
+   
+}
+
+.icon-article:before {
+	content: "\e609";
+    
+}
+
+
+.icon-thumbs-down:hover:before, .icon-thumbs-up:hover:before,.icon-comment:hover:before,.icon-textsms:hover:before,
+.icon-remove-red-eye:hover:before , .icon-delete:hover:before, .icon-border-color:hover:before, .icon-image:hover:before,
+.icon-insert-drive-file:hover:before,.icon-link:hover:before,.icon-article:hover:before,.icon-locked:hover:before ,
+.icon-rate-review:hover:before ,.icon-pictures2:hover:before, .icon-camera:hover:before
+{
+  color: #515050;
+  text-shadow: 1px 1px #A5A1A1;
+
+}

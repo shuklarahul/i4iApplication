@@ -1,0 +1,8 @@
+﻿@model WorldRef.DataLayer.SignUpWorldRefModel
+@{
+    ViewBag.Title = "Search";
+    Layout = "~/Views/Shared/LayoutSearchResult.cshtml";
+}
+
+
+

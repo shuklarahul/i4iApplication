@@ -1,0 +1,69 @@
+﻿@model WorldRef.Models.ProjectSearchModel
+
+<div id="content-wrapper" class="profile_part2" style="padding: 20px;width: 500px; display: block;">
+        <article>
+            <h3 class="modalh3"> Delete images & videos</h3>
+            @using (Html.BeginForm("DeleteImages", "WorldRef", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.Hidden("ProjectId", Model.id, "");
+                <table id="tblData" class="myTable webgrid-table">
+                    <thead>
+                        <tr>
+                            <th>
+                                Image name
+                            </th>
+                            <th>
+                                Image / Link
+                            </th>
+                            <th>
+                                Select
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.ListOfImages)
+                        {
+
+                            <tr>
+                                <td>
+                                    <label>@item.ImageName</label>
+                                </td>
+                                <td>
+                                    <img id="imageDisplay" src="~/uploads/@item.ImagePath" width="70">
+                                </td>
+                                <td>
+                                    <input type="checkbox" name="ids" value="@item.ImagePath" />
+                                </td>
+                            </tr>
+                        }
+                        @foreach (var item in Model.ListOfVideos)
+                        {
+                            <tr class="noMargin">
+                                <td>
+                                    <label>@item.ImageName</label>
+                                </td>
+                                <td>
+                                    <label>@item.ImagePath</label>
+                                </td>
+                                <td>
+                                    <input type="checkbox" name="ids" value="@item.ImagePath" />
+                                </td>
+                            </tr>
+
+                        }
+                    </tbody>
+                </table>
+    <div class="button_box">
+        @if (Model.ListOfImages.Count() > 0 || Model.ListOfVideos.Count() > 0)
+{
+    <input class="fancy_button" type="submit" value="Delete" id="btnSave" />
+}
+    </div>
+            }
+        </article>
+
+
+    </div>
+
+
+

@@ -1,0 +1,1663 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="I4IDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="AppointmentDiary">
+    <Key>
+      <PropertyRef Name="AppointmentID" />
+    </Key>
+    <Property Name="AppointmentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="Title" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="SomeImportantKey" Type="int" Nullable="false" />
+    <Property Name="DateTimeScheduled" Type="datetime" Nullable="false" />
+    <Property Name="AppointmentLength" Type="int" Nullable="false" />
+    <Property Name="StatusENUM" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AssociateProjectIndustries">
+    <Key>
+      <PropertyRef Name="AssProjectIndustriesID" />
+    </Key>
+    <Property Name="AssProjectIndustriesID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="ProductName" Type="nvarchar" MaxLength="250" />
+    <Property Name="IndustriesID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AssociateProjects">
+    <Key>
+      <PropertyRef Name="AssociateProjectID" />
+    </Key>
+    <Property Name="AssociateProjectID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="CustomerName" Type="nvarchar(max)" />
+    <Property Name="ProjectName" Type="nvarchar(max)" />
+    <Property Name="Industry" Type="nvarchar(max)" />
+    <Property Name="ProjectInquiryType" Type="nvarchar(max)" />
+    <Property Name="SalesMarginExpectation" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="CustomerType" Type="nvarchar" MaxLength="100" />
+    <Property Name="ProjectInquiryStatus" Type="nvarchar(max)" />
+    <Property Name="ImportantDate" Type="datetime" />
+    <Property Name="InquirySubmissionDate" Type="datetime" />
+    <Property Name="OfferSubmissionDate" Type="datetime" />
+    <Property Name="LetterIntentReleaseDate" Type="datetime" />
+    <Property Name="ContractSigningDate" Type="datetime" />
+    <Property Name="FirstPaymentdate" Type="datetime" />
+    <Property Name="CompletePaymentdate" Type="datetime" />
+    <Property Name="ContractExecutionDate" Type="datetime" />
+    <Property Name="CollaborateWithUs" Type="char" MaxLength="10" />
+    <Property Name="AssociateWithi4i" Type="char" MaxLength="10" />
+    <Property Name="Attachment" Type="nvarchar(max)" />
+    <Property Name="UserNo" Type="nvarchar" MaxLength="50" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="ReasonForDisapprove" Type="varchar(max)" />
+    <Property Name="CurrentYear" Type="varchar" MaxLength="50" />
+    <Property Name="Status" Type="char" MaxLength="1" />
+    <Property Name="ContactNumber" Type="char" MaxLength="10" />
+    <Property Name="Capacity" Type="nvarchar" MaxLength="150" />
+    <Property Name="Description" Type="nvarchar(max)" />
+    <Property Name="ReasonOfUnhappiness" Type="nvarchar(max)" />
+    <Property Name="OfferDocument" Type="nvarchar(max)" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <EntityType Name="AssociateRefferal">
+    <Key>
+      <PropertyRef Name="AssociateRefferalID" />
+    </Key>
+    <Property Name="AssociateRefferalID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PersonName" Type="nvarchar" MaxLength="250" />
+    <Property Name="ContactNumber" Type="char" MaxLength="10" />
+    <Property Name="ReferralEmail" Type="varchar" MaxLength="250" />
+    <Property Name="ReferredBy" Type="char" MaxLength="10" />
+    <Property Name="Status" Type="bit" />
+  </EntityType>
+  <EntityType Name="Board_Management">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CompID" Type="varchar" MaxLength="50" />
+    <Property Name="Name" Type="varchar" MaxLength="150" />
+    <Property Name="Designation" Type="varchar" MaxLength="150" />
+    <Property Name="Description" Type="varchar" MaxLength="500" />
+    <Property Name="Photo" Type="varchar" MaxLength="250" />
+    <Property Name="Type" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Certificates">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CompID" Type="varchar" MaxLength="150" />
+    <Property Name="TypeOfCertificate" Type="varchar" MaxLength="250" />
+    <Property Name="RefNo" Type="varchar" MaxLength="50" />
+    <Property Name="Name" Type="varchar" MaxLength="150" />
+    <Property Name="IssuedBy" Type="varchar" MaxLength="150" />
+    <Property Name="StartDate" Type="varchar" MaxLength="50" />
+    <Property Name="EndDate" Type="varchar" MaxLength="50" />
+    <Property Name="Image1" Type="varchar" MaxLength="150" />
+    <Property Name="Image2" Type="varchar" MaxLength="150" />
+    <Property Name="Image3" Type="varchar" MaxLength="150" />
+    <Property Name="Scope" Type="varchar(max)" />
+  </EntityType>
+  <EntityType Name="Comp_profile_MultiLang">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CompID" Type="varchar" MaxLength="50" />
+    <Property Name="Profile" Type="varchar" MaxLength="50" />
+    <Property Name="Language" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="CompanyInfo">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CompanyName" Type="varchar" MaxLength="150" />
+    <Property Name="Vision" Type="varchar" MaxLength="200" />
+    <Property Name="BusinessInterest" Type="varchar" MaxLength="250" />
+    <Property Name="WeAre" Type="varchar" MaxLength="150" />
+    <Property Name="YearOfCompReg" Type="varchar" MaxLength="50" />
+    <Property Name="TotalEmployee" Type="varchar" MaxLength="50" />
+    <Property Name="FinancialRating" Type="varchar" MaxLength="50" />
+    <Property Name="VideoProfile" Type="varchar" MaxLength="250" />
+  </EntityType>
+  <EntityType Name="CompHistory">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CompID" Type="varchar" MaxLength="50" />
+    <Property Name="Year" Type="varchar" MaxLength="10" />
+    <Property Name="Discription" Type="varchar" MaxLength="500" />
+  </EntityType>
+  <EntityType Name="CompProfile">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CompID" Type="varchar" MaxLength="50" />
+    <Property Name="FileName" Type="varchar" MaxLength="150" />
+    <Property Name="Language" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="ContactBook">
+    <Key>
+      <PropertyRef Name="ContactBookID" />
+    </Key>
+    <Property Name="ContactBookID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ContactName" Type="varchar" MaxLength="250" />
+    <Property Name="Email" Type="nvarchar" MaxLength="150" />
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="Company" Type="varchar" MaxLength="250" />
+    <Property Name="ContactNumber" Type="char" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="Conversation">
+    <Key>
+      <PropertyRef Name="ConversationID" />
+    </Key>
+    <Property Name="ConversationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProjectID" Type="int" Nullable="false" />
+    <Property Name="Message" Type="nvarchar(max)" />
+    <Property Name="Time" Type="datetime" />
+    <Property Name="Proposalfile" Type="nvarchar(max)" />
+    <Property Name="Subject" Type="nvarchar" MaxLength="550" />
+    <Property Name="SentBy" Type="nvarchar" MaxLength="250" />
+  </EntityType>
+  <EntityType Name="Country">
+    <Key>
+      <PropertyRef Name="CountryID" />
+    </Key>
+    <Property Name="CountryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CountryName" Type="nvarchar" MaxLength="255" />
+    <Property Name="Code" Type="varchar" MaxLength="150" />
+    <Property Name="ISOCode" Type="nvarchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="CountryOld">
+    <Key>
+      <PropertyRef Name="CountryID" />
+    </Key>
+    <Property Name="CountryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Code" Type="varchar" MaxLength="150" />
+    <Property Name="CountryName" Type="varchar" MaxLength="150" />
+  </EntityType>
+  <EntityType Name="CurrentYear">
+    <Key>
+      <PropertyRef Name="CurrentYearID" />
+    </Key>
+    <Property Name="CurrentYearID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CurrentYear" Type="varchar" MaxLength="50" />
+    <Property Name="ProjectName" Type="nvarchar" MaxLength="250" />
+    <Property Name="CustomerName" Type="varchar" MaxLength="150" />
+    <Property Name="ProjectStatus" Type="nvarchar" MaxLength="250" />
+    <Property Name="PaymentStatus" Type="nvarchar" MaxLength="250" />
+  </EntityType>
+  <EntityType Name="Customer_Details">
+    <Key>
+      <PropertyRef Name="CustomerDetailsID" />
+    </Key>
+    <Property Name="CustomerDetailsID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BookTrainerID" Type="int" />
+    <Property Name="Name" Type="nvarchar" MaxLength="150" />
+    <Property Name="EmailId" Type="nvarchar" MaxLength="150" />
+    <Property Name="ContactNumber" Type="char" MaxLength="10" />
+    <Property Name="Country" Type="nvarchar" MaxLength="150" />
+    <Property Name="Organisation" Type="nvarchar" MaxLength="150" />
+  </EntityType>
+  <EntityType Name="FactoryOffice">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CompID" Type="varchar" MaxLength="50" />
+    <Property Name="StreetNo" Type="varchar" MaxLength="150" />
+    <Property Name="Country" Type="varchar" MaxLength="50" />
+    <Property Name="City" Type="varchar" MaxLength="50" />
+    <Property Name="OfficeContactNo" Type="varchar" MaxLength="50" />
+    <Property Name="ContactPerson" Type="varchar" MaxLength="50" />
+    <Property Name="ContactNo" Type="varchar" MaxLength="50" />
+    <Property Name="Email" Type="varchar" MaxLength="50" />
+    <Property Name="Designation" Type="varchar" MaxLength="50" />
+    <Property Name="CorrespondenceAddress" Type="varchar" MaxLength="50" />
+    <Property Name="PersonUndEnglish" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="FollowUp">
+    <Key>
+      <PropertyRef Name="FollowID" />
+    </Key>
+    <Property Name="FollowID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EmailID" Type="nvarchar" MaxLength="250" />
+    <Property Name="IndustriesID" Type="int" />
+  </EntityType>
+  <EntityType Name="ForwardQuery">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SupplierId" Type="bigint" />
+    <Property Name="QueryId" Type="bigint" />
+  </EntityType>
+  <EntityType Name="I4IForwardQuery">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SuppId" Type="bigint" />
+    <Property Name="QueryId" Type="bigint" />
+  </EntityType>
+  <EntityType Name="ImageLikeAndComment">
+    <Key>
+      <PropertyRef Name="PImageLikeId" />
+    </Key>
+    <Property Name="PImageLikeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ImageId" Type="int" />
+    <Property Name="UserId" Type="int" />
+    <Property Name="ProjectId" Type="int" />
+    <Property Name="ImgLikeFlag" Type="bit" />
+    <Property Name="ImageTestimonials" Type="nvarchar(max)" />
+    <Property Name="CmtImgFlag" Type="bit" />
+  </EntityType>
+  <EntityType Name="Industries">
+    <Key>
+      <PropertyRef Name="IndustriesID" />
+    </Key>
+    <Property Name="IndustriesID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IndustriesName" Type="varchar" MaxLength="150" />
+  </EntityType>
+  <EntityType Name="IndustryCategory">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IndustryId" Type="int" />
+    <Property Name="CategoryName" Type="nvarchar(max)" />
+    <Property Name="createdon" Type="datetime" />
+  </EntityType>
+  <EntityType Name="IndustrySubCategory">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IndustryId" Type="int" />
+    <Property Name="IndusCategoryId" Type="int" />
+    <Property Name="SubCategoryName" Type="nvarchar(max)" />
+    <Property Name="createdon" Type="datetime" />
+  </EntityType>
+  <EntityType Name="InputQueryData">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Attachments" Type="nvarchar(max)" />
+    <Property Name="QueryText" Type="nvarchar(max)" />
+    <Property Name="UQueryNum" Type="nvarchar(max)" />
+    <Property Name="acion" Type="nvarchar" MaxLength="10" />
+    <Property Name="QDate" Type="date" />
+    <Property Name="Supplier" Type="bigint" />
+    <Property Name="ForwardDate" Type="date" />
+    <Property Name="UserNo" Type="nvarchar" MaxLength="100" />
+    <Property Name="QType" Type="char" MaxLength="1" />
+  </EntityType>
+  <EntityType Name="ISO">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserID" Type="varchar" MaxLength="50" />
+    <Property Name="FileName" Type="varchar" MaxLength="150" />
+  </EntityType>
+  <EntityType Name="KnowledgeQuery">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IndustryId" Type="int" Nullable="false" />
+    <Property Name="Query" Type="nvarchar(max)" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="IndustryCatId" Type="int" />
+    <Property Name="IndustrySubCatId" Type="int" />
+  </EntityType>
+  <EntityType Name="KnowledgeQueryAnswer">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="QueryID" Type="int" />
+    <Property Name="UserId" Type="int" />
+    <Property Name="QueryAnswer" Type="nvarchar(max)" />
+    <Property Name="createdOn" Type="datetime" />
+    <Property Name="Relevant" Type="bit" />
+  </EntityType>
+  <EntityType Name="Language">
+    <Key>
+      <PropertyRef Name="LanguageID" />
+    </Key>
+    <Property Name="LanguageID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LanguageName" Type="nvarchar" MaxLength="150" />
+  </EntityType>
+  <EntityType Name="LinkedInUser">
+    <Key>
+      <PropertyRef Name="LinkedinUserID" />
+    </Key>
+    <Property Name="LinkedinUserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id" Type="int" />
+    <Property Name="userId" Type="int" />
+    <Property Name="FirstName" Type="nvarchar(max)" />
+    <Property Name="LastName" Type="nvarchar(max)" />
+    <Property Name="Email" Type="nvarchar(max)" />
+    <Property Name="Industry" Type="nvarchar(max)" />
+    <Property Name="CreditM" Type="bit" />
+    <Property Name="IsApproved" Type="bit" />
+    <Property Name="Designation" Type="nvarchar" MaxLength="100" />
+    <Property Name="Approvedate" Type="datetime" />
+    <Property Name="picUrl" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="LoginDetailWorldRef">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="350" />
+    <Property Name="Type" Type="varchar" MaxLength="350" />
+    <Property Name="Email" Type="varchar" MaxLength="250" />
+    <Property Name="Industry" Type="nvarchar" MaxLength="250" />
+    <Property Name="ContactNumber" Type="nvarchar" MaxLength="250" />
+    <Property Name="Country" Type="int" />
+    <Property Name="ProfilePath" Type="nvarchar" MaxLength="250" />
+    <Property Name="ProfileName" Type="nvarchar" MaxLength="250" />
+    <Property Name="UserName" Type="varchar" MaxLength="250" />
+    <Property Name="Password" Type="nvarchar" MaxLength="250" />
+    <Property Name="IsLogin" Type="int" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="dateModified" Type="datetime" />
+    <Property Name="isDeleted" Type="int" />
+  </EntityType>
+  <EntityType Name="ManageDocument">
+    <Key>
+      <PropertyRef Name="DocumentID" />
+    </Key>
+    <Property Name="DocumentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="UserNo" Type="nvarchar(max)" />
+    <Property Name="DocumentType" Type="nvarchar" MaxLength="150" />
+    <Property Name="Name" Type="nvarchar(max)" />
+    <Property Name="Country" Type="nvarchar" MaxLength="250" />
+    <Property Name="Industry" Type="nvarchar(max)" />
+    <Property Name="Topic" Type="nvarchar(max)" />
+    <Property Name="Time" Type="datetime" />
+    <Property Name="Charges" Type="nvarchar(max)" />
+    <Property Name="CreatedDate" Type="date" />
+    <Property Name="SampleAttach" Type="nvarchar(max)" />
+    <Property Name="Status" Type="nvarchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="OfficeDetails_RegCorpHead">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CompID" Type="varchar" MaxLength="50" />
+    <Property Name="StreetNo" Type="varchar" MaxLength="150" />
+    <Property Name="Country" Type="varchar" MaxLength="50" />
+    <Property Name="City" Type="varchar" MaxLength="50" />
+    <Property Name="OfficeContactNo" Type="varchar" MaxLength="50" />
+    <Property Name="ContactPerson" Type="varchar" MaxLength="50" />
+    <Property Name="ContactNo" Type="varchar" MaxLength="50" />
+    <Property Name="Email" Type="varchar" MaxLength="50" />
+    <Property Name="Designation" Type="varchar" MaxLength="50" />
+    <Property Name="CorrespondenceAddress" Type="varchar" MaxLength="50" />
+    <Property Name="PersonUndEnglish" Type="varchar" MaxLength="50" />
+    <Property Name="OfficeType" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="OHSAS">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserID" Type="varchar" MaxLength="150" />
+    <Property Name="FileName" Type="varchar" MaxLength="150" />
+  </EntityType>
+  <EntityType Name="partners_Associates">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="150" />
+    <Property Name="TypeOfPartnership" Type="varchar" MaxLength="150" />
+    <Property Name="Description" Type="varchar" MaxLength="500" />
+    <Property Name="territories" Type="varchar" MaxLength="250" />
+    <Property Name="Logo" Type="varchar" MaxLength="150" />
+    <Property Name="CompID" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Preferred_Country">
+    <Key>
+      <PropertyRef Name="PreferredCountryID" />
+    </Key>
+    <Property Name="PreferredCountryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PreferredCountryName" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="PriceCurrency">
+    <Key>
+      <PropertyRef Name="CurrencyID" />
+    </Key>
+    <Property Name="CurrencyID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Currency" Type="nvarchar" MaxLength="150" />
+  </EntityType>
+  <EntityType Name="ProductDetails">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CompID" Type="varchar" MaxLength="50" />
+    <Property Name="ProductName" Type="varchar" MaxLength="250" />
+    <Property Name="ProductDesc" Type="varchar" MaxLength="500" />
+    <Property Name="ProductKeywords" Type="varchar" MaxLength="500" />
+  </EntityType>
+  <EntityType Name="ProductImagesVideos">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductID" Type="varchar" MaxLength="50" />
+    <Property Name="Image" Type="varchar" MaxLength="150" />
+    <Property Name="video" Type="varchar" MaxLength="150" />
+    <Property Name="EnquiryFormat" Type="varchar" MaxLength="150" />
+  </EntityType>
+  <EntityType Name="Products">
+    <Key>
+      <PropertyRef Name="ProductID" />
+    </Key>
+    <Property Name="ProductID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductName" Type="varchar" MaxLength="150" />
+  </EntityType>
+  <EntityType Name="ProjectContactDetails">
+    <Key>
+      <PropertyRef Name="ContactDetailID" />
+    </Key>
+    <Property Name="ContactDetailID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="ContactName" Type="varchar" MaxLength="150" />
+    <Property Name="ContactNumber" Type="char" MaxLength="10" />
+    <Property Name="Email" Type="nvarchar" MaxLength="150" />
+    <Property Name="Organisation" Type="nvarchar(max)" />
+    <Property Name="IndustriesID" Type="int" />
+    <Property Name="ModifiedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="ProjectImageLikeHistory">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProjectId" Type="int" />
+    <Property Name="ProjectImageId" Type="int" />
+    <Property Name="userId" Type="int" />
+    <Property Name="likedOn" Type="datetime" />
+  </EntityType>
+  <EntityType Name="ProjectImages">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProjectId" Type="int" />
+    <Property Name="ImageName" Type="nvarchar" MaxLength="250" />
+    <Property Name="ImagePath" Type="nvarchar(max)" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="link" Type="bit" />
+    <Property Name="ProjectCertificates" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="ProjectImagesVideosLikes">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProjectId" Type="int" />
+    <Property Name="ProjectImageId" Type="int" />
+    <Property Name="TotalLikes" Type="int" />
+    <Property Name="modifiedOn" Type="datetime" />
+  </EntityType>
+  <EntityType Name="ProjectImageVideoComment">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProjectId" Type="int" />
+    <Property Name="ProjectImageId" Type="int" />
+    <Property Name="Review" Type="nvarchar(max)" />
+    <Property Name="createdOn" Type="datetime" />
+    <Property Name="UserId" Type="int" />
+    <Property Name="Show" Type="bit" />
+  </EntityType>
+  <EntityType Name="ProjectLikeComment">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="projectId" Type="int" />
+    <Property Name="comment" Type="nvarchar(max)" />
+    <Property Name="date" Type="datetime" />
+  </EntityType>
+  <EntityType Name="ProjectLikedIP">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProjectId" Type="int" />
+    <Property Name="Ip" Type="varchar" MaxLength="20" />
+    <Property Name="likedon" Type="datetime" />
+  </EntityType>
+  <EntityType Name="ProjectLikeDisLike">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="projectId" Type="int" />
+    <Property Name="totalLike" Type="int" />
+    <Property Name="totalDislike" Type="nchar" MaxLength="10" />
+    <Property Name="flag" Type="bit" />
+  </EntityType>
+  <EntityType Name="ProjectLikeHistory">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProjectId" Type="int" />
+    <Property Name="userId" Type="int" />
+    <Property Name="likeOn" Type="datetime" />
+  </EntityType>
+  <EntityType Name="ProjectLinkedInMember">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProfileUrl" Type="varchar" MaxLength="250" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+    <Property Name="IsAuthorized" Type="bit" Nullable="false" />
+    <Property Name="createdOn" Type="datetime" Nullable="false" />
+    <Property Name="ProjectId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProjectRating">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="projectId" Type="int" />
+    <Property Name="rating" Type="nvarchar" MaxLength="50" />
+    <Property Name="QualityRating" Type="nvarchar" MaxLength="50" />
+    <Property Name="UserRating" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="ProjectRatingHistory">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProjectId" Type="int" />
+    <Property Name="rating" Type="varchar" MaxLength="50" />
+    <Property Name="date" Type="datetime" />
+  </EntityType>
+  <EntityType Name="ProjectReview">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="userId" Type="int" />
+    <Property Name="Review" Type="nvarchar(max)" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="ProjectId" Type="int" />
+    <Property Name="Show" Type="bit" />
+    <Property Name="flag" Type="bit" />
+    <Property Name="IsAdminApproved" Type="bit" />
+    <Property Name="Publish" Type="bit" />
+    <Property Name="UnPublish" Type="bit" />
+    <Property Name="AdminFlag" Type="bit" />
+  </EntityType>
+  <EntityType Name="ProjectSearchKeywords">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProjectId" Type="int" />
+    <Property Name="SearchKeyword" Type="varchar(max)" />
+    <Property Name="createdOn" Type="datetime" />
+    <Property Name="isDeleted" Type="bit" />
+  </EntityType>
+  <EntityType Name="Promote_Associate">
+    <Key>
+      <PropertyRef Name="PromoteID" />
+    </Key>
+    <Property Name="PromoteID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PromotionLibraryID" Type="int" />
+    <Property Name="Id" Type="int" />
+    <Property Name="IndustriesID" Type="int" />
+  </EntityType>
+  <EntityType Name="PromotionCertificate">
+    <Key>
+      <PropertyRef Name="CertificationID" />
+    </Key>
+    <Property Name="CertificationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PromotionLibraryID" Type="int" Nullable="false" />
+    <Property Name="CertificateName" Type="varchar" MaxLength="150" />
+    <Property Name="CertificateAttachment" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="PromotionIndustry">
+    <Key>
+      <PropertyRef Name="PromotionIndustriesID" />
+    </Key>
+    <Property Name="PromotionIndustriesID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PromotionLibraryID" Type="int" />
+    <Property Name="IndustriesID" Type="int" />
+  </EntityType>
+  <EntityType Name="PromotionLibrary">
+    <Key>
+      <PropertyRef Name="PromotionLibraryID" />
+    </Key>
+    <Property Name="PromotionLibraryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PName" Type="varchar" MaxLength="150" />
+    <Property Name="PEmailId" Type="nvarchar" MaxLength="100" />
+    <Property Name="PContactNumber" Type="char" MaxLength="12" />
+    <Property Name="PReference" Type="nvarchar(max)" />
+    <Property Name="PCompanyProfile" Type="nvarchar(max)" />
+    <Property Name="IndustriesID" Type="int" Nullable="false" />
+    <Property Name="ReasonForDisapproved" Type="varchar(max)" />
+    <Property Name="Status" Type="char" MaxLength="1" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PromotionOtherDocument">
+    <Key>
+      <PropertyRef Name="POtherDocumentID" />
+    </Key>
+    <Property Name="POtherDocumentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PromotionLibraryID" Type="int" Nullable="false" />
+    <Property Name="OtherDocumentName" Type="varchar" MaxLength="150" />
+    <Property Name="DocumentAttachment" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="PromotionProductList">
+    <Key>
+      <PropertyRef Name="PromotionProductID" />
+    </Key>
+    <Property Name="PromotionProductID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PromotionLibraryID" Type="int" Nullable="false" />
+    <Property Name="ProductName" Type="nvarchar" MaxLength="150" />
+    <Property Name="ProductBrochure" Type="nvarchar(max)" />
+    <Property Name="ProductIndustry" Type="nvarchar(max)" />
+    <Property Name="URSFormat" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="RegionalOffice">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CompID" Type="varchar" MaxLength="50" />
+    <Property Name="StreetNo" Type="varchar" MaxLength="150" />
+    <Property Name="Country" Type="varchar" MaxLength="50" />
+    <Property Name="City" Type="varchar" MaxLength="50" />
+    <Property Name="OfficeContactNo" Type="varchar" MaxLength="50" />
+    <Property Name="ContactPerson" Type="varchar" MaxLength="50" />
+    <Property Name="ContactNo" Type="varchar" MaxLength="50" />
+    <Property Name="Email" Type="varchar" MaxLength="50" />
+    <Property Name="Designation" Type="varchar" MaxLength="50" />
+    <Property Name="CorrespondenceAddress" Type="varchar" MaxLength="50" />
+    <Property Name="PersonUndEnglish" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="RegisterUser">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserNo" Type="nvarchar" MaxLength="100" />
+    <Property Name="Email" Type="nvarchar(max)" />
+    <Property Name="Date" Type="date" />
+    <Property Name="UserFirstName" Type="nvarchar(max)" />
+    <Property Name="UserLastName" Type="nvarchar(max)" />
+    <Property Name="phone" Type="nvarchar(max)" />
+    <Property Name="UserRole" Type="nvarchar" MaxLength="1" />
+    <Property Name="Company" Type="nvarchar(max)" />
+    <Property Name="Password" Type="nvarchar" MaxLength="50" />
+    <Property Name="ProfileAttach" Type="nvarchar(max)" />
+    <Property Name="PhotoAttach" Type="nvarchar(max)" />
+    <Property Name="CountryName" Type="varchar" MaxLength="150" />
+    <Property Name="BusinessInterestCountry" Type="varchar(max)" />
+    <Property Name="Products" Type="varchar" MaxLength="150" />
+    <Property Name="Region" Type="varchar" MaxLength="150" />
+    <Property Name="Industries" Type="varchar" MaxLength="150" />
+    <Property Name="ReferredBy" Type="nvarchar" MaxLength="100" />
+    <Property Name="Type" Type="nvarchar" MaxLength="250" />
+    <Property Name="RecruitmentType" Type="nvarchar" MaxLength="150" />
+    <Property Name="ProfileUrl" Type="nvarchar(max)" />
+    <Property Name="OrgName" Type="nvarchar(max)" />
+    <Property Name="RecruiterFlag" Type="bit" />
+    <Property Name="UploaderType" Type="nvarchar(max)" />
+    <Property Name="OrganisationName" Type="nvarchar(max)" />
+    <Property Name="BussinessUnitName" Type="nvarchar(max)" />
+    <Property Name="MyCompany" Type="nvarchar(max)" />
+    <Property Name="RecoveryMail" Type="nvarchar(max)" />
+    <Property Name="OtherMail" Type="nvarchar(max)" />
+    <Property Name="OfficialNumber" Type="nvarchar(max)" />
+    <Property Name="ProfileLanguageID" Type="int" />
+  </EntityType>
+  <EntityType Name="RepresentationRefferal">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ReferralEmailID" Type="varchar" MaxLength="300" />
+    <Property Name="ReferredID" Type="int" />
+  </EntityType>
+  <EntityType Name="RepresentativeDocument">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DocumentFile" Type="varchar" MaxLength="300" />
+    <Property Name="ShownToRepresentative" Type="int" />
+    <Property Name="UploadDate" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="RepresentativeOffice">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CompID" Type="varchar" MaxLength="50" />
+    <Property Name="StreetNo" Type="varchar" MaxLength="150" />
+    <Property Name="Country" Type="varchar" MaxLength="50" />
+    <Property Name="City" Type="varchar" MaxLength="50" />
+    <Property Name="OfficeContactNo" Type="varchar" MaxLength="50" />
+    <Property Name="ContactPerson" Type="varchar" MaxLength="50" />
+    <Property Name="ContactNo" Type="varchar" MaxLength="50" />
+    <Property Name="Email" Type="varchar" MaxLength="50" />
+    <Property Name="Designation" Type="varchar" MaxLength="50" />
+    <Property Name="CorrespondenceAddress" Type="varchar" MaxLength="50" />
+    <Property Name="PersonUndEnglish" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Services">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ServiceName" Type="varchar" MaxLength="150" />
+    <Property Name="Description" Type="varchar" MaxLength="500" />
+    <Property Name="Keywords" Type="varchar" MaxLength="500" />
+    <Property Name="Brochure" Type="varchar" MaxLength="250" />
+    <Property Name="CompID" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Story">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CompID" Type="varchar" MaxLength="50" />
+    <Property Name="Photo" Type="varchar" MaxLength="150" />
+    <Property Name="InterviewWith" Type="varchar" MaxLength="150" />
+    <Property Name="StoryText" Type="varchar(max)" />
+  </EntityType>
+  <EntityType Name="Supplier">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Company" Type="nvarchar(max)" />
+    <Property Name="ContactPersonName" Type="nvarchar(max)" />
+    <Property Name="phone" Type="nvarchar" MaxLength="10" />
+    <Property Name="Email" Type="varchar(max)" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="50" />
+    <Property Name="password" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="SupplierProposals">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SupplierId" Type="bigint" />
+    <Property Name="UQueryNum" Type="nvarchar" MaxLength="50" />
+    <Property Name="attachment" Type="nvarchar(max)" />
+    <Property Name="ProposalDate" Type="date" />
+    <Property Name="QueryId" Type="bigint" />
+    <Property Name="status" Type="nvarchar" MaxLength="10" />
+    <Property Name="I4IForwardDate" Type="date" />
+    <Property Name="Deviations" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="SuppMailDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SupplierId" Type="bigint" />
+    <Property Name="QueryId" Type="bigint" />
+  </EntityType>
+  <EntityType Name="TopicIndustry">
+    <Key>
+      <PropertyRef Name="IndustryTopicID" />
+    </Key>
+    <Property Name="IndustryTopicID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="IndustriesID" Type="int" Nullable="false" />
+    <Property Name="Topic" Type="nvarchar(max)" />
+    <Property Name="CurrencyID" Type="int" Nullable="false" />
+    <Property Name="Price" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="TimeDurationID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TopicTimeDuration">
+    <Key>
+      <PropertyRef Name="TimeDurationID" />
+    </Key>
+    <Property Name="TimeDurationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TimeDuration" Type="nvarchar" MaxLength="250" />
+  </EntityType>
+  <EntityType Name="Trainer_Profile">
+    <Key>
+      <PropertyRef Name="TrainerProfileID" />
+    </Key>
+    <Property Name="TrainerProfileID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="UserNo" Type="nvarchar" MaxLength="100" />
+    <Property Name="UserName" Type="varchar" MaxLength="150" />
+    <Property Name="TrainerImage" Type="nvarchar(max)" />
+    <Property Name="Iam" Type="varchar" MaxLength="250" />
+    <Property Name="Organisation" Type="nvarchar" MaxLength="250" />
+    <Property Name="Designation" Type="nvarchar" MaxLength="250" />
+    <Property Name="Age" Type="int" />
+    <Property Name="Country" Type="varchar" MaxLength="150" />
+    <Property Name="LocatedAt" Type="nvarchar(max)" />
+    <Property Name="SpeakLanguages" Type="nvarchar" MaxLength="150" />
+    <Property Name="FluentEnglish" Type="bit" />
+    <Property Name="IntrestedIndustries" Type="nvarchar" MaxLength="250" />
+    <Property Name="AnswerQuery" Type="bit" />
+    <Property Name="HelthIssue" Type="bit" />
+    <Property Name="PreferredCountry" Type="nvarchar" MaxLength="250" />
+    <Property Name="Passport" Type="bit" />
+    <Property Name="CompleteName" Type="varchar(max)" />
+    <Property Name="PassportNumber" Type="nvarchar" MaxLength="20" />
+    <Property Name="IssuePlace" Type="nvarchar(max)" />
+    <Property Name="IssueDate" Type="datetime" />
+    <Property Name="ExpiryDate" Type="datetime" />
+    <Property Name="Citizenship" Type="varchar" MaxLength="50" />
+    <Property Name="Keyword" Type="nvarchar" MaxLength="250" />
+    <Property Name="Topic" Type="nvarchar" MaxLength="350" />
+    <Property Name="TimeDuration" Type="nvarchar" MaxLength="250" />
+    <Property Name="Price" Type="nvarchar(max)" />
+    <Property Name="Currency" Type="nvarchar" MaxLength="150" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <EntityType Name="TrainerBook">
+    <Key>
+      <PropertyRef Name="BookTrainerID" />
+    </Key>
+    <Property Name="BookTrainerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IndustryTopicID" Type="int" Nullable="false" />
+    <Property Name="Topic" Type="varchar" MaxLength="250" />
+    <Property Name="TotalTopic" Type="int" />
+    <Property Name="TotalHours" Type="int" />
+    <Property Name="TotalPayments" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="BookingDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="TrainerSample">
+    <Key>
+      <PropertyRef Name="SampleId" />
+    </Key>
+    <Property Name="SampleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserNo" Type="nvarchar" MaxLength="100" />
+    <Property Name="DocumentType" Type="nvarchar" MaxLength="150" />
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="SampleAttach" Type="nvarchar" MaxLength="250" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <EntityType Name="TrainingSampleOrder">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TrainerId" Type="bigint" />
+    <Property Name="OrderDate" Type="date" />
+    <Property Name="OrderHr" Type="nvarchar" MaxLength="2" />
+    <Property Name="OrderMin" Type="nvarchar" MaxLength="2" />
+    <Property Name="OrderAm" Type="nvarchar" MaxLength="2" />
+    <Property Name="Email" Type="nvarchar(max)" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'I4IDB.dbo.User_Certificate_DrpValue' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="User_Certificate_DrpValue">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CertificateType" Type="varchar" MaxLength="100" />
+    <Property Name="Name" Type="varchar" MaxLength="200" />
+    <Property Name="Title" Type="varchar" MaxLength="500" />
+    <Property Name="CreatedDate" Type="datetime" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'I4IDB.dbo.User_Certificate_DrpValue_Common' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="User_Certificate_DrpValue_Common">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="200" />
+    <Property Name="Title" Type="varchar" MaxLength="500" />
+    <Property Name="CreatedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="User_Certificates">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Userid" Type="int" />
+    <Property Name="CertificateName" Type="varchar" MaxLength="500" />
+    <Property Name="CertificateFileName" Type="varchar" MaxLength="500" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="ModifiedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="User_Details">
+    <Key>
+      <PropertyRef Name="UserDetailsID" />
+    </Key>
+    <Property Name="UserDetailsID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserName" Type="varchar(max)" />
+    <Property Name="Keywords" Type="nvarchar(max)" />
+    <Property Name="LocationIP" Type="nvarchar(max)" />
+    <Property Name="LastLogin" Type="datetime" />
+    <Property Name="EmailId" Type="nvarchar" MaxLength="150" />
+    <Property Name="flag" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="User_ProductCertificates">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CertificateName" Type="int" />
+    <Property Name="CertificateIssuedBy" Type="int" />
+    <Property Name="CertificateAttactedFile" Type="varchar" MaxLength="200" />
+    <Property Name="Startdate" Type="varchar" MaxLength="100" />
+    <Property Name="Enddate" Type="varchar" MaxLength="100" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="Userid" Type="int" />
+    <Property Name="CameFrom" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="User_Rewards">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Userid" Type="int" />
+    <Property Name="RewardName" Type="varchar" MaxLength="500" />
+    <Property Name="RewardFileName" Type="varchar" MaxLength="500" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="ModifiedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="UserIndustry">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="IndustryId" Type="int" Nullable="false" />
+    <Property Name="createdOn" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserProfile_Edit">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FinancialRating" Type="varchar" MaxLength="5" />
+    <Property Name="ISO" Type="varchar" MaxLength="5" />
+    <Property Name="OHSOS" Type="varchar" MaxLength="5" />
+    <Property Name="EmployeeNo" Type="varchar" MaxLength="50" />
+    <Property Name="Revenue" Type="varchar" MaxLength="50" />
+    <Property Name="UserId" Type="int" />
+    <Property Name="Iso_FileName" Type="varchar" MaxLength="500" />
+    <Property Name="Iso_ExpiryDate" Type="varchar" MaxLength="500" />
+    <Property Name="Ohsos_ExpiryDate" Type="varchar" MaxLength="500" />
+    <Property Name="Ohsos_FileName" Type="varchar" MaxLength="500" />
+    <Property Name="Addres" Type="varchar" MaxLength="1024" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="FinancialIssuedBy" Type="int" />
+  </EntityType>
+  <EntityType Name="VideosLikeAndComment">
+    <Key>
+      <PropertyRef Name="PVideosId" />
+    </Key>
+    <Property Name="PVideosId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="VideosId" Type="int" />
+    <Property Name="UserId" Type="int" />
+    <Property Name="ProjectId" Type="int" />
+    <Property Name="VideosLikeFlag" Type="bit" />
+    <Property Name="VideosTestimonials" Type="nvarchar(max)" />
+    <Property Name="cmtVidFlag" Type="bit" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'I4IDB.dbo.VisitUserProfile' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="VisitUserProfile">
+    <Key>
+      <PropertyRef Name="ContentId" />
+    </Key>
+    <Property Name="ContentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RegisterId" Type="int" />
+    <Property Name="ProfileName" Type="varchar" MaxLength="1024" />
+    <Property Name="IpAddress" Type="varchar" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="WorldRefExcelDataProject">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OrganizationName" Type="nvarchar(max)" />
+    <Property Name="CustomerName" Type="nvarchar" MaxLength="350" />
+    <Property Name="ProjectName" Type="nvarchar" MaxLength="350" />
+    <Property Name="Type" Type="nvarchar" MaxLength="350" />
+    <Property Name="Year" Type="nvarchar" MaxLength="50" />
+    <Property Name="Country" Type="nvarchar" MaxLength="250" />
+    <Property Name="EmailId" Type="nvarchar" MaxLength="250" />
+    <Property Name="IsOrganization" Type="bit" />
+    <Property Name="IsCustomer" Type="bit" />
+    <Property Name="IsProject" Type="bit" />
+    <Property Name="IsType" Type="bit" />
+    <Property Name="IsYear" Type="bit" />
+    <Property Name="IsCountry" Type="bit" />
+    <Property Name="IsEmail" Type="bit" />
+    <Property Name="Createdon" Type="datetime" />
+    <Property Name="userid" Type="int" />
+    <Property Name="ExcelPath" Type="nvarchar(max)" />
+    <Property Name="ExcelName" Type="nvarchar" MaxLength="350" />
+    <Property Name="IsAuthorized" Type="int" />
+    <Property Name="DisApproveReason" Type="nvarchar(max)" />
+    <Property Name="CustomerIndustryType" Type="nvarchar(max)" />
+    <Property Name="Status" Type="nvarchar(max)" />
+    <Property Name="IsStatus" Type="bit" />
+    <Property Name="Description" Type="nvarchar(max)" />
+    <Property Name="IsAdminAuthorized" Type="bit" />
+    <Property Name="IsAdminUnAuthorized" Type="bit" />
+    <Property Name="ProjectLocation" Type="nvarchar(max)" />
+    <Property Name="UserEditFlag" Type="bit" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'I4IDB.dbo.SearchImageView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="SearchImageView">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="ProjectId" Type="int" />
+    <Property Name="ImageName" Type="nvarchar" MaxLength="250" />
+    <Property Name="ImagePath" Type="nvarchar(max)" />
+    <Property Name="link" Type="bit" />
+    <Property Name="ProjectCertificates" Type="nvarchar(max)" />
+    <Property Name="SearchKeyword" Type="varchar(max)" />
+    <Property Name="isDeleted" Type="bit" />
+    <Property Name="OrganizationName" Type="nvarchar(max)" />
+    <Property Name="CustomerName" Type="nvarchar" MaxLength="350" />
+    <Property Name="ProjectName" Type="nvarchar" MaxLength="350" />
+    <Property Name="Type" Type="nvarchar" MaxLength="350" />
+    <Property Name="Year" Type="nvarchar" MaxLength="50" />
+    <Property Name="Country" Type="nvarchar" MaxLength="250" />
+    <Property Name="EmailId" Type="nvarchar" MaxLength="250" />
+    <Property Name="IsOrganization" Type="bit" />
+    <Property Name="IsCustomer" Type="bit" />
+    <Property Name="IsProject" Type="bit" />
+    <Property Name="IsType" Type="bit" />
+    <Property Name="IsCountry" Type="bit" />
+    <Property Name="IsYear" Type="bit" />
+    <Property Name="userid" Type="int" />
+    <Property Name="Createdon" Type="datetime" />
+    <Property Name="IsEmail" Type="bit" />
+    <Property Name="ExcelPath" Type="nvarchar(max)" />
+    <Property Name="ExcelName" Type="nvarchar" MaxLength="350" />
+    <Property Name="IsAuthorized" Type="int" />
+    <Property Name="DisApproveReason" Type="nvarchar(max)" />
+    <Property Name="IsStatus" Type="bit" />
+    <Property Name="Status" Type="nvarchar(max)" />
+    <Property Name="CustomerIndustryType" Type="nvarchar(max)" />
+    <Property Name="IsAdminAuthorized" Type="bit" />
+    <Property Name="Description" Type="nvarchar(max)" />
+    <Property Name="IsAdminUnAuthorized" Type="bit" />
+    <Property Name="ProjectLocation" Type="nvarchar(max)" />
+    <Property Name="UserEditFlag" Type="bit" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'I4IDB.dbo.SearchImageView2' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="SearchImageView2">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="ProjectId" Type="int" />
+    <Property Name="ImageName" Type="nvarchar" MaxLength="250" />
+    <Property Name="ImagePath" Type="nvarchar(max)" />
+    <Property Name="link" Type="bit" />
+    <Property Name="ProjectCertificates" Type="nvarchar(max)" />
+    <Property Name="SearchKeyword" Type="varchar(max)" />
+    <Property Name="isDeleted" Type="bit" />
+    <Property Name="OrganizationName" Type="nvarchar(max)" />
+    <Property Name="CustomerName" Type="nvarchar" MaxLength="350" />
+    <Property Name="ProjectName" Type="nvarchar" MaxLength="350" />
+    <Property Name="Type" Type="nvarchar" MaxLength="350" />
+    <Property Name="Year" Type="nvarchar" MaxLength="50" />
+    <Property Name="Country" Type="nvarchar" MaxLength="250" />
+    <Property Name="EmailId" Type="nvarchar" MaxLength="250" />
+    <Property Name="IsOrganization" Type="bit" />
+    <Property Name="IsCustomer" Type="bit" />
+    <Property Name="IsProject" Type="bit" />
+    <Property Name="IsType" Type="bit" />
+    <Property Name="IsCountry" Type="bit" />
+    <Property Name="IsYear" Type="bit" />
+    <Property Name="userid" Type="int" />
+    <Property Name="Createdon" Type="datetime" />
+    <Property Name="IsEmail" Type="bit" />
+    <Property Name="ExcelPath" Type="nvarchar(max)" />
+    <Property Name="ExcelName" Type="nvarchar" MaxLength="350" />
+    <Property Name="IsAuthorized" Type="int" />
+    <Property Name="DisApproveReason" Type="nvarchar(max)" />
+    <Property Name="IsStatus" Type="bit" />
+    <Property Name="Status" Type="nvarchar(max)" />
+    <Property Name="CustomerIndustryType" Type="nvarchar(max)" />
+    <Property Name="IsAdminAuthorized" Type="bit" />
+    <Property Name="Description" Type="nvarchar(max)" />
+    <Property Name="IsAdminUnAuthorized" Type="bit" />
+    <Property Name="ProjectLocation" Type="nvarchar(max)" />
+    <Property Name="UserEditFlag" Type="bit" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'I4IDB.dbo.SearchViewNew' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="SearchViewNew">
+    <Key>
+      <PropertyRef Name="id" />
+      <PropertyRef Name="WorldId" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="ProjectId" Type="int" />
+    <Property Name="createdOn" Type="datetime" />
+    <Property Name="SearchKeyword" Type="varchar(max)" />
+    <Property Name="WorldId" Type="int" Nullable="false" />
+    <Property Name="OrganizationName" Type="nvarchar(max)" />
+    <Property Name="CustomerName" Type="nvarchar" MaxLength="350" />
+    <Property Name="ProjectName" Type="nvarchar" MaxLength="350" />
+    <Property Name="Year" Type="nvarchar" MaxLength="50" />
+    <Property Name="Type" Type="nvarchar" MaxLength="350" />
+    <Property Name="Country" Type="nvarchar" MaxLength="250" />
+    <Property Name="EmailId" Type="nvarchar" MaxLength="250" />
+    <Property Name="IsOrganization" Type="bit" />
+    <Property Name="IsCustomer" Type="bit" />
+    <Property Name="IsProject" Type="bit" />
+    <Property Name="IsType" Type="bit" />
+    <Property Name="IsYear" Type="bit" />
+    <Property Name="IsCountry" Type="bit" />
+    <Property Name="IsEmail" Type="bit" />
+    <Property Name="Expr2" Type="datetime" />
+    <Property Name="userid" Type="int" />
+    <Property Name="ExcelPath" Type="nvarchar(max)" />
+    <Property Name="ExcelName" Type="nvarchar" MaxLength="350" />
+    <Property Name="IsAuthorized" Type="int" />
+    <Property Name="DisApproveReason" Type="nvarchar(max)" />
+    <Property Name="CustomerIndustryType" Type="nvarchar(max)" />
+    <Property Name="Status" Type="nvarchar(max)" />
+    <Property Name="IsStatus" Type="bit" />
+    <Property Name="Description" Type="nvarchar(max)" />
+    <Property Name="IsAdminUnAuthorized" Type="bit" />
+    <Property Name="IsAdminAuthorized" Type="bit" />
+    <Property Name="ProjectLocation" Type="nvarchar(max)" />
+    <Property Name="UserEditFlag" Type="bit" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'I4IDB.dbo.SearchViewVideo' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="SearchViewVideo">
+    <Key>
+      <PropertyRef Name="uniqueId" />
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="uniqueId" Type="int" Nullable="false" />
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="CustomerName" Type="nvarchar" MaxLength="350" />
+    <Property Name="ProjectName" Type="nvarchar" MaxLength="350" />
+    <Property Name="OrganizationName" Type="nvarchar(max)" />
+    <Property Name="Type" Type="nvarchar" MaxLength="350" />
+    <Property Name="EmailId" Type="nvarchar" MaxLength="250" />
+    <Property Name="Country" Type="nvarchar" MaxLength="250" />
+    <Property Name="Year" Type="nvarchar" MaxLength="50" />
+    <Property Name="IsOrganization" Type="bit" />
+    <Property Name="IsCustomer" Type="bit" />
+    <Property Name="IsProject" Type="bit" />
+    <Property Name="IsType" Type="bit" />
+    <Property Name="IsCountry" Type="bit" />
+    <Property Name="IsYear" Type="bit" />
+    <Property Name="IsEmail" Type="bit" />
+    <Property Name="Createdon" Type="datetime" />
+    <Property Name="userid" Type="int" />
+    <Property Name="ExcelPath" Type="nvarchar(max)" />
+    <Property Name="ExcelName" Type="nvarchar" MaxLength="350" />
+    <Property Name="IsAuthorized" Type="int" />
+    <Property Name="DisApproveReason" Type="nvarchar(max)" />
+    <Property Name="CustomerIndustryType" Type="nvarchar(max)" />
+    <Property Name="Status" Type="nvarchar(max)" />
+    <Property Name="Description" Type="nvarchar(max)" />
+    <Property Name="IsStatus" Type="bit" />
+    <Property Name="IsAdminAuthorized" Type="bit" />
+    <Property Name="UserEditFlag" Type="bit" />
+    <Property Name="ProjectLocation" Type="nvarchar(max)" />
+    <Property Name="IsAdminUnAuthorized" Type="bit" />
+    <Property Name="ProjectCertificates" Type="nvarchar(max)" />
+    <Property Name="link" Type="bit" />
+    <Property Name="Expr1" Type="datetime" />
+    <Property Name="ImagePath" Type="nvarchar(max)" />
+    <Property Name="ImageName" Type="nvarchar" MaxLength="250" />
+    <Property Name="ProjectId" Type="int" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'I4IDB.dbo.SearchViewVideo2' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="SearchViewVideo2">
+    <Key>
+      <PropertyRef Name="uniqueId" />
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="uniqueId" Type="int" Nullable="false" />
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="CustomerName" Type="nvarchar" MaxLength="350" />
+    <Property Name="ProjectName" Type="nvarchar" MaxLength="350" />
+    <Property Name="OrganizationName" Type="nvarchar(max)" />
+    <Property Name="Type" Type="nvarchar" MaxLength="350" />
+    <Property Name="EmailId" Type="nvarchar" MaxLength="250" />
+    <Property Name="Country" Type="nvarchar" MaxLength="250" />
+    <Property Name="Year" Type="nvarchar" MaxLength="50" />
+    <Property Name="IsOrganization" Type="bit" />
+    <Property Name="IsCustomer" Type="bit" />
+    <Property Name="IsProject" Type="bit" />
+    <Property Name="IsType" Type="bit" />
+    <Property Name="IsCountry" Type="bit" />
+    <Property Name="IsYear" Type="bit" />
+    <Property Name="IsEmail" Type="bit" />
+    <Property Name="Createdon" Type="datetime" />
+    <Property Name="userid" Type="int" />
+    <Property Name="ExcelPath" Type="nvarchar(max)" />
+    <Property Name="ExcelName" Type="nvarchar" MaxLength="350" />
+    <Property Name="IsAuthorized" Type="int" />
+    <Property Name="DisApproveReason" Type="nvarchar(max)" />
+    <Property Name="CustomerIndustryType" Type="nvarchar(max)" />
+    <Property Name="Status" Type="nvarchar(max)" />
+    <Property Name="Description" Type="nvarchar(max)" />
+    <Property Name="IsStatus" Type="bit" />
+    <Property Name="IsAdminAuthorized" Type="bit" />
+    <Property Name="UserEditFlag" Type="bit" />
+    <Property Name="ProjectLocation" Type="nvarchar(max)" />
+    <Property Name="IsAdminUnAuthorized" Type="bit" />
+    <Property Name="ProjectCertificates" Type="nvarchar(max)" />
+    <Property Name="link" Type="bit" />
+    <Property Name="Expr1" Type="datetime" />
+    <Property Name="ImagePath" Type="nvarchar(max)" />
+    <Property Name="ImageName" Type="nvarchar" MaxLength="250" />
+    <Property Name="ProjectId" Type="int" />
+  </EntityType>
+  <Function Name="GetTrainerName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="IndustriesID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_CheckVisitUserLog" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="registerid" Type="int" Mode="In" />
+    <Parameter Name="profilename" Type="varchar" Mode="In" />
+    <Parameter Name="ipaddress" Type="varchar" Mode="In" />
+    <Parameter Name="TotalVisit" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="sp_GetAssociateIndustryProducts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="sp_GetAssociateReferrals" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_GetData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="profilename" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sp_GetTrainerDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_insert_update_Iso" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="userid" Type="varchar" Mode="In" />
+    <Parameter Name="filename" Type="varchar" Mode="In" />
+    <Parameter Name="expirydate" Type="datetime" Mode="In" />
+  </Function>
+  <Function Name="sp_insert_update_OHSAS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="userid" Type="varchar" Mode="In" />
+    <Parameter Name="filename" Type="varchar" Mode="In" />
+    <Parameter Name="expirydate" Type="datetime" Mode="In" />
+  </Function>
+  <Function Name="sp_insert_update_UserProfile_Edit" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="financialrating" Type="varchar" Mode="In" />
+    <Parameter Name="iso" Type="varchar" Mode="In" />
+    <Parameter Name="ohsos" Type="varchar" Mode="In" />
+    <Parameter Name="employeeno" Type="varchar" Mode="In" />
+    <Parameter Name="revenue" Type="varchar" Mode="In" />
+    <Parameter Name="id" Type="varchar" Mode="In" />
+    <Parameter Name="isofilename" Type="varchar" Mode="In" />
+    <Parameter Name="isoexpirydate" Type="varchar" Mode="In" />
+    <Parameter Name="ohsosfilename" Type="varchar" Mode="In" />
+    <Parameter Name="ohsosexpirydate" Type="varchar" Mode="In" />
+    <Parameter Name="addres" Type="varchar" Mode="In" />
+    <Parameter Name="financialissuedby" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_search_Image" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Type" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="sp_search_Project" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Type" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="sp_search_ProjectDat" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="sp_search_Videos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Type" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="SP_SendI4IMail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="sp_topicDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="country" Type="varchar" Mode="In" />
+    <Parameter Name="IndustriesName" Type="varchar" Mode="In" />
+    <Parameter Name="Topic" Type="nvarchar(max)" Mode="In" />
+  </Function>
+  <Function Name="SplitStringI4I" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Input" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="Character" Type="char" Mode="In" />
+    <ReturnType>
+      <CollectionType>
+        <RowType>
+          <Property Name="Item" Type="nvarchar" MaxLength="1000" />
+        </RowType>
+      </CollectionType>
+    </ReturnType>
+  </Function>
+  <EntityContainer Name="I4IDBModelStoreContainer">
+    <EntitySet Name="AppointmentDiary" EntityType="Self.AppointmentDiary" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AssociateProjectIndustries" EntityType="Self.AssociateProjectIndustries" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AssociateProjects" EntityType="Self.AssociateProjects" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AssociateRefferal" EntityType="Self.AssociateRefferal" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Board_Management" EntityType="Self.Board_Management" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Certificates" EntityType="Self.Certificates" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Comp_profile_MultiLang" EntityType="Self.Comp_profile_MultiLang" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CompanyInfo" EntityType="Self.CompanyInfo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CompHistory" EntityType="Self.CompHistory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CompProfile" EntityType="Self.CompProfile" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ContactBook" EntityType="Self.ContactBook" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Conversation" EntityType="Self.Conversation" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CountryOld" EntityType="Self.CountryOld" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CurrentYear" EntityType="Self.CurrentYear" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Customer_Details" EntityType="Self.Customer_Details" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FactoryOffice" EntityType="Self.FactoryOffice" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FollowUp" EntityType="Self.FollowUp" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ForwardQuery" EntityType="Self.ForwardQuery" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="I4IForwardQuery" EntityType="Self.I4IForwardQuery" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ImageLikeAndComment" EntityType="Self.ImageLikeAndComment" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Industries" EntityType="Self.Industries" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="IndustryCategory" EntityType="Self.IndustryCategory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="IndustrySubCategory" EntityType="Self.IndustrySubCategory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="InputQueryData" EntityType="Self.InputQueryData" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ISO" EntityType="Self.ISO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="KnowledgeQuery" EntityType="Self.KnowledgeQuery" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="KnowledgeQueryAnswer" EntityType="Self.KnowledgeQueryAnswer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Language" EntityType="Self.Language" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LinkedInUser" EntityType="Self.LinkedInUser" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LoginDetailWorldRef" EntityType="Self.LoginDetailWorldRef" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ManageDocument" EntityType="Self.ManageDocument" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OfficeDetails_RegCorpHead" EntityType="Self.OfficeDetails_RegCorpHead" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OHSAS" EntityType="Self.OHSAS" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="partners_Associates" EntityType="Self.partners_Associates" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Preferred_Country" EntityType="Self.Preferred_Country" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PriceCurrency" EntityType="Self.PriceCurrency" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductDetails" EntityType="Self.ProductDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductImagesVideos" EntityType="Self.ProductImagesVideos" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProjectContactDetails" EntityType="Self.ProjectContactDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProjectImageLikeHistory" EntityType="Self.ProjectImageLikeHistory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProjectImages" EntityType="Self.ProjectImages" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProjectImagesVideosLikes" EntityType="Self.ProjectImagesVideosLikes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProjectImageVideoComment" EntityType="Self.ProjectImageVideoComment" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProjectLikeComment" EntityType="Self.ProjectLikeComment" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProjectLikedIP" EntityType="Self.ProjectLikedIP" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProjectLikeDisLike" EntityType="Self.ProjectLikeDisLike" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProjectLikeHistory" EntityType="Self.ProjectLikeHistory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProjectLinkedInMember" EntityType="Self.ProjectLinkedInMember" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProjectRating" EntityType="Self.ProjectRating" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProjectRatingHistory" EntityType="Self.ProjectRatingHistory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProjectReview" EntityType="Self.ProjectReview" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProjectSearchKeywords" EntityType="Self.ProjectSearchKeywords" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Promote_Associate" EntityType="Self.Promote_Associate" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PromotionCertificate" EntityType="Self.PromotionCertificate" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PromotionIndustry" EntityType="Self.PromotionIndustry" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PromotionLibrary" EntityType="Self.PromotionLibrary" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PromotionOtherDocument" EntityType="Self.PromotionOtherDocument" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PromotionProductList" EntityType="Self.PromotionProductList" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RegionalOffice" EntityType="Self.RegionalOffice" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RegisterUser" EntityType="Self.RegisterUser" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RepresentationRefferal" EntityType="Self.RepresentationRefferal" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RepresentativeDocument" EntityType="Self.RepresentativeDocument" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RepresentativeOffice" EntityType="Self.RepresentativeOffice" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Services" EntityType="Self.Services" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Story" EntityType="Self.Story" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Supplier" EntityType="Self.Supplier" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SupplierProposals" EntityType="Self.SupplierProposals" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SuppMailDetail" EntityType="Self.SuppMailDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TopicIndustry" EntityType="Self.TopicIndustry" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TopicTimeDuration" EntityType="Self.TopicTimeDuration" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Trainer_Profile" EntityType="Self.Trainer_Profile" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TrainerBook" EntityType="Self.TrainerBook" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TrainerSample" EntityType="Self.TrainerSample" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TrainingSampleOrder" EntityType="Self.TrainingSampleOrder" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User_Certificates" EntityType="Self.User_Certificates" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User_Details" EntityType="Self.User_Details" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User_ProductCertificates" EntityType="Self.User_ProductCertificates" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User_Rewards" EntityType="Self.User_Rewards" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserIndustry" EntityType="Self.UserIndustry" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserProfile_Edit" EntityType="Self.UserProfile_Edit" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="VideosLikeAndComment" EntityType="Self.VideosLikeAndComment" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WorldRefExcelDataProject" EntityType="Self.WorldRefExcelDataProject" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User_Certificate_DrpValue" EntityType="Self.User_Certificate_DrpValue" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [User_Certificate_DrpValue].[Id] AS [Id], 
+    [User_Certificate_DrpValue].[CertificateType] AS [CertificateType], 
+    [User_Certificate_DrpValue].[Name] AS [Name], 
+    [User_Certificate_DrpValue].[Title] AS [Title], 
+    [User_Certificate_DrpValue].[CreatedDate] AS [CreatedDate]
+    FROM [dbo].[User_Certificate_DrpValue] AS [User_Certificate_DrpValue]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="User_Certificate_DrpValue_Common" EntityType="Self.User_Certificate_DrpValue_Common" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [User_Certificate_DrpValue_Common].[Id] AS [Id], 
+    [User_Certificate_DrpValue_Common].[Name] AS [Name], 
+    [User_Certificate_DrpValue_Common].[Title] AS [Title], 
+    [User_Certificate_DrpValue_Common].[CreatedDate] AS [CreatedDate]
+    FROM [dbo].[User_Certificate_DrpValue_Common] AS [User_Certificate_DrpValue_Common]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="VisitUserProfile" EntityType="Self.VisitUserProfile" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [VisitUserProfile].[ContentId] AS [ContentId], 
+    [VisitUserProfile].[RegisterId] AS [RegisterId], 
+    [VisitUserProfile].[ProfileName] AS [ProfileName], 
+    [VisitUserProfile].[IpAddress] AS [IpAddress]
+    FROM [dbo].[VisitUserProfile] AS [VisitUserProfile]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="SearchImageView" EntityType="Self.SearchImageView" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [SearchImageView].[Id] AS [Id], 
+    [SearchImageView].[ProjectId] AS [ProjectId], 
+    [SearchImageView].[ImageName] AS [ImageName], 
+    [SearchImageView].[ImagePath] AS [ImagePath], 
+    [SearchImageView].[link] AS [link], 
+    [SearchImageView].[ProjectCertificates] AS [ProjectCertificates], 
+    [SearchImageView].[SearchKeyword] AS [SearchKeyword], 
+    [SearchImageView].[isDeleted] AS [isDeleted], 
+    [SearchImageView].[OrganizationName] AS [OrganizationName], 
+    [SearchImageView].[CustomerName] AS [CustomerName], 
+    [SearchImageView].[ProjectName] AS [ProjectName], 
+    [SearchImageView].[Type] AS [Type], 
+    [SearchImageView].[Year] AS [Year], 
+    [SearchImageView].[Country] AS [Country], 
+    [SearchImageView].[EmailId] AS [EmailId], 
+    [SearchImageView].[IsOrganization] AS [IsOrganization], 
+    [SearchImageView].[IsCustomer] AS [IsCustomer], 
+    [SearchImageView].[IsProject] AS [IsProject], 
+    [SearchImageView].[IsType] AS [IsType], 
+    [SearchImageView].[IsCountry] AS [IsCountry], 
+    [SearchImageView].[IsYear] AS [IsYear], 
+    [SearchImageView].[userid] AS [userid], 
+    [SearchImageView].[Createdon] AS [Createdon], 
+    [SearchImageView].[IsEmail] AS [IsEmail], 
+    [SearchImageView].[ExcelPath] AS [ExcelPath], 
+    [SearchImageView].[ExcelName] AS [ExcelName], 
+    [SearchImageView].[IsAuthorized] AS [IsAuthorized], 
+    [SearchImageView].[DisApproveReason] AS [DisApproveReason], 
+    [SearchImageView].[IsStatus] AS [IsStatus], 
+    [SearchImageView].[Status] AS [Status], 
+    [SearchImageView].[CustomerIndustryType] AS [CustomerIndustryType], 
+    [SearchImageView].[IsAdminAuthorized] AS [IsAdminAuthorized], 
+    [SearchImageView].[Description] AS [Description], 
+    [SearchImageView].[IsAdminUnAuthorized] AS [IsAdminUnAuthorized], 
+    [SearchImageView].[ProjectLocation] AS [ProjectLocation], 
+    [SearchImageView].[UserEditFlag] AS [UserEditFlag]
+    FROM [dbo].[SearchImageView] AS [SearchImageView]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="SearchImageView2" EntityType="Self.SearchImageView2" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [SearchImageView2].[id] AS [id], 
+    [SearchImageView2].[ProjectId] AS [ProjectId], 
+    [SearchImageView2].[ImageName] AS [ImageName], 
+    [SearchImageView2].[ImagePath] AS [ImagePath], 
+    [SearchImageView2].[link] AS [link], 
+    [SearchImageView2].[ProjectCertificates] AS [ProjectCertificates], 
+    [SearchImageView2].[SearchKeyword] AS [SearchKeyword], 
+    [SearchImageView2].[isDeleted] AS [isDeleted], 
+    [SearchImageView2].[OrganizationName] AS [OrganizationName], 
+    [SearchImageView2].[CustomerName] AS [CustomerName], 
+    [SearchImageView2].[ProjectName] AS [ProjectName], 
+    [SearchImageView2].[Type] AS [Type], 
+    [SearchImageView2].[Year] AS [Year], 
+    [SearchImageView2].[Country] AS [Country], 
+    [SearchImageView2].[EmailId] AS [EmailId], 
+    [SearchImageView2].[IsOrganization] AS [IsOrganization], 
+    [SearchImageView2].[IsCustomer] AS [IsCustomer], 
+    [SearchImageView2].[IsProject] AS [IsProject], 
+    [SearchImageView2].[IsType] AS [IsType], 
+    [SearchImageView2].[IsCountry] AS [IsCountry], 
+    [SearchImageView2].[IsYear] AS [IsYear], 
+    [SearchImageView2].[userid] AS [userid], 
+    [SearchImageView2].[Createdon] AS [Createdon], 
+    [SearchImageView2].[IsEmail] AS [IsEmail], 
+    [SearchImageView2].[ExcelPath] AS [ExcelPath], 
+    [SearchImageView2].[ExcelName] AS [ExcelName], 
+    [SearchImageView2].[IsAuthorized] AS [IsAuthorized], 
+    [SearchImageView2].[DisApproveReason] AS [DisApproveReason], 
+    [SearchImageView2].[IsStatus] AS [IsStatus], 
+    [SearchImageView2].[Status] AS [Status], 
+    [SearchImageView2].[CustomerIndustryType] AS [CustomerIndustryType], 
+    [SearchImageView2].[IsAdminAuthorized] AS [IsAdminAuthorized], 
+    [SearchImageView2].[Description] AS [Description], 
+    [SearchImageView2].[IsAdminUnAuthorized] AS [IsAdminUnAuthorized], 
+    [SearchImageView2].[ProjectLocation] AS [ProjectLocation], 
+    [SearchImageView2].[UserEditFlag] AS [UserEditFlag]
+    FROM [dbo].[SearchImageView2] AS [SearchImageView2]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="SearchViewNew" EntityType="Self.SearchViewNew" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [SearchViewNew].[id] AS [id], 
+    [SearchViewNew].[ProjectId] AS [ProjectId], 
+    [SearchViewNew].[createdOn] AS [createdOn], 
+    [SearchViewNew].[SearchKeyword] AS [SearchKeyword], 
+    [SearchViewNew].[WorldId] AS [WorldId], 
+    [SearchViewNew].[OrganizationName] AS [OrganizationName], 
+    [SearchViewNew].[CustomerName] AS [CustomerName], 
+    [SearchViewNew].[ProjectName] AS [ProjectName], 
+    [SearchViewNew].[Year] AS [Year], 
+    [SearchViewNew].[Type] AS [Type], 
+    [SearchViewNew].[Country] AS [Country], 
+    [SearchViewNew].[EmailId] AS [EmailId], 
+    [SearchViewNew].[IsOrganization] AS [IsOrganization], 
+    [SearchViewNew].[IsCustomer] AS [IsCustomer], 
+    [SearchViewNew].[IsProject] AS [IsProject], 
+    [SearchViewNew].[IsType] AS [IsType], 
+    [SearchViewNew].[IsYear] AS [IsYear], 
+    [SearchViewNew].[IsCountry] AS [IsCountry], 
+    [SearchViewNew].[IsEmail] AS [IsEmail], 
+    [SearchViewNew].[Expr2] AS [Expr2], 
+    [SearchViewNew].[userid] AS [userid], 
+    [SearchViewNew].[ExcelPath] AS [ExcelPath], 
+    [SearchViewNew].[ExcelName] AS [ExcelName], 
+    [SearchViewNew].[IsAuthorized] AS [IsAuthorized], 
+    [SearchViewNew].[DisApproveReason] AS [DisApproveReason], 
+    [SearchViewNew].[CustomerIndustryType] AS [CustomerIndustryType], 
+    [SearchViewNew].[Status] AS [Status], 
+    [SearchViewNew].[IsStatus] AS [IsStatus], 
+    [SearchViewNew].[Description] AS [Description], 
+    [SearchViewNew].[IsAdminUnAuthorized] AS [IsAdminUnAuthorized], 
+    [SearchViewNew].[IsAdminAuthorized] AS [IsAdminAuthorized], 
+    [SearchViewNew].[ProjectLocation] AS [ProjectLocation], 
+    [SearchViewNew].[UserEditFlag] AS [UserEditFlag]
+    FROM [dbo].[SearchViewNew] AS [SearchViewNew]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="SearchViewVideo" EntityType="Self.SearchViewVideo" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [SearchViewVideo].[uniqueId] AS [uniqueId], 
+    [SearchViewVideo].[id] AS [id], 
+    [SearchViewVideo].[CustomerName] AS [CustomerName], 
+    [SearchViewVideo].[ProjectName] AS [ProjectName], 
+    [SearchViewVideo].[OrganizationName] AS [OrganizationName], 
+    [SearchViewVideo].[Type] AS [Type], 
+    [SearchViewVideo].[EmailId] AS [EmailId], 
+    [SearchViewVideo].[Country] AS [Country], 
+    [SearchViewVideo].[Year] AS [Year], 
+    [SearchViewVideo].[IsOrganization] AS [IsOrganization], 
+    [SearchViewVideo].[IsCustomer] AS [IsCustomer], 
+    [SearchViewVideo].[IsProject] AS [IsProject], 
+    [SearchViewVideo].[IsType] AS [IsType], 
+    [SearchViewVideo].[IsCountry] AS [IsCountry], 
+    [SearchViewVideo].[IsYear] AS [IsYear], 
+    [SearchViewVideo].[IsEmail] AS [IsEmail], 
+    [SearchViewVideo].[Createdon] AS [Createdon], 
+    [SearchViewVideo].[userid] AS [userid], 
+    [SearchViewVideo].[ExcelPath] AS [ExcelPath], 
+    [SearchViewVideo].[ExcelName] AS [ExcelName], 
+    [SearchViewVideo].[IsAuthorized] AS [IsAuthorized], 
+    [SearchViewVideo].[DisApproveReason] AS [DisApproveReason], 
+    [SearchViewVideo].[CustomerIndustryType] AS [CustomerIndustryType], 
+    [SearchViewVideo].[Status] AS [Status], 
+    [SearchViewVideo].[Description] AS [Description], 
+    [SearchViewVideo].[IsStatus] AS [IsStatus], 
+    [SearchViewVideo].[IsAdminAuthorized] AS [IsAdminAuthorized], 
+    [SearchViewVideo].[UserEditFlag] AS [UserEditFlag], 
+    [SearchViewVideo].[ProjectLocation] AS [ProjectLocation], 
+    [SearchViewVideo].[IsAdminUnAuthorized] AS [IsAdminUnAuthorized], 
+    [SearchViewVideo].[ProjectCertificates] AS [ProjectCertificates], 
+    [SearchViewVideo].[link] AS [link], 
+    [SearchViewVideo].[Expr1] AS [Expr1], 
+    [SearchViewVideo].[ImagePath] AS [ImagePath], 
+    [SearchViewVideo].[ImageName] AS [ImageName], 
+    [SearchViewVideo].[ProjectId] AS [ProjectId]
+    FROM [dbo].[SearchViewVideo] AS [SearchViewVideo]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="SearchViewVideo2" EntityType="Self.SearchViewVideo2" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [SearchViewVideo2].[uniqueId] AS [uniqueId], 
+    [SearchViewVideo2].[id] AS [id], 
+    [SearchViewVideo2].[CustomerName] AS [CustomerName], 
+    [SearchViewVideo2].[ProjectName] AS [ProjectName], 
+    [SearchViewVideo2].[OrganizationName] AS [OrganizationName], 
+    [SearchViewVideo2].[Type] AS [Type], 
+    [SearchViewVideo2].[EmailId] AS [EmailId], 
+    [SearchViewVideo2].[Country] AS [Country], 
+    [SearchViewVideo2].[Year] AS [Year], 
+    [SearchViewVideo2].[IsOrganization] AS [IsOrganization], 
+    [SearchViewVideo2].[IsCustomer] AS [IsCustomer], 
+    [SearchViewVideo2].[IsProject] AS [IsProject], 
+    [SearchViewVideo2].[IsType] AS [IsType], 
+    [SearchViewVideo2].[IsCountry] AS [IsCountry], 
+    [SearchViewVideo2].[IsYear] AS [IsYear], 
+    [SearchViewVideo2].[IsEmail] AS [IsEmail], 
+    [SearchViewVideo2].[Createdon] AS [Createdon], 
+    [SearchViewVideo2].[userid] AS [userid], 
+    [SearchViewVideo2].[ExcelPath] AS [ExcelPath], 
+    [SearchViewVideo2].[ExcelName] AS [ExcelName], 
+    [SearchViewVideo2].[IsAuthorized] AS [IsAuthorized], 
+    [SearchViewVideo2].[DisApproveReason] AS [DisApproveReason], 
+    [SearchViewVideo2].[CustomerIndustryType] AS [CustomerIndustryType], 
+    [SearchViewVideo2].[Status] AS [Status], 
+    [SearchViewVideo2].[Description] AS [Description], 
+    [SearchViewVideo2].[IsStatus] AS [IsStatus], 
+    [SearchViewVideo2].[IsAdminAuthorized] AS [IsAdminAuthorized], 
+    [SearchViewVideo2].[UserEditFlag] AS [UserEditFlag], 
+    [SearchViewVideo2].[ProjectLocation] AS [ProjectLocation], 
+    [SearchViewVideo2].[IsAdminUnAuthorized] AS [IsAdminUnAuthorized], 
+    [SearchViewVideo2].[ProjectCertificates] AS [ProjectCertificates], 
+    [SearchViewVideo2].[link] AS [link], 
+    [SearchViewVideo2].[Expr1] AS [Expr1], 
+    [SearchViewVideo2].[ImagePath] AS [ImagePath], 
+    [SearchViewVideo2].[ImageName] AS [ImageName], 
+    [SearchViewVideo2].[ProjectId] AS [ProjectId]
+    FROM [dbo].[SearchViewVideo2] AS [SearchViewVideo2]</DefiningQuery>
+    </EntitySet>
+  </EntityContainer>
+</Schema>

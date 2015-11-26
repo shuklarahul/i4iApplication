@@ -1,0 +1,115 @@
+﻿@model IEnumerable<WorldRef.Models.RegisterUserDAO>
+@{
+    ViewBag.Title = "Recruiters";
+    Layout = "~/Views/Shared/LayoutChild.cshtml";
+    int i = 1;
+}
+<script src="~/Content/WorldRef/js/jquery-1.10.1.min.js"></script>
+<script type="text/javascript">
+    function SendUserNameAndPassword(id, name, email, pid) {
+        $("#li-" + id.split('-')[1]).hide();
+
+        $.ajax({
+            url: "/WorldRef/SendUsernamrePwd",
+            type: 'POST',
+            data: JSON.stringify({ "Uname": name, "email": email, "ID": parseInt(pid) }),
+            contentType: 'application/json; charset=utf-8',
+            success: function (response) {
+
+                alert("Approved.");
+
+            },
+            error: function () {
+                alert("Failed! Please try again.");
+            }
+        });
+
+    }
+    //function check(id,name,email,pid)
+    //{
+    //    alert(id);
+    //    alert(name);
+    //    alert(email);
+    //    alert(pid);
+    //}
+</script>
+<style>
+    .thisPage {
+        width: 40%;
+        margin: 0 auto;
+    }
+
+    .table {
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 20px;
+        border: 1px solid #ddd;
+        border-spacing: 0;
+        border-collapse: collapse;
+    }
+
+        .table th {
+            padding: 8px;
+            line-height: 1.42857143;
+            vertical-align: top;
+            text-align: left;
+            border: 1px solid #ddd;
+            border-bottom-width: 2px;
+            background-color: #188DC5;
+            color: white;
+        }
+
+        .table td {
+            padding: 8px;
+            line-height: 1.42857143;
+            vertical-align: top;
+            border: 1px solid #ddd;
+        }
+</style>
+
+<div id="content-wrapper" class="side-left">
+
+    <div id="">
+        <section id="main-content" role="main">
+
+            <h2>Upload Reference List</h2>
+
+
+            <!-- article -->
+            <article id="post-501" class="post-501 page type-page status-publish hentry">
+                <div class="thisPage">
+                    @using (Html.BeginForm("Recruiters", "WorldRef"))
+                    {
+                        <table class="table">
+                            <tr>
+                                <th> <span class="colHead">Recruiter Name</span></th>
+                                <th>Check</th>
+                            </tr>
+                            @foreach (var item in Model)
+                            {
+                                <tr id="li-@i">
+
+                                    <td>@item.UserFirstName</td>
+                                    <td> <input type="checkbox" id="chk-@i" name="chkCustomer" onclick="return SendUserNameAndPassword(this.id,'@item.UserFirstName','@item.Email','@item.Id')" value="Customer Name"></td>
+
+                                </tr>
+                                i++;
+                            }
+
+                        </table>
+                    }
+                </div>
+
+            </article>
+            <!-- /article -->
+
+
+
+        </section>
+    </div>
+
+
+</div>
+
+
+

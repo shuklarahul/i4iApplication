@@ -1,0 +1,377 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using WorldRef.DataLayer;
+using WorldRef.Models;
+using WorldRef.BusinessLayer;
+using System.Web.Security;
+using System.Security.Cryptography;
+using System.Text;
+namespace WorldRef.Controllers
+{
+    public class WorldRefController : Controller
+    {
+        public I4IDBEntities context=new I4IDBEntities();
+        public ActionResult WorldRefIndex()
+        {
+            SignUpWorldRefModel signUpModel = new SignUpWorldRefModel();
+            signUpModel=GetAllSignUpDetails();
+           
+            return View(signUpModel);
+        }
+        #region All SignUp Details
+        private SignUpWorldRefModel GetAllSignUpDetails()
+        {
+            SignUpWorldRefModel signUpModel = new SignUpWorldRefModel();
+            List<SelectListItem> selectListCountry = new List<SelectListItem>();
+            List<SelectListItem> selectList = new List<SelectListItem>();//Developer, Investor, Fabricator, Procurement Staff, Others
+            selectList.Add(new SelectListItem() { Text = "I am", Value = "0" });
+            selectList.Add(new SelectListItem() { Text = "Manufacturer", Value = "Manufacturer" });
+            selectList.Add(new SelectListItem() { Text = "Contractor", Value = "Contractor" });
+            selectList.Add(new SelectListItem() { Text = "Consultant", Value = "Consultant" });
+            selectList.Add(new SelectListItem() { Text = "Trading Company", Value = "Trading Company" });
+            selectList.Add(new SelectListItem() { Text = "Project Owner’s/Procurement Staff", Value = "Project Owner’s/Procurement Staff" });
+            selectList.Add(new SelectListItem() { Text = "Developer", Value = "Developer" });
+            selectList.Add(new SelectListItem() { Text = "Investor", Value = "Investor" });
+            selectList.Add(new SelectListItem() { Text = "Fabricator", Value = "Fabricator" });
+            selectList.Add(new SelectListItem() { Text = "Raw Material Supplier", Value = "Raw Material Supplier" });
+            selectList.Add(new SelectListItem() { Text = "Others", Value = "Others" });
+            signUpModel.TypeList = selectList;
+
+            var content = (from p in context.Countries
+                           select new { p.CountryID, p.CountryName }).AsEnumerable();
+
+            selectListCountry.Add(new SelectListItem() { Text = "Select Country", Value = "0" });
+
+            foreach (var item in content)
+            {
+                selectListCountry.Add(new SelectListItem() { Text = item.CountryName, Value = item.CountryName });
+
+            }
+            signUpModel.CountryList = selectListCountry;
+            KnowledgeLogic knowIndustry = new KnowledgeLogic();
+            signUpModel.IndustryList = knowIndustry.GetIndustry();
+            List<SelectListItem> selectList1 = new List<SelectListItem>();
+            selectList1.Add(new SelectListItem() { Text = "Type of Recruitment", Value = "0" });
+            selectList1.Add(new SelectListItem() { Text = "I recruit for my Organisation only", Value = "I recruit for my Organisation only" });
+            selectList1.Add(new SelectListItem() { Text = "I recruit for Other Organisations only", Value = "I recruit for Other Organisations only" });
+            selectList1.Add(new SelectListItem() { Text = "Both: I recruit for my and other organisations", Value = "Both: I recruit for my and other organisations" });
+            signUpModel.RecruitersTypeList = selectList1;
+            return signUpModel;
+        }
+        #endregion
+
+        #region Partial View for Sign in
+        public ActionResult _SignIN()
+        {
+            return PartialView();
+        }
+        #endregion
+
+        #region code for login uploader in WorldrefIndex added by Rahul  Shukla Date :29/09/2015
+
+        public JsonResult LoginIndex(string UserName, string Password, string returnUrl)
+        {
+            SignUpWorldRef signup = new SignUpWorldRef();
+            SignUpWorldRefModel signWorldModel = signup.Login(UserName, Password);
+            if (signWorldModel != null)
+            {
+                HttpCookie userNameCookies = new HttpCookie("username");
+                userNameCookies.Value = signWorldModel.Name;
+                Response.Cookies.Add(userNameCookies);
+
+                HttpCookie userNameCookiesq = new HttpCookie("UsrNo");
+                userNameCookiesq.Value = signWorldModel.UserNo;
+                Response.Cookies.Add(userNameCookiesq);
+
+
+
+
+                HttpCookie genraluserPhoto = new HttpCookie("GenuserPhoto");
+                genraluserPhoto.Value = signWorldModel.PhotoAttach;
+                Response.Cookies.Add(genraluserPhoto);
+
+                HttpCookie userNoCookies = new HttpCookie("UName");
+                userNoCookies.Value = UserName;
+                Response.Cookies.Add(userNoCookies);
+
+                HttpCookie userNameCookies1 = new HttpCookie("UserId");
+                userNameCookies1.Value = signWorldModel.Id.ToString();
+                Response.Cookies.Add(userNameCookies1);
+
+
+
+                HttpCookie userNameCookies2 = new HttpCookie("UserRole");
+                userNameCookies2.Value = signWorldModel.UserRole.ToString();
+                Response.Cookies.Add(userNameCookies2);
+
+                if (signWorldModel.UserRole == "W")
+
+                    return Json("ue", JsonRequestBehavior.AllowGet);
+                else
+                    return Json("re", JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                signWorldModel = signup.SignInCommonUser(UserName, Password);
+                if (signWorldModel != null)
+                {
+                    HttpCookie userNameCookies = new HttpCookie("Cusername");
+                    userNameCookies.Value = signWorldModel.Name;
+                    Response.Cookies.Add(userNameCookies);
+
+                    HttpCookie userNameCookies1 = new HttpCookie("CUserId");
+                    userNameCookies1.Value = signWorldModel.Id.ToString();
+                    Response.Cookies.Add(userNameCookies1);
+                    return Json("wi", JsonRequestBehavior.AllowGet);
+
+                }
+                else
+                {
+
+                    TempData.Clear();
+
+                    return Json("nr", JsonRequestBehavior.AllowGet);
+                }
+            }
+            
+        }
+        #endregion
+
+        #region code for save linkedin profile data in database
+        public JsonResult SaveLinkedInProfile(string projid, string firstName, string email, string lastName, string Industry, string picUrl)
+        {
+            try
+            {
+                string UserNo = getUserNo();
+                string password = GeneratePassword();
+                RegisterUser objregister = new RegisterUser();
+                objregister.UserFirstName = firstName;
+                objregister.Email = email;
+                objregister.UserLastName = lastName;
+                objregister.Industries = Industry;
+                objregister.UserNo = UserNo;
+                objregister.Password = password;
+                objregister.UserRole = "L";
+                int creditcount = 0;
+                //int userId = (from x in context.RegisterUsers
+                //              where x.Email == email
+                //              select x.Email).FirstOrDefault().Count();
+
+
+                //int uId = Convert.ToInt32(userId.f);
+                //if (userId > 0)
+                //{
+                //    var userNo = (from x in context.RegisterUsers
+                //                  where x.Email == email
+                //                  select x.UserNo).SingleOrDefault();
+                //    string UserNumber = userNo.ToString();
+
+                //    string UsName = UserNumber;
+                //    HttpCookie userNoCookies = new HttpCookie("UserName");
+                //    userNoCookies.Value = UsName;
+                //    Response.Cookies.Add(userNoCookies);
+                //    Response.Cookies.Set(userNoCookies);
+
+                //}
+                //else
+                //{
+                //    context.RegisterUsers.Add(objregister);
+                //    context.SaveChanges();
+                //    string UsName = UserNo;
+                //    HttpCookie userNoCookies = new HttpCookie("UserName");
+                //    userNoCookies.Value = UsName;
+                //    Response.Cookies.Add(userNoCookies);
+                //    Response.Cookies.Set(userNoCookies);
+                //}
+                int proid = Convert.ToInt32(projid);
+                creditcount = (from x in context.LinkedInUsers
+                               where x.id == proid && x.Email == email
+                               select new { x.Email, x.id }).Count();
+                if (creditcount > 0)
+                {
+                }
+                else
+                {
+                    LinkedInUser objLuser = new LinkedInUser();
+                    objLuser.id = Convert.ToInt32(projid);
+                    objLuser.FirstName = firstName;
+                    objLuser.LastName = lastName;
+                    objLuser.Email = email;
+                    objLuser.Industry = Industry;
+                    objLuser.CreditM = false;
+                    objLuser.picUrl = picUrl;
+                    context.LinkedInUsers.Add(objLuser);
+                    context.SaveChanges();
+                }
+                int projectId = Convert.ToInt32(projid);
+                var emailid = (from x in context.LinkedInUsers
+                               where x.id == projectId
+                               select x.Email);
+                string linkedEmailid = emailid.ToString();
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return Json("", JsonRequestBehavior.AllowGet);
+        }
+
+
+        public JsonResult SignInwithLinkedin(string firstName, string email, string lastName, string Industry, string picUrl)
+        {
+            try
+            {
+                string UserNo = getUserNo();
+                string password = GeneratePassword();
+                RegisterUser objregister = new RegisterUser();
+                objregister.UserFirstName = firstName;
+                objregister.Email = email;
+                objregister.UserLastName = lastName;
+                objregister.Industries = Industry;
+                objregister.UserNo = UserNo;
+                objregister.Password = password;
+                objregister.UserRole = "L";
+
+                //int userId = 0;
+                var userId = (from x in context.RegisterUsers
+                              where x.Email == email
+                              select x.Email).Count();
+                //(from x in context.LinkedInUsers
+                // where x.id == proid && x.Email == email
+                // select new { x.Email, x.id }).Count();
+
+
+                if (userId > 0)
+                {
+                    var model = (from x in context.RegisterUsers
+                                 where x.Email == email
+                                 select new { x.UserNo, x.Id, x.UserRole }).SingleOrDefault();
+                    string UserNumber = model.UserNo.ToString();
+                    string Uid = model.Id.ToString();
+                    string urole = model.UserRole.ToString();
+                    string UsName = UserNumber;
+                    HttpCookie userNoCookies = new HttpCookie("UserName");
+                    userNoCookies.Value = UsName;
+                    Response.Cookies.Add(userNoCookies);
+                    Response.Cookies.Set(userNoCookies);
+
+                    HttpCookie userNameCookies1 = new HttpCookie("UserId");
+                    userNameCookies1.Value = Uid;
+                    Response.Cookies.Add(userNameCookies1);
+                    HttpCookie userNameCookies5 = new HttpCookie("UName");
+                    userNameCookies5.Value = UserNo;
+                    Response.Cookies.Add(userNameCookies5);
+
+
+                    HttpCookie userNameCookies2 = new HttpCookie("UserRole");
+                    userNameCookies2.Value = urole;
+                    Response.Cookies.Add(userNameCookies2);
+
+                    return Json("Success", JsonRequestBehavior.AllowGet);
+
+                }
+                else
+                {
+                    context.RegisterUsers.Add(objregister);
+                    context.SaveChanges();
+                    string UsName = UserNo;
+                    HttpCookie userNoCookies = new HttpCookie("UserName");
+                    userNoCookies.Value = UsName;
+                    Response.Cookies.Add(userNoCookies);
+                    Response.Cookies.Set(userNoCookies);
+
+                    //var model = (from x in context.RegisterUsers
+                    //             where x.Email == email
+                    //             select new { x.UserNo, x.Id, x.UserRole }).SingleOrDefault();
+                    var Userid = objregister.Id;
+
+                    HttpCookie userNameCookies1 = new HttpCookie("UserId");
+                    userNameCookies1.Value = Userid.ToString();
+                    Response.Cookies.Add(userNameCookies1);
+
+
+                    HttpCookie userNameCookies2 = new HttpCookie("UserRole");
+                    userNameCookies2.Value = "L";
+                    Response.Cookies.Add(userNameCookies2);
+
+                }
+
+
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return Json("", JsonRequestBehavior.AllowGet);
+        }
+
+        private string GeneratePassword()
+        {
+            string strPwdchar = "abcdefghijklmnopqrstuvwxyz0123456789#+@&$ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            string strPwd = "";
+            Random rnd = new Random();
+            for (int i = 0; i <= 7; i++)
+            {
+                int iRandom = rnd.Next(0, strPwdchar.Length - 1);
+                strPwd += strPwdchar.Substring(iRandom, 1);
+            }
+            return strPwd;
+        }
+        private string getUserNo()
+        {
+            string UserName = string.Empty;
+
+            UserName = GetUniqueKey(7);
+            using (I4IDBEntities context = new I4IDBEntities())
+            {
+                var isexistKey = context.RegisterUsers.Where(m => m.UserNo == UserName).FirstOrDefault();
+                if (isexistKey != null)
+                {
+                    getUserNo();
+                }
+            }
+            return UserName;
+        }
+        public static string GetUniqueKey(int maxSize)
+        {
+            char[] chars = new char[62];
+            chars =
+            "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890".ToCharArray();
+            byte[] data = new byte[1];
+            RNGCryptoServiceProvider crypto = new RNGCryptoServiceProvider();
+            crypto.GetNonZeroBytes(data);
+            data = new byte[maxSize];
+            crypto.GetNonZeroBytes(data);
+            StringBuilder result = new StringBuilder(maxSize);
+            foreach (byte b in data)
+            {
+                result.Append(chars[b % (chars.Length)]);
+            }
+            return result.ToString();
+        }
+        #endregion
+
+        #region code for sign out  added by rahul shukla modified date: 29/09/2015
+        public ActionResult SignOut()
+        {
+            Response.Cookies.Clear();
+            FormsAuthentication.SignOut();
+
+            string[] myCookie = Request.Cookies.AllKeys;
+            foreach (string cookie in myCookie)
+            {
+                Response.Cookies[cookie].Expires = DateTime.Now.AddDays(-1);
+            }
+
+            Session.Clear();
+
+            return RedirectToAction("WorldrefIndex");
+        }
+        #endregion
+
+    }
+}

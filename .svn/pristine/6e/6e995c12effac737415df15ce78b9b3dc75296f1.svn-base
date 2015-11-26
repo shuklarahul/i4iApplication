@@ -1,0 +1,301 @@
+﻿@model List<WorldRef.Models.PromotionLibraryModels.PromotionLibraryDAO>
+@{
+    ViewBag.Title = "AdminPromotionList";
+    Layout = "~/Views/Shared/_I4ILayout.cshtml";
+}
+<script type="text/javascript">
+    function ShowAllIndustry(id) {
+        var cnt = '<div><select  id="drpd' + id + '">' +
+      '<option value="0">Select Industry</option>' +
+      '<option value="1">Pharmaceutical/Food Processing</option>' +
+      '<option value="2">Power</option>' +
+      '<option value="3">Sugar Plants</option>' +
+      '<option value="4">Steel Plants</option>' +
+      '<option value="5">Palm Oil Mill</option>' +
+      '<option value="6">Mining & Construction</option></div>';
+
+        $("#promotediv").html(cnt);
+        $("#promotediv").dialog({
+            width: 430,
+            height: 200,
+            modal: true,
+        });
+        $(".ui-dialog").show();
+        $(".ui-widget-overlay").show();
+    };
+</script>
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+        $("#Approved").click(function () {
+            $("#Approved").addClass("active");
+            $("#Disapproved").removeClass("active");
+            $("#newpromotion").removeClass("active");
+
+            $("#gridContent").hide();
+            $("#btnSave").hide();
+            $.ajax({
+                url: "/PromotionLibrary/GetAllApprovedPromotionList",
+                type: 'POST',
+                data: JSON.stringify({}),
+                contentType: 'application/json; charset=utf-8',
+                success: function (response) {
+                    var Result = "";
+                    Result += '<table class="myTable webgrid-table"><thead><tr>' +
+                         '<th>Name</th>' +
+                        '<th>Email</th>' +
+                        '<th>Contact Number</th>' +
+                        '<th>Company Profile</th>' +
+                        '<th>Reference List</th>' +
+                         '<th>Details</th>' +
+                        '<th>Action</th></tr></thead>';
+                    $.each(response, function (id, model) {
+                        Result += '<tr><td>' + model.PName + '</td>';
+                        Result += '<td>' + model.PEmailId + '</td>';
+                        Result += '<td>' + model.PContactNumber + '</td>';
+                        Result += '<td>' + model.PCompanyProfile + '</td>';
+                        Result += '<td>' + model.PReference + '</td>';
+                        Result += '<td><a href="../PromotionLibrary/PromotionDetails?PromotionID=' + model.PromotionLibraryID + '" target="_blank"> View Details</a></td>';
+                        Result += '<td><a href="../PromotionLibrary/PromotionDetails?PromotionID=' + model.PromotionLibraryID + '" target="_blank">Promote</a></td></tr>';
+                        //Result += '<td><a href="../PromotionLibrary/ShowIndustryWiseAssociate?PromotionID=' + model.PromotionLibraryID + '" target="_blank">Promote</a></td></tr>';
+
+                    });
+                    Result += '</table>';
+                    $("#ApprovedTable").html(Result);
+                },
+                error: function () {
+                    alert("Failed! Please try again.");
+                }
+            });
+        });
+    });
+</script>
+<style type="text/css">
+    /*Here we will add css for style webgrid*/
+
+    table th {
+        background: #E47E7E !important;
+        color: #fff !important;
+    }
+
+        table th a {
+            color: #fff !important;
+        }
+
+            table th a:hover {
+                color: #fff !important;
+            }
+
+
+
+    .myTable tr:nth-child(even) {
+        background: #EAF2D3;
+    }
+
+    .myTable tr:nth-child(odd) {
+        background: #fff;
+    }
+
+    .active {
+        background-color: #ddd !important;
+        color: #5E5D5D !important;
+    }
+</style>
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+        $("#Disapproved").click(function () {
+            $("#Approved").removeClass("active");
+            $("#Disapproved").addClass("active");
+            $("#newpromotion").removeClass("active");
+            $("#gridContent").hide();
+            //$("#btnSave").show();
+            $.ajax({
+                url: "/PromotionLibrary/GetAllPromotionDisapproveList",
+                type: 'POST',
+                data: JSON.stringify({}),
+                contentType: 'application/json; charset=utf-8',
+                success: function (response) {
+                    if (response == "") {
+                        $("#ApprovedTable").empty().html("<div style='color: rgb(244, 31, 104); text-align: left; padding-top:20px'>No Record Found</div>");
+                        document.getElementById("btnSave").style.visibility = "hidden";
+                    }
+                    else {
+                        var Result = "";
+                        Result += '<table class="myTable webgrid-table"><thead><tr>' +
+                            '<th>Name</th>' +
+                            '<th>Email</th>' +
+                            '<th>Contact Number</th>' +
+                            '<th>Company Profile</th>' +
+                            '<th>Reference List</th>' +
+                            '<th>Details</th>' +
+                            '<th>Reason For Disapproved</th>' +
+                          '<th>Action</th></tr></thead>';
+                        $.each(response, function (id, model) {
+                            Result += '<tr><td>' + model.PName + '</td>';
+                            Result += '<td>' + model.PEmailId + '</td>';
+                            Result += '<td>' + model.PContactNumber + '</td>';
+                            Result += '<td><a href="../Content/PromotionFile/' + model.PCompanyProfile + '" target="_blank">' + model.PCompanyProfile + '</a></td>';
+                            Result += '<td><a href="../Content/PromotionFile/' + model.PReference + '" target="_blank">' + model.PReference + '</a></td>';
+                            Result += '<td><a href="../PromotionLibrary/PromotionDetails?PromotionID=' + model.PromotionLibraryID + '");">View Details</a></td>';
+                            Result += '<td>' + model.ReasonForDisapproved + '</td>';
+                            Result += '<td> <input type="checkbox" name="ids" value="' + model.PromotionLibraryID + '"/></td></tr>';
+                        });
+                        Result += '</table>';
+                        $("#ApprovedTable").html(Result);
+                    }
+                },
+                error: function () {
+                    alert("Failed! Please try again.");
+                }
+            });
+        });
+    });
+</script>
+<link href="~/Content/themes/jquery-ui.css" rel="stylesheet" />
+<script src="~/Scripts/NewScript/jquery-1.8.2.js"></script>
+<script src="~/Scripts/NewScript/jquery-ui.js"></script>
+<script type="text/javascript">
+    function showmodalpopup(id) {
+        var cnt = '<div><textarea rows="10" cols="50" id="txt' + id + '"></textarea></div><div align="center"><input type="submit" value="Save" name="Save" onclick="GetData2(' + id + ')" > </div>';
+        $("#popupdiv").html(cnt);
+        $("#gridContent").hide();
+        $("#popupdiv").dialog({
+            width: 430,
+            height: 140,
+            modal: true,
+        });
+    };
+    $(".ui-dialog").show();
+    $(".ui-widget-overlay").show();
+    function GetData2(id) {
+        $(".ui-dialog").hide();
+        $(".ui-widget-overlay").hide();
+        var s1 = document.getElementById('txt' + id).value;
+        $.ajax({
+            url: "/PromotionLibrary/SendDisapproveMesgAdmin",
+            type: 'POST',
+            data: JSON.stringify({
+                ID: id,
+                VALUE: s1
+            }),
+            contentType: 'application/json; charset=utf-8',
+            success: function (response) {
+                var Result = "";
+                Result += '<table class="myTable webgrid-table"><thead><tr>' +
+                        '<th>Name</th>' +
+                        '<th>Contact Number</th>' +
+                        '<th>Company Profile</th>' +
+                        '<th>Product Name</th>' +
+                        '<th>Action</th></tr></thead>';
+
+                $.each(response, function (id, model) {
+
+                    Result += '<tr><td>' + model.PName + '</td>';
+                    Result += '<td>' + model.PContactNumber + '</td>';
+                    Result += '<td>' + model.PCompanyProfile + '</td>';
+                    Result += '<td>' + model.ProductName + '</td>';
+                    Result += '<td><input type="checkbox" name="ids" value="' + model.PromotionLibraryID + '"/></td>';
+                    Result += '<td><input type="button" id="' + model.PromotionLibraryID + '" name="Disapprove" value="Disapprove" onclick="showmodalpopup(this.id);"/></td></tr>';
+                });
+                Result += '</table>';
+                $("#ApprovedTable").html(Result);
+                $("#popupdiv").dialog("close");
+            },
+            error: function () {
+                alert("Failed! Please try again.");
+            }
+        });
+
+    }
+</script>
+<section>
+    <h3>Promotional Library</h3>
+    <div class="formstart_box">
+        @using (Html.BeginForm("AdminPromotionList", "PromotionLibrary"))
+        {
+
+            <div>
+                <div class="project_mainbox" style="float: left;">
+                    <ul>
+                        <li> <a href='@Url.Action("AdminPromotionList", "PromotionLibrary")' id="newpromotion" class="active">New</a></li>
+
+                        <li>
+                            <a href='javascript:void(0)' id="Approved">Approved</a>
+
+
+                        </li>
+                        <li>
+                            <a href='javascript:void(0)' id="Disapproved">Disapproved</a>
+
+
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+
+            <div style="height: auto; width: 96%; float: left; background-color: rgb(247, 201, 201); padding: 10px; display: none; margin: 20px 0px; color: #D82727;" id="AlertMsg">
+                @if ((ViewBag.AlertMsg) != null)
+                {
+                    <script>
+                        document.getElementById("AlertMsg").style.display = "block";
+                    </script>
+                    @ViewBag.AlertMsg
+                }
+            </div>
+            if (Model.Count == 0)
+            {
+                <span>No Record Found.</span>
+            }
+            else
+            {
+                <div id="gridContent" style="overflow:auto;margin-bottom:20px; width:100%">
+                    <table class="myTable webgrid-table">
+                        <tr>
+                            <th>Name</th>
+                            <th>EmailId</th>
+                            <th>Contact Number</th>
+                            <th>Reference List</th>
+                            <th>Company Profile</th>
+
+                            <th>Action</th>
+
+                        </tr>
+                        @for (var i = 0; i < Model.Count; i++)
+                        {
+                            <tr>
+                                <td>@Model[i].PName</td>
+                                <td>@Model[i].PEmailId</td>
+                                <td>@Model[i].PContactNumber</td>
+                                <td><a href="~/Content/PromotionFile/@Model[i].PReference" target="_blank">@Model[i].PReference</a></td>
+                                <td><a href="~/Content/PromotionFile/@Model[i].PCompanyProfile" target="_blank">@Model[i].PCompanyProfile</a></td>
+
+                                <td>
+                                    <span><img src="~/Content/icons/approve.png" style="width:15px;" /></span><input type="checkbox" name="ids" value="@Model[i].PromotionLibraryID" />
+                                    <input type="image" src="~/Content/icons/disapprove.png" style="width:17px;" id="@Model[i].PromotionLibraryID" name="Disapprove" value="Disapprove" onclick="showmodalpopup(this.id);" />
+                                    <a href="~/PromotionLibrary/PromotionDetails?PromotionID=@Model[i].PromotionLibraryID"><img src="~/Content/icons/view-details.png" style="width: 15px;" /></a>
+                                </td>
+
+                            </tr>
+                        }
+                    </table>
+
+                </div>
+            }
+            <div>
+                <input type="submit" value="Apply" id="btnSave" />
+            </div>
+            <div id="ApprovedTable">
+            </div>
+            <div id="popupdiv" title="Reason For Disapprove" style="display: none;">
+            </div>
+            <div id="popupdivedit" title="Industry" style="display: none;">
+            </div>
+
+
+
+            <div id="promotediv" title="Industry" style="display: none;">
+            </div>
+        }
+    </div>
+
+</section>

@@ -1,0 +1,271 @@
+﻿@model WorldRef.Models.PromotionLibraryModels.PromotionProductListDAO
+@{
+    ViewBag.Title = "AdminPromotionList";
+    Layout = "~/Views/Shared/_I4ILayout.cshtml";
+}
+@{
+    var msg = TempData["msg"] ?? string.Empty;
+    TempData["msg"] = "";
+    var msgColor = TempData["vColor"] ?? string.Empty;
+    TempData["vColor"] = "";
+    var data = TempData["Data"] ?? string.Empty;
+    TempData["Data"] = "";
+}
+<h3>Promote Material with Associates</h3>
+<div id="content-wrapper">
+    <style type="text/css">
+        .one-fourth {
+            width: 45% !important;
+            margin: 1% 0.4% 2% .4%;
+            list-style-type: none;
+            background: #f4f4f4;
+        }
+
+        .proj-description {
+            width: 100%;
+            float: left;
+            box-shadow:none;
+            padding:7px 0;
+        }
+
+        .halfW {
+            width: 50%;
+        }
+       
+
+        .proj-description h3 {
+            padding-left: 12px;
+            margin-bottom: 0;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .dis_project {
+            text-align: left;
+            overflow: auto;
+            border: 1px solid rgb(224, 224, 224);
+            padding: 9px;
+            margin: 0 10px;
+            background-color: #FDFDFD;
+            max-height: 63px;
+        }
+
+        .title-hydro li {
+            line-height: 15px;
+            font-size: 11px;
+            list-style-type: none;
+        }
+
+            .title-hydro li > span, .projectuser-text {
+                font-weight: 700;
+            }
+        /*Here we will add css for style webgrid*/
+        .webgrid-table {
+            font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+            font-size: 1.2em;
+            width: 100%;
+            display: table;
+            border-collapse: separate;
+            background-color: white;
+            border-bottom: 1px solid #F47D7D;
+        }
+
+            .webgrid-table tbody tr {
+                border-bottom: 1px solid #F47D7D;
+            }
+
+                .webgrid-table tbody tr td {
+                    border-bottom: none;
+                    border-left: 1px solid #F47D7D;
+                    font-size: 14px !important;
+                }
+
+        table th {
+            background: #E47E7E !important;
+            color: #fff !important;
+        }
+
+            table th a {
+                color: #fff !important;
+            }
+
+                table th a:hover {
+                    color: #fff !important;
+                }
+
+        .webgrid-table td, th {
+            border-top: 1px solid #F47D7D;
+            border-left: 1px solid #F47D7D;
+            padding: 3px 7px 2px;
+        }
+
+            .webgrid-table td:last-child, th:last-child {
+                border-right: 1px solid #F47D7D;
+            }
+
+        .webgrid-header {
+            background-color: #A7C942;
+            color: #FFFFFF;
+            padding-bottom: 4px;
+            padding-top: 5px;
+            text-align: left;
+        }
+
+        .webgrid-footer {
+        }
+
+        .webgrid-row-style {
+            padding: 3px 7px 2px;
+        }
+
+        .webgrid-alternating-row {
+            background-color: #EAF2D3;
+            padding: 3px 7px 2px;
+        }
+
+        #filter {
+            height: 15px;
+            margin-top: 10px;
+            width: 130px !important;
+        }
+
+        #search-cus {
+            font-weight: 600;
+            margin-left: 7px;
+        }
+
+        #proposal {
+            font-size: 18px;
+            font-weight: 600;
+            margin-left: 160px;
+        }
+
+        .myTable {
+            width: 100%;
+        }
+
+            .myTable tr:nth-child(even) {
+                background: #EAF2D3;
+            }
+
+            .myTable tr:nth-child(odd) {
+                background: #fff;
+            }
+    </style>
+    <section>
+        <div>
+            <ul class="pE">
+                @if (msg != "")
+                {
+                    <li style="color: @msgColor;">
+                        <label></label>
+                        @msg
+                    </li>
+                }
+            </ul>
+        </div>
+        @using (Html.BeginForm("Save", "PromotionLibrary"))
+        {
+            
+            <ul class="projects-slider">
+                @foreach (var item in Model._Productlist)
+                {				
+                    <li class="project one-fourth">
+
+                        <div class="proj-description" style="text-align: left;">
+                            @*<h3>Products</h3>*@
+                            <ul class="title-hydro dis_project">
+                                <li><span>Product Name : </span>@item.ProductName</li>
+                                <li><span>Brochure : </span><a href="~/Content/PromotionFile/@item.ProductBrochure" target="_blank">@item.ProductBrochure</a></li>
+                                <li><span>U.R.S Format : </span><a href="~/Content/PromotionFile/@item.URSFormat" target="_blank">@item.URSFormat</a></li>
+                            </ul>
+                            <input type="hidden" name="proLibId" id="proLibId" value="@item.PromotionLibraryID" />
+                        </div>
+                        @foreach (var item1 in Model.documentlist)
+                        { 
+                            <div class="proj-description halfW" style="text-align: left;">
+                                <h3>Other Documents</h3>
+                                <ul class="title-hydro dis_project">
+                                    @*<li><span>Document Name :</span>@item.OtherDocumentName</li>*@
+                                    <li><a href="~/Content/PromotionFile/@item1.DocumentAttachment" target="_blank" title="Click For Download">@item1.OtherDocumentName</a></li>
+
+
+                                </ul>
+                            </div>
+                        }
+                        @foreach (var item2 in Model.certificatelist)
+                        {
+                             <div class="proj-description halfW" style="text-align: left;">
+                                <h3>Certificates</h3>
+                                <ul class="title-hydro dis_project">
+                                    @*   <li><span>Certificates Name :</span>@item.CertificateName</li>*@
+                                    <li><a href="~/Content/PromotionFile/@item2.CertificateAttachment" target="_blank" title="Click For Download">@item2.CertificateName</a></li>
+
+                                </ul>
+                            </div> 
+                        }
+
+
+                        <div class="proj-description" style="text-align: left;">
+                            <h3>Choose Associates </h3>
+                            <ul class="title-hydro dis_project">
+                                @foreach (var item3 in Model.objlistpromotionlib)
+                                { 
+                                    <li>
+                                        <input type="checkbox" name="ids" value="@item3.Id"/>@item3.UserFirstName, @item3.CountryName (@item3.USerNo) </li>@*
+                                    <li></li>
+                                    <li>@item3.CountryName</li>*@
+                                }
+
+                            </ul>
+
+                        </div>
+                          @*<div class="proj-description halfW" style="text-align: left;">
+                            <h3>Choose Worldref Users</h3>
+                               <ul class="title-hydro dis_project">
+                                @foreach (var item3 in Model.worlrefUserList)
+                                { 
+                                    <li>
+                                        <input type="checkbox" name="ids" value="@item3.Id"/>@item3.UserFirstName, @item3.CountryName (@item3.USerNo) </li>
+                                 
+                                }
+
+                            </ul>
+                          </div>*@
+                        <div class="proj-description">
+
+                            <input class="button red" type="submit" value="Promote" id="btnSave" />
+                        </div>
+                    </li>
+                }
+
+
+
+
+                @* <li class="project one-fourth">
+
+                    <div class="proj-description" style="text-align: left;">
+                        <h3>Associate List</h3>
+                        <ul class="title-hydro dis_project">
+
+                            @foreach (var item in Model.objlistpromotionlib)
+                            {
+                                <li>
+                                    <input type="checkbox" name="ids" value="@item.Id"/>@item.UserFirstName</li>
+                                <li>@item.USerNo</li>
+                                <li>@item.CountryName</li>
+                            }
+
+
+                        </ul>
+
+
+                    </div>
+                </li>*@
+
+            </ul>
+            
+           
+        }
+    </section>
+</div>

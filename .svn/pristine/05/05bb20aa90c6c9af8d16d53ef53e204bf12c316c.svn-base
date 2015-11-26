@@ -1,0 +1,349 @@
+﻿@model WorldRef.Models.PromotionLibraryModels.PromotionLibraryDAO
+@{
+    ViewBag.Title = "PromotionLibraryForm";
+    Layout = "~/Views/Shared/PromotionalLayout.cshtml";
+}
+@{
+    var msg = TempData["msg"] ?? string.Empty;
+    TempData["msg"] = "";
+    var msgColor = TempData["vColor"] ?? string.Empty;
+    TempData["vColor"] = "";
+    var data = TempData["Data"] ?? string.Empty;
+    TempData["Data"] = "";
+}
+
+<html>
+<head>
+    <title></title>
+    <link href="~/Content/MultipleSelect/multiple-select.css" rel="stylesheet" />
+    <script src="~/Content/js/jquery-1.10.1.min.js"></script>
+    <script src="~/Content/MultipleSelect/jquery.multiple.select.js"></script>
+
+    <script type="text/javascript">
+        var p = 0;
+        function AddOtherDocument() {
+
+            var toAppend = '';
+            toAppend += '<div class="certif pr-certi" ><div class="mainLib"><div class="leftlid"><div class="leftportion"><label>Document Name(Competitional analysis,knowledge enhancing documents)</label><input type="text" class="cerF-input" id="Document' + p + '"/></div></div>' +
+                        '<div class="leftlid" style="float:right;"><label>Document File</label><input type="file" id="Document" name="file3"/></div></div></div>';
+            var j = jQuery.noConflict();
+            j('#otherDocument').append(toAppend);
+            p++;
+        }
+
+    </script>
+    <script type="text/javascript">
+        var k = 0;
+        function AddNewCertificate() {
+            var toAppend = '';
+            toAppend += '<div class="certif pr-certi" ><div class="mainLib"><div class="leftlid"><div class="leftportion"><label>Certificate Name</label><input type="text" class="cerF-input" id="Certificate' + k + '"/></div></div>' +
+                        '<div class="leftlid" style="float:right;"><label>Certificate File</label><input type="file" class="cerF-input" id="Certificate" name="file2"/></div></div></div>';
+            var j = jQuery.noConflict();
+            j('#ContainerCertificate').append(toAppend);
+            k++;
+        }
+
+
+    </script>
+
+    <style>
+        .leftlid {
+            width: 48%;
+            float: left;
+            margin: 0 1%;
+        }
+
+            .leftlid label {
+                width: 29%;
+                float: left;
+                text-align: left;
+            }
+
+        .ms-drop.bottom {
+            position: absolute;
+            top:100% !important;
+        }
+
+        .ms-parent {
+            position: relative;
+        }
+
+        .cerF-box {
+            width: 47%;
+            float: left;
+            margin-right: 2%;
+        }
+
+        .certF-name {
+            display: block !important;
+            text-align: left !important;
+            float: left !important;
+        }
+
+        .cerF-input {
+            width: 51% !important;
+            text-align: left !important;
+            float: left !important;
+        }
+
+        .clear {
+            clear: both;
+        }
+    </style>
+    <script type="text/javascript">
+        var ijk = 0;
+
+        function AddNew() {
+
+            var oList = document.forms[0].elements["IndustriesID"];
+            var sdValues = [];
+            var sdText = [];
+            for (var i = 0; i < oList.options.length; i++) {
+                if (oList.options[i].selected == true) {
+                    sdValues.push(oList.options[i].value);
+                    sdText.push(oList.options[i].text);
+                }
+            }
+            console.log(sdValues); console.log(sdText);
+
+
+            var toAppend = '';
+            toAppend += '<div class="prd-col"><div class="mainLib"><div class="leftlid"><div class="leftportion"><label>Product Name</label><input type="text"  class="cerF-input" id="product' + ijk + '"/></div></div>' +
+                        '<div class="leftlid" style="float:right;"><label>Broucher</label><input type="file" id="Broucher" name="file1"/></div></div>';
+            toAppend += '<div class="mainLib"><div class="leftlid"><div class="leftportion"><label>U.R.S Format</label><input type="file" id="ursformat" name="file1"/></div></div>' +
+                        '<div class="leftlid" style="float:right;"><label>Selected Industry</label><select id="mySelect' + ijk + '" class="certF-name"></select></div></div></div>';
+            var j = jQuery.noConflict();
+            j('#Container').append(toAppend);
+            for (var i = 0; i < sdValues.length; i++) {
+                var z = document.createElement("option");
+                z.setAttribute("value", sdValues[i]);
+                var t = document.createTextNode(sdText[i]);
+                z.appendChild(t);
+                document.getElementById("mySelect" + ijk).appendChild(z);
+            }
+            ijk++;
+
+        }
+    </script>
+    <script type="text/javascript">
+        function GetAllValues() {
+
+            //alert(ijk);
+            //debugger;
+            for (var s = 0; s <= ijk - 1; s++) {
+
+                document.getElementById('AllData').value += document.getElementById('product' + s).value + "," + document.getElementById('mySelect' + s).value + "~";
+            }
+            for (var q = 0; q <= k - 1; q++) {
+                document.getElementById('AllData1').value += document.getElementById('Certificate' + q).value + "~";
+            }
+            alert(k);
+
+            for (var t = 0; t <= p - 1; t++) {
+                document.getElementById('AllData2').value += document.getElementById('Document' + t).value + "~";
+
+            }
+            alert(p);
+            CheckBoxVAlue();
+        }
+        function CheckBoxVAlue() {
+            // var ind = new Array();
+            var oList = document.forms[0].elements["IndustriesID"];
+            var sdValues = [];
+            var sdText = [];
+            for (var a = 0; a < oList.options.length; a++) {
+                if (oList.options[a].selected == true) {
+                    sdValues.push(oList.options[a].value);
+                    sdText.push(oList.options[a].text);
+                }
+                document.getElementById("hdnCheckBox").value = sdValues;
+            }
+
+
+
+
+
+        }
+    </script>
+
+    <script type="text/javascript">
+
+        function DissableTable() {
+
+            document.getElementById("chk-1").disabled = true;
+            document.getElementById("td-1").disabled = true;
+            document.getElementById("chk-2").disabled = true;
+            document.getElementById("td-2").disabled = true;
+            document.getElementById("chk-3").disabled = true;
+            document.getElementById("td-3").disabled = true;
+            document.getElementById("chk-4").disabled = true;
+            document.getElementById("td-4").disabled = true;
+            document.getElementById("chk-5").disabled = true;
+            document.getElementById("td-5").disabled = true;
+            document.getElementById("chk-6").disabled = true;
+            document.getElementById("td-6").disabled = true;
+        }
+
+    </script>
+
+</head>
+<body>
+    <div id="content-wrapper">
+        <section>
+            <h3>Promote your Material </h3>
+            <div>
+                @if (data != "")
+                {
+
+                    <label></label>
+                    <div style="color: red;">
+                        @data
+                    </div>
+                }
+            </div>
+            <div style="margin-bottom: 10px;">
+                @using (Html.BeginForm("SavePromotion", "PromotionLibrary", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <input type="hidden" id="hdnCheckBox" name="chkvalue" />
+                    @Html.HiddenFor(m => m.AllData)
+                    @Html.HiddenFor(m => m.AllData1)
+                    @Html.HiddenFor(m => m.AllData2)
+                    <div class="mainForm" style="padding: 0px; text-align: left;">
+                        <div class="mainLib prom-main">
+                            <div class="leftlid">
+                                <div class="leftportion">
+                                    <label>Organisation Name</label>
+                                    @Html.TextBoxFor(model => model.PName)
+                                </div>
+                            </div>
+                            <div class="leftlid" style="float: right;">
+                                <div class="leftportion">
+                                    <label>Email Address</label>
+                                    @Html.TextBoxFor(model => model.PEmailId)
+                                </div>
+                            </div>
+                            <div class="leftlid">
+                                <div class="leftportion">
+                                    <label>Contact No.</label>
+                                    @Html.TextBoxFor(model => model.PContactNumber)
+                                </div>
+                            </div>
+                            <div class="leftlid" style="float: right;">
+                                <div class="leftportion">
+                                    <label>Industry</label>
+                                    @Html.DropDownListFor(model => model.IndustriesID, new MultiSelectList(Model.IndustriesListModel, "Value", "Text"), new { @class = "sign-up-input mul-drop", multiple = "multiple", data_placeholder = "Select Industry" })
+
+                                </div>
+
+                            </div>
+
+                            <div class="leftlid">
+                                <div class="leftportion">
+                                    <label>Company Profile</label>
+                                    <input type="file" id="Cprofile" name="file" style="width: 40%;" />
+
+
+                                </div>
+                            </div>
+                            <div class="leftlid" style="float: right;">
+                                <div class="leftportion">
+                                    <label>Reference List</label>
+                                    <input type="file" id="reference" name="file" />
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="clear"></div>
+
+                    <br />
+                    <div class="prd-mainbox">
+                        <div class="prd-mainbox-title">
+                            <span>Products</span>
+                        </div>
+                        <div class="prd-innerboxbtn">
+                            <input type="button" value="Add Products" id="btnAddProducts" onclick="return AddNew();" />
+                        </div>
+                        <div id="Container">
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                    <br />
+
+                    <div class="prd-mainbox">
+                        <div class="prd-mainbox-title">
+                            <span>Certificates</span>
+                        </div>
+                        <div class="prd-innerboxbtn">
+                            <input type="button" value="Add Certificates" class="" id="btnAddmore" onclick="return AddNewCertificate();" />
+                        </div>
+                        <div id="ContainerCertificate"></div>
+                    </div>
+                    <div class="clear"></div>
+                    <br />
+                    <div class="prd-mainbox">
+                        <div class="prd-mainbox-title">
+                            <span>Other Documents</span>
+                        </div>
+                        <div class="prd-innerboxbtn">
+                            <input type="button" value="Add Other Documents" class="" id="btnOtherDocuments" onclick="return AddOtherDocument();" />
+                        </div>
+                        <div id="otherDocument"></div>
+                    </div>
+                    <div class="reg-button" style="margin-left:0px ;">
+                        <input type="submit" value="Save" class="search-btn" id="btnSave" onclick="GetAllValues();" />
+                    </div>
+
+
+                }
+            </div>
+
+        </section>
+    </div>
+    <style>
+        .list-arrange {
+            float: left;
+            margin-right: 42px;
+        }
+
+        .ms-parent {
+            width: 65% !important;
+        }
+
+        input[type="text"], input[type="password"], input[type="email"], input[type="tel"], textarea {
+            width: 65% !important;
+        }
+
+        #btnSave {
+            width: 80px !important;
+            margin-bottom: 20px;
+            margin-top: 20px;
+        }
+
+
+        #industry_table tr td {
+            padding: 0px;
+            border: none;
+        }
+        /* style css for promotion library*/
+        button.ms-choice, button.ms-choice:hover {
+            background-color: #fff !important;
+            border: 1px solid #e6e6e6;
+            background: none;
+        }
+    </style>
+
+    <script>
+        var j = jQuery.noConflict();
+        j(document).ready(function () {
+
+            j('select').multipleSelect({
+                //isOpen: true,
+                keepOpen: true
+            });
+        });
+    </script>
+</body>
+</html>

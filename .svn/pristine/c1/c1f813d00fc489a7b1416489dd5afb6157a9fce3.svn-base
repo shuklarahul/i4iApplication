@@ -1,0 +1,284 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <link href="~/Content/css/font-awesome-4.1.0/css/font-awesome.css" rel="stylesheet" />
+    <link rel="shortcut icon" type="image/x-icon" href="~/Content/WorldRef/images/favicon.png">
+    <link href="~/Content/css/css/form-css.css" rel="stylesheet" />
+    <link href="~/Content/css/css/css.css" rel="stylesheet" />
+    <link href="~/Content/css/css/jquery.fancybox.css" rel="stylesheet" />
+    <script src="~/Content/js/jquery-1.10.1.min.js"></script>
+    <script type="text/javascript" src="http://platform.linkedin.com/in.js">
+        api_key: 75ngf8ppx3c4pk
+        authorize: true
+        onLoad: onLinkedInLoad
+        scope: r_basicprofile r_emailaddress
+    </script>
+    <script type="text/javascript">
+        function onLinkedInLoad() {
+
+            try {
+            } catch (err) {
+                console.log(err);
+            }
+            var lkInAuth = IN.User.isAuthorized();
+            if (lkInAuth == false) {
+                IN.Event.on(IN, "auth", onLinkedInAuth);
+            }
+
+
+        }
+        function onLinkedInAuth() {
+            IN.API.Profile("me")
+            .fields("firstName", "lastName", "industry", "location:(name)", "pictureUrl", "headline", "summary", "num-connections", "publicProfileUrl", "distance", "positions", "email-address", "educations", "date-of-birth")
+            .result(displayProfiles)
+            .error(displayProfilesErrors);
+        }
+        function displayProfiles(profiles) {
+            member = profiles.values[0];
+            var txtFirstName = member.firstName;
+            var txtLastName = member.lastName;
+            var txtEmail = member.emailAddress;
+            var txtindustry = member.industry;
+            var picture = member.pictureUrl;
+            $.ajax({
+                url: "/WorldRef/SignInwithLinkedin",
+                type: 'POST',
+                data: JSON.stringify({ "firstName": txtFirstName, "email": txtEmail, "lastName": txtLastName, "Industry": txtindustry, "picUrl": picture }),
+                contentType: "application/json; charset=utf-8",
+                success: function (response) {
+                    if (response == "Success") {
+                        $.fancybox.close();
+                        window.location.href = '/WorldRef/WorldrefIndex';
+
+                    }
+                    else {
+                        $.fancybox.close();
+                        window.location.href = '/WorldRef/WorldrefIndex';
+                    }
+                },
+                error: function (response) {
+                    alert(response.status + ' ' + response.statusText);
+                }
+            });
+        }
+        function displayProfilesErrors(error) {
+            profilesDiv = document.getElementById("profiles");
+            profilesDiv.innerHTML = error.message;
+            console.log(error);
+        }
+    </script>
+    <script type="text/javascript">
+        function Login() {
+            if (FormValidation() == true) {
+                var uName = document.getElementById("UserName").value;
+                var uPassword = document.getElementById("Password").value;
+
+                $.ajax({
+                    url: "/WorldRef/LoginIndex",
+                    type: 'POST',
+                    async: false,
+                    data: JSON.stringify({ "UserName": uName, "Password": uPassword }),
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (response) {
+                        // alert(response);
+                        if (response == "wi") {
+                            window.location.href = '/WorldRef/WorldrefIndex';
+                        }
+                        else if (response == "ue") {
+                            window.location.href = '/uploader/UploadExcel';
+                        }
+                        else if (response == "re") {
+                            window.location.href = '/WorldRef/WorldrefIndex';
+                        }
+                        else if (response == "nr") {
+                            alert("Invalid username/password.");
+                            // document.getElementById("UserName").value = "";
+                            document.getElementById("Password").value = "";
+                        }
+                        else {
+
+                        }
+                    },
+
+                    error: function () {
+                        alert("Failed! Please try again.");
+                    }
+                });
+            }
+            else { return false; }
+        }
+        function FormValidation() {
+            var y;
+            y = document.getElementById("UserName").value;
+            if (y == null || y == "") {
+                alert("Please enter User Name");
+                document.getElementById("UserName").focus();
+                return false;
+            }
+            var y;
+            y = document.getElementById("Password").value;
+            if (y == null || y == "") {
+                alert("Please enter Password");
+                document.getElementById("Password").focus();
+                return false;
+            }
+            return true;
+        }
+    </script>
+    <script>
+        var addmail = 1;
+        var no = 1;
+        $(document).ready(function () {
+            $(".content-3").mCustomScrollbar({
+                scrollButtons: { enable: true },
+                theme: "light-thick",
+                scrollbarPosition: "outside"
+            });
+            $("#info").click(function () {
+                $(".action-field").toggle();
+            });
+            $(document).click(function (e) {
+                if (e.target.id != 'info' && !$('#info').find(e.target).length) {
+                    $(".action-field").hide();
+                }
+            });
+            $('#Type').multipleSelect();
+            $('#Industry').multipleSelect();
+            $('#IndustriesID').multipleSelect();
+            $("#ParentOrganisationName").show();
+            $("#BusinessUnitName").hide();
+            $("input:radio[name='ProfileReason']").click(function () {
+                if ($("#rdoCompany").prop("checked")) {
+                    $("#ParentOrganisationName").show();
+                    $("#BusinessUnitName").hide();
+                }
+                else {
+                    $("#ParentOrganisationName").show();
+                    $("#BusinessUnitName").show();
+                }
+            });
+            $("#AddEmailID").click(function () {
+                $("#EmailCnt").append('<div><input class="sign-up-input fullinput" id="Email' + addmail + '" placeholder="Email ID" type="text" ><i class="fa fa-trash-o" style="cursor: pointer; font-size: 24px; vertical-align: -4px;padding-left: 5px;" title="Delete"></i></div>');
+                addmail++;
+            });
+            $(document).on('click', '.fa-trash-o', function(){
+                $(this).parent().remove();
+            });
+            $("#AddContactNo").click(function () {
+                var areacode = $("#areacode").val();
+                $("#addMoreNo").append('<div><input class="sign-up-input forWidth1" id="ContactCode" name="ContactCode" placeholder="Area Code" readonly="readonly" type="text" value="' + areacode + '"><input class="sign-up-input forWidth2" id="ContactNumber'+no+'" name="ContactNumber" placeholder="Mobile Number" style="width: 77%;" type="text"><i class="fa fa-trash-o" style="cursor: pointer; font-size: 24px; vertical-align: -4px;padding-left: 5px;" title="Delete"></i></div>');
+                no++;
+            });
+            $("#Country").change(function () {
+                getCountryCode($('option:selected', $(this)).text());
+            });
+            $('#Password').keypress(function (e) {
+                if (e.keyCode == 13) {
+                    Login();
+                }
+            });
+            function getCountryCode(countryname) {
+                $.ajax({
+                    url: "/WorldRef/GetCountryCode",
+                    type: 'POST',
+                    data: JSON.stringify({ "Countryname": countryname }),
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (response) {
+                        $('.area').val("+"+response);
+                        $("#areacode").val("+"+response);
+                    },
+                    error: function () {
+                        alert("Failed! Please try again.");
+                    }
+                });
+            }
+        });
+    </script>
+
+    <script src="~/Content/js/SearchFunction.js"></script>
+    <link href="~/Content/WorldRef/css/form-css.css" rel="stylesheet" />
+    <link href="~/Content/WorldRef/css/jquery.fancybox.css" rel="stylesheet" />
+    <script src="~/Content/WorldRef/js/jquery-1.10.1.min.js"></script>
+    <script src="~/Content/WorldRef/js/jquery.hashchange.min.js"></script>
+    <script src="~/Content/WorldRef/js/jquery.easytabs.min.js"></script>
+    <script src="~/Content/WorldRef/js/jquery.fancybox.js"></script>
+    <script src="~/Content/js/CheckCookie.js"></script>
+    <link href="~/Content/WorldRef/WorldRef/css/StyleSheet1.css" rel="stylesheet" />
+    <script src="~/Scripts/NewScript/jquery-ui.js"></script>
+    <script src="~/Content/WorldRef/worldRefInner/js/html5lightbox.js"></script>
+    <script src="~/Content/jquery.multiple.select.js"></script>
+    <link href="~/Content/multiple-select.css" rel="stylesheet" />
+    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600,700&#038;subset=latin,latin-ext' type='text/css' media='all' />
+    <script src="~/Content/js/JavaScript1.js"></script>
+    <link rel="stylesheet" media="screen and (max-width: 940px)" href="~/Content/WorldRef/WorldRefSearch/css/search.css" />
+    <script src="~/Content/css/jquery.mCustomScrollbar.concat.min.js"></script> 
+</head>
+<body style="height: 100%; overflow: hidden;background-color:#fff;">
+    <section class="stiky">        
+        <div>
+            @RenderBody()
+        </div>
+    <div class="footer_social">
+            <ul>
+                <li><span></span></li>
+                <li><span></span></li>
+                <li><span></span></li>
+            </ul>
+        </div>
+    </section>
+    <div id="about" style="display: none; width: 500px;">
+        <h2 class="about-popup_title">About WorldRef</h2>
+        <p class="about-popup_content" style="">
+            <span style="font-weight: 600;">For the Project Owners:</span> WorldRef is a tool to search and find the rightmost possible partners for your Industrial needs. Also they can tell the world about the projects they have accomplished along with the partners’ review with whom they have accomplished it.
+            <br />
+            <br />
+            <span style="font-weight: 600;">For the Manufacturers, Contractors, Consultants, Developers, Investors, Fabricators & Trading Companies;</span>
+            WorldRef is a place to glorify their contribution for the worldwide projects they have executed.
+
+        </p>
+    </div>
+    <div class="footer-bottom fo_stiky">
+        <div class="block">
+            <ul>
+                <li><a href="#about" class="fancybox" id="footer-hyp">About WorldRef </a></li>
+                |
+                <li><a href="#" class="" id="footer-hyp">Advertise & Get Featured</a></li>
+                |
+                <li><a href="#" class="" id="footer-hyp">Terms</a></li>
+                |
+                <li><a href="#" class="" id="footer-hyp">Policy & Guidelines</a></li>
+                |
+                <li><a href="#" class="" id="footer-hyp">Help & Support</a></li>
+            </ul>
+        </div>
+        <div>
+            <p style="font-style: italic; font-size: 11px; text-align: center; margin: 0;">
+                &copy; 2015 i4i. &nbsp;&nbsp; | &nbsp;&nbsp;
+                <span>Worldref is a tool for search and promotion of engineering products and Services.  </span>&nbsp;&nbsp; | &nbsp;&nbsp;<span><b>Powered by : </b>i4i engineering</span>
+            </p>
+        </div>
+    </div>
+    @*<div id="inline1" class="lightbox-wid" style="display: none;">
+        @Html.Partial("_SignIN")
+    </div>*@
+    <script src="~/Content/js/jquery.fancybox.js"></script>
+    <script src="~/Content/js/jquery.easytabs.min.js"></script>
+    <script src="~/Content/js/jquery.hashchange.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#info").click(function () {
+                $(".action-field").toggle();
+            });
+            $(document).click(function (e) {
+                if (e.target.id != 'info' && !$('#info').find(e.target).length) {
+                    $(".action-field").hide();
+                }
+            });
+        });
+
+    </script>
+    <script src="~/Content/js/CheckCookie.js"></script>
+</body>
+</html>

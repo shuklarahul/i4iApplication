@@ -1,0 +1,827 @@
+﻿@model WorldRef.DataLayer.SignUpWorldRefModel
+@using System.Configuration;
+
+@{
+    var msg = TempData["ErrorMessage"] ?? string.Empty;
+    TempData["ErrorMessage"] = "";
+    var displayMessage = TempData["DisplayMessage"] ?? string.Empty;
+    TempData["DisplayMessage"] = "";
+}
+<script src="~/Content/js/CheckCookie.js"></script>
+<style type="text/css">
+    .body {
+        background: none repeat scroll 0 0 rgb(218, 218, 218);
+    }
+
+    .boxCircle:hover {
+        background-color: #E16C6C !important;
+        color: #fff;
+    }
+
+    ul.menu a:hover {
+        color: #000 !important;
+    }
+
+    div.content p, div.content ul {
+        padding: 0 !important;
+    }
+
+    #adown-test {
+    }
+
+    .fancybox-inner {
+        overflow-y: auto;
+    }
+
+    .lightbox-wid {
+        width: 500px;
+        overflow-y: auto;
+    }
+
+    .image-back {
+        background-image: url('http://www.i4i.co.in/wp-content/themes/i4i/images/body-bg.jpg');
+        background-repeat: repeat;
+        background-position: top left;
+        background-attachment: scroll;
+    }
+
+    *, *:before, *:after {
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+    header::before {
+        content: "";
+        position: absolute;
+        height: 5px;
+        width: 100%;
+        top: 0;
+        left: 0;
+    }
+
+    nav ul li li {
+        padding: 2px 10px 5px 10px !important;
+    }
+
+    .forWidth1 {
+        width: 15%;
+        margin-right: 1%;
+    }
+
+    .forWidth2 {
+        width: 84%;
+    }
+
+
+    .fancybox-skin {
+    }
+
+    .divsubmain2 {
+        margin: 0px;
+    }
+
+    li.pE.main-test {
+        /*margin-bottom: 10px;*/
+    }
+
+    .single-line {
+        width: 100%;
+        padding: 6px;
+        outline: 0;
+    }
+
+    ul.pE {
+        list-style: none;
+        padding: 0;
+    }
+
+    .thnku {
+        color: #404040;
+        font-weight: 600;
+        line-height: 1.5em;
+        margin-bottom: 1em;
+        text-transform: capitalize;
+        font-size: 16px;
+        text-align: center;
+    }
+
+    a.indexAnchor {
+        color: #446FD6;
+    }
+
+        a.indexAnchor:hover {
+            color: #000;
+        }
+
+    .halfinput {
+        width: 46%;
+    }
+
+    .fullinput {
+        width: 93%;
+    }
+    .tab a
+    {
+        cursor:pointer;
+    }
+</style>
+<script>
+    function SignUpFormValidation() {
+        if ($("#DropdownType").val() == "0") {
+            alert("Please Select Type");
+            document.getElementById("DropdownType").focus();
+            return false;
+        }
+
+        if ($("#DropdownType").val() == "Others") {
+            var y1;
+            y1 = document.getElementById("OtherType").value;
+            if (y1 == null || y1 == "") {
+                alert("Please enter Type ");
+                document.getElementById("OtherType").focus();
+                return false;
+            }
+        }
+        var y;
+        y = document.getElementById("ParentOrganisationName").value;
+        if (y == null || y == "") {
+            alert("Please enter Parent Organisation Name");
+            document.getElementById("ParentOrganisationName").focus();
+            return false;
+        }
+        var Contain = "";
+        $("#TextBoxContain :text").each(function () {
+            Contain += $(this).val();
+        });
+        y = document.getElementById("Industry").value;
+        if ((y == null || y == "") && Contain == "") {
+            alert("Please select  Industry or Add your Industry");
+            document.getElementById("Industry").focus();
+            return false;
+        }
+        //var x;
+        //x = document.getElementById("ProfileUrl").value;
+        //if (x == null || x == "") {
+        //    alert("Please enter ProfileUrl");
+        //    document.getElementById("ProfileUrl").focus();
+        //    return false;
+        //}
+        //  return ValidateUserProfile();
+        var y;
+        y = document.getElementById("Email").value;
+        if (y == null || y == "") {
+            alert("Please enter Email");
+            document.getElementById("Email").focus();
+            return false;
+        }
+        var y;
+        y = document.getElementById("AlternateEmail").value;
+        if (y == null || y == "") {
+            alert("Please enter Alternate Email");
+            document.getElementById("AlternateEmail").focus();
+            return false;
+        }
+
+        if (document.getElementById('Country').selectedIndex == 0) {
+            alert("Please Select Country");
+            return false;
+        }
+        var y;
+
+        y = document.getElementById("ContactNumber").value;
+        if (y == null || y == "") {
+            alert("Please enter Contact Number");
+            document.getElementById("ContactNumber").focus();
+            return false;
+        }
+        //var y = document.getElementById("fileUp").value;
+        //if (y == null || y == "") {
+        //    alert("Please Select Company Profile");
+        //    document.getElementById("fileUp").focus();
+        //    return false;
+        //}
+        var y = document.getElementById("Logo").value;
+        if (y == null || y == "") {
+            alert("Please Select Company Logo");
+            document.getElementById("Logo").focus();
+            return false;
+        }
+        for (var i = 1; i < addmail; i++) {
+            debugger;
+            if ($("#Email" + i).length>0)
+                document.getElementById('OtherMail').value += document.getElementById('Email' + i).value + ",";
+        }
+        for (var j = 1; j < no; j++) {
+            if ($("#ContactNumber" + j).length > 0)
+                document.getElementById('ContactNumber').value += ","+document.getElementById('ContactNumber' + j).value + ",";
+        }
+    }
+</script>
+<script type="text/javascript">
+    function RecruiterSignUp() {
+
+        if ($("#RecruitmentType").val() == "0") {
+            alert("Please Select Recruitment Type");
+            document.getElementById("RecruitmentType").focus();
+            return false;
+        }
+
+
+        var y;
+        y = document.getElementById("txtRecName").value;
+        if (y == null || y == "") {
+            alert("Please Enter Recruiter Name");
+            document.getElementById("txtRecName").focus();
+            return false;
+        }
+
+
+        var y;
+        y = document.getElementById("txtOrgName").value;
+        if (y == null || y == "") {
+            alert("Please Enter Organization Name");
+            document.getElementById("txtOrgName").focus();
+            return false;
+        }
+
+        //var Contain = "";
+        //$("#TextBoxContain :text").each(function () {
+        //    Contain += $(this).val();
+        //});|| Contain == ""
+        y = document.getElementById("IndustriesID").value;
+        if (y == null || y == "") {
+            alert("Please select  Industry");
+            document.getElementById("Industry").focus();
+            return false;
+        }
+
+
+        var y;
+        y = document.getElementById("txtEmailAdd").value;
+        if (y == null || y == "") {
+            alert("Please enter Email");
+            document.getElementById("txtEmailAdd").focus();
+            return false;
+        }
+
+
+
+        var y;
+
+        y = document.getElementById("txtConNum").value;
+        if (y == null || y == "") {
+            alert("Please enter Contact Number");
+            document.getElementById("txtConNum").focus();
+            return false;
+        }
+
+
+    }
+
+</script>
+
+<script type="text/javascript">
+
+    $(document).on("change", "#txtRecName", function () {
+        var getName = document.getElementById('txtRecName').value;
+
+        $.ajax({
+            type: 'POST',
+            contentType: 'application/json; charset=utf-8',
+            url: '/WorldRef/CheckUsername',
+            data: "{ 'userName':' " + getName + "' }",
+            success: function (data) {
+
+                if (data == "Available") {
+
+                } else {
+                    alert("Recruiter Name Allready Exist.")
+                    $('#txtRecName').focus();
+                }
+            },
+            error: function (data) {
+                alert('Error in getting result');
+            }
+        });
+    });
+
+</script>
+<script type="text/javascript">
+    $(function () {
+        $('#txtOrgName').autocomplete({
+            source: function (request, response) {
+                $.getJSON("/Worldref/getData?term=" + request.term, function (data) {
+                    response(data);
+                });
+            },
+            minLength: 3,
+            delay: 100
+        });
+    });
+</script>
+
+
+<script type="text/javascript">
+
+    function CommonUserSignUp() {
+
+        var y;
+        y = document.getElementById("txtName").value;
+        if (y == null || y == "") {
+            alert("Please Enter Name");
+            document.getElementById("txtName").focus();
+            return false;
+        }
+
+        var y;
+        y = document.getElementById("txtOrganization").value;
+        if (y == null || y == "") {
+            alert("Please Enter Organization Name");
+            document.getElementById("txtOrganization").focus();
+            return false;
+        }
+        var y;
+        y = document.getElementById("txtGemail").value;
+        if (y == null || y == "") {
+            alert("Please enter Email");
+            document.getElementById("txtGemail").focus();
+            return false;
+        }
+
+
+
+        var y;
+
+        y = document.getElementById("txtContactno").value;
+        if (y == null || y == "") {
+            alert("Please enter Contact Number");
+            document.getElementById("txtContactno").focus();
+            return false;
+        }
+        var y;
+
+        y = document.getElementById("txtGPassword").value;
+        if (y == null || y == "") {
+            alert("Please enter Password");
+            document.getElementById("txtGPassword").focus();
+            return false;
+        }
+
+        var y = document.getElementById("guserPhoto").value;
+        if (y == null || y == "") {
+            alert("Please Select profile picture");
+            document.getElementById("guserPhoto").focus();
+            return false;
+        }
+
+    }
+
+</script>
+
+<div id="tab-container" class='tab-container'>
+    <ul class='etabs'>
+        <li id="e1" class='tab'><a class="sign-up-title" onclick="logintab()">Login</a></li>
+        <li id="e2" class='tab'><a onclick="byd()" class="sign-up-title">Sign up</a></li>
+    </ul>
+    <div class='panel-container'>
+        <div id="tabs1-html">
+            <div style="margin-top:20px;">
+                @Html.TextBoxFor(x => x.UserName, new { @class = "sign-up-input", placeholder = "Username or Email" })
+                @Html.PasswordFor(x => x.Password, new { @class = "sign-up-input", placeholder = "Password" })
+                @Html.Hidden("returnUrl", ViewContext.HttpContext.Request.Url.PathAndQuery)
+                <input type="submit" name="Submit" id="Submit" value="Sign in" class="lgButton" onclick=" return Login()" />
+                <span class="forget_pass"><a href="/WorldRef/ForgetPassword">Forgot password?</a></span>
+            </div>
+            <div style="float:left;width:100%;margin:10px 0px;">
+                <div style="width: 45%; border: 1px solid #E8E8E8; float: left; margin-top: 10px; "></div>
+                <div class="spanOr">OR</div>
+                <div style="width: 45%; border: 1px solid #E8E8E8; float: right; margin-top: 10px; "></div>
+            </div>
+            <div class="social">
+                <div class="login linkedin">
+                    <script type="in/Login">
+                    </script>
+                </div>
+                <div class="fb login">
+                    <a href="http://182.73.96.52:94/WorldRef/FacebookWorldRef">
+                        <i class="fa fa-facebook"></i>
+                        <span>Sign in with Facebook</span>
+                    </a>
+                </div>
+                <div class="google login">
+                    <a href="https://accounts.google.com/o/oauth2/auth?response_type=code&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile+https%3A%2F%2Fwww.google.com/m8/feeds/contacts/default/full&redirect_uri=@(ConfigurationManager.AppSettings["gmailredirecturl"].ToString().Trim())&client_id=@(ConfigurationManager.AppSettings["gmailclientid"].ToString().Trim())&state=%2Fprofile">
+                        <i class="fa fa-google"></i>
+                        <span>Sign in with Google</span>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+        <div id="tabs1-js">
+            <ul class="intom">
+                <li id="into1" class='intab'><a href="#intoOpen1" onclick="byd()" class="sign-up-title">Create Your RefWorld</a></li>
+                <li id="into2" class='intab'><a href="#intoOpen2" onclick="MovetoGeneralTab()" class="sign-up-title">As General User</a></li>
+                <li id="into3" class='intab'><a href="#intoOpen3" onclick="MovetoRecruitersTab()" class="sign-up-title">As Recruiter</a></li>
+            </ul>
+            <div>
+                <div id="intoOpen1">
+                    <div class="content content-3" style="height:405px;width:100%;text-align:left;">
+                        <input type="hidden" id="areacode" />
+                        @using (Html.BeginForm("SignUp", "WorldRef", FormMethod.Post, new { enctype = "multipart/form-data", @class = "marginBottom" }))
+                        {
+                            @Html.HiddenFor(model => model.OtherMail)
+                            <input type="radio" id="rdoCompany" name="ProfileReason" checked="checked" value="Company" />
+                            <span>Company</span>
+                            <input type="radio" id="rdoBusiness" name="ProfileReason" value="BusinessUnit" />
+                            <span>Business unit</span>
+                            @Html.TextBoxFor(model => model.ParentOrganisationName, new { @class = "sign-up-input", placeholder = "Parent Organisation Name" })
+                            @Html.TextBoxFor(model => model.BusinessUnitName, new { @class = "sign-up-input", placeholder = "Business Unit Name", @style = "display:none" })<br />
+                            @Html.DropDownListFor(model => model.Type, new SelectList(Model.TypeList, "Value", "Text"), new { @class = "sign-up-input mul-drop", multiple = "multiple", data_placeholder = "My Company is" })
+
+                            <span>If you can't find in the dropdown above</span>
+                            <a href="javascript:void(0)" class="indexAnchor" onclick="AddDynamicCompany()">Add Another Company</a>
+                            <br />
+                            <div id="TextBoxPleaseMention" style="display: block; width: 100%;">
+                            </div>
+
+                            @Html.TextBoxFor(model => model.OtherType, new { @class = "sign-up-input", placeholder = "Please Mention", @style = "display:none" })
+                            @*@Html.TextBoxFor(model => model.Name, new { @class = "sign-up-input", placeholder = "Name of the Organisation" })<br />*@
+                            @Html.DropDownListFor(model => model.Industry, new MultiSelectList(Model.IndustryList, "Value", "Text"), new { @class = "sign-up-input mul-drop", multiple = "multiple", data_placeholder = "Select Industry" })
+                            <span>If you can't find in the dropdown above</span>
+                            <a href="javascript:void(0)" class="indexAnchor" onclick="AddDynamicTxtbox()">Add Another Industry</a>
+                            @*<input type="button" value="Add Another Industry" onclick="AddDynamicTxtbox()" style="margin-bottom: 10px;" />*@
+                            <br />
+                            <div id="TextBoxContain" style="display: block; width: 100%;">
+                            </div>
+                            @Html.TextBoxFor(model => model.OtherIndustryName, new { @class = "sign-up-input", @placeholder = "Industry", @style = "display:none" });
+                            @*<div><span>WorldRef Profile URL :&nbsp;</span> <span>www.worldref.org/ </span>@Html.TextBoxFor(model => model.ProfileUrl, new { style = "margin-right:0;width: 48%;", @class = "sign-up-input marginR", placeholder = "e.g Thomos", onchange = "return ValidateUserProfile();", title = "You personalised WorldRef URL will showcase your professional experience. You may also use it in your email signatures." })</div>*@
+                            @Html.TextBoxFor(model => model.Email, new { @class = "sign-up-input halfinput", placeholder = "Official Email ID", @style = "margin-right: 6px;" });
+                            @Html.TextBoxFor(model => model.AlternateEmail, new { @class = "sign-up-input halfinput", placeholder = "Recovery Email Id" });
+                            <i class="fa fa-plus-circle" style="cursor: pointer; font-size: 24px; vertical-align: -4px;padding:0;" id="AddEmailID" title="Add More EmailID"></i>
+                            <div id="EmailCnt"></div>
+                            @Html.DropDownListFor(model => model.Country, new SelectList(Model.CountryList, "Value", "Text"), new { @class = "sign-up-input" })<br />
+                            @Html.TextBoxFor(model => model.ContactCode, new { @class = "sign-up-input forWidth1 area", placeholder = "Area Code", @readonly = "readonly" })
+                            @Html.TextBoxFor(model => model.OfficialNumber, new { @class = "sign-up-input forWidth2", placeholder = "Official Contact Number" })
+                            @Html.TextBoxFor(model => model.ContactCode, new { @class = "sign-up-input forWidth1 area", placeholder = "Area Code", @readonly = "readonly" })
+                            @Html.TextBoxFor(model => model.ContactNumber, new { @class = "sign-up-input forWidth2", placeholder = "Mobile Number", @style = "width: 77%;" })
+                            <i class="fa fa-plus-circle" style="cursor: pointer; font-size: 24px; vertical-align: -4px;padding:0;" id="AddContactNo" title="Add More Contact No."></i>
+                            <div id="addMoreNo"></div>
+                            @*<div class="mbottom">
+                                    <div class="formmain_text">
+                                        <label>Company Profile :</label>
+                                        <span style="color: green; font-size: 11px;">Select File Upto 90 MB (Only PDF)</span></div>
+                                    <input type="file" id="fileUp" nam
+                                e="Company Profile" class="fileInput" onchange="ValidateSingleInput(this);" autofocus>
+                                </div>*@
+                            <div class="mbottom">
+                                <div class="formmain_text">
+                                    <label>Company Logo :</label>
+                                    <span style="color: green; font-size: 11px;">Select File Upto 10 MB</span>
+                                </div>
+                                <input type="file" id="Logo" name="Company Profile" class="fileInput" onchange="ValidateSingleInput1(this);" autofocus>
+                            </div>
+                            <input type="submit" value="Get Your WorldRef Profile URL" class="lgButton" onclick="return SignUpFormValidation();">
+                        }
+                    </div>
+                </div>
+                <div id="intoOpen2">
+                      @using (Html.BeginForm("SignUpUser", "WorldRef", FormMethod.Post, new { enctype = "multipart/form-data", @class = "marginBottom" }))
+{
+    <ul class="pE marginBottom">
+        <li class="pE main-test">
+            <label class="lp">
+                <input class="sign-up-input" id="txtName" name="txtName" type="text" placeholder="Your Name">
+            </label>
+            <span class="field-validation-valid" data-valmsg-for="Cperson" data-valmsg-replace="true"></span>
+
+        </li>
+        <li class="pE main-test">
+            <label class="lp">
+                <input class="sign-up-input" id="txtOrganization" name="txtOrganization" type="text" placeholder="Organization Name">
+            </label>
+            <span class="field-validation-valid" data-valmsg-for="OrganizationName" data-valmsg-replace="true"></span>
+        </li>
+        <li class="pE main-test">
+            <label class="lp">
+                <input class="sign-up-input" id="txtContactno" name="txtContactno" type="text" placeholder="Contact Number">
+            </label>
+            <span class="field-validation-valid" data-valmsg-for="CustomerName" data-valmsg-replace="true"></span>
+        </li>
+        <li class="pE main-test">
+            <label class="lp">
+                <input class="sign-up-input" id="txtGemail" name="txtGemail" type="text" placeholder="Email Address">
+            </label>
+            <span class="field-validation-valid" data-valmsg-for="ProjectName" data-valmsg-replace="true"></span>
+        </li>
+        <li class="pE">
+            <label class="lp">
+                <input class="sign-up-input" id="txtGPassword" name="txtGPassword" type="password" placeholder="Password">
+            </label>
+            <span class="field-validation-valid" data-valmsg-for="OrganizationName" data-valmsg-replace="true"></span>
+        </li>
+
+        <li class="pE main-test mbottom">
+            <label class="lp">
+                <label class="formmain_text">Profile Picture</label>
+                <input type="file" id="guserPhoto" name="guserPhoto" class="fileInput">
+            </label>
+
+        </li>
+
+
+        <li class="pE">
+            <span class="pEdit manage-search">
+                <input type="submit" value="Sign Up" class="lgButton" onclick="return CommonUserSignUp();" style="width:74px;">
+                @*<input type="submit" value="Sign Up" class="sign-up-button" onclick="return CommonUserSignUp();">*@
+            </span>
+            <label class="lp" style="width: 33%;">
+                <input type="submit" value="Cancel" class="lgButton" onclick="CancelLike();" style="width:74px;">
+            </label>
+        </li>
+    </ul>
+}
+                    </div>
+
+
+                <div id="intoOpen3">
+                    @using (Html.BeginForm("SaveRecruiters", "WorldRef", FormMethod.Post, new { enctype = "multipart/form-data", @class = "marginBottom" }))
+                    {  <ul class="pE marginBottom">
+                        <li class="pE main-test">
+                            <label class="lp">
+
+                                <select id="RecruitmentType" class="sign-up-input">
+                                    <option value="0">Type of Recruitment</option>
+                                    <option value="I recruit for my Organisation only">I recruit for my Organisation only</option>
+                                    <option value="I recruit for Other Organisations only">I recruit for Other Organisations only</option>
+                                    <option value="Both: I recruit for my and other organisations">Both: I recruit for my and other organisations</option>
+                                </select>
+                                @*  @Html.DropDownListFor(model => model.RecruitmentType, new SelectList(Model.RecruitersTypeList, "Value", "Text", new { @class = "sign-up-input" }))<br />*@
+                            </label>
+
+                        </li>
+                        <li class="pE main-test">
+                            <label class="lp">
+                                <input class="sign-up-input" id="txtRecName" name="txtRecName" type="text" placeholder="Recruiter Name">
+                            </label>
+
+                        </li>
+                        <li class="pE main-test">
+                            <label class="lp">
+                                <input class="sign-up-input" id="txtOrgName" name="txtOrgName" type="text" placeholder="Organization Name">
+                            </label>
+
+                        </li>
+                        <li class="pE main-test">
+
+                            @Html.DropDownListFor(model => model.IndustriesID, new MultiSelectList(Model.IndustryList, "Value", "Text"), new { @class = "sign-up-input mul-drop", multiple = "multiple", data_placeholder = "Select Industry" })
+
+                            <span class="field-validation-valid" data-valmsg-for="ProjectName" data-valmsg-replace="true"></span>
+                        </li>
+                        <li class="pE main-test">
+                            <label class="lp">
+                                <input class="sign-up-input" id="txtConNum" name="txtConNum" type="text" placeholder="Contact Number">
+                            </label>
+
+                        </li>
+
+                        <li class="pE main-test">
+                            <label class="lp">
+                                <input class="sign-up-input" id="txtEmailAdd" name="txtEmailAdd" type="text" placeholder="Email Address">
+                            </label>
+
+                        </li>
+
+                        <li class="pE">
+                            <span class="pEdit manage-search">
+                                <input type="submit" value="Sign Up" class="lgButton" onclick="return RecruiterSignUp();" style="width:74px;">
+                            </span>
+                            <label class="lp" style="width: 33%;">
+                                <input type="submit" value="Cancel" class="lgButton" onclick="CancelLike();" style="width:74px;">
+                            </label>
+                        </li>
+                    </ul>
+                    }
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function MovetoSignUpTab() {//e2
+        $("#tabs1-html").removeClass("active");
+        $("#tabs1-js").addClass("active");
+        $("#e1").removeClass("active");
+        $("#e2").addClass("active");
+        $("#tabs1-html").css("display", "none");
+        $("#tabs1-js").css("display", "block");
+        $("#into1").addClass("active");
+        $("#into2").removeClass("active");
+        $("#into3").removeClass("active");
+        $("#intoOpen1").addClass("active");
+        $("#intoOpen2").removeClass("active");
+        $("#intoOpen3").removeClass("active");
+        $("#intoOpen1").css("display", "block");
+        $("#intoOpen2").css("display", "none");
+        $("#intoOpen3").css("display", "none");
+        openFancybox();
+    }
+    function MovetoLoginTab() {//e1
+
+        $("#tabs1-html").addClass("active");
+        $("#tabs1-js").removeClass("active");
+        $("#e1").addClass("active");
+        $("#e2").removeClass("active");
+        $("#tabs1-html").css("display", "block");
+        $("#tabs1-js").css("display", "none");
+        $("#intoOpen1").css("display", "none");
+        $("#intoOpen2").css("display", "none");
+        $("#intoOpen3").css("display", "none");
+        openFancybox();
+    }
+    function logintab() {
+        $("#tabs1-html").addClass("active");
+        $("#tabs1-js").removeClass("active");
+        $("#e1").addClass("active");
+        $("#e2").removeClass("active");
+        $("#tabs1-html").css("display", "block");
+        $("#tabs1-js").css("display", "none");
+        $("#intoOpen1").css("display", "none");
+        $("#intoOpen2").css("display", "none");
+        $("#intoOpen3").css("display", "none");
+    }
+    function byd() {//into1
+        debugger;
+        $("#tabs1-html").removeClass("active");
+        $("#tabs1-js").addClass("active");
+        $("#e1").removeClass("active");
+        $("#e2").addClass("active");
+        $("#tabs1-html").css("display", "none");
+        $("#tabs1-js").css("display", "block");
+        $("#into1").addClass("active");
+        $("#into2").removeClass("active");
+        $("#into3").removeClass("active");
+        $("#intoOpen1").addClass("active");
+        $("#intoOpen2").removeClass("active");
+        $("#intoOpen3").removeClass("active");
+        $("#intoOpen1").css("display", "block");
+        $("#intoOpen2").css("display", "none");
+        $("#intoOpen3").css("display", "none");
+    }
+    function MovetoGeneralTab() {//into2
+        $("#into1").removeClass("active");
+        $("#into2").addClass("active");
+        $("#into3").removeClass("active");
+        $("#intoOpen1").removeClass("active");
+        $("#intoOpen2").addClass("active");
+        $("#intoOpen3").removeClass("active");
+        $("#intoOpen1").css("display", "none");
+        $("#intoOpen2").css("display", "block");
+        $("#intoOpen3").css("display", "none");
+    }
+    function MovetoRecruitersTab() {//into3
+        $("#into1").removeClass("active");
+        $("#into2").removeClass("active");
+        $("#into3").addClass("active");
+        $("#intoOpen1").removeClass("active");
+        $("#intoOpen2").removeClass("active");
+        $("#intoOpen3").addClass("active");
+        $("#intoOpen1").css("display", "none");
+        $("#intoOpen2").css("display", "none");
+        $("#intoOpen3").css("display", "block");
+    }
+    function openFancybox() {
+        $.fancybox({
+            'autoScale': true,
+            'transitionIn': 'elastic',
+            'transitionOut': 'elastic',
+            'speedIn': 500,
+            'speedOut': 300,
+            'autoDimensions': true,
+            'centerOnScroll': true,
+            'href': '#inline1'
+        });
+    }
+
+    $(document).ready(function () {
+        $('#Industry').multipleSelect();
+        $('#IndustriesID').multipleSelect();
+        var message = '@displayMessage';
+
+        if (message != "") {
+            $.fancybox("#ModelpopUp");
+        }
+
+        $('#tab-container').easytabs({ updateHash: false });
+        $('#SearchValue').keypress(function (e) {
+            alert("Called");
+            var key = e.which;
+            if (key == 13)  // the enter key code
+            {
+                Search();
+            }
+        });
+        $("#Country").change(function () {
+            // alert($('option:selected', $(this)).text());
+            getCountryCode($('option:selected', $(this)).text());
+        });
+        $('#ContactNumber').keypress(function (evt) {
+            var charCode = 0;
+            charCode = (evt.which) ? evt.which : event.keyCode;
+            if (((charCode > 47) && (charCode < 58)) || (charCode == 8) || (charCode == 9) || (charCode == 46) || (charCode == 0))
+                return true;
+
+            return false;
+        });
+        $("#OtherType").hide();
+        $("#DropdownType").change(function () {
+            if ($(this).val() == "Others") {
+                $("#OtherType").show();
+            }
+            else {
+                $("#OtherType").hide();
+            }
+        });
+        $("#OtherIndustryName").hide();
+        $("#Industry").change(function () {
+            if ($("#Industry option:selected").text() == "Other") {
+                $("#OtherIndustryName").show();
+            }
+            else {
+                $("#OtherIndustryName").hide();
+            }
+        });
+    });
+
+    function getCountryCode(countryname) {
+        $.ajax({
+            url: "/WorldRef/GetCountryCode",
+            type: 'POST',
+            data: JSON.stringify({ "Countryname": countryname }),
+            contentType: 'application/json; charset=utf-8',
+            success: function (response) {
+                $('#ContactCode').val(response);
+            },
+            error: function () {
+                alert("Failed! Please try again.");
+            }
+        });
+    }
+</script>
+<script type="text/javascript">
+    function onLinkedInLoad() {
+
+        try {
+        } catch (err) {
+            console.log(err);
+        }
+        var lkInAuth = IN.User.isAuthorized();
+        if (lkInAuth == false) {
+            IN.Event.on(IN, "auth", onLinkedInAuth);
+        }
+
+
+    }
+    function onLinkedInAuth() {
+        IN.API.Profile("me")
+        .fields("firstName", "lastName", "industry", "location:(name)", "pictureUrl", "headline", "summary", "num-connections", "publicProfileUrl", "distance", "positions", "email-address", "educations", "date-of-birth")
+        .result(displayProfiles)
+        .error(displayProfilesErrors);
+    }
+    function displayProfiles(profiles) {
+        member = profiles.values[0];
+        var txtFirstName = member.firstName;
+        var txtLastName = member.lastName;
+        var txtEmail = member.emailAddress;
+        var txtindustry = member.industry;
+        var picture = member.pictureUrl;
+        $.ajax({
+            url: "/WorldRef/SignInwithLinkedin",
+            type: 'POST',
+            data: JSON.stringify({ "firstName": txtFirstName, "email": txtEmail, "lastName": txtLastName, "Industry": txtindustry, "picUrl": picture }),
+            contentType: "application/json; charset=utf-8",
+            success: function (response) {
+                if (response == "Success") {
+                    $.fancybox.close();
+                    window.location.href = '/WorldRef/WorldrefIndex';
+
+                }
+                else {
+                    $.fancybox.close();
+                    window.location.href = '/WorldRef/WorldrefIndex';
+                }
+            },
+            error: function (response) {
+                alert(response.status + ' ' + response.statusText);
+            }
+        });
+    }
+    function displayProfilesErrors(error) {
+        profilesDiv = document.getElementById("profiles");
+        profilesDiv.innerHTML = error.message;
+        console.log(error);
+    }
+</script>

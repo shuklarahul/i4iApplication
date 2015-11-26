@@ -1,0 +1,203 @@
+﻿
+@model WorldRef.Models.ReviewViewModel
+@{
+    int i = 1;
+    string newString = "SH";
+    string rr = "";
+}
+<script type="text/javascript">
+    function OpenUserReview(id) {
+        $.ajax({
+            url: "/WorldRef/AdminReviewList1",
+            type: 'POST',
+            data: JSON.stringify({ "projectId": id }),
+            contentType: 'application/json; charset=utf-8',
+            success: function (response) {
+
+
+                var foo = $("#ReviewList").html(response);
+                $.fancybox(foo);
+
+            },
+            error: function () {
+                alert("Failed! Please try again.");
+            }
+        });
+    }
+    function PublishProjectReview(id, trid) {
+        // alert(id);
+        var review = document.getElementById('rvr' + id).value;
+        //  alert(review);
+        $.ajax({
+            url: "/WorldRef/PublishProjectReview",
+            type: 'POST',
+            data: JSON.stringify({ "id": id, "Show": "true", "review": review }),
+            contentType: 'application/json; charset=utf-8',
+            success: function (response) {
+
+                $("#SH" + trid).html("");
+                alert("Testimonial Publish Successfully");
+                window.location.href = "../Worldref/ListExcelProjectsUser";
+            },
+            error: function () {
+                alert("Failed! Please try again.");
+            }
+        });
+    }
+</script>
+<script>
+
+    function AdmPublishProjectReview(id, trid) {
+        // alert(id);
+        var review = document.getElementById('rvr' + id).value;
+        //  alert(review);
+        $.ajax({
+            url: "/WorldRef/AdminPublishProjectReview",
+            type: 'POST',
+            data: JSON.stringify({ "id": id, "Show": "true", "review": review }),
+            contentType: 'application/json; charset=utf-8',
+            success: function (response) {
+                $("#SH" + trid).html("");
+                alert("Testimonial Publish Successfully");
+            },
+            error: function () {
+                alert("Failed! Please try again.");
+            }
+        });
+    }
+    function PublishImageReview(id, trid) {
+        var review = document.getElementById('rvr' + id).value;
+        $.ajax({
+            url: "/WorldRef/PublishImageReview",
+            type: 'POST',
+            data: JSON.stringify({ "id": id, "Show": "true", "review": review }),
+            contentType: 'application/json; charset=utf-8',
+            success: function (response) {
+                $("#SH" + trid).html("");
+                alert("Testimonial Publish Successfully");
+
+            },
+            error: function () {
+                alert("Failed! Please try again.");
+            }
+        });
+    }
+    function UnPublishProjectReview(id, trid) {
+        var review = document.getElementById('rvr' + id).value;
+        $.ajax({
+            url: "/WorldRef/UnPublishProjectReviewUser",
+            type: 'POST',
+            data: JSON.stringify({ "id": id, "Show": "false", "review": review }),
+            contentType: 'application/json; charset=utf-8',
+            success: function (response) {
+                $("#SH" + trid).html("");
+                alert("Testimonial Unpublish Successfully");
+
+            },
+            error: function () {
+                alert("Failed! Please try again.");
+            }
+        });
+    }
+    function UnPublishImageReview(id, trid) {
+        var review = document.getElementById('rvr' + id).value;
+        $.ajax({
+            url: "/WorldRef/PublishImageReview",
+            type: 'POST',
+            data: JSON.stringify({ "id": id, "Show": "false", "review": review }),
+            contentType: 'application/json; charset=utf-8',
+            success: function (response) {
+                $("#" + trid).html("");
+                alert("Testimonial Unpublish Successfully");
+
+            },
+            error: function () {
+                alert("Failed! Please try again.");
+            }
+        });
+    }
+</script>
+@using (Html.BeginForm("AdminReviewList", "WorldRef", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{<div class="profile_part2 border_design popBoxWidth_fix" >
+     <h4 class="fancyCu_h4">
+         User's Testimonial</h4>
+         <table class="adminReviewlist_table">
+             <tr>
+                 <td>User</td>
+                 <td>Testimonial </td>
+                 <td>
+                     Publish
+                 </td>
+                 <td>
+                     Unpublish
+                 </td>
+             </tr>
+
+             @foreach (var item in Model.ProjectReviews)
+        {
+            rr = newString + i;
+         <tr id='@rr'>
+             <td>
+                 @Html.Label(item.userName, item.userName, "")
+             </td>
+             <td>
+                 @Html.TextAreaFor(modelItem => item.Review, new { id = "rvr" + item.Id })
+
+             </td>
+             @if (item.Show == true)
+                {
+             <td>
+                 <input type="button" value="Publish" onclick="PublishProjectReview(@item.Id,@i)" />
+             </td>
+             <td>
+                 <input type="button" value="UnPublish" onclick="UnPublishProjectReview(@item.Id,@i)" />
+             </td>
+                }
+                else
+                {
+             <td>
+                 <input type="button" value="Publish" onclick="PublishProjectReview(@item.Id,@i)" />
+             </td>
+             <td>
+                 <input type="button" value="UnPublish" onclick="UnPublishProjectReview(@item.Id,@i)" />
+             </td>
+                }
+         </tr>
+                i++;
+
+        }
+             @*   @foreach (var item in Model.ImagesReview)
+                {
+                    <tr id="@i">
+                          <td>
+                            @Html.Label(item.userName, item.userName, "")
+                        </td>
+                        <td>
+                            @Html.TextAreaFor(modelItem => item.Review, new { id =  "rvr"+item.Id })
+
+                        </td>
+                        @if (item.Show == true)
+                        {
+                            <td>
+                                <input type="button" value="Publish" onclick="return PublishProjectReview(@item.Id,@i)" />
+                            </td>
+                            <td>
+                                <input type="button" value="UnPublish" onclick="return UnPublishImageReview(@item.Id,@i)" />
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                <input type="button" value="Publish" onclick="return PublishProjectReview(@item.Id,@i)" />
+                            </td>
+                        }
+                    </tr>
+                   i++;
+                }*@
+
+         </table>
+</div>
+}
+
+
+

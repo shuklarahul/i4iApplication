@@ -1,0 +1,217 @@
+﻿@model WorldRef.DataLayer.SignUpWorldRefModel
+@{
+    ViewBag.Title = "Search Image";
+    Layout = "~/Views/Shared/LayoutSearch.cshtml";
+
+}
+@{
+    var msg = TempData["ErrorMessage"] ?? string.Empty;
+    TempData["ErrorMessage"] = "";
+    var displayMessage = TempData["DisplayMessage"] ?? string.Empty;
+    TempData["DisplayMessage"] = "";
+}
+<style type="text/css">
+     /*add in css.css*/
+    .image_tn a > img {
+        max-width: 175px;
+        height: 116px;
+        width: 100%;
+        float: left;
+    }
+    .width100searchI li:nth-child(5) {
+        margin-right: 0;
+    }
+    /*add in css.css*/
+</style>
+
+<script>
+    
+</script>
+<script>
+    $('#SearchValue').keypress(function (e) {
+        var key = e.which;
+        if (key == 13) 
+        {
+            SearchImage();
+        }
+    });
+    </script>
+    <script type="text/javascript">
+
+
+        function GetAllCommentsOfProject(projectId, projectImageId, userid) {
+
+            $.ajax({
+                type: "POST",
+                url: '/WorldRef/GetAllComentsImage',
+                data: JSON.stringify({ "projectId": projectId, "projectImageId": projectImageId, "UserId": userid }),
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+
+                    var Result = "<li style='text-align=center;color=black'>  </li>";
+
+                    Result += "<li><textarea type='text' id='txt1' class='text-box single-line' rows='4' cols='30' placeholder='Enter Review'> </textarea><input type='button' value='Add Comment' class='lgButton' onclick='AddCommentOnProjectImage(" + projectId + "," + projectImageId + "," + userid + ")' style='  padding: 1% 5%;  margin-top: 1%;'></input></li>";
+                    $("#CommentList").html(Result);
+                },
+                error: function () {
+                    alert("Failed! Please try again.");
+                }
+            });
+        }
+    function LikeSearchImage(projectId, ProjectImageId, uId) {
+        $.ajax({
+            type: "POST",
+            url: '/WorldRef/AddLikeSearchImage',
+            data: JSON.stringify({ "ProjectId": projectId, "UserID": uId, "LikeOrDisLike": "Like", "UserIp": "0", "ProjectImageId": ProjectImageId }),
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                if (data == "login") {
+                    MovetoLoginTab();
+                    // $.fancybox("#inline111");
+                }
+                else if (data == "userProject") {
+                    alert("You Can not like to own project Image.");
+                }
+                else if (data == "Success") {
+
+                    alert("You have successfully liked.");
+                }
+                else if (data == "You Already Liked this Project Image.") {
+                    alert("You Already Liked this Project Image.");
+                }
+                else if (data == "Fail") {
+                    alert("There have been some error. Please try again.");
+                }
+                else {
+                    //  CallCountrySearchHome();
+                }
+            }
+        });
+
+    }
+</script>
+<script>
+    $(document).ready(function () {
+        
+        CallSearchImages();
+        CountryList();
+        IndustryList();
+       
+    });
+    function IndustryList() {
+        $.ajax({
+            url: "/WorldRef/GetAllIndustry",
+            type: 'POST',
+            data: JSON.stringify({}),
+            contentType: 'application/json; charset=utf-8',
+            success: function (response) {
+                var Result = "";
+                $.each(response, function (id, model) {
+                    Result += ' <input type="checkbox" name="' + model.CustomerIndustryType + '" class="filter-select" onchange="CallSearchImages()" value="Only India">&nbsp;&nbsp;' + model.CustomerIndustryType + '<br>';
+                });
+                $("#industry").html(Result);
+            },
+            error: function () {
+                alert("Failed! Please try again.");
+            }
+        });
+    }
+    function CountryList() {
+        $.ajax({
+            url: "/WorldRef/GetAllCountries",
+            type: 'POST',
+            data: JSON.stringify({}),
+            contentType: 'application/json; charset=utf-8',
+            success: function (response) {
+                var Result = "";
+                $.each(response, function (id, model) {
+                    Result += ' <input type="checkbox" name="' + model.Country + '" class="filter-select" onchange="CallSearchImages()" value="Only India">&nbsp;&nbsp;' + model.Country + '<br>';
+                });
+                $("#country").html(Result);
+            },
+            error: function () {
+                alert("Failed! Please try again.");
+            }
+        });
+    }
+</script>
+<script type="text/javascript">
+    function CallSearchImages() {
+        $("#loading").show();
+        document.getElementById('BindModel').innerHTML = "";
+        y = document.getElementById("SearchValue").value;
+        var selectedCountry = [];
+        selectedCountry = getAllSelectedCheckBox();
+        var selectedIndustry = [];
+        selectedIndustry = getAllSelectedCheckBoxIndustry();
+        $.ajax({
+            url: "/WorldRef/SearchImagesFilter",
+            type: 'POST',
+            data: JSON.stringify({ "searchString": y, "ArrayIndustry": selectedIndustry, "ArrayCountry": selectedCountry }),
+            contentType: 'application/json; charset=utf-8',
+            success: function (response) {
+                var Result = '<ul class="SearchImg-slider width100searchI">';
+                var i = 0;
+                $.each(response, function (id, model) {
+                    Result += '<li class="project one-five"><div class="proj-thumb2"><div class="image_tn image_src">';
+                    Result += ' <a href="/uploads/' + model.ImagePath + '" data-thumbnail="" class="html5lightbox fancybox-button tooltip" data-group="set1" rel="fancybox-button" >';
+                    Result += '<img id="imageDisplay" src="/uploads/' + model.ImagePath + '" class="searchImg"/>' +
+                        '<span style="">Organization name : ' + model.OrganizationName + '<br/>Project Name :  ' + model.ProjectName + '<br />Country : ' + model.Country + '<br />Industry : ' + model.CustomerIndustryType + '</span></a></div></div>';
+                    Result += '<div class="proj-description2 responsiveQ"><div class="searchImage_icon"><div>';
+                    Result += ' <span class="projectimg-icon marginside"><a href="javascript:void(0)" onclick="LikeSearchImage(' + model.id + ',' + model.ImageId + ',' + model.userid + ')" style="text-decoration:none;">';
+                    Result += '<img src="/Content/WorldRef/images/like-20.png" title="Like" /><span class="notify_number" onclick="GetLikedUserOnProject(' + model.id + ',' + model.ImageId + ')" >' + model.TotalLikes + '</span></a></span>';
+                    Result += '<span class="projectimg-icon marginside"><a href="#inline4" class="fancybox" ><img src="/Content/WorldRef/images/Comment.png" title="Write a Review" onclick="GetAllCommentsOfProject(' + model.id + ',' + model.ImageId + ',,' + model.userid + ')"/></a>';
+                    Result += '  </span></div></div></div></li>';
+                    i++;
+                });
+                Result += '</ul>';
+                $("#BindModel").html(Result);
+                $("#loading").hide();
+                var count = "";
+               // document.getElementById('viewBagResult').innerHTML = "";
+                count += '<li class="searchmenu " id="countRecord">Total Result Found: ' + i + '</li>';
+                $("#viewBagResult").html(count);
+            },
+            error: function () {
+                $("#loading").hide();
+                alert("Failed! Please try again.");
+            }
+        });
+    }
+</script>
+<div class="wrapper">
+    <div id="navfiltericon">
+        <div id="resultfilter">
+            <div class="xxx">
+                <div class="filterheadline filter-border">
+                    <span class="Cnt-title">Filter Country Wise </span>
+                    <div id="country" class="filter-videos">
+                    </div>
+                </div>
+                <br />
+                <div class="filterheadline filter-border">
+                    <span class="Cnt-title">Filter Industry Wise</span>
+                    <div id="industry" class="filter-videos" style="margin-top: 10px;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="resultlist">
+        <div id="searchTpp" style="font-size: 120%; display: none;"></div>
+        <div id="BindModel">
+        </div>
+        <span id="noresultsadvice" style="margin-left: 0px; display: none;">
+            No results.
+            Try broadening your searchterm.
+        </span>
+    </div>
+    <div id="popupdiv" title="View Images" style="display: none; height: 700px; width: 1240px">
+    </div>
+    <div id="inline4" style="display: none;">
+        <div class="profile_part2" style="width: 400px;">
+            <h3 class="review-title_ser">Testimonials</h3>
+            <ul class="pE heigt" id="CommentList"></ul>
+        </div>
+    </div>
+</div>

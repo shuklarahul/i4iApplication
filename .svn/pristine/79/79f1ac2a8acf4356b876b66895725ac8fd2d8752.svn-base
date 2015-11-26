@@ -1,0 +1,186 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <link href="~/Content/css/font-awesome-4.1.0/css/font-awesome.css" rel="stylesheet" />
+    <link rel="shortcut icon" type="image/x-icon" href="~/Content/WorldRef/images/favicon.png">
+    <link href="~/Content/css/css/form-css.css" rel="stylesheet" />
+    <link href="~/Content/css/css/css.css" rel="stylesheet" />
+    <link href="~/Content/css/css/jquery.fancybox.css" rel="stylesheet" />
+    <link href="~/Content/scrollbar/style.css" rel="stylesheet" />
+    
+</head>
+<body style="height: 100%; overflow: hidden;background-color:#fff;">
+    <section class="stiky">
+        <div class="mainWrapper">
+            <header>
+                <div id="ModelpopUp" style="display: none" title="Thank You">
+                    <p id="PModelpopUp">
+                        <h4 class="thnku">Thank you for Signing Up with us.The Username and Password has been sent to your email address.</h4>
+                    </p>
+                </div>
+                @if (Request.Cookies["UserId"] != null)
+                {
+                    <div id="top-bar" class="rightDropdown">
+                        <div class="welcome-bar">
+                            <span><a href="/WorldRef/WorldrefIndexImageSearch">Images</a></span>
+                            <span><a href="/WorldRef/WorldrefIndexVideosSearch">Videos</a></span>
+                            <span id="info">
+                                <span>
+                                    @if (Request.Cookies["UserRole"].Value == "P" || Request.Cookies["UserRole"].Value == "L" || Request.Cookies["UserRole"].Value == "C")
+                                    {
+                                        <img src="../uploads/@Request.Cookies["GenuserPhoto"].Value">
+                                        @Request.Cookies["UserName"].Value
+                                    }
+                                    else
+                                    {
+                                        <span style="line-height: 35px;">
+                                            <img src="../uploads/af059b9b-2019-462e-bb35-639091c3fc02.jpg">
+                                            @Request.Cookies["UserName"].Value
+                                        </span>
+                                    }
+                                </span><i class="fa fa-caret-down"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="action-field" style="display:none;">
+                        <ul style="">
+                            @if (Request.Cookies["UserRole"].Value == "P" || Request.Cookies["UserRole"].Value == "L" || Request.Cookies["UserRole"].Value == "C")
+                            {
+                                <li><a href=""><i class="fa fa-user"></i>My Profile</a></li>
+                                <li><a href=""><i class="fa fa-globe"></i>My Refworld</a></li>
+                                <li>
+                                    <a href="">
+                                        <i class="fa fa-bolt"></i>My
+                                        <img src="~/Content/WorldRef/images/watts-01.svg" style="height:20px;" />
+                                    </a>
+                                </li>
+                                <li><a href=""><i class="fa fa-level-down"></i>Refer / Add</a></li>
+                                <li><a href=""><i class="fa fa-cogs"></i>Settings</a></li>
+                            }
+                            else
+                            {
+                                <li><a href=""><i class="fa fa-user"></i>My Profile</a></li>
+                                <li><a href=""><i class="fa fa-globe"></i>My Refworld</a></li>
+                                <li>
+                                    <a href="">
+                                        <i class="fa fa-bolt"></i>My
+                                        <img src="~/Content/WorldRef/images/watts-01.svg" style="height:20px;" />
+                                    </a>
+                                </li>
+                                <li><a href=""><i class="fa fa-level-down"></i>Refer / Add</a></li>
+                                <li><a href=""><i class="fa fa-cogs"></i>Settings</a></li>
+                            }
+                            <li><a href="/WorldRef/ChangeUserNameAndPassword"><i class="fa fa-lock"></i>Change Username / Password</a></li>
+                            <li><a href="/WorldRef/SignOut"><i class="fa fa-power-off"></i>Sign Out</a></li>
+                        </ul>
+                    </div>
+
+                }
+                else if (Request.Cookies["CUserId"] != null)
+                {
+                    <div id="top-bar" class="rightDropdown ">
+                        <div class="welcome-bar">
+                            <span><a href="/WorldRef/WorldrefIndexImageSearch">Images</a></span>
+                            <span><a href="/WorldRef/WorldrefIndexVideosSearch">Videos</a></span>
+                            <span id="info">
+                                <span>
+                                    <img src="../uploads/@Request.Cookies["GenuserPhoto"].Value">
+                                    @Request.Cookies["CUserName"].Value
+                                </span><i class="fa fa-caret-down"></i>
+                            </span>
+                        </div>
+                        }
+                    </div>
+                    <div class="action-field" style="display:none;">
+                        <ul style="">
+                            <li><a href=""><i class="fa fa-user"></i>My Profile</a></li>
+                            <li><a href=""><i class="fa fa-globe"></i>My Refworld</a></li>
+                            <li>
+                                <a href="">
+                                    <i class="fa fa-bolt"></i>My
+                                    <img src="~/Content/WorldRef/images/watts-01.svg" style="height:20px;" />
+                                </a>
+                            </li>
+                            <li><a href=""><i class="fa fa-level-down"></i>Refer / Add</a></li>
+                            <li><a href=""><i class="fa fa-cogs"></i>Settings</a></li>
+                            <li><a href="/WorldRef/ChangeUserNameAndPassword"><i class="fa fa-lock"></i>Change Username / Password</a></li>
+                            <li><a href="/WorldRef/SignOut"><i class="fa fa-power-off"></i>Sign Out</a></li>
+                        </ul>
+                    </div>
+                }
+                else
+                {
+                    <div class="rightDropdown">
+                        <div class="corner-menu" style="float: right;">
+                            <ul id="drop-nav" style="float: right; margin-right: 20px;">
+                                <li><a href="/WorldRef/WorldrefIndexImageSearch">Images</a></li>
+                                <li><a href="/WorldRef/WorldrefIndexVideosSearch">Videos</a></li>
+                                <li style=" margin-right: 14px; margin-left: 7px;">
+                                    <input type="submit" value="Sign in" class="lgButton signin" onclick="return MovetoLoginTab();" style="width:74px;">
+                                </li>
+                                <li>
+                                    <input type="submit" value="Sign up" class="lgButton signin" onclick="return MovetoSignUpTab();" style="width:74px;">
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                }
+
+            </header>
+        </div>
+        <div>
+            @RenderBody()
+        </div>
+        <div class="footer_social">
+            <ul>
+                <li><span></span></li>
+                <li><span></span></li>
+                <li><span></span></li>
+            </ul>
+        </div>
+    </section>
+
+
+    <div id="about" style="display: none; width: 500px;">
+        <h2 class="about-popup_title">About WorldRef</h2>
+        <p class="about-popup_content" style="">
+            <span style="font-weight: 600;">For the Project Owners:</span> WorldRef is a tool to search and find the rightmost possible partners for your Industrial needs. Also they can tell the world about the projects they have accomplished along with the partners’ review with whom they have accomplished it.
+            <br />
+            <br />
+            <span style="font-weight: 600;">For the Manufacturers, Contractors, Consultants, Developers, Investors, Fabricators & Trading Companies;</span>
+            WorldRef is a place to glorify their contribution for the worldwide projects they have executed.
+
+        </p>
+    </div>
+    <div class="footer-bottom fo_stiky">
+        <div class="block">
+            <ul>
+                <li><a href="#about" class="fancybox" id="footer-hyp">About WorldRef </a></li>
+                |
+                <li><a href="#" class="" id="footer-hyp">Advertise & Get Featured</a></li>
+                |
+                <li><a href="#" class="" id="footer-hyp">Terms</a></li>
+                |
+                <li><a href="#" class="" id="footer-hyp">Policy & Guidelines</a></li>
+                |
+                <li><a href="#" class="" id="footer-hyp">Help & Support</a></li>
+            </ul>
+        </div>
+        <div>
+            <p style="font-style: italic; font-size: 11px; text-align: center; margin: 0;">
+                &copy; 2015 i4i. &nbsp;&nbsp; | &nbsp;&nbsp;
+                <span>Worldref is a tool for search and promotion of engineering products and Services.  </span>&nbsp;&nbsp; | &nbsp;&nbsp;<span><b>Powered by : </b>i4i engineering</span>
+            </p>
+        </div>
+    </div>
+    <div id="inline1" class="lightbox-wid" style="display: none;">
+        @Html.Partial("_SignIN")
+    </div>
+    <script src="~/Content/js/jquery.fancybox.js"></script>
+    <script src="~/Content/js/jquery.easytabs.min.js"></script>
+    <script src="~/Content/js/jquery.hashchange.min.js"></script>
+    <script src="~/Content/js/CheckCookie.js"></script>
+</body>
+</html>

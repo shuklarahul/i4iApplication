@@ -1,0 +1,66 @@
+﻿@model WorldRef.DataLayer.SignUpWorldRefModel
+@using System.Configuration;
+@{
+    ViewBag.Title = "WorldrefIndexSearchImage";
+}
+@{
+    Layout = "~/Views/Shared/LayoutSearch.cshtml";
+}
+@{
+    var msg = TempData["ErrorMessage"] ?? string.Empty;
+    TempData["ErrorMessage"] = "";
+    var displayMessage = TempData["DisplayMessage"] ?? string.Empty;
+    TempData["DisplayMessage"] = "";
+}
+<script>
+    function runScript(e) {
+        if (e.keyCode == 13) {
+          SearchImage();
+        }
+    }
+
+</script>
+<nav class="navigationMenu">
+    @if (Request.Cookies["UserId"] != null)
+            {
+            <ul class="menu">
+                @if (Request.Cookies["UserRole"].Value == "P" || Request.Cookies["UserRole"].Value == "L" || Request.Cookies["UserRole"].Value == "C")
+                    {
+                    <li>
+                        <button class="searchButton" title="Search Engineering References" value="Search" onclick="Search()">Search</button>
+                    </li>
+                    }
+                    else
+                    {
+                    <li>
+                        <button class="searchButton"  title="Search Engineering References" value="Search" onclick="SearchImage();">Search Images</button>
+                    </li>
+                    }
+            </ul>
+            }
+    else
+    {
+        <div class="centerlogo">
+            <img src="~/Content/images/worldref-logo1.png" />
+        </div>
+        <div class="searchfullwidth">
+            <div class="boxWrapper">
+                <div class="divBoxContainer">
+                    <div class="divsubmain2">
+                        <div class="div_box" id="btn">
+                            <input type="text" id="SearchValue" name="search-box" placeholder="Project / Vendor-Manufacturer-Consultant-Contractor / Keywords / Machine-Equipment / Country, Certificates etc " onkeypress="return runScript(event)" class="worldref-search-box">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <ul class="menu">
+                <li>
+                    <button class="searchButton" id="imageSearch" title="Search Engineering References" value="Search" onclick="SearchImage();">Search Images</button>
+                </li>
+            </ul>
+    }
+</nav>
+<div id="inline111" style="display: none;">
+    @Html.Partial("_SignIN")
+</div>

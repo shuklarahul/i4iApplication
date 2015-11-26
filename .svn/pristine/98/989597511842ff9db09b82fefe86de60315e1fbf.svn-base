@@ -1,0 +1,73 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using WorldRef.DataLayer;
+using WorldRef.Models;
+using WorldRef.BusinessLayer;
+namespace WorldRef.Controllers
+{
+    public class WorldRefController : Controller
+    {
+        public I4IDBEntities context=new I4IDBEntities();
+        public ActionResult WorldRefIndex()
+        {
+            SignUpWorldRefModel signUpModel = new SignUpWorldRefModel();
+            signUpModel=GetAllSignUpDetails();
+           
+            return View(signUpModel);
+        }
+
+        #region All SignUp Details
+        private SignUpWorldRefModel GetAllSignUpDetails()
+        {
+            SignUpWorldRefModel signUpModel = new SignUpWorldRefModel();
+            List<SelectListItem> selectListCountry = new List<SelectListItem>();
+            List<SelectListItem> selectList = new List<SelectListItem>();//Developer, Investor, Fabricator, Procurement Staff, Others
+            selectList.Add(new SelectListItem() { Text = "I am", Value = "0" });
+            selectList.Add(new SelectListItem() { Text = "Manufacturer", Value = "Manufacturer" });
+            selectList.Add(new SelectListItem() { Text = "Contractor", Value = "Contractor" });
+            selectList.Add(new SelectListItem() { Text = "Consultant", Value = "Consultant" });
+            selectList.Add(new SelectListItem() { Text = "Trading Company", Value = "Trading Company" });
+            selectList.Add(new SelectListItem() { Text = "Project Owner’s/Procurement Staff", Value = "Project Owner’s/Procurement Staff" });
+            selectList.Add(new SelectListItem() { Text = "Developer", Value = "Developer" });
+            selectList.Add(new SelectListItem() { Text = "Investor", Value = "Investor" });
+            selectList.Add(new SelectListItem() { Text = "Fabricator", Value = "Fabricator" });
+            selectList.Add(new SelectListItem() { Text = "Raw Material Supplier", Value = "Raw Material Supplier" });
+            selectList.Add(new SelectListItem() { Text = "Others", Value = "Others" });
+            signUpModel.TypeList = selectList;
+
+            var content = (from p in context.Countries
+                           select new { p.CountryID, p.CountryName }).AsEnumerable();
+
+            selectListCountry.Add(new SelectListItem() { Text = "Select Country", Value = "0" });
+
+            foreach (var item in content)
+            {
+                selectListCountry.Add(new SelectListItem() { Text = item.CountryName, Value = item.CountryName });
+
+            }
+            signUpModel.CountryList = selectListCountry;
+            KnowledgeLogic knowIndustry = new KnowledgeLogic();
+            signUpModel.IndustryList = knowIndustry.GetIndustry();
+            List<SelectListItem> selectList1 = new List<SelectListItem>();
+            selectList1.Add(new SelectListItem() { Text = "Type of Recruitment", Value = "0" });
+            selectList1.Add(new SelectListItem() { Text = "I recruit for my Organisation only", Value = "I recruit for my Organisation only" });
+            selectList1.Add(new SelectListItem() { Text = "I recruit for Other Organisations only", Value = "I recruit for Other Organisations only" });
+            selectList1.Add(new SelectListItem() { Text = "Both: I recruit for my and other organisations", Value = "Both: I recruit for my and other organisations" });
+            signUpModel.RecruitersTypeList = selectList1;
+            return signUpModel;
+        }
+        #endregion
+
+        #region Partial View for Sign in
+        public ActionResult _SignIN()
+        {
+            return PartialView();
+        }
+        #endregion
+
+        
+    }
+}

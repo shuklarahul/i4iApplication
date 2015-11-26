@@ -1,0 +1,7 @@
+﻿
+@{
+    var msg = TempData["Path"] ?? string.Empty;
+    TempData["Path"] = "";
+}
+
+<iframe src="~/uploads/@msg" style="height:450px;width:582px"></iframe>

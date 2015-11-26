@@ -1,0 +1,48 @@
+﻿
+@model IEnumerable<WorldRef.LinkedInUser>
+<div class="profile_part2">
+    <style>
+        .profile_part2 ul.pE li {
+            text-align: left !important;
+        }
+    </style>
+    <h4 class="fW" style="  margin:0 0 7px 0;">Contributor's</h4>
+    @if (Model.Any())
+    {
+
+        <ul class="pE">
+            <li style="border-bottom: 1px solid #ddd;">
+                <span class="colHead">Name</span>
+                <span class="colHead">Designation</span>
+                <span class="colHead">Industry</span>
+            </li>
+            @foreach (var item in Model)
+            {
+                <li>
+                    <span class="colRow">
+                        @String.Concat(item.FirstName, " ", item.LastName)
+                        @*@Html.DisplayFor(m => item.FirstName, "FirstName")*@
+                    </span>
+                    @*<span class="colRow">
+                            @Html.DisplayFor(m => item.LastName, "LastName")
+                        </span>*@
+                    <span class="colRow">
+                        @Html.DisplayFor(m => item.Designation, "Designation")
+                    </span>
+                    <span class="colRow">
+                        @Html.DisplayFor(m => item.Industry, "Industry")
+                    </span>
+                </li>
+            }
+
+        </ul>
+
+
+    }
+    else
+    {
+        <div class="noRecord fW">No Contributor's Request</div>
+    }
+
+
+</div>

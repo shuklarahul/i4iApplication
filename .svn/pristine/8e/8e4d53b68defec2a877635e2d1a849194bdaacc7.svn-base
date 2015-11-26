@@ -1,0 +1,1825 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using WorldRef.DataLayer;
+using WorldRef.Models;
+using WorldRef.BusinessLayer;
+using System.Web.Security;
+using System.Security.Cryptography;
+using System.Text;
+using System.IO;
+using System.Configuration;
+using System.Data;
+using System.Reflection;
+namespace WorldRef.Controllers
+{
+    public class WorldRefController : Controller
+    {
+        public I4IDBEntities context=new I4IDBEntities();
+        public ActionResult WorldRefIndex()
+        {
+            SignUpWorldRefModel signUpModel = new SignUpWorldRefModel();
+            signUpModel=GetAllSignUpDetails();
+           
+            return View(signUpModel);
+        }
+        #region All SignUp Details
+        private SignUpWorldRefModel GetAllSignUpDetails()
+        {
+            SignUpWorldRefModel signUpModel = new SignUpWorldRefModel();
+            List<SelectListItem> selectListCountry = new List<SelectListItem>();
+            List<SelectListItem> selectList = new List<SelectListItem>();//Developer, Investor, Fabricator, Procurement Staff, Others
+            selectList.Add(new SelectListItem() { Text = "I am", Value = "0" });
+            selectList.Add(new SelectListItem() { Text = "Manufacturer", Value = "Manufacturer" });
+            selectList.Add(new SelectListItem() { Text = "Contractor", Value = "Contractor" });
+            selectList.Add(new SelectListItem() { Text = "Consultant", Value = "Consultant" });
+            selectList.Add(new SelectListItem() { Text = "Trading Company", Value = "Trading Company" });
+            selectList.Add(new SelectListItem() { Text = "Project Owner’s/Procurement Staff", Value = "Project Owner’s/Procurement Staff" });
+            selectList.Add(new SelectListItem() { Text = "Developer", Value = "Developer" });
+            selectList.Add(new SelectListItem() { Text = "Investor", Value = "Investor" });
+            selectList.Add(new SelectListItem() { Text = "Fabricator", Value = "Fabricator" });
+            selectList.Add(new SelectListItem() { Text = "Raw Material Supplier", Value = "Raw Material Supplier" });
+            selectList.Add(new SelectListItem() { Text = "Others", Value = "Others" });
+            signUpModel.TypeList = selectList;
+
+            var content = (from p in context.Countries
+                           select new { p.CountryID, p.CountryName }).AsEnumerable();
+
+            selectListCountry.Add(new SelectListItem() { Text = "Select Country", Value = "0" });
+
+            foreach (var item in content)
+            {
+                selectListCountry.Add(new SelectListItem() { Text = item.CountryName, Value = item.CountryName });
+
+            }
+            signUpModel.CountryList = selectListCountry;
+            KnowledgeLogic knowIndustry = new KnowledgeLogic();
+            signUpModel.IndustryList = knowIndustry.GetIndustry();
+            List<SelectListItem> selectList1 = new List<SelectListItem>();
+            selectList1.Add(new SelectListItem() { Text = "Type of Recruitment", Value = "0" });
+            selectList1.Add(new SelectListItem() { Text = "I recruit for my Organisation only", Value = "I recruit for my Organisation only" });
+            selectList1.Add(new SelectListItem() { Text = "I recruit for Other Organisations only", Value = "I recruit for Other Organisations only" });
+            selectList1.Add(new SelectListItem() { Text = "Both: I recruit for my and other organisations", Value = "Both: I recruit for my and other organisations" });
+            signUpModel.RecruitersTypeList = selectList1;
+            return signUpModel;
+        }
+        #endregion
+        #region Partial View for Sign in
+        public ActionResult _SignIN()
+        {
+            return PartialView();
+        }
+        #endregion
+        #region code for login uploader in WorldrefIndex added by Rahul  Shukla Date :29/09/2015
+
+        public JsonResult LoginIndex(string UserName, string Password, string returnUrl)
+        {
+            SignUpWorldRef signup = new SignUpWorldRef();
+            SignUpWorldRefModel signWorldModel = signup.Login(UserName, Password);
+            if (signWorldModel != null)
+            {
+                HttpCookie userNameCookies = new HttpCookie("username");
+                userNameCookies.Value = signWorldModel.Name;
+                Response.Cookies.Add(userNameCookies);
+
+                HttpCookie userNameCookiesq = new HttpCookie("UsrNo");
+                userNameCookiesq.Value = signWorldModel.UserNo;
+                Response.Cookies.Add(userNameCookiesq);
+
+
+
+
+                HttpCookie genraluserPhoto = new HttpCookie("GenuserPhoto");
+                genraluserPhoto.Value = signWorldModel.PhotoAttach;
+                Response.Cookies.Add(genraluserPhoto);
+
+                HttpCookie userNoCookies = new HttpCookie("UName");
+                userNoCookies.Value = UserName;
+                Response.Cookies.Add(userNoCookies);
+
+                HttpCookie userNameCookies1 = new HttpCookie("UserId");
+                userNameCookies1.Value = signWorldModel.Id.ToString();
+                Response.Cookies.Add(userNameCookies1);
+
+
+
+                HttpCookie userNameCookies2 = new HttpCookie("UserRole");
+                userNameCookies2.Value = signWorldModel.UserRole.ToString();
+                Response.Cookies.Add(userNameCookies2);
+
+                if (signWorldModel.UserRole == "W")
+
+                    return Json("ue", JsonRequestBehavior.AllowGet);
+                else
+                    return Json("re", JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                signWorldModel = signup.SignInCommonUser(UserName, Password);
+                if (signWorldModel != null)
+                {
+                    HttpCookie userNameCookies = new HttpCookie("Cusername");
+                    userNameCookies.Value = signWorldModel.Name;
+                    Response.Cookies.Add(userNameCookies);
+
+                    HttpCookie userNameCookies1 = new HttpCookie("CUserId");
+                    userNameCookies1.Value = signWorldModel.Id.ToString();
+                    Response.Cookies.Add(userNameCookies1);
+                    return Json("wi", JsonRequestBehavior.AllowGet);
+
+                }
+                else
+                {
+
+                    TempData.Clear();
+
+                    return Json("nr", JsonRequestBehavior.AllowGet);
+                }
+            }
+            
+        }
+        #endregion
+        #region code for save linkedin profile data in database
+        public JsonResult SaveLinkedInProfile(string projid, string firstName, string email, string lastName, string Industry, string picUrl)
+        {
+            try
+            {
+                string UserNo = getUserNo();
+                string password = GeneratePassword();
+                RegisterUser objregister = new RegisterUser();
+                objregister.UserFirstName = firstName;
+                objregister.Email = email;
+                objregister.UserLastName = lastName;
+                objregister.Industries = Industry;
+                objregister.UserNo = UserNo;
+                objregister.Password = password;
+                objregister.UserRole = "L";
+                int creditcount = 0;
+                //int userId = (from x in context.RegisterUsers
+                //              where x.Email == email
+                //              select x.Email).FirstOrDefault().Count();
+
+
+                //int uId = Convert.ToInt32(userId.f);
+                //if (userId > 0)
+                //{
+                //    var userNo = (from x in context.RegisterUsers
+                //                  where x.Email == email
+                //                  select x.UserNo).SingleOrDefault();
+                //    string UserNumber = userNo.ToString();
+
+                //    string UsName = UserNumber;
+                //    HttpCookie userNoCookies = new HttpCookie("UserName");
+                //    userNoCookies.Value = UsName;
+                //    Response.Cookies.Add(userNoCookies);
+                //    Response.Cookies.Set(userNoCookies);
+
+                //}
+                //else
+                //{
+                //    context.RegisterUsers.Add(objregister);
+                //    context.SaveChanges();
+                //    string UsName = UserNo;
+                //    HttpCookie userNoCookies = new HttpCookie("UserName");
+                //    userNoCookies.Value = UsName;
+                //    Response.Cookies.Add(userNoCookies);
+                //    Response.Cookies.Set(userNoCookies);
+                //}
+                int proid = Convert.ToInt32(projid);
+                creditcount = (from x in context.LinkedInUsers
+                               where x.id == proid && x.Email == email
+                               select new { x.Email, x.id }).Count();
+                if (creditcount > 0)
+                {
+                }
+                else
+                {
+                    LinkedInUser objLuser = new LinkedInUser();
+                    objLuser.id = Convert.ToInt32(projid);
+                    objLuser.FirstName = firstName;
+                    objLuser.LastName = lastName;
+                    objLuser.Email = email;
+                    objLuser.Industry = Industry;
+                    objLuser.CreditM = false;
+                    objLuser.picUrl = picUrl;
+                    context.LinkedInUsers.Add(objLuser);
+                    context.SaveChanges();
+                }
+                int projectId = Convert.ToInt32(projid);
+                var emailid = (from x in context.LinkedInUsers
+                               where x.id == projectId
+                               select x.Email);
+                string linkedEmailid = emailid.ToString();
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return Json("", JsonRequestBehavior.AllowGet);
+        }
+
+
+        public JsonResult SignInwithLinkedin(string firstName, string email, string lastName, string Industry, string picUrl)
+        {
+            try
+            {
+                string UserNo = getUserNo();
+                string password = GeneratePassword();
+                RegisterUser objregister = new RegisterUser();
+                objregister.UserFirstName = firstName;
+                objregister.Email = email;
+                objregister.UserLastName = lastName;
+                objregister.Industries = Industry;
+                objregister.UserNo = UserNo;
+                objregister.Password = password;
+                objregister.UserRole = "L";
+
+                
+                var userId = (from x in context.RegisterUsers
+                              where x.Email == email
+                              select x.Email).Count();
+              
+                if (userId > 0)
+                {
+                    var model = (from x in context.RegisterUsers
+                                 where x.Email == email && x.UserRole=="L"
+                                 select new { x.UserNo, x.Id, x.UserRole }).SingleOrDefault();
+                    string UserNumber = model.UserNo.ToString();
+                    string Uid = model.Id.ToString();
+                    string urole = model.UserRole.ToString();
+                    string UsName = UserNumber;
+                    HttpCookie userNoCookies = new HttpCookie("UserName");
+                    userNoCookies.Value = UsName;
+                    Response.Cookies.Add(userNoCookies);
+                    Response.Cookies.Set(userNoCookies);
+
+                    HttpCookie userNameCookies1 = new HttpCookie("UserId");
+                    userNameCookies1.Value = Uid;
+                    Response.Cookies.Add(userNameCookies1);
+                    HttpCookie userNameCookies5 = new HttpCookie("UName");
+                    userNameCookies5.Value = UserNo;
+                    Response.Cookies.Add(userNameCookies5);
+
+
+                    HttpCookie userNameCookies2 = new HttpCookie("UserRole");
+                    userNameCookies2.Value = urole;
+                    Response.Cookies.Add(userNameCookies2);
+
+                    return Json("Success", JsonRequestBehavior.AllowGet);
+
+                }
+                else
+                {
+                    context.RegisterUsers.Add(objregister);
+                    context.SaveChanges();
+                    string UsName = UserNo;
+                    HttpCookie userNoCookies = new HttpCookie("UserName");
+                    userNoCookies.Value = UsName;
+                    Response.Cookies.Add(userNoCookies);
+                    Response.Cookies.Set(userNoCookies);
+
+                    //var model = (from x in context.RegisterUsers
+                    //             where x.Email == email
+                    //             select new { x.UserNo, x.Id, x.UserRole }).SingleOrDefault();
+                    var Userid = objregister.Id;
+
+                    HttpCookie userNameCookies1 = new HttpCookie("UserId");
+                    userNameCookies1.Value = Userid.ToString();
+                    Response.Cookies.Add(userNameCookies1);
+
+
+                    HttpCookie userNameCookies2 = new HttpCookie("UserRole");
+                    userNameCookies2.Value = "L";
+                    Response.Cookies.Add(userNameCookies2);
+
+                }
+
+
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return Json("", JsonRequestBehavior.AllowGet);
+        }
+
+        private string GeneratePassword()
+        {
+            string strPwdchar = "abcdefghijklmnopqrstuvwxyz0123456789#+@&$ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            string strPwd = "";
+            Random rnd = new Random();
+            for (int i = 0; i <= 7; i++)
+            {
+                int iRandom = rnd.Next(0, strPwdchar.Length - 1);
+                strPwd += strPwdchar.Substring(iRandom, 1);
+            }
+            return strPwd;
+        }
+        private string getUserNo()
+        {
+            string UserName = string.Empty;
+
+            UserName = GetUniqueKey(7);
+            using (I4IDBEntities context = new I4IDBEntities())
+            {
+                var isexistKey = context.RegisterUsers.Where(m => m.UserNo == UserName).FirstOrDefault();
+                if (isexistKey != null)
+                {
+                    getUserNo();
+                }
+            }
+            return UserName;
+        }
+        public static string GetUniqueKey(int maxSize)
+        {
+            char[] chars = new char[62];
+            chars =
+            "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890".ToCharArray();
+            byte[] data = new byte[1];
+            RNGCryptoServiceProvider crypto = new RNGCryptoServiceProvider();
+            crypto.GetNonZeroBytes(data);
+            data = new byte[maxSize];
+            crypto.GetNonZeroBytes(data);
+            StringBuilder result = new StringBuilder(maxSize);
+            foreach (byte b in data)
+            {
+                result.Append(chars[b % (chars.Length)]);
+            }
+            return result.ToString();
+        }
+        #endregion
+        #region code for sign out  added by rahul shukla modified date: 29/09/2015
+        public ActionResult SignOut()
+        {
+            Response.Cookies.Clear();
+            FormsAuthentication.SignOut();
+
+            string[] myCookie = Request.Cookies.AllKeys;
+            foreach (string cookie in myCookie)
+            {
+                Response.Cookies[cookie].Expires = DateTime.Now.AddDays(-1);
+            }
+
+            Session.Clear();
+
+            return RedirectToAction("WorldrefIndex");
+        }
+        #endregion
+        #region code for save uploader details in database added by rahul shukla dated :01/10/2015
+        [HttpPost]
+        public ActionResult SignUp(SignUpWorldRefModel signModel, FormCollection formCollection, string ProfileReason)
+        {
+            
+            ISignUpWorldRef signup = new SignUpWorldRef();
+            Email email = new Email();
+          
+            var IsRegistered =
+                (from q in context.RegisterUsers where q.Email.ToLower() == signModel.Email.ToLower() && q.UserRole == "W" select q.UserNo).
+                    FirstOrDefault();
+
+            if (IsRegistered != null)
+            {
+                TempData.Clear();
+                TempData.Add("ErrorMessage", "Email Id Already Registered");
+                return RedirectToAction("WorldrefIndex");
+            }
+            if (ProfileReason == "BusinessUnit")
+            {
+                signModel.UploaderType = ProfileReason;
+
+            }
+            else
+            {
+
+                signModel.UploaderType = ProfileReason;
+            }
+            string path = string.Empty;
+            string filename = string.Empty;
+            string Extension = string.Empty;
+            string guid = string.Empty;
+            string CompanyLogo = string.Empty;
+            string CompanyProfile = string.Empty;
+
+            for (int i = 0; i < Request.Files.Count; i++)
+            {
+                guid = Guid.NewGuid().ToString();
+                path = AppDomain.CurrentDomain.BaseDirectory + "uploads/";
+                bool existPath = Directory.Exists(path);
+                if (!existPath) Directory.CreateDirectory(path);
+
+                filename = Path.GetFileName(Request.Files[i].FileName);
+                Extension = Path.GetExtension(Request.Files[i].FileName);
+                if (i == 0)
+                {
+                    CompanyProfile = Path.Combine(guid + Extension).ToString();
+                }
+                else
+                {
+                    CompanyLogo = Path.Combine(guid + Extension).ToString();
+                }
+                Request.Files[i].SaveAs(Path.Combine(path, guid + Extension));
+            }
+            signModel.OrganisationName = formCollection["ParentOrganisationName"];
+            signModel.BussinessUnitName = formCollection["BusinessUnitName"];
+            signModel.MyCompany = formCollection["Type"];
+            signModel.OfficialNumber = formCollection["ContactNumber"];
+            signModel.RecoveryMail = formCollection["AlternateEmail"];
+            signModel.OtherMail = formCollection["OtherMail"];
+            //OtherMail
+            signModel.ProfileFileName = CompanyProfile;
+            signModel.CompanyLogo = CompanyLogo;
+            signModel.ProfileUrl = formCollection["ProfileUrl"];
+            signModel.ProfilePath = Path.Combine(guid + Extension).ToString();
+            string userName = formCollection["ProfileUrl"];
+            signModel.UserName = email.getUserNo();
+            //signModel.UserName = email.getUserNo();
+            signModel.Password = email.GeneratePassword();
+            //  signModel.ContactNumber = signModel.ContactCode + "-" + signModel.ContactNumber;
+            if (signModel.Type == "Others")
+            {
+                signModel.Type = signModel.OtherType;
+            }
+
+            if (!string.IsNullOrEmpty(signModel.OtherIndustryName))
+            {
+                AddOtherIndustry(signModel.OtherIndustryName);
+                signModel.Industry = (from indus in context.Industries
+                                      where indus.IndustriesName == signModel.OtherIndustryName
+                                      select indus.IndustriesID).FirstOrDefault().ToString();
+            }
+            else
+            {
+
+                signModel.Industry = formCollection["Industry"];
+
+            }
+            string status = signup.Add(signModel);
+            if (status == "Success")
+            {
+                TempData.Clear();
+                var callbackUrl1 = Url.Action("PromotionLibraryform", "PromotionLibrary", new { }, protocol: Request.Url.Scheme);
+                //Thank you for Signing Up with us. Please do not forget to submit your material at Promotional Library [Link] of i4i. Please do not forget to submit your material at <a href = '" + callbackUrl1 + "'>
+                string textDisplay = "Thank you for Signing Up with us. The Username and Password has been sent to your email address.";
+                //   string textDisplay = "Thank you for signing up with us.The Username and Password has been sent to your email address.You may continue to sign in.";
+                string UserId = (from db in context.RegisterUsers where db.UserNo == signModel.UserName select db.Id).FirstOrDefault().ToString();
+                // TempData.Add("ErrorMessage", textDisplay);
+                TempData.Add("DisplayMessage", textDisplay);
+                AddUserIndustry(Convert.ToInt32(UserId), AddIndustryToArray(formCollection, formCollection["Industry"].ToString()));
+                string link = ConfigurationManager.AppSettings["WebLink"].ToString();
+                var callbackUrl = Url.Action("ChangeUserNameAndPassword", "WorldRef", new { userId = UserId }, protocol: Request.Url.Scheme);
+
+                string Subject = "Welcome to WorldRef";
+                string Body = "<div style='font-size:15px; font-family:Calibri Light;'>Thank you for Registering with World Ref.<br/> <br/> Your username is : " + signModel.UserName + " <br/> Your password is : " + signModel.Password;
+                Body = Body + "<br/><br/> In case you wish to change your username and password, please <a href = '" + callbackUrl + "'>Click here</a><br/><br/>";
+                Body = Body +
+                       " WorldRef gives you maximum exposure to utilize your experiences and achievements in the engineering industry.<br/><br/>Please upload your documents on our <a href = '" + callbackUrl1 + "'>Promotional Library</a> for access to our associates and customers, and for our review.</div>";// Promotional Library
+                email.SendMail(signModel.Name, signModel.Email, Subject, Body);
+
+                return RedirectToAction("WorldrefIndex");
+            }
+            else
+            {
+                TempData.Clear();
+                TempData.Add("ErrorMessage", "Failed !.Please try again");
+                return RedirectToAction("WorldrefIndex");
+            }
+        }
+        #endregion
+
+        private void AddOtherIndustry(string industry)
+        {
+            int ValueProvider;
+            int industryId = (from indu in context.Industries
+                              where indu.IndustriesName.ToLower() == industry.ToLower()
+                              select indu.IndustriesID
+                                ).FirstOrDefault();
+
+            if (industryId == 0)
+            {
+                if (int.TryParse(industry, out ValueProvider))
+                {
+                    int industryValue = Convert.ToInt32(industry);
+                    industryId = (from indu in context.Industries
+                                  where indu.IndustriesID == industryValue
+                                  select indu.IndustriesID
+                                    ).FirstOrDefault();
+                    if (industryId == 0)
+                    {
+                        context.Industries.Add(new Industry() { IndustriesName = industry });
+                    }
+                }
+                else
+                {
+                    context.Industries.Add(new Industry() { IndustriesName = industry });
+                }
+                context.SaveChanges();
+            }
+
+        }
+
+        private void AddUserIndustry(int userId, string[] industries)
+        {
+            foreach (string industry in industries)
+            {
+                if (!string.IsNullOrEmpty(industry))
+                {
+                    AddOtherIndustry(industry);
+                    context.UserIndustries.Add(new UserIndustry()
+                    {
+                        UserId = userId,
+                        IndustryId = GetIndustryId(industry),
+                        createdOn = DateTime.Now
+                    });
+                    context.SaveChanges();
+                }
+            }
+        }
+
+        private int GetIndustryId(string IndustryName)
+        {
+            int ValueProvider;
+            int industryId = (from indu in context.Industries
+                              where indu.IndustriesName.ToLower() == IndustryName.ToLower()
+                              select indu.IndustriesID
+                                ).FirstOrDefault();
+            if (industryId == 0)
+            {
+                if (int.TryParse(IndustryName, out ValueProvider))
+                {
+                    int indiesId = Convert.ToInt32(IndustryName);
+                    industryId = (from indu in context.Industries
+                                  where indu.IndustriesID == indiesId
+                                  select indu.IndustriesID
+                                ).FirstOrDefault();
+                }
+            }
+
+            return industryId;
+        }
+
+        private string[] AddIndustryToArray(FormCollection frm, string DropDownvalue)
+        {
+            int i = 0;
+            string[] industries = new string[50];
+            foreach (var key in frm.AllKeys)
+            {
+                if (key.Contains("txt"))
+                {
+                    string valueOfLink = Request.Form[key];
+                    industries[i] = valueOfLink;
+                    i++;
+                }
+            }
+            string[] dropValues = DropDownvalue.Split(',');
+
+            foreach (string indus in dropValues)
+            {
+                industries[i] = indus;
+                i++;
+            }
+
+            return industries;
+        }
+
+        public JsonResult GetCountryCode(string Countryname)
+        {
+            var content = (from p in context.Countries
+                           where p.CountryName.ToLower() == Countryname.ToLower()
+                           select new { p.Code }).FirstOrDefault();
+
+            string CountryCode = string.Empty;
+
+            if (content != null)
+            {
+                CountryCode = content.Code;
+            }
+
+            return Json(CountryCode, JsonRequestBehavior.AllowGet);
+        }
+
+
+        #region code for check username availability on recruiter sign up  added by rahul shukla dated:05/10/2015
+        public JsonResult CheckUsername(string userName)
+        {
+            string IsAvailable;
+            var getData = context.RegisterUsers.FirstOrDefault(m => m.UserFirstName == userName.Trim());
+            if (getData == null)
+            {
+                IsAvailable = "Available";
+            }
+            else
+            {
+                IsAvailable = "Not Available";
+            }
+            return Json(IsAvailable, JsonRequestBehavior.AllowGet);
+            // return IsAvailable;
+        }
+        #endregion
+
+        #region code for save recruiter details in database added by rahul shukla modified date 05/10/2015
+        [HttpPost]
+        public ActionResult SaveRecruiters(FormCollection fc)
+        {
+            string emailId = fc["txtEmailAdd"];
+            string Uname = fc["txtRecName"];
+            SignUpWorldRefModel signModel = new SignUpWorldRefModel();
+            RegisterUser register = new RegisterUser()
+            {
+                UserFirstName = fc["txtRecName"],
+                Email = fc["txtEmailAdd"],
+                phone = fc["txtConNum"],
+                OrgName = fc["txtOrgName"],
+                Industries = fc["IndustriesID"],
+                RecruitmentType = fc["RecruitmentType"],
+                RecruiterFlag = false,
+                UserNo = getUserNo(),
+                Password = GeneratePassword(),
+                UserRole = "P",// user role for recruiters.
+                Date = DateTime.Now
+            };
+            string OrgnisationName = fc["txtOrgName"];
+            var Emailid = (from m in context.RegisterUsers where m.Company == OrgnisationName select new { m.Email }).FirstOrDefault();
+
+            context.RegisterUsers.Add(register);
+            context.SaveChanges();
+            Email email = new Email();
+            string Subject = "Welcome to WorldRef";
+            string Body = "<div style='font-size:15px; font-family:Calibri Light;'>Thank you for Registering with World Ref.<br/> <br/> Your username is :" + signModel.UserNo + " <br/> Your password is :" + signModel.Password + " ";
+
+            Body = Body +
+                   " WorldRef gives you maximum exposure to utilize your experiences and achievements in the engineering industry.<br/><br/></div>";// Promotional Library
+            email.SendMail(Uname, emailId, Subject, Body);
+
+            return RedirectToAction("WorldrefIndex");
+        }
+        #endregion
+        #region code Common User Registration on worldref added by rahul shukla dated :05/10/2015
+        [HttpPost]
+        public ActionResult SignUpUser(FormCollection fc, HttpPostedFileBase[] files)
+        {
+            SignUpWorldRef world = new SignUpWorldRef();
+            string path = string.Empty;
+            string filename = string.Empty;
+            string SavePath = string.Empty;
+            string Extension = string.Empty;
+            try
+            {
+                for (int i = 0; i < Request.Files.Count; i++)
+                {
+                    HttpPostedFileBase postedFiles = Request.Files[i];
+
+                    if (postedFiles != null)
+                    {
+                        SavePath = Guid.NewGuid().ToString();
+                        Extension = Path.GetExtension(postedFiles.FileName);
+
+                        filename = System.IO.Path.GetFileName(postedFiles.FileName);
+
+                        postedFiles.SaveAs(Server.MapPath("~/uploads/" + SavePath + Extension));
+
+                    }
+                }
+
+            }
+            catch
+            {
+
+
+            }
+            //UserNo = getUserNo(),
+            string UserName = getUserNo();
+            string CPerson = fc["txtName"];
+            string CompanyName = fc["txtOrganization"];
+            string ContactNumber = fc["txtContactno"];
+            string emailId = fc["txtGemail"];
+            string password = fc["txtGPassword"];
+            string msg = world.SignUpLikeUser(CPerson, CompanyName, ContactNumber, emailId, password, UserName, filename);
+
+            TempData.Clear();
+            TempData.Add("ErrorMessage", msg);
+            return RedirectToAction("WorldrefIndex");
+            //return View(world.SignUpLikeUser( CPerson,CompanyName,ContactNumber,emailId,password,UserName,filename));
+        }
+        #endregion
+
+        #region code for Search Image on worldref Added by rahul shukla dated:05/10/2015
+
+        [HttpPost]
+        public ActionResult WorldrefIndexImageSearch(FormCollection frm)
+        {
+            return RedirectToAction("SearchImages");
+        }
+        public ActionResult WorldrefIndexImageSearch()//Action methode for searchimages on index page
+        {
+            SignUpWorldRefModel signUpModel = new SignUpWorldRefModel();
+            List<SelectListItem> selectListCountry = new List<SelectListItem>();
+            List<SelectListItem> selectList = new List<SelectListItem>();//Developer, Investor, Fabricator, Procurement Staff, Others
+            selectList.Add(new SelectListItem() { Text = "I am", Value = "0" });
+            selectList.Add(new SelectListItem() { Text = "Manufacturer", Value = "Manufacturer" });
+            selectList.Add(new SelectListItem() { Text = "Contractor", Value = "Contractor" });
+            selectList.Add(new SelectListItem() { Text = "Consultant", Value = "Consultant" });
+            selectList.Add(new SelectListItem() { Text = "Trading Company", Value = "Trading Company" });
+            selectList.Add(new SelectListItem() { Text = "Project Owner’s/Procurement Staff", Value = "Project Owner’s/Procurement Staff" });
+            selectList.Add(new SelectListItem() { Text = "Developer", Value = "Developer" });
+            selectList.Add(new SelectListItem() { Text = "Investor", Value = "Investor" });
+            selectList.Add(new SelectListItem() { Text = "Fabricator", Value = "Fabricator" });
+            selectList.Add(new SelectListItem() { Text = "Raw Material Supplier", Value = "Raw Material Supplier" });
+            selectList.Add(new SelectListItem() { Text = "Others", Value = "Others" });
+            signUpModel.TypeList = selectList;
+
+            var content = (from p in context.Countries
+                           select new { p.CountryID, p.CountryName }).AsEnumerable();
+
+            selectListCountry.Add(new SelectListItem() { Text = "Select Country", Value = "0" });
+
+            foreach (var item in content)
+            {
+                selectListCountry.Add(new SelectListItem() { Text = item.CountryName, Value = item.CountryName });
+
+            }
+            signUpModel.CountryList = selectListCountry;
+            KnowledgeLogic knowIndustry = new KnowledgeLogic();
+            signUpModel.IndustryList = knowIndustry.GetIndustry();
+            List<SelectListItem> selectList1 = new List<SelectListItem>();
+            selectList1.Add(new SelectListItem() { Text = "Type of Recruitment", Value = "0" });
+            selectList1.Add(new SelectListItem() { Text = "I recruit for my Organisation only", Value = "I recruit for my Organisation only" });
+            selectList1.Add(new SelectListItem() { Text = "I recruit for Other Organisations only", Value = "I recruit for Other Organisations only" });
+            selectList1.Add(new SelectListItem() { Text = "Both: I recruit for my and other organisations", Value = "Both: I recruit for my and other organisations" });
+            signUpModel.RecruitersTypeList = selectList1;
+
+            return View(signUpModel);
+        }
+        #endregion
+
+
+        #region code for Search Videos On worldref Added by rahul shukla Dated : 05/10/2015
+        [HttpPost]
+        public ActionResult WorldrefIndexVideosSearch(FormCollection frm)
+        {
+            return RedirectToAction("SearchVideos");
+        }
+        public ActionResult WorldrefIndexVideosSearch()//Action methode for searchimages on index page
+        {
+            SignUpWorldRefModel signUpModel = new SignUpWorldRefModel();
+            List<SelectListItem> selectListCountry = new List<SelectListItem>();
+            List<SelectListItem> selectList = new List<SelectListItem>();//Developer, Investor, Fabricator, Procurement Staff, Others
+            selectList.Add(new SelectListItem() { Text = "I am", Value = "0" });
+            selectList.Add(new SelectListItem() { Text = "Manufacturer", Value = "Manufacturer" });
+            selectList.Add(new SelectListItem() { Text = "Contractor", Value = "Contractor" });
+            selectList.Add(new SelectListItem() { Text = "Consultant", Value = "Consultant" });
+            selectList.Add(new SelectListItem() { Text = "Trading Company", Value = "Trading Company" });
+            selectList.Add(new SelectListItem() { Text = "Project Owner’s/Procurement Staff", Value = "Project Owner’s/Procurement Staff" });
+            selectList.Add(new SelectListItem() { Text = "Developer", Value = "Developer" });
+            selectList.Add(new SelectListItem() { Text = "Investor", Value = "Investor" });
+            selectList.Add(new SelectListItem() { Text = "Fabricator", Value = "Fabricator" });
+            selectList.Add(new SelectListItem() { Text = "Raw Material Supplier", Value = "Raw Material Supplier" });
+            selectList.Add(new SelectListItem() { Text = "Others", Value = "Others" });
+            signUpModel.TypeList = selectList;
+
+            var content = (from p in context.Countries
+                           select new { p.CountryID, p.CountryName }).AsEnumerable();
+
+            selectListCountry.Add(new SelectListItem() { Text = "Select Country", Value = "0" });
+
+            foreach (var item in content)
+            {
+                selectListCountry.Add(new SelectListItem() { Text = item.CountryName, Value = item.CountryName });
+
+            }
+            signUpModel.CountryList = selectListCountry;
+            KnowledgeLogic knowIndustry = new KnowledgeLogic();
+            signUpModel.IndustryList = knowIndustry.GetIndustry();
+            List<SelectListItem> selectList1 = new List<SelectListItem>();
+            selectList1.Add(new SelectListItem() { Text = "Type of Recruitment", Value = "0" });
+            selectList1.Add(new SelectListItem() { Text = "I recruit for my Organisation only", Value = "I recruit for my Organisation only" });
+            selectList1.Add(new SelectListItem() { Text = "I recruit for Other Organisations only", Value = "I recruit for Other Organisations only" });
+            selectList1.Add(new SelectListItem() { Text = "Both: I recruit for my and other organisations", Value = "Both: I recruit for my and other organisations" });
+            signUpModel.RecruitersTypeList = selectList1;
+
+            return View(signUpModel);
+        }
+        #endregion
+
+
+        #region code for show experience list Added by rahul shukla dated : 05/10/2015
+
+        public ActionResult ListExcelProjectsUser()
+        {
+            if (Request.Cookies["UserId"] == null)
+            {
+                return RedirectToAction("WorldrefIndex");
+            }
+            ReadExcel excel = new ReadExcel();
+            int UserId = Convert.ToInt32(Request.Cookies["UserId"].Value);
+
+            var cnt = (from s in context.WorldRefExcelDataProjects
+                       where s.IsAuthorized == 1 && s.IsAdminAuthorized == true && s.userid == UserId
+                       select s).Count();
+            int count = Convert.ToInt32(cnt);
+            ViewBag.approveCount = count;
+
+            var cntDis = (from s in context.WorldRefExcelDataProjects
+                          where s.IsAuthorized == 2 && s.IsAdminUnAuthorized == true && s.userid == UserId
+                          select s).Count();
+            int countDis = Convert.ToInt32(cntDis);
+            ViewBag.DisapproveCount = countDis;
+
+
+
+            List<WorldRefExcelDataModel> worldExcelProject = excel.ReadAllDataUser(UserId);
+            return View(worldExcelProject);
+        }
+        #endregion 
+        #region Add Project
+        public PartialViewResult AddProjects()
+        {
+            return PartialView();
+        }
+        [HttpPost]
+        public ActionResult AddProject(FormCollection form)
+        {
+            try
+            {
+                int UserId = Convert.ToInt32(Request.Cookies["UserId"].Value);
+                WorldRefExcelDataModel worldExcelModel = new WorldRefExcelDataModel();
+                worldExcelModel.ProjectName = form["Project"].ToString();
+                worldExcelModel.OrganizationName = form["OrganizationName"].ToString();
+                worldExcelModel.CustomerName = form["CustomerName"].ToString();
+                worldExcelModel.CustomerIndustryType = form["CustomerIndustryType"].ToString();
+                worldExcelModel.Type = form["Type"].ToString();
+                worldExcelModel.Country = form["Country"].ToString();
+                worldExcelModel.Status = form["Status"].ToString();
+                worldExcelModel.Year = form["Year"].ToString();
+                worldExcelModel.Description = form["Description"].ToString();
+                worldExcelModel.IsOrganization = form["chkOrganization"] == null ? false : true;
+                worldExcelModel.IsCustomer = form["chkCustomer"] == null ? false : true;
+                worldExcelModel.IsProject = form["chkProject"] == null ? false : true;
+                //worldExcelModel.IsType = form["chkStatus"] == null ? false : true;
+                worldExcelModel.IsYear = form["chkYear"] == null ? false : true;
+                worldExcelModel.IsStatus = form["chkStatus"] == null ? false : true;
+                worldExcelModel.userid = UserId;
+
+                ReadExcel excel = new ReadExcel();
+                excel.AddParticularProject(worldExcelModel);
+                return RedirectToAction("ListExcelProjectsUser");
+            }
+            catch
+            {
+
+            }
+            return View();
+        }
+
+        public JsonResult ListExcelProjectsUserApproved()
+        {
+            ReadExcel excel = new ReadExcel();
+            int UserId = Convert.ToInt32(Request.Cookies["UserId"].Value);
+            List<WorldRefExcelDataModel> worldExcelProject = excel.AllApproveDataUser(UserId);
+            return Json(worldExcelProject, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult ListExcelProjectsUserDisApproved()
+        {
+            ReadExcel excel = new ReadExcel();
+            int UserId = Convert.ToInt32(Request.Cookies["UserId"].Value);
+            List<WorldRefExcelDataModel> worldExcelProject = excel.AllDisApproveDataUser(UserId);
+            return Json(worldExcelProject, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult SaveDescription(int id, string DescriptionString)
+        {
+            WorldRefExcelDataProject excelProject = (from excel in context.WorldRefExcelDataProjects where excel.id == id select excel).FirstOrDefault();
+
+            if (excelProject != null)
+            {
+                excelProject.Description = DescriptionString;
+                context.SaveChanges();
+            }
+            return Json("", JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
+        #region Edit Project
+
+        public PartialViewResult EditparticularProject(int projectId)
+        {
+            TempData["projId"] = projectId.ToString();
+            ReadExcel excel = new ReadExcel();
+            WorldRefExcelDataModel projectModel = excel.ReadParticularProject(projectId);
+            return PartialView(projectModel);
+        }
+        public ActionResult EditProject(WorldRefExcelDataModel excelData)
+        {
+            int projeId = Convert.ToInt32(TempData["projId"]);
+            System.Threading.Thread.Sleep(5000);
+            ReadExcel excel = new ReadExcel();
+            string returnString = excel.EditParticularProject(excelData, projeId);
+            if (!string.IsNullOrEmpty(returnString))
+            {
+                TempData["msg"] = "This changes is subjected to approval from i4i. So this project is moved to All Projects.";
+                TempData["vColor"] = "red";
+                return RedirectToAction("ListExcelProjectsUser");
+            }
+
+            return View();
+        }
+        #endregion
+
+        public PartialViewResult _addProjectImage(int ProjectId = 0)
+        {
+            ProjectImageModel projectImage = new ProjectImageModel();
+            projectImage.ProjectId = ProjectId;
+            return PartialView(projectImage);
+        }
+
+        [HttpPost]
+        public ActionResult AddProjectImages(ProjectImageModel ProjectModel, HttpPostedFileBase[] files, FormCollection frm)
+        {
+            ReadExcel read = new ReadExcel();
+            List<ImageStructure> projectImage = new List<ImageStructure>();
+            try
+            {
+                string path = string.Empty;
+                string filename = string.Empty;
+                string SavePath = string.Empty;
+                string Extension = string.Empty;
+
+                for (int i = 0; i < Request.Files.Count; i++)
+                {
+                    HttpPostedFileBase postedFiles = Request.Files[i];
+
+                    if (postedFiles != null)
+                    {
+                        SavePath = Guid.NewGuid().ToString();
+                        Extension = Path.GetExtension(postedFiles.FileName);
+
+                        filename = System.IO.Path.GetFileName(postedFiles.FileName);
+
+                        postedFiles.SaveAs(Server.MapPath("~/uploads/" + SavePath + Extension));
+
+                        projectImage.Add(new ImageStructure()
+                        {
+                            ImageName = filename,
+                            ImagePath = Path.Combine(SavePath + Extension).ToString(),
+                            Link = false
+                        });
+                    }
+                }
+
+                foreach (var key in frm.AllKeys)
+                {
+                    if (key.Contains("txt"))
+                    {
+                        string valueOfLink = Request.Form[key];
+
+                        if (!string.IsNullOrEmpty(valueOfLink))
+                        {
+                            if (valueOfLink.Contains("youtube"))
+                            {
+                                valueOfLink = valueOfLink.Replace("watch?v=", "embed/");
+                            }
+                            projectImage.Add(new ImageStructure()
+                            {
+                                ImageName = "",
+                                ImagePath = valueOfLink,
+                                Link = true
+                            });
+                        }
+                    }
+                }
+
+                TempData.Clear();
+                TempData.Add("SuccessMessage", "Images/videos uploaded successfully.");
+            }
+            catch
+            {
+                TempData.Clear();
+                TempData.Add("ErrorMessage", "Image/Videos Not Uploaded Successfully.Please Try Again");
+            }
+            read.AddImageOrVideo(ProjectModel.ProjectId, projectImage);
+            return RedirectToAction("ListExcelProjectsUser");
+        }
+
+        public PartialViewResult ShowCreditForApprove(int projectId)
+        {
+            ReadExcel excel = new ReadExcel();
+            List<LinkedInUser> objlinkedin = excel.readCreditforApprove(projectId);
+            return PartialView(objlinkedin);
+        }
+        public PartialViewResult ListOfApprovedCredit(int projectId)
+        {
+
+            ReadExcel excel = new ReadExcel();
+            List<LinkedInUser> objlinkedin = excel.ListOfCreditApproved(projectId);
+            return PartialView(objlinkedin);
+        }
+        public JsonResult UpdateForApproveCredit(string linkedid, string Designation)
+        {
+            int Lid = Convert.ToInt32(linkedid);
+
+            LinkedInUser c = (from x in context.LinkedInUsers
+                              where x.LinkedinUserID == Lid
+                              select x).First();
+            c.IsApproved = true;
+            c.CreditM = true;
+            c.Designation = Designation;
+            c.Approvedate = DateTime.Now;
+            context.SaveChanges();
+            return Json("aa", JsonRequestBehavior.AllowGet);
+        }
+
+        #region AdminAprroveReview
+
+        public PartialViewResult AdminReviewList1(int? projectId)
+        {
+            ReviewViewModel viewModel = new ReviewViewModel();
+
+            List<ReviewModel> proj = new List<ReviewModel>();
+            List<ReviewModel> img = new List<ReviewModel>();
+
+            var readReviewProject = (from Project in context.ProjectReviews
+                                     join
+                                         rr in context.RegisterUsers on Project.userId equals rr.Id
+                                     where Project.ProjectId == projectId && Project.flag == true
+                                     select new { Project, rr }).AsEnumerable();
+
+            //I4IDBEntities db = new I4IDBEntities();
+            //if (readReviewProject != null)
+            //{
+            //    foreach (var ii in readReviewProject)
+            //    {
+            //       // ProjectReview c = (from s in db.ProjectReviews where s.ProjectId == projectId select s).FirstOrDefault();
+            //      var c = db.ProjectReviews.Where(a => a.ProjectId==(ii.Project.ProjectId)).FirstOrDefault();
+            //        if (c != null)
+            //        {
+            //            c.flag = false;
+            //        }
+            //    }
+            //    db.SaveChanges();
+            //}
+
+
+
+
+            //var readReviewImage = (from Img in context.ProjectImageVideoComments
+            //                       join
+            //                            rr in context.RegisterUsers on Img.UserId equals rr.Id
+            //                       where Img.ProjectId == projectId
+            //                       select new { Img, rr }).AsEnumerable();
+
+
+            //foreach (var Image in readReviewImage)
+            //{
+            //    img.Add(new ReviewModel()
+            //    {
+            //        Id = Image.Img.Id,
+            //        ImageId = Image.Img.ProjectImageId,
+            //        Review = Image.Img.Review,
+            //        Show = Image.Img.Show,
+            //        userName = Image.rr.UserFirstName
+            //    });
+            //}
+            //viewModel.ImagesReview = img;
+
+            foreach (var item in readReviewProject)
+            {
+                proj.Add(new ReviewModel()
+                {
+                    Id = item.Project.Id,
+                    ImageId = 0,
+                    Review = item.Project.Review,
+                    Show = item.Project.Show,
+                    userName = item.rr.UserFirstName
+                });
+            }
+            viewModel.ProjectReviews = proj;
+
+            return PartialView(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult AdminReviewList(FormCollection frm)
+        {
+            var chckedValues = frm.GetValues("ids");
+
+            return View();
+        }
+
+        public JsonResult PublishProjectReview(int id, string Show, string review)
+        {
+            string returnString = "Success";
+            try
+            {
+                var project = (from proj in context.ProjectReviews
+                               where proj.Id == id
+                               select proj).FirstOrDefault();
+
+                if (project != null)
+                {
+                    project.Review = review;
+                    project.Show = true;
+                    project.flag = false;
+                    project.IsAdminApproved = false;
+                    project.Publish = true;
+                    project.AdminFlag = true;
+                    project.UnPublish = false;
+                }
+                context.SaveChanges();
+            }
+            catch
+            {
+                returnString = "Fail";
+            }
+            return Json(returnString, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult UnPublishProjectReviewUser(int id, string Show, string review)
+        {
+            string returnString = "Success";
+            try
+            {
+                var project = (from proj in context.ProjectReviews
+                               where proj.Id == id
+                               select proj).FirstOrDefault();
+
+                if (project != null)
+                {
+                    project.Review = review;
+                    project.Show = false;
+                    project.flag = false;
+                    project.IsAdminApproved = false;
+                    project.Publish = false;
+                    project.UnPublish = true;
+                }
+                context.SaveChanges();
+            }
+            catch
+            {
+                returnString = "Fail";
+            }
+            return Json(returnString, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult UnPublishProjectReviewAdmin(int id, string Show, string review)
+        {
+            string returnString = "Success";
+            try
+            {
+                var project = (from proj in context.ProjectReviews
+                               where proj.Id == id
+                               select proj).FirstOrDefault();
+
+                if (project != null)
+                {
+                    project.Review = review;
+                    project.Show = false;
+                    project.flag = false;
+                    project.IsAdminApproved = false;
+                    project.Publish = false;
+                    project.UnPublish = true;
+                }
+                context.SaveChanges();
+            }
+            catch
+            {
+                returnString = "Fail";
+            }
+            return Json(returnString, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult TotalpblishedReview(string id)
+        {
+            int uID = Convert.ToInt32(Request.Cookies["UserId"].Value);
+            int pid = Convert.ToInt32(id);
+            List<ProjectReview> lstTotal = new List<ProjectReview>();
+            // string returnString = "Success";
+            try
+            {
+                var project = (from proj in context.ProjectReviews
+                               where proj.ProjectId == pid && proj.userId == uID && proj.Publish == true
+                               select proj).AsEnumerable();
+                foreach (var datat in project)
+                {
+                    lstTotal.Add(new ProjectReview()
+                    {
+                        Review = datat.Review
+
+                    });
+
+                }
+
+            }
+            catch
+            {
+                //  returnString = "Fail";
+            }
+            return Json(lstTotal, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult TotalUnpblishedReview(string id)
+        {
+            int uID = Convert.ToInt32(Request.Cookies["UserId"].Value);
+            int pid = Convert.ToInt32(id);
+            List<ProjectReview> lstTotal = new List<ProjectReview>();
+
+            try
+            {
+                var project = (from proj in context.ProjectReviews
+                               where proj.ProjectId == pid && proj.userId == uID && proj.UnPublish == true
+                               select proj).AsEnumerable();
+                foreach (var datat in project)
+                {
+                    lstTotal.Add(new ProjectReview()
+                    {
+                        Review = datat.Review
+
+                    });
+
+                }
+
+            }
+            catch
+            {
+                //  returnString = "Fail";
+            }
+            return Json(lstTotal, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult PublishImageReview(int id, string Show, string review)
+        {
+            string returnString = "Success";
+            try
+            {
+                var project = (from proj in context.ProjectImageVideoComments
+                               where proj.Id == id
+                               select proj).FirstOrDefault();
+
+                if (project != null)
+                {
+                    project.Review = review;
+                    project.Show = Convert.ToBoolean(Show);
+                }
+                context.SaveChanges();
+            }
+            catch
+            {
+                returnString = "Fail";
+            }
+            return Json(returnString, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        public JsonResult GetProjectLikeUserOnProject(int ProjectId)
+        {
+
+            List<string> LikedUser = new List<string>();
+
+            LikedUser = (from user in context.RegisterUsers
+                         join project in context.ProjectLikeHistories on user.Id equals project.userId
+                         where project.ProjectId == ProjectId
+                         select user.UserFirstName).ToList();
+            var chk = (from b in context.ProjectLikeDisLikes
+                       where b.projectId == ProjectId && b.flag == true
+                       select b).FirstOrDefault();
+            if (chk == null)
+            {
+
+            }
+            else
+            {
+                ProjectLikeDisLike v = (from b in context.ProjectLikeDisLikes
+                                        where b.projectId == ProjectId && b.flag == true
+                                        select b).FirstOrDefault();
+                v.flag = false;
+                context.SaveChanges();
+            }
+
+
+            return Json(LikedUser, JsonRequestBehavior.AllowGet);
+        }
+
+        public PartialViewResult AddMoreCertificates(int ProjectId = 0)
+        {
+            ProjectImageModel projectImage = new ProjectImageModel();
+            projectImage.ProjectId = ProjectId;
+            TempData["pid"] = ProjectId;
+            return PartialView(projectImage);
+
+        }
+        [HttpPost]
+        public ActionResult AddCertificate(ProjectImageModel ProjectModel, HttpPostedFileBase[] files, FormCollection frm)
+        {
+            int PrId = Convert.ToInt32(TempData["pid"]);
+            ReadExcel read = new ReadExcel();
+            List<ProjectImageModel> projectImage = new List<ProjectImageModel>();
+            string path = string.Empty;
+            string filename = string.Empty;
+            string SavePath = string.Empty;
+            string Extension = string.Empty;
+            try
+            {
+                for (int i = 0; i < Request.Files.Count; i++)
+                {
+                    HttpPostedFileBase postedFiles = Request.Files[i];
+
+                    if (postedFiles != null)
+                    {
+                        SavePath = Guid.NewGuid().ToString();
+                        Extension = Path.GetExtension(postedFiles.FileName);
+
+                        filename = System.IO.Path.GetFileName(postedFiles.FileName);
+
+                        postedFiles.SaveAs(Server.MapPath("~/uploads/" + SavePath + Extension));
+
+                    }
+                }
+                TempData.Clear();
+                TempData.Add("SuccessMessage", "Certificate uploaded successfully.");
+            }
+            catch
+            {
+                TempData.Clear();
+                TempData.Add("ErrorMessage", "Certificate Not Uploaded Successfully.Please Try Again");
+            }
+            read.AdCertificate(PrId, filename);
+            return RedirectToAction("ListExcelProjectsUser");
+        }
+
+        #region Give Images
+        public class Demo
+        {
+            public string image { get; set; }
+            public bool? link { get; set; }
+        }
+        public PartialViewResult _deleteProjectImage(int? ProjectId = 0)
+        {
+            SearchWorldRef search = new SearchWorldRef();
+            ProjectSearchModel projectImages = search.ReturnParticularSearchRef(ProjectId);
+            return PartialView(projectImages);
+        }
+
+        public JsonResult Image(int projectId, int index, string ButtonType)
+        {
+            var dir = Server.MapPath("/uploads/");
+            List<Demo> imagePath = new List<Demo>();
+            string returnPath = string.Empty;
+            bool? link = false;
+            try
+            {
+                imagePath = (from img in context.ProjectImages where img.ProjectId == projectId select new Demo { image = img.ImagePath, link = img.link }).ToList();
+
+                if (imagePath.Count() > 0)
+                {
+                    returnPath = imagePath[index].image;
+                    link = imagePath[index].link;
+                }
+
+            }
+            catch
+            {
+                try
+                {
+                    if (imagePath.Count() > 0)
+                    {
+                        int indexReturn;
+                        if (ButtonType == "next")
+                        {
+                            returnPath = imagePath[0].image;
+                            link = imagePath[0].link;
+                            indexReturn = 0;
+                        }
+                        else
+                        {
+                            int count = imagePath.Count();
+
+                            returnPath = imagePath[count - 1].image;
+                            link = imagePath[count - 1].link;
+                            indexReturn = count - 1;
+                        }
+                        ImageStructure imgStruct1 = new ImageStructure()
+                        {
+                            ImagePath = returnPath,
+                            Link = link,
+                            ImgIndex = indexReturn.ToString()
+                        };
+
+                        return Json(imgStruct1, JsonRequestBehavior.AllowGet);
+                    }
+                }
+                catch
+                {
+                    return Json("", JsonRequestBehavior.AllowGet);
+                }
+                // return Json("", JsonRequestBehavior.AllowGet);
+            }
+
+            ImageStructure imgStruct = new ImageStructure()
+            {
+                ImagePath = returnPath,
+                Link = link,
+                ImgIndex = index.ToString()
+            };
+
+            return Json(imgStruct, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult DeleteImages(int? ProjectId)
+        {
+            if (ProjectId == null)
+            {
+                ProjectId = Convert.ToInt32(TempData["ProjectId"]);
+                TempData.Remove("ProjectId");
+            }
+            SearchWorldRef search = new SearchWorldRef();
+            ProjectSearchModel projectImages = search.ReturnParticularSearchRef(ProjectId);
+            return View(projectImages);
+        }
+
+        [HttpPost]
+        public ActionResult DeleteImages(FormCollection form)
+        {
+            var chckedValues = form.GetValues("ids");
+
+            if (chckedValues == null)
+            {
+                TempData.Clear();
+                TempData.Add("ErrorMessage", "Please select at least one checkbox");
+                TempData.Add("ProjectId", form["ProjectId"].ToString());
+                return RedirectToAction("DeleteImages");
+            }
+
+            ReadExcel readExcel = new ReadExcel();
+
+            foreach (var checkedValue in chckedValues)
+            {
+                ProjectImage image = (from img in context.ProjectImages
+                                      where img.ImagePath == checkedValue
+                                      select img).FirstOrDefault();
+                if (image != null)
+                {
+                    context.ProjectImages.Remove(image);
+                    context.SaveChanges();
+                }
+            }
+            TempData.Clear();
+            TempData.Add("ErrorMessage", "Images Deleted Successfully");
+            return RedirectToAction("ListExcelProjectsUser");
+        }
+        #endregion
+
+        #region Refer
+
+        public ActionResult Refer()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Refer(string EmailAddress, FormCollection frm)
+        {
+            Email email = new Email();
+            int userId = Convert.ToInt32(Request.Cookies["UserId"].Value);
+
+            string Firstname = (from q in context.RegisterUsers
+                                where q.Id == userId
+                                select q.UserFirstName).FirstOrDefault();
+
+            TempData.Clear();
+            string textDisplay = "Email Send Successfully.";
+            TempData.Add("ErrorMessage", textDisplay);
+
+            var callbackUrl = Url.Action("worldrefindex", "WorldRef", new { }, protocol: Request.Url.Scheme);
+            string Subject = "WorldRef for Engineering";
+            string Body = "<div style='font-size:15px; font-family:Calibri Light;'> " + Firstname + " has referred you to participate in the WorldRef.<br/><br/> WorldRef is a platform that gives you maximum exposure to utilize your experiences and achievements in the engineering industry. ";
+            // Body = Body + "<br/> To Change your username and password ,please click this link below :<br/><a href = '" + callbackUrl + "'>Click here </a><br/>";
+            Body = Body +
+                   "<br/><br/> You can search your projects at WorldRef <a href = '" + callbackUrl + "'>here</a>   after uploading them.</div>";
+            email.SendMail("", EmailAddress, Subject, Body);
+
+            foreach (var key in frm.AllKeys)
+            {
+                if (key.Contains("txt"))
+                {
+                    string valueOfLink = Request.Form[key];
+
+                    if (!string.IsNullOrEmpty(valueOfLink))
+                    {
+                        email.SendMail("", valueOfLink, Subject, Body);
+                    }
+                }
+            }
+
+            return RedirectToAction("Refer");
+        }
+
+        #endregion
+
+        #region code for list of recruiter 07/10/2015 added by rahul shukla
+        public ActionResult Recruiters()
+        {
+            RegisterUserDAO objRegisterusr = new RegisterUserDAO();
+            List<RegisterUserDAO> objList = new List<RegisterUserDAO>();
+            var list = (from g in context.RegisterUsers where g.OrgName == "gswi" && g.RecruiterFlag == false select g);
+            foreach (var data in list)
+            {
+                objList.Add(new RegisterUserDAO()
+                {
+                    UserFirstName = data.UserFirstName,
+                    Email = data.Email,
+                    Id = data.Id
+
+                });
+            }
+
+            return View(objList);
+        }
+        #endregion
+        #region code for approve recuiter by uploader and send mail to username and password 07/10/2015 added by rahul shukla
+        public JsonResult SendUsernamrePwd(string Uname, string email, int ID)
+        {
+            RegisterUserDAO obj = new RegisterUserDAO();
+            Email objEmail = new Email();
+            string userName = objEmail.getUserNo();
+            string pwd = objEmail.GeneratePassword();
+            RegisterUser objR = (from n in context.RegisterUsers where n.Id == ID select n).First();
+            objR.UserNo = userName;
+            objR.Password = pwd;
+            objR.RecruiterFlag = true;
+            context.SaveChanges();
+            string Subject = "Welcome to WorldRef";
+            string Body = "<div style='font-size:15px; font-family:Calibri Light;'>Thank you for Registering with World Ref.<br/> <br/> Your username is : " + userName + " <br/> Your password is : " + pwd;
+            Body = Body + "<br/><br/> In case you wish to change your username and password, please <br/><br/>";
+            Body = Body +
+                   " WorldRef gives you maximum exposure to utilize your experiences and achievements in the engineering industry.<br/><br/>Please upload your documents on our for access to our associates and customers, and for our review.</div>";// Promotional Library
+            objEmail.SendMail(Uname, email, Subject, Body);
+            return Json("Success", JsonRequestBehavior.AllowGet);
+
+        }
+        #endregion
+
+        public JsonResult MoveToSearchPage(string searchResult)
+        {
+            TempData.Clear();
+            TempData["searchResult"] = string.IsNullOrEmpty(searchResult) ? "" : searchResult;
+            return Json("/WorldRef/Search", JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult Search(string SearchValue, FormCollection frm)
+        {
+            if (TempData.ContainsKey("searchResult"))
+            {
+                SearchValue = TempData["searchResult"].ToString();
+                TempData.Clear();
+            }
+            else
+            {
+            }           
+            if (Request.Cookies["UserRole"] != null)
+            {
+                var cookieUserRoleVal = Request.Cookies["UserRole"].Value;
+                ViewBag.cookieUserRole = cookieUserRoleVal;
+            }
+            else
+            {
+                ViewBag.cookieUserRole = "";
+            }
+            ViewBag.SearchString = SearchValue;
+            ViewBag.TypeList = TypeSignUp();
+            ViewBag.CountryList = CountrySignUp();
+            KnowledgeLogic knowIndustry = new KnowledgeLogic();
+            ViewBag.IndustryList = knowIndustry.GetIndustry();
+            SignUpWorldRefModel signUpModel = new SignUpWorldRefModel();
+            signUpModel = GetAllSignUpDetails();
+            return View(signUpModel);
+            //return View();
+           
+        }
+        public JsonResult SearchCountryWise(string searchString, string[] ArrayIndustry, string[] ArrayCountry)
+        {
+            List<WorldRefSearchModel> FinalResult = new List<WorldRefSearchModel>();
+            List<WorldRefSearchModel> listProject = new List<WorldRefSearchModel>();
+            SearchWorldRefExtension ext = new SearchWorldRefExtension();
+            User_Details objUdetails = new User_Details();
+            List<Int32> allProjectsId = new List<Int32>();
+            DataTable dtNA = new DataTable();
+            List<WorldRefSearchModel> finalRes = new List<WorldRefSearchModel>();
+            WorldRefSearchModel obj = new WorldRefSearchModel();
+            string[] splitData = searchString.Split(' ');
+            foreach (string splitVal in splitData)
+            {
+                listProject = ext.DecideFilter(splitVal, ArrayIndustry, ArrayCountry);
+
+                foreach (WorldRefSearchModel model in listProject)
+                {
+                    FinalResult.Add(model);
+                
+                }
+ 
+            }
+
+            dtNA = ToDataTable<WorldRefSearchModel>(FinalResult);
+
+            for (int ij = 0; ij < dtNA.Rows.Count; ij++)
+            {
+                for (int ll = 0; ll < FinalResult.Count; ll++)
+                {
+                    if (dtNA.Rows[ij]["id"].ToString() == FinalResult[ll].id.ToString())
+                    {
+                        if (allProjectsId.Contains(Convert.ToInt32(FinalResult[ll].id)))
+                        { }
+                        else
+                        {
+                            allProjectsId.Add(Convert.ToInt32(FinalResult[ll].id));
+                            finalRes.Add(FinalResult[ll]);
+                        }
+                    }
+                }
+            }
+            if (Request.Cookies["UserRole"] != null)
+            {
+                string UsrName = Request.Cookies["UName"].Value;
+                // string UsrName = Request.Cookies["UserName"].Value;
+                // string UrNo = Request.Cookies["UsrNo"].Value;
+                string uRole = Request.Cookies["UserRole"].Value;
+                var data = (from s in context.RegisterUsers
+                            where s.UserNo == UsrName && s.UserRole == uRole
+                            select new { s.UserNo, s.Email }).FirstOrDefault();
+                string IPAdd = string.Empty;
+                IPAdd = Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+                if (string.IsNullOrEmpty(IPAdd))
+                    IPAdd = Request.ServerVariables["REMOTE_ADDR"];
+                if (string.IsNullOrEmpty(data.Email))
+                    objUdetails.EmailId = data.Email;
+                objUdetails.LastLogin = DateTime.Now;
+                objUdetails.LocationIP = IPAdd;
+                objUdetails.UserName = data.UserNo;
+                objUdetails.Keywords = searchString;
+                context.User_Details.Add(objUdetails);
+                context.SaveChanges();
+                var cookieUserRoleVal = Request.Cookies["UserRole"].Value;
+                ViewBag.cookieUserRole = cookieUserRoleVal;
+            }
+            else
+            {
+                string IPAdd = string.Empty;
+                IPAdd = Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+                if (string.IsNullOrEmpty(IPAdd))
+                    IPAdd = Request.ServerVariables["REMOTE_ADDR"];
+                objUdetails.LastLogin = DateTime.Now;
+                objUdetails.LocationIP = IPAdd;
+                objUdetails.Keywords = searchString;
+                context.User_Details.Add(objUdetails);
+                context.SaveChanges();
+                ViewBag.cookieUserRole = "";
+            }
+            //var cookieUserRoleVal = Request.Cookies["UserRole"].Value;
+            //ViewBag.cookieUserRole = cookieUserRoleVal;
+            ViewBag.count = listProject.Count;
+            ViewBag.SearchString = searchString;
+            obj.AllData = finalRes;
+            return Json(finalRes, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult GetAllCountries()
+        {
+            SearchWorldRef read = new SearchWorldRef();
+            List<WorldRefExcelDataModel> list = read.ReturnCountryOnly();
+            return Json(list, JsonRequestBehavior.AllowGet);
+        }
+        public DataTable ToDataTable<T>(List<WorldRefSearchModel> items)
+        {
+            DataTable dataTable = new DataTable(typeof(WorldRefSearchModel).Name);
+
+            //Get all the properties
+            PropertyInfo[] Props = typeof(WorldRefSearchModel).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            foreach (PropertyInfo prop in Props)
+            {
+                //Setting column names as Property names
+                dataTable.Columns.Add(prop.Name);
+            }
+            foreach (WorldRefSearchModel item in items)
+            {
+                var values = new object[Props.Length];
+                for (int i = 0; i < Props.Length; i++)
+                {
+                    //inserting property values to datatable rows
+                    values[i] = Props[i].GetValue(item, null);
+                }
+                dataTable.Rows.Add(values);
+            }
+
+            DataView dv = dataTable.DefaultView;
+            dv.Sort = "id desc";
+            DataTable sortedDT = dv.ToTable();
+            sortedDT.Columns.Add("idCount");
+            Int32 cc = 0;
+            int mn = 1;
+            for (int q = 1; q < sortedDT.Rows.Count; q++)
+            {
+                if (sortedDT.Rows[q - 1]["id"].ToString() == sortedDT.Rows[q]["id"].ToString())
+                {
+                    //sortedDT.Rows[q].Delete();
+                    //sortedDT.AcceptChanges();
+                    sortedDT.Rows[q - 1]["idCount"] = 0;
+                    sortedDT.Rows[q]["idCount"] = cc + 2;
+                    cc++;
+                    mn++;
+                }
+                else
+                {
+                    cc = 0;
+                    if (mn == 1)
+                        sortedDT.Rows[q - 1]["idCount"] = 1;
+                    else
+                        sortedDT.Rows[q]["idCount"] = 1;
+                }
+            }
+
+            DataView dview = sortedDT.DefaultView;
+            dview.Sort = "idCount desc";
+            DataTable finalDt = dview.ToTable();
+
+            DataRow[] rowsArray = finalDt.Select("idCount <> 0");
+
+            //foreach (DataRow dr in rowsArray)
+            //{
+            //    finalDt.Rows.Add(dr);
+            //    finalDt.AcceptChanges();
+            //}
+
+            //finalDt.Rows.Add(rowsArray);
+            //finalDt.AcceptChanges();
+
+            List<DataRow> rowsToDelete = new List<DataRow>();
+            foreach (DataRow DR in finalDt.Rows)
+            {
+                if (DR["idCount"].ToString() == "0")
+                    rowsToDelete.Add(DR);
+            }
+
+            foreach (var r in rowsToDelete)
+                finalDt.Rows.Remove(r);
+
+            return finalDt;
+        }
+        private List<T> ConvertDataTable<T>(DataTable dt)
+        {
+            List<T> data = new List<T>();
+            foreach (DataRow row in dt.Rows)
+            {
+                T item = GetItem<T>(row);
+                data.Add(item);
+            }
+            return data;
+        }
+        private T GetItem<T>(DataRow dr)
+        {
+            System.Type temp = typeof(T);
+            T obj = Activator.CreateInstance<T>();
+
+            foreach (DataColumn column in dr.Table.Columns)
+            {
+                foreach (PropertyInfo pro in temp.GetProperties())
+                {
+                    if (pro.Name == column.ColumnName)
+                        pro.SetValue(obj, !String.IsNullOrEmpty(dr[column.ColumnName].ToString()) ? dr[column.ColumnName] : "", null);
+                    else
+                        continue;
+                }
+            }
+            return obj;
+        }
+        public List<SelectListItem> TypeSignUp()
+        {
+            List<SelectListItem> selectList = new List<SelectListItem>();
+
+            selectList.Add(new SelectListItem() { Text = "I am", Value = "0" });
+            selectList.Add(new SelectListItem() { Text = "Manufacturer", Value = "Manufacturer" });
+            selectList.Add(new SelectListItem() { Text = "Contractor", Value = "Contractor" });
+            selectList.Add(new SelectListItem() { Text = "Consultant", Value = "Consultant" });
+            selectList.Add(new SelectListItem() { Text = "Trading Company", Value = "Trading Company" });
+            selectList.Add(new SelectListItem() { Text = "Project Owner’s/Procurement Staff", Value = "Project Owner’s/Procurement Staff" });
+            selectList.Add(new SelectListItem() { Text = "Developer", Value = "Developer" });
+            selectList.Add(new SelectListItem() { Text = "Investor", Value = "Investor" });
+            selectList.Add(new SelectListItem() { Text = "Fabricator", Value = "Fabricator" });
+            selectList.Add(new SelectListItem() { Text = "Raw Material Supplier", Value = "Raw Material Supplier" });
+            selectList.Add(new SelectListItem() { Text = "Others", Value = "Others" });
+            return selectList;
+            
+        }
+        public List<SelectListItem> CountrySignUp()
+        {
+            List<SelectListItem> selectListCountry = new List<SelectListItem>();
+            var content = (from p in context.Countries
+                           select new { p.CountryID, p.CountryName }).AsEnumerable();
+            selectListCountry.Add(new SelectListItem() { Text = "Select Country", Value = "0" });
+
+            foreach (var item in content)
+            {
+                selectListCountry.Add(new SelectListItem() { Text = item.CountryName, Value = item.CountryName });
+
+            }
+            return selectListCountry;
+        }
+    }
+}

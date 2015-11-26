@@ -1,0 +1,1494 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="I4IDBModelStoreContainer" CdmEntityContainer="I4IDBEntities">
+    <EntitySetMapping Name="AppointmentDiaries">
+      <EntityTypeMapping TypeName="I4IDBModel.AppointmentDiary">
+        <MappingFragment StoreEntitySet="AppointmentDiary">
+          <ScalarProperty Name="StatusENUM" ColumnName="StatusENUM" />
+          <ScalarProperty Name="AppointmentLength" ColumnName="AppointmentLength" />
+          <ScalarProperty Name="DateTimeScheduled" ColumnName="DateTimeScheduled" />
+          <ScalarProperty Name="SomeImportantKey" ColumnName="SomeImportantKey" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="AppointmentID" ColumnName="AppointmentID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AssociateProjectIndustries">
+      <EntityTypeMapping TypeName="I4IDBModel.AssociateProjectIndustry">
+        <MappingFragment StoreEntitySet="AssociateProjectIndustries">
+          <ScalarProperty Name="IndustriesID" ColumnName="IndustriesID" />
+          <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="AssProjectIndustriesID" ColumnName="AssProjectIndustriesID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AssociateProjects">
+      <EntityTypeMapping TypeName="I4IDBModel.AssociateProject">
+        <MappingFragment StoreEntitySet="AssociateProjects">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="OfferDocument" ColumnName="OfferDocument" />
+          <ScalarProperty Name="ReasonOfUnhappiness" ColumnName="ReasonOfUnhappiness" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Capacity" ColumnName="Capacity" />
+          <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="CurrentYear" ColumnName="CurrentYear" />
+          <ScalarProperty Name="ReasonForDisapprove" ColumnName="ReasonForDisapprove" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="UserNo" ColumnName="UserNo" />
+          <ScalarProperty Name="Attachment" ColumnName="Attachment" />
+          <ScalarProperty Name="AssociateWithi4i" ColumnName="AssociateWithi4i" />
+          <ScalarProperty Name="CollaborateWithUs" ColumnName="CollaborateWithUs" />
+          <ScalarProperty Name="ContractExecutionDate" ColumnName="ContractExecutionDate" />
+          <ScalarProperty Name="CompletePaymentdate" ColumnName="CompletePaymentdate" />
+          <ScalarProperty Name="FirstPaymentdate" ColumnName="FirstPaymentdate" />
+          <ScalarProperty Name="ContractSigningDate" ColumnName="ContractSigningDate" />
+          <ScalarProperty Name="LetterIntentReleaseDate" ColumnName="LetterIntentReleaseDate" />
+          <ScalarProperty Name="OfferSubmissionDate" ColumnName="OfferSubmissionDate" />
+          <ScalarProperty Name="InquirySubmissionDate" ColumnName="InquirySubmissionDate" />
+          <ScalarProperty Name="ImportantDate" ColumnName="ImportantDate" />
+          <ScalarProperty Name="ProjectInquiryStatus" ColumnName="ProjectInquiryStatus" />
+          <ScalarProperty Name="CustomerType" ColumnName="CustomerType" />
+          <ScalarProperty Name="SalesMarginExpectation" ColumnName="SalesMarginExpectation" />
+          <ScalarProperty Name="ProjectInquiryType" ColumnName="ProjectInquiryType" />
+          <ScalarProperty Name="Industry" ColumnName="Industry" />
+          <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+          <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="AssociateProjectID" ColumnName="AssociateProjectID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AssociateRefferals">
+      <EntityTypeMapping TypeName="I4IDBModel.AssociateRefferal">
+        <MappingFragment StoreEntitySet="AssociateRefferal">
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="ReferredBy" ColumnName="ReferredBy" />
+          <ScalarProperty Name="ReferralEmail" ColumnName="ReferralEmail" />
+          <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
+          <ScalarProperty Name="PersonName" ColumnName="PersonName" />
+          <ScalarProperty Name="AssociateRefferalID" ColumnName="AssociateRefferalID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Board_Management">
+      <EntityTypeMapping TypeName="I4IDBModel.Board_Management">
+        <MappingFragment StoreEntitySet="Board_Management">
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Photo" ColumnName="Photo" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Designation" ColumnName="Designation" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="CompID" ColumnName="CompID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Certificates">
+      <EntityTypeMapping TypeName="I4IDBModel.Certificate">
+        <MappingFragment StoreEntitySet="Certificates">
+          <ScalarProperty Name="Scope" ColumnName="Scope" />
+          <ScalarProperty Name="Image3" ColumnName="Image3" />
+          <ScalarProperty Name="Image2" ColumnName="Image2" />
+          <ScalarProperty Name="Image1" ColumnName="Image1" />
+          <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="IssuedBy" ColumnName="IssuedBy" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="RefNo" ColumnName="RefNo" />
+          <ScalarProperty Name="TypeOfCertificate" ColumnName="TypeOfCertificate" />
+          <ScalarProperty Name="CompID" ColumnName="CompID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Comp_profile_MultiLang">
+      <EntityTypeMapping TypeName="I4IDBModel.Comp_profile_MultiLang">
+        <MappingFragment StoreEntitySet="Comp_profile_MultiLang">
+          <ScalarProperty Name="Language" ColumnName="Language" />
+          <ScalarProperty Name="Profile" ColumnName="Profile" />
+          <ScalarProperty Name="CompID" ColumnName="CompID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CompanyInfoes">
+      <EntityTypeMapping TypeName="I4IDBModel.CompanyInfo">
+        <MappingFragment StoreEntitySet="CompanyInfo">
+          <ScalarProperty Name="VideoProfile" ColumnName="VideoProfile" />
+          <ScalarProperty Name="FinancialRating" ColumnName="FinancialRating" />
+          <ScalarProperty Name="TotalEmployee" ColumnName="TotalEmployee" />
+          <ScalarProperty Name="YearOfCompReg" ColumnName="YearOfCompReg" />
+          <ScalarProperty Name="WeAre" ColumnName="WeAre" />
+          <ScalarProperty Name="BusinessInterest" ColumnName="BusinessInterest" />
+          <ScalarProperty Name="Vision" ColumnName="Vision" />
+          <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CompHistories">
+      <EntityTypeMapping TypeName="I4IDBModel.CompHistory">
+        <MappingFragment StoreEntitySet="CompHistory">
+          <ScalarProperty Name="Discription" ColumnName="Discription" />
+          <ScalarProperty Name="Year" ColumnName="Year" />
+          <ScalarProperty Name="CompID" ColumnName="CompID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CompProfiles">
+      <EntityTypeMapping TypeName="I4IDBModel.CompProfile">
+        <MappingFragment StoreEntitySet="CompProfile">
+          <ScalarProperty Name="Language" ColumnName="Language" />
+          <ScalarProperty Name="FileName" ColumnName="FileName" />
+          <ScalarProperty Name="CompID" ColumnName="CompID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ContactBooks">
+      <EntityTypeMapping TypeName="I4IDBModel.ContactBook">
+        <MappingFragment StoreEntitySet="ContactBook">
+          <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
+          <ScalarProperty Name="Company" ColumnName="Company" />
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="ContactName" ColumnName="ContactName" />
+          <ScalarProperty Name="ContactBookID" ColumnName="ContactBookID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Conversations">
+      <EntityTypeMapping TypeName="I4IDBModel.Conversation">
+        <MappingFragment StoreEntitySet="Conversation">
+          <ScalarProperty Name="SentBy" ColumnName="SentBy" />
+          <ScalarProperty Name="Subject" ColumnName="Subject" />
+          <ScalarProperty Name="Proposalfile" ColumnName="Proposalfile" />
+          <ScalarProperty Name="Time" ColumnName="Time" />
+          <ScalarProperty Name="Message" ColumnName="Message" />
+          <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+          <ScalarProperty Name="ConversationID" ColumnName="ConversationID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Countries">
+      <EntityTypeMapping TypeName="I4IDBModel.Country">
+        <MappingFragment StoreEntitySet="Country">
+          <ScalarProperty Name="ISOCode" ColumnName="ISOCode" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+          <ScalarProperty Name="CountryID" ColumnName="CountryID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CountryOlds">
+      <EntityTypeMapping TypeName="I4IDBModel.CountryOld">
+        <MappingFragment StoreEntitySet="CountryOld">
+          <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="CountryID" ColumnName="CountryID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CurrentYears">
+      <EntityTypeMapping TypeName="I4IDBModel.CurrentYear">
+        <MappingFragment StoreEntitySet="CurrentYear">
+          <ScalarProperty Name="PaymentStatus" ColumnName="PaymentStatus" />
+          <ScalarProperty Name="ProjectStatus" ColumnName="ProjectStatus" />
+          <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+          <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+          <ScalarProperty Name="CurrentYear1" ColumnName="CurrentYear" />
+          <ScalarProperty Name="CurrentYearID" ColumnName="CurrentYearID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Customer_Details">
+      <EntityTypeMapping TypeName="I4IDBModel.Customer_Details">
+        <MappingFragment StoreEntitySet="Customer_Details">
+          <ScalarProperty Name="Organisation" ColumnName="Organisation" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
+          <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="BookTrainerID" ColumnName="BookTrainerID" />
+          <ScalarProperty Name="CustomerDetailsID" ColumnName="CustomerDetailsID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FactoryOffices">
+      <EntityTypeMapping TypeName="I4IDBModel.FactoryOffice">
+        <MappingFragment StoreEntitySet="FactoryOffice">
+          <ScalarProperty Name="PersonUndEnglish" ColumnName="PersonUndEnglish" />
+          <ScalarProperty Name="CorrespondenceAddress" ColumnName="CorrespondenceAddress" />
+          <ScalarProperty Name="Designation" ColumnName="Designation" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="ContactNo" ColumnName="ContactNo" />
+          <ScalarProperty Name="ContactPerson" ColumnName="ContactPerson" />
+          <ScalarProperty Name="OfficeContactNo" ColumnName="OfficeContactNo" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="StreetNo" ColumnName="StreetNo" />
+          <ScalarProperty Name="CompID" ColumnName="CompID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FollowUps">
+      <EntityTypeMapping TypeName="I4IDBModel.FollowUp">
+        <MappingFragment StoreEntitySet="FollowUp">
+          <ScalarProperty Name="IndustriesID" ColumnName="IndustriesID" />
+          <ScalarProperty Name="EmailID" ColumnName="EmailID" />
+          <ScalarProperty Name="FollowID" ColumnName="FollowID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ForwardQueries">
+      <EntityTypeMapping TypeName="I4IDBModel.ForwardQuery">
+        <MappingFragment StoreEntitySet="ForwardQuery">
+          <ScalarProperty Name="QueryId" ColumnName="QueryId" />
+          <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="I4IForwardQuery">
+      <EntityTypeMapping TypeName="I4IDBModel.I4IForwardQuery">
+        <MappingFragment StoreEntitySet="I4IForwardQuery">
+          <ScalarProperty Name="QueryId" ColumnName="QueryId" />
+          <ScalarProperty Name="SuppId" ColumnName="SuppId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ImageLikeAndComments">
+      <EntityTypeMapping TypeName="I4IDBModel.ImageLikeAndComment">
+        <MappingFragment StoreEntitySet="ImageLikeAndComment">
+          <ScalarProperty Name="CmtImgFlag" ColumnName="CmtImgFlag" />
+          <ScalarProperty Name="ImageTestimonials" ColumnName="ImageTestimonials" />
+          <ScalarProperty Name="ImgLikeFlag" ColumnName="ImgLikeFlag" />
+          <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="ImageId" ColumnName="ImageId" />
+          <ScalarProperty Name="PImageLikeId" ColumnName="PImageLikeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Industries">
+      <EntityTypeMapping TypeName="I4IDBModel.Industry">
+        <MappingFragment StoreEntitySet="Industries">
+          <ScalarProperty Name="IndustriesName" ColumnName="IndustriesName" />
+          <ScalarProperty Name="IndustriesID" ColumnName="IndustriesID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="IndustryCategories">
+      <EntityTypeMapping TypeName="I4IDBModel.IndustryCategory">
+        <MappingFragment StoreEntitySet="IndustryCategory">
+          <ScalarProperty Name="createdon" ColumnName="createdon" />
+          <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+          <ScalarProperty Name="IndustryId" ColumnName="IndustryId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="IndustrySubCategories">
+      <EntityTypeMapping TypeName="I4IDBModel.IndustrySubCategory">
+        <MappingFragment StoreEntitySet="IndustrySubCategory">
+          <ScalarProperty Name="createdon" ColumnName="createdon" />
+          <ScalarProperty Name="SubCategoryName" ColumnName="SubCategoryName" />
+          <ScalarProperty Name="IndusCategoryId" ColumnName="IndusCategoryId" />
+          <ScalarProperty Name="IndustryId" ColumnName="IndustryId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="InputQueryDatas">
+      <EntityTypeMapping TypeName="I4IDBModel.InputQueryData">
+        <MappingFragment StoreEntitySet="InputQueryData">
+          <ScalarProperty Name="QType" ColumnName="QType" />
+          <ScalarProperty Name="UserNo" ColumnName="UserNo" />
+          <ScalarProperty Name="ForwardDate" ColumnName="ForwardDate" />
+          <ScalarProperty Name="Supplier" ColumnName="Supplier" />
+          <ScalarProperty Name="QDate" ColumnName="QDate" />
+          <ScalarProperty Name="acion" ColumnName="acion" />
+          <ScalarProperty Name="UQueryNum" ColumnName="UQueryNum" />
+          <ScalarProperty Name="QueryText" ColumnName="QueryText" />
+          <ScalarProperty Name="Attachments" ColumnName="Attachments" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ISOes">
+      <EntityTypeMapping TypeName="I4IDBModel.ISO">
+        <MappingFragment StoreEntitySet="ISO">
+          <ScalarProperty Name="FileName" ColumnName="FileName" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="KnowledgeQueries">
+      <EntityTypeMapping TypeName="I4IDBModel.KnowledgeQuery">
+        <MappingFragment StoreEntitySet="KnowledgeQuery">
+          <ScalarProperty Name="IndustrySubCatId" ColumnName="IndustrySubCatId" />
+          <ScalarProperty Name="IndustryCatId" ColumnName="IndustryCatId" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="Query" ColumnName="Query" />
+          <ScalarProperty Name="IndustryId" ColumnName="IndustryId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="KnowledgeQueryAnswers">
+      <EntityTypeMapping TypeName="I4IDBModel.KnowledgeQueryAnswer">
+        <MappingFragment StoreEntitySet="KnowledgeQueryAnswer">
+          <ScalarProperty Name="Relevant" ColumnName="Relevant" />
+          <ScalarProperty Name="createdOn" ColumnName="createdOn" />
+          <ScalarProperty Name="QueryAnswer" ColumnName="QueryAnswer" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="QueryID" ColumnName="QueryID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Languages">
+      <EntityTypeMapping TypeName="I4IDBModel.Language">
+        <MappingFragment StoreEntitySet="Language">
+          <ScalarProperty Name="LanguageName" ColumnName="LanguageName" />
+          <ScalarProperty Name="LanguageID" ColumnName="LanguageID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LinkedInUsers">
+      <EntityTypeMapping TypeName="I4IDBModel.LinkedInUser">
+        <MappingFragment StoreEntitySet="LinkedInUser">
+          <ScalarProperty Name="picUrl" ColumnName="picUrl" />
+          <ScalarProperty Name="Approvedate" ColumnName="Approvedate" />
+          <ScalarProperty Name="Designation" ColumnName="Designation" />
+          <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
+          <ScalarProperty Name="CreditM" ColumnName="CreditM" />
+          <ScalarProperty Name="Industry" ColumnName="Industry" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="userId" ColumnName="userId" />
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="LinkedinUserID" ColumnName="LinkedinUserID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LoginDetailWorldRefs">
+      <EntityTypeMapping TypeName="I4IDBModel.LoginDetailWorldRef">
+        <MappingFragment StoreEntitySet="LoginDetailWorldRef">
+          <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+          <ScalarProperty Name="dateModified" ColumnName="dateModified" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="IsLogin" ColumnName="IsLogin" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="ProfileName" ColumnName="ProfileName" />
+          <ScalarProperty Name="ProfilePath" ColumnName="ProfilePath" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
+          <ScalarProperty Name="Industry" ColumnName="Industry" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ManageDocuments">
+      <EntityTypeMapping TypeName="I4IDBModel.ManageDocument">
+        <MappingFragment StoreEntitySet="ManageDocument">
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="SampleAttach" ColumnName="SampleAttach" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="Charges" ColumnName="Charges" />
+          <ScalarProperty Name="Time" ColumnName="Time" />
+          <ScalarProperty Name="Topic" ColumnName="Topic" />
+          <ScalarProperty Name="Industry" ColumnName="Industry" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="DocumentType" ColumnName="DocumentType" />
+          <ScalarProperty Name="UserNo" ColumnName="UserNo" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="DocumentID" ColumnName="DocumentID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OfficeDetails_RegCorpHead">
+      <EntityTypeMapping TypeName="I4IDBModel.OfficeDetails_RegCorpHead">
+        <MappingFragment StoreEntitySet="OfficeDetails_RegCorpHead">
+          <ScalarProperty Name="OfficeType" ColumnName="OfficeType" />
+          <ScalarProperty Name="PersonUndEnglish" ColumnName="PersonUndEnglish" />
+          <ScalarProperty Name="CorrespondenceAddress" ColumnName="CorrespondenceAddress" />
+          <ScalarProperty Name="Designation" ColumnName="Designation" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="ContactNo" ColumnName="ContactNo" />
+          <ScalarProperty Name="ContactPerson" ColumnName="ContactPerson" />
+          <ScalarProperty Name="OfficeContactNo" ColumnName="OfficeContactNo" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="StreetNo" ColumnName="StreetNo" />
+          <ScalarProperty Name="CompID" ColumnName="CompID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OHSAS">
+      <EntityTypeMapping TypeName="I4IDBModel.OHSA">
+        <MappingFragment StoreEntitySet="OHSAS">
+          <ScalarProperty Name="FileName" ColumnName="FileName" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="partners_Associates">
+      <EntityTypeMapping TypeName="I4IDBModel.partners_Associates">
+        <MappingFragment StoreEntitySet="partners_Associates">
+          <ScalarProperty Name="CompID" ColumnName="CompID" />
+          <ScalarProperty Name="Logo" ColumnName="Logo" />
+          <ScalarProperty Name="territories" ColumnName="territories" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="TypeOfPartnership" ColumnName="TypeOfPartnership" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Preferred_Country">
+      <EntityTypeMapping TypeName="I4IDBModel.Preferred_Country">
+        <MappingFragment StoreEntitySet="Preferred_Country">
+          <ScalarProperty Name="PreferredCountryName" ColumnName="PreferredCountryName" />
+          <ScalarProperty Name="PreferredCountryID" ColumnName="PreferredCountryID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PriceCurrencies">
+      <EntityTypeMapping TypeName="I4IDBModel.PriceCurrency">
+        <MappingFragment StoreEntitySet="PriceCurrency">
+          <ScalarProperty Name="Currency" ColumnName="Currency" />
+          <ScalarProperty Name="CurrencyID" ColumnName="CurrencyID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProductDetails">
+      <EntityTypeMapping TypeName="I4IDBModel.ProductDetail">
+        <MappingFragment StoreEntitySet="ProductDetails">
+          <ScalarProperty Name="ProductKeywords" ColumnName="ProductKeywords" />
+          <ScalarProperty Name="ProductDesc" ColumnName="ProductDesc" />
+          <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+          <ScalarProperty Name="CompID" ColumnName="CompID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProductImagesVideos">
+      <EntityTypeMapping TypeName="I4IDBModel.ProductImagesVideo">
+        <MappingFragment StoreEntitySet="ProductImagesVideos">
+          <ScalarProperty Name="EnquiryFormat" ColumnName="EnquiryFormat" />
+          <ScalarProperty Name="video" ColumnName="video" />
+          <ScalarProperty Name="Image" ColumnName="Image" />
+          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Products">
+      <EntityTypeMapping TypeName="I4IDBModel.Product">
+        <MappingFragment StoreEntitySet="Products">
+          <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProjectContactDetails">
+      <EntityTypeMapping TypeName="I4IDBModel.ProjectContactDetail">
+        <MappingFragment StoreEntitySet="ProjectContactDetails">
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="IndustriesID" ColumnName="IndustriesID" />
+          <ScalarProperty Name="Organisation" ColumnName="Organisation" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
+          <ScalarProperty Name="ContactName" ColumnName="ContactName" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ContactDetailID" ColumnName="ContactDetailID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProjectImageLikeHistories">
+      <EntityTypeMapping TypeName="I4IDBModel.ProjectImageLikeHistory">
+        <MappingFragment StoreEntitySet="ProjectImageLikeHistory">
+          <ScalarProperty Name="likedOn" ColumnName="likedOn" />
+          <ScalarProperty Name="userId" ColumnName="userId" />
+          <ScalarProperty Name="ProjectImageId" ColumnName="ProjectImageId" />
+          <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProjectImages">
+      <EntityTypeMapping TypeName="I4IDBModel.ProjectImage">
+        <MappingFragment StoreEntitySet="ProjectImages">
+          <ScalarProperty Name="ProjectCertificates" ColumnName="ProjectCertificates" />
+          <ScalarProperty Name="link" ColumnName="link" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+          <ScalarProperty Name="ImageName" ColumnName="ImageName" />
+          <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProjectImagesVideosLikes">
+      <EntityTypeMapping TypeName="I4IDBModel.ProjectImagesVideosLike">
+        <MappingFragment StoreEntitySet="ProjectImagesVideosLikes">
+          <ScalarProperty Name="modifiedOn" ColumnName="modifiedOn" />
+          <ScalarProperty Name="TotalLikes" ColumnName="TotalLikes" />
+          <ScalarProperty Name="ProjectImageId" ColumnName="ProjectImageId" />
+          <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProjectImageVideoComments">
+      <EntityTypeMapping TypeName="I4IDBModel.ProjectImageVideoComment">
+        <MappingFragment StoreEntitySet="ProjectImageVideoComment">
+          <ScalarProperty Name="Show" ColumnName="Show" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="createdOn" ColumnName="createdOn" />
+          <ScalarProperty Name="Review" ColumnName="Review" />
+          <ScalarProperty Name="ProjectImageId" ColumnName="ProjectImageId" />
+          <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProjectLikeComments">
+      <EntityTypeMapping TypeName="I4IDBModel.ProjectLikeComment">
+        <MappingFragment StoreEntitySet="ProjectLikeComment">
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="comment" ColumnName="comment" />
+          <ScalarProperty Name="projectId" ColumnName="projectId" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProjectLikedIPs">
+      <EntityTypeMapping TypeName="I4IDBModel.ProjectLikedIP">
+        <MappingFragment StoreEntitySet="ProjectLikedIP">
+          <ScalarProperty Name="likedon" ColumnName="likedon" />
+          <ScalarProperty Name="Ip" ColumnName="Ip" />
+          <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProjectLikeDisLikes">
+      <EntityTypeMapping TypeName="I4IDBModel.ProjectLikeDisLike">
+        <MappingFragment StoreEntitySet="ProjectLikeDisLike">
+          <ScalarProperty Name="flag" ColumnName="flag" />
+          <ScalarProperty Name="totalDislike" ColumnName="totalDislike" />
+          <ScalarProperty Name="totalLike" ColumnName="totalLike" />
+          <ScalarProperty Name="projectId" ColumnName="projectId" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProjectLikeHistories">
+      <EntityTypeMapping TypeName="I4IDBModel.ProjectLikeHistory">
+        <MappingFragment StoreEntitySet="ProjectLikeHistory">
+          <ScalarProperty Name="likeOn" ColumnName="likeOn" />
+          <ScalarProperty Name="userId" ColumnName="userId" />
+          <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProjectLinkedInMembers">
+      <EntityTypeMapping TypeName="I4IDBModel.ProjectLinkedInMember">
+        <MappingFragment StoreEntitySet="ProjectLinkedInMember">
+          <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+          <ScalarProperty Name="createdOn" ColumnName="createdOn" />
+          <ScalarProperty Name="IsAuthorized" ColumnName="IsAuthorized" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="ProfileUrl" ColumnName="ProfileUrl" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProjectRatings">
+      <EntityTypeMapping TypeName="I4IDBModel.ProjectRating">
+        <MappingFragment StoreEntitySet="ProjectRating">
+          <ScalarProperty Name="UserRating" ColumnName="UserRating" />
+          <ScalarProperty Name="QualityRating" ColumnName="QualityRating" />
+          <ScalarProperty Name="rating" ColumnName="rating" />
+          <ScalarProperty Name="projectId" ColumnName="projectId" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProjectRatingHistories">
+      <EntityTypeMapping TypeName="I4IDBModel.ProjectRatingHistory">
+        <MappingFragment StoreEntitySet="ProjectRatingHistory">
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="rating" ColumnName="rating" />
+          <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProjectReviews">
+      <EntityTypeMapping TypeName="I4IDBModel.ProjectReview">
+        <MappingFragment StoreEntitySet="ProjectReview">
+          <ScalarProperty Name="AdminFlag" ColumnName="AdminFlag" />
+          <ScalarProperty Name="UnPublish" ColumnName="UnPublish" />
+          <ScalarProperty Name="Publish" ColumnName="Publish" />
+          <ScalarProperty Name="IsAdminApproved" ColumnName="IsAdminApproved" />
+          <ScalarProperty Name="flag" ColumnName="flag" />
+          <ScalarProperty Name="Show" ColumnName="Show" />
+          <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="Review" ColumnName="Review" />
+          <ScalarProperty Name="userId" ColumnName="userId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProjectSearchKeywords">
+      <EntityTypeMapping TypeName="I4IDBModel.ProjectSearchKeyword">
+        <MappingFragment StoreEntitySet="ProjectSearchKeywords">
+          <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+          <ScalarProperty Name="createdOn" ColumnName="createdOn" />
+          <ScalarProperty Name="SearchKeyword" ColumnName="SearchKeyword" />
+          <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Promote_Associate">
+      <EntityTypeMapping TypeName="I4IDBModel.Promote_Associate">
+        <MappingFragment StoreEntitySet="Promote_Associate">
+          <ScalarProperty Name="IndustriesID" ColumnName="IndustriesID" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="PromotionLibraryID" ColumnName="PromotionLibraryID" />
+          <ScalarProperty Name="PromoteID" ColumnName="PromoteID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PromotionCertificates">
+      <EntityTypeMapping TypeName="I4IDBModel.PromotionCertificate">
+        <MappingFragment StoreEntitySet="PromotionCertificate">
+          <ScalarProperty Name="CertificateAttachment" ColumnName="CertificateAttachment" />
+          <ScalarProperty Name="CertificateName" ColumnName="CertificateName" />
+          <ScalarProperty Name="PromotionLibraryID" ColumnName="PromotionLibraryID" />
+          <ScalarProperty Name="CertificationID" ColumnName="CertificationID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PromotionIndustries">
+      <EntityTypeMapping TypeName="I4IDBModel.PromotionIndustry">
+        <MappingFragment StoreEntitySet="PromotionIndustry">
+          <ScalarProperty Name="IndustriesID" ColumnName="IndustriesID" />
+          <ScalarProperty Name="PromotionLibraryID" ColumnName="PromotionLibraryID" />
+          <ScalarProperty Name="PromotionIndustriesID" ColumnName="PromotionIndustriesID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PromotionLibraries">
+      <EntityTypeMapping TypeName="I4IDBModel.PromotionLibrary">
+        <MappingFragment StoreEntitySet="PromotionLibrary">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="ReasonForDisapproved" ColumnName="ReasonForDisapproved" />
+          <ScalarProperty Name="IndustriesID" ColumnName="IndustriesID" />
+          <ScalarProperty Name="PCompanyProfile" ColumnName="PCompanyProfile" />
+          <ScalarProperty Name="PReference" ColumnName="PReference" />
+          <ScalarProperty Name="PContactNumber" ColumnName="PContactNumber" />
+          <ScalarProperty Name="PEmailId" ColumnName="PEmailId" />
+          <ScalarProperty Name="PName" ColumnName="PName" />
+          <ScalarProperty Name="PromotionLibraryID" ColumnName="PromotionLibraryID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PromotionOtherDocuments">
+      <EntityTypeMapping TypeName="I4IDBModel.PromotionOtherDocument">
+        <MappingFragment StoreEntitySet="PromotionOtherDocument">
+          <ScalarProperty Name="DocumentAttachment" ColumnName="DocumentAttachment" />
+          <ScalarProperty Name="OtherDocumentName" ColumnName="OtherDocumentName" />
+          <ScalarProperty Name="PromotionLibraryID" ColumnName="PromotionLibraryID" />
+          <ScalarProperty Name="POtherDocumentID" ColumnName="POtherDocumentID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PromotionProductLists">
+      <EntityTypeMapping TypeName="I4IDBModel.PromotionProductList">
+        <MappingFragment StoreEntitySet="PromotionProductList">
+          <ScalarProperty Name="URSFormat" ColumnName="URSFormat" />
+          <ScalarProperty Name="ProductIndustry" ColumnName="ProductIndustry" />
+          <ScalarProperty Name="ProductBrochure" ColumnName="ProductBrochure" />
+          <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+          <ScalarProperty Name="PromotionLibraryID" ColumnName="PromotionLibraryID" />
+          <ScalarProperty Name="PromotionProductID" ColumnName="PromotionProductID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RegionalOffices">
+      <EntityTypeMapping TypeName="I4IDBModel.RegionalOffice">
+        <MappingFragment StoreEntitySet="RegionalOffice">
+          <ScalarProperty Name="PersonUndEnglish" ColumnName="PersonUndEnglish" />
+          <ScalarProperty Name="CorrespondenceAddress" ColumnName="CorrespondenceAddress" />
+          <ScalarProperty Name="Designation" ColumnName="Designation" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="ContactNo" ColumnName="ContactNo" />
+          <ScalarProperty Name="ContactPerson" ColumnName="ContactPerson" />
+          <ScalarProperty Name="OfficeContactNo" ColumnName="OfficeContactNo" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="StreetNo" ColumnName="StreetNo" />
+          <ScalarProperty Name="CompID" ColumnName="CompID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RegisterUsers">
+      <EntityTypeMapping TypeName="I4IDBModel.RegisterUser">
+        <MappingFragment StoreEntitySet="RegisterUser">
+          <ScalarProperty Name="ProfileLanguageID" ColumnName="ProfileLanguageID" />
+          <ScalarProperty Name="OfficialNumber" ColumnName="OfficialNumber" />
+          <ScalarProperty Name="OtherMail" ColumnName="OtherMail" />
+          <ScalarProperty Name="RecoveryMail" ColumnName="RecoveryMail" />
+          <ScalarProperty Name="MyCompany" ColumnName="MyCompany" />
+          <ScalarProperty Name="BussinessUnitName" ColumnName="BussinessUnitName" />
+          <ScalarProperty Name="OrganisationName" ColumnName="OrganisationName" />
+          <ScalarProperty Name="UploaderType" ColumnName="UploaderType" />
+          <ScalarProperty Name="RecruiterFlag" ColumnName="RecruiterFlag" />
+          <ScalarProperty Name="OrgName" ColumnName="OrgName" />
+          <ScalarProperty Name="ProfileUrl" ColumnName="ProfileUrl" />
+          <ScalarProperty Name="RecruitmentType" ColumnName="RecruitmentType" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="ReferredBy" ColumnName="ReferredBy" />
+          <ScalarProperty Name="Industries" ColumnName="Industries" />
+          <ScalarProperty Name="Region" ColumnName="Region" />
+          <ScalarProperty Name="Products" ColumnName="Products" />
+          <ScalarProperty Name="BusinessInterestCountry" ColumnName="BusinessInterestCountry" />
+          <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+          <ScalarProperty Name="PhotoAttach" ColumnName="PhotoAttach" />
+          <ScalarProperty Name="ProfileAttach" ColumnName="ProfileAttach" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Company" ColumnName="Company" />
+          <ScalarProperty Name="UserRole" ColumnName="UserRole" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="UserLastName" ColumnName="UserLastName" />
+          <ScalarProperty Name="UserFirstName" ColumnName="UserFirstName" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="UserNo" ColumnName="UserNo" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RepresentationRefferals">
+      <EntityTypeMapping TypeName="I4IDBModel.RepresentationRefferal">
+        <MappingFragment StoreEntitySet="RepresentationRefferal">
+          <ScalarProperty Name="ReferredID" ColumnName="ReferredID" />
+          <ScalarProperty Name="ReferralEmailID" ColumnName="ReferralEmailID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RepresentativeDocuments">
+      <EntityTypeMapping TypeName="I4IDBModel.RepresentativeDocument">
+        <MappingFragment StoreEntitySet="RepresentativeDocument">
+          <ScalarProperty Name="UploadDate" ColumnName="UploadDate" />
+          <ScalarProperty Name="ShownToRepresentative" ColumnName="ShownToRepresentative" />
+          <ScalarProperty Name="DocumentFile" ColumnName="DocumentFile" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RepresentativeOffices">
+      <EntityTypeMapping TypeName="I4IDBModel.RepresentativeOffice">
+        <MappingFragment StoreEntitySet="RepresentativeOffice">
+          <ScalarProperty Name="PersonUndEnglish" ColumnName="PersonUndEnglish" />
+          <ScalarProperty Name="CorrespondenceAddress" ColumnName="CorrespondenceAddress" />
+          <ScalarProperty Name="Designation" ColumnName="Designation" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="ContactNo" ColumnName="ContactNo" />
+          <ScalarProperty Name="ContactPerson" ColumnName="ContactPerson" />
+          <ScalarProperty Name="OfficeContactNo" ColumnName="OfficeContactNo" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="StreetNo" ColumnName="StreetNo" />
+          <ScalarProperty Name="CompID" ColumnName="CompID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Services">
+      <EntityTypeMapping TypeName="I4IDBModel.Service">
+        <MappingFragment StoreEntitySet="Services">
+          <ScalarProperty Name="CompID" ColumnName="CompID" />
+          <ScalarProperty Name="Brochure" ColumnName="Brochure" />
+          <ScalarProperty Name="Keywords" ColumnName="Keywords" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="ServiceName" ColumnName="ServiceName" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Stories">
+      <EntityTypeMapping TypeName="I4IDBModel.Story">
+        <MappingFragment StoreEntitySet="Story">
+          <ScalarProperty Name="StoryText" ColumnName="StoryText" />
+          <ScalarProperty Name="InterviewWith" ColumnName="InterviewWith" />
+          <ScalarProperty Name="Photo" ColumnName="Photo" />
+          <ScalarProperty Name="CompID" ColumnName="CompID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Suppliers">
+      <EntityTypeMapping TypeName="I4IDBModel.Supplier">
+        <MappingFragment StoreEntitySet="Supplier">
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="ContactPersonName" ColumnName="ContactPersonName" />
+          <ScalarProperty Name="Company" ColumnName="Company" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SupplierProposals">
+      <EntityTypeMapping TypeName="I4IDBModel.SupplierProposal">
+        <MappingFragment StoreEntitySet="SupplierProposals">
+          <ScalarProperty Name="Deviations" ColumnName="Deviations" />
+          <ScalarProperty Name="I4IForwardDate" ColumnName="I4IForwardDate" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="QueryId" ColumnName="QueryId" />
+          <ScalarProperty Name="ProposalDate" ColumnName="ProposalDate" />
+          <ScalarProperty Name="attachment" ColumnName="attachment" />
+          <ScalarProperty Name="UQueryNum" ColumnName="UQueryNum" />
+          <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SuppMailDetails">
+      <EntityTypeMapping TypeName="I4IDBModel.SuppMailDetail">
+        <MappingFragment StoreEntitySet="SuppMailDetail">
+          <ScalarProperty Name="QueryId" ColumnName="QueryId" />
+          <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TopicIndustries">
+      <EntityTypeMapping TypeName="I4IDBModel.TopicIndustry">
+        <MappingFragment StoreEntitySet="TopicIndustry">
+          <ScalarProperty Name="TimeDurationID" ColumnName="TimeDurationID" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="CurrencyID" ColumnName="CurrencyID" />
+          <ScalarProperty Name="Topic" ColumnName="Topic" />
+          <ScalarProperty Name="IndustriesID" ColumnName="IndustriesID" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="IndustryTopicID" ColumnName="IndustryTopicID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TopicTimeDurations">
+      <EntityTypeMapping TypeName="I4IDBModel.TopicTimeDuration">
+        <MappingFragment StoreEntitySet="TopicTimeDuration">
+          <ScalarProperty Name="TimeDuration" ColumnName="TimeDuration" />
+          <ScalarProperty Name="TimeDurationID" ColumnName="TimeDurationID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Trainer_Profile">
+      <EntityTypeMapping TypeName="I4IDBModel.Trainer_Profile">
+        <MappingFragment StoreEntitySet="Trainer_Profile">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Currency" ColumnName="Currency" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="TimeDuration" ColumnName="TimeDuration" />
+          <ScalarProperty Name="Topic" ColumnName="Topic" />
+          <ScalarProperty Name="Keyword" ColumnName="Keyword" />
+          <ScalarProperty Name="Citizenship" ColumnName="Citizenship" />
+          <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
+          <ScalarProperty Name="IssueDate" ColumnName="IssueDate" />
+          <ScalarProperty Name="IssuePlace" ColumnName="IssuePlace" />
+          <ScalarProperty Name="PassportNumber" ColumnName="PassportNumber" />
+          <ScalarProperty Name="CompleteName" ColumnName="CompleteName" />
+          <ScalarProperty Name="Passport" ColumnName="Passport" />
+          <ScalarProperty Name="PreferredCountry" ColumnName="PreferredCountry" />
+          <ScalarProperty Name="HelthIssue" ColumnName="HelthIssue" />
+          <ScalarProperty Name="AnswerQuery" ColumnName="AnswerQuery" />
+          <ScalarProperty Name="IntrestedIndustries" ColumnName="IntrestedIndustries" />
+          <ScalarProperty Name="FluentEnglish" ColumnName="FluentEnglish" />
+          <ScalarProperty Name="SpeakLanguages" ColumnName="SpeakLanguages" />
+          <ScalarProperty Name="LocatedAt" ColumnName="LocatedAt" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="Age" ColumnName="Age" />
+          <ScalarProperty Name="Designation" ColumnName="Designation" />
+          <ScalarProperty Name="Organisation" ColumnName="Organisation" />
+          <ScalarProperty Name="Iam" ColumnName="Iam" />
+          <ScalarProperty Name="TrainerImage" ColumnName="TrainerImage" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="UserNo" ColumnName="UserNo" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="TrainerProfileID" ColumnName="TrainerProfileID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TrainerBooks">
+      <EntityTypeMapping TypeName="I4IDBModel.TrainerBook">
+        <MappingFragment StoreEntitySet="TrainerBook">
+          <ScalarProperty Name="BookingDate" ColumnName="BookingDate" />
+          <ScalarProperty Name="TotalPayments" ColumnName="TotalPayments" />
+          <ScalarProperty Name="TotalHours" ColumnName="TotalHours" />
+          <ScalarProperty Name="TotalTopic" ColumnName="TotalTopic" />
+          <ScalarProperty Name="Topic" ColumnName="Topic" />
+          <ScalarProperty Name="IndustryTopicID" ColumnName="IndustryTopicID" />
+          <ScalarProperty Name="BookTrainerID" ColumnName="BookTrainerID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TrainerSamples">
+      <EntityTypeMapping TypeName="I4IDBModel.TrainerSample">
+        <MappingFragment StoreEntitySet="TrainerSample">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="SampleAttach" ColumnName="SampleAttach" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="DocumentType" ColumnName="DocumentType" />
+          <ScalarProperty Name="UserNo" ColumnName="UserNo" />
+          <ScalarProperty Name="SampleId" ColumnName="SampleId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TrainingSampleOrders">
+      <EntityTypeMapping TypeName="I4IDBModel.TrainingSampleOrder">
+        <MappingFragment StoreEntitySet="TrainingSampleOrder">
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="OrderAm" ColumnName="OrderAm" />
+          <ScalarProperty Name="OrderMin" ColumnName="OrderMin" />
+          <ScalarProperty Name="OrderHr" ColumnName="OrderHr" />
+          <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+          <ScalarProperty Name="TrainerId" ColumnName="TrainerId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="User_Certificates">
+      <EntityTypeMapping TypeName="I4IDBModel.User_Certificates">
+        <MappingFragment StoreEntitySet="User_Certificates">
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="CertificateFileName" ColumnName="CertificateFileName" />
+          <ScalarProperty Name="CertificateName" ColumnName="CertificateName" />
+          <ScalarProperty Name="Userid" ColumnName="Userid" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="User_Details">
+      <EntityTypeMapping TypeName="I4IDBModel.User_Details">
+        <MappingFragment StoreEntitySet="User_Details">
+          <ScalarProperty Name="flag" ColumnName="flag" />
+          <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+          <ScalarProperty Name="LastLogin" ColumnName="LastLogin" />
+          <ScalarProperty Name="LocationIP" ColumnName="LocationIP" />
+          <ScalarProperty Name="Keywords" ColumnName="Keywords" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="UserDetailsID" ColumnName="UserDetailsID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="User_ProductCertificates">
+      <EntityTypeMapping TypeName="I4IDBModel.User_ProductCertificates">
+        <MappingFragment StoreEntitySet="User_ProductCertificates">
+          <ScalarProperty Name="CameFrom" ColumnName="CameFrom" />
+          <ScalarProperty Name="Userid" ColumnName="Userid" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="Enddate" ColumnName="Enddate" />
+          <ScalarProperty Name="Startdate" ColumnName="Startdate" />
+          <ScalarProperty Name="CertificateAttactedFile" ColumnName="CertificateAttactedFile" />
+          <ScalarProperty Name="CertificateIssuedBy" ColumnName="CertificateIssuedBy" />
+          <ScalarProperty Name="CertificateName" ColumnName="CertificateName" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="User_Rewards">
+      <EntityTypeMapping TypeName="I4IDBModel.User_Rewards">
+        <MappingFragment StoreEntitySet="User_Rewards">
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="RewardFileName" ColumnName="RewardFileName" />
+          <ScalarProperty Name="RewardName" ColumnName="RewardName" />
+          <ScalarProperty Name="Userid" ColumnName="Userid" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserIndustries">
+      <EntityTypeMapping TypeName="I4IDBModel.UserIndustry">
+        <MappingFragment StoreEntitySet="UserIndustry">
+          <ScalarProperty Name="createdOn" ColumnName="createdOn" />
+          <ScalarProperty Name="IndustryId" ColumnName="IndustryId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserProfile_Edit">
+      <EntityTypeMapping TypeName="I4IDBModel.UserProfile_Edit">
+        <MappingFragment StoreEntitySet="UserProfile_Edit">
+          <ScalarProperty Name="FinancialIssuedBy" ColumnName="FinancialIssuedBy" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="Addres" ColumnName="Addres" />
+          <ScalarProperty Name="Ohsos_FileName" ColumnName="Ohsos_FileName" />
+          <ScalarProperty Name="Ohsos_ExpiryDate" ColumnName="Ohsos_ExpiryDate" />
+          <ScalarProperty Name="Iso_ExpiryDate" ColumnName="Iso_ExpiryDate" />
+          <ScalarProperty Name="Iso_FileName" ColumnName="Iso_FileName" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Revenue" ColumnName="Revenue" />
+          <ScalarProperty Name="EmployeeNo" ColumnName="EmployeeNo" />
+          <ScalarProperty Name="OHSOS" ColumnName="OHSOS" />
+          <ScalarProperty Name="ISO" ColumnName="ISO" />
+          <ScalarProperty Name="FinancialRating" ColumnName="FinancialRating" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VideosLikeAndComments">
+      <EntityTypeMapping TypeName="I4IDBModel.VideosLikeAndComment">
+        <MappingFragment StoreEntitySet="VideosLikeAndComment">
+          <ScalarProperty Name="cmtVidFlag" ColumnName="cmtVidFlag" />
+          <ScalarProperty Name="VideosTestimonials" ColumnName="VideosTestimonials" />
+          <ScalarProperty Name="VideosLikeFlag" ColumnName="VideosLikeFlag" />
+          <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="VideosId" ColumnName="VideosId" />
+          <ScalarProperty Name="PVideosId" ColumnName="PVideosId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WorldRefExcelDataProjects">
+      <EntityTypeMapping TypeName="I4IDBModel.WorldRefExcelDataProject">
+        <MappingFragment StoreEntitySet="WorldRefExcelDataProject">
+          <ScalarProperty Name="UserEditFlag" ColumnName="UserEditFlag" />
+          <ScalarProperty Name="ProjectLocation" ColumnName="ProjectLocation" />
+          <ScalarProperty Name="IsAdminUnAuthorized" ColumnName="IsAdminUnAuthorized" />
+          <ScalarProperty Name="IsAdminAuthorized" ColumnName="IsAdminAuthorized" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="IsStatus" ColumnName="IsStatus" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="CustomerIndustryType" ColumnName="CustomerIndustryType" />
+          <ScalarProperty Name="DisApproveReason" ColumnName="DisApproveReason" />
+          <ScalarProperty Name="IsAuthorized" ColumnName="IsAuthorized" />
+          <ScalarProperty Name="ExcelName" ColumnName="ExcelName" />
+          <ScalarProperty Name="ExcelPath" ColumnName="ExcelPath" />
+          <ScalarProperty Name="userid" ColumnName="userid" />
+          <ScalarProperty Name="Createdon" ColumnName="Createdon" />
+          <ScalarProperty Name="IsEmail" ColumnName="IsEmail" />
+          <ScalarProperty Name="IsCountry" ColumnName="IsCountry" />
+          <ScalarProperty Name="IsYear" ColumnName="IsYear" />
+          <ScalarProperty Name="IsType" ColumnName="IsType" />
+          <ScalarProperty Name="IsProject" ColumnName="IsProject" />
+          <ScalarProperty Name="IsCustomer" ColumnName="IsCustomer" />
+          <ScalarProperty Name="IsOrganization" ColumnName="IsOrganization" />
+          <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="Year" ColumnName="Year" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+          <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+          <ScalarProperty Name="OrganizationName" ColumnName="OrganizationName" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="User_Certificate_DrpValue">
+      <EntityTypeMapping TypeName="I4IDBModel.User_Certificate_DrpValue">
+        <MappingFragment StoreEntitySet="User_Certificate_DrpValue">
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="CertificateType" ColumnName="CertificateType" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="User_Certificate_DrpValue_Common">
+      <EntityTypeMapping TypeName="I4IDBModel.User_Certificate_DrpValue_Common">
+        <MappingFragment StoreEntitySet="User_Certificate_DrpValue_Common">
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VisitUserProfiles">
+      <EntityTypeMapping TypeName="I4IDBModel.VisitUserProfile">
+        <MappingFragment StoreEntitySet="VisitUserProfile">
+          <ScalarProperty Name="IpAddress" ColumnName="IpAddress" />
+          <ScalarProperty Name="ProfileName" ColumnName="ProfileName" />
+          <ScalarProperty Name="RegisterId" ColumnName="RegisterId" />
+          <ScalarProperty Name="ContentId" ColumnName="ContentId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SearchImageViews">
+      <EntityTypeMapping TypeName="I4IDBModel.SearchImageView">
+        <MappingFragment StoreEntitySet="SearchImageView">
+          <ScalarProperty Name="UserEditFlag" ColumnName="UserEditFlag" />
+          <ScalarProperty Name="ProjectLocation" ColumnName="ProjectLocation" />
+          <ScalarProperty Name="IsAdminUnAuthorized" ColumnName="IsAdminUnAuthorized" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="IsAdminAuthorized" ColumnName="IsAdminAuthorized" />
+          <ScalarProperty Name="CustomerIndustryType" ColumnName="CustomerIndustryType" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="IsStatus" ColumnName="IsStatus" />
+          <ScalarProperty Name="DisApproveReason" ColumnName="DisApproveReason" />
+          <ScalarProperty Name="IsAuthorized" ColumnName="IsAuthorized" />
+          <ScalarProperty Name="ExcelName" ColumnName="ExcelName" />
+          <ScalarProperty Name="ExcelPath" ColumnName="ExcelPath" />
+          <ScalarProperty Name="IsEmail" ColumnName="IsEmail" />
+          <ScalarProperty Name="Createdon" ColumnName="Createdon" />
+          <ScalarProperty Name="userid" ColumnName="userid" />
+          <ScalarProperty Name="IsYear" ColumnName="IsYear" />
+          <ScalarProperty Name="IsCountry" ColumnName="IsCountry" />
+          <ScalarProperty Name="IsType" ColumnName="IsType" />
+          <ScalarProperty Name="IsProject" ColumnName="IsProject" />
+          <ScalarProperty Name="IsCustomer" ColumnName="IsCustomer" />
+          <ScalarProperty Name="IsOrganization" ColumnName="IsOrganization" />
+          <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="Year" ColumnName="Year" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+          <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+          <ScalarProperty Name="OrganizationName" ColumnName="OrganizationName" />
+          <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+          <ScalarProperty Name="SearchKeyword" ColumnName="SearchKeyword" />
+          <ScalarProperty Name="ProjectCertificates" ColumnName="ProjectCertificates" />
+          <ScalarProperty Name="link" ColumnName="link" />
+          <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+          <ScalarProperty Name="ImageName" ColumnName="ImageName" />
+          <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SearchImageView2">
+      <EntityTypeMapping TypeName="I4IDBModel.SearchImageView2">
+        <MappingFragment StoreEntitySet="SearchImageView2">
+          <ScalarProperty Name="UserEditFlag" ColumnName="UserEditFlag" />
+          <ScalarProperty Name="ProjectLocation" ColumnName="ProjectLocation" />
+          <ScalarProperty Name="IsAdminUnAuthorized" ColumnName="IsAdminUnAuthorized" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="IsAdminAuthorized" ColumnName="IsAdminAuthorized" />
+          <ScalarProperty Name="CustomerIndustryType" ColumnName="CustomerIndustryType" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="IsStatus" ColumnName="IsStatus" />
+          <ScalarProperty Name="DisApproveReason" ColumnName="DisApproveReason" />
+          <ScalarProperty Name="IsAuthorized" ColumnName="IsAuthorized" />
+          <ScalarProperty Name="ExcelName" ColumnName="ExcelName" />
+          <ScalarProperty Name="ExcelPath" ColumnName="ExcelPath" />
+          <ScalarProperty Name="IsEmail" ColumnName="IsEmail" />
+          <ScalarProperty Name="Createdon" ColumnName="Createdon" />
+          <ScalarProperty Name="userid" ColumnName="userid" />
+          <ScalarProperty Name="IsYear" ColumnName="IsYear" />
+          <ScalarProperty Name="IsCountry" ColumnName="IsCountry" />
+          <ScalarProperty Name="IsType" ColumnName="IsType" />
+          <ScalarProperty Name="IsProject" ColumnName="IsProject" />
+          <ScalarProperty Name="IsCustomer" ColumnName="IsCustomer" />
+          <ScalarProperty Name="IsOrganization" ColumnName="IsOrganization" />
+          <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="Year" ColumnName="Year" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+          <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+          <ScalarProperty Name="OrganizationName" ColumnName="OrganizationName" />
+          <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+          <ScalarProperty Name="SearchKeyword" ColumnName="SearchKeyword" />
+          <ScalarProperty Name="ProjectCertificates" ColumnName="ProjectCertificates" />
+          <ScalarProperty Name="link" ColumnName="link" />
+          <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+          <ScalarProperty Name="ImageName" ColumnName="ImageName" />
+          <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SearchViewNews">
+      <EntityTypeMapping TypeName="I4IDBModel.SearchViewNew">
+        <MappingFragment StoreEntitySet="SearchViewNew">
+          <ScalarProperty Name="UserEditFlag" ColumnName="UserEditFlag" />
+          <ScalarProperty Name="ProjectLocation" ColumnName="ProjectLocation" />
+          <ScalarProperty Name="IsAdminAuthorized" ColumnName="IsAdminAuthorized" />
+          <ScalarProperty Name="IsAdminUnAuthorized" ColumnName="IsAdminUnAuthorized" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="IsStatus" ColumnName="IsStatus" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="CustomerIndustryType" ColumnName="CustomerIndustryType" />
+          <ScalarProperty Name="DisApproveReason" ColumnName="DisApproveReason" />
+          <ScalarProperty Name="IsAuthorized" ColumnName="IsAuthorized" />
+          <ScalarProperty Name="ExcelName" ColumnName="ExcelName" />
+          <ScalarProperty Name="ExcelPath" ColumnName="ExcelPath" />
+          <ScalarProperty Name="userid" ColumnName="userid" />
+          <ScalarProperty Name="Expr2" ColumnName="Expr2" />
+          <ScalarProperty Name="IsEmail" ColumnName="IsEmail" />
+          <ScalarProperty Name="IsCountry" ColumnName="IsCountry" />
+          <ScalarProperty Name="IsYear" ColumnName="IsYear" />
+          <ScalarProperty Name="IsType" ColumnName="IsType" />
+          <ScalarProperty Name="IsProject" ColumnName="IsProject" />
+          <ScalarProperty Name="IsCustomer" ColumnName="IsCustomer" />
+          <ScalarProperty Name="IsOrganization" ColumnName="IsOrganization" />
+          <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Year" ColumnName="Year" />
+          <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+          <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+          <ScalarProperty Name="OrganizationName" ColumnName="OrganizationName" />
+          <ScalarProperty Name="WorldId" ColumnName="WorldId" />
+          <ScalarProperty Name="SearchKeyword" ColumnName="SearchKeyword" />
+          <ScalarProperty Name="createdOn" ColumnName="createdOn" />
+          <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SearchViewVideos">
+      <EntityTypeMapping TypeName="I4IDBModel.SearchViewVideo">
+        <MappingFragment StoreEntitySet="SearchViewVideo">
+          <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+          <ScalarProperty Name="ImageName" ColumnName="ImageName" />
+          <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+          <ScalarProperty Name="Expr1" ColumnName="Expr1" />
+          <ScalarProperty Name="link" ColumnName="link" />
+          <ScalarProperty Name="ProjectCertificates" ColumnName="ProjectCertificates" />
+          <ScalarProperty Name="IsAdminUnAuthorized" ColumnName="IsAdminUnAuthorized" />
+          <ScalarProperty Name="ProjectLocation" ColumnName="ProjectLocation" />
+          <ScalarProperty Name="UserEditFlag" ColumnName="UserEditFlag" />
+          <ScalarProperty Name="IsAdminAuthorized" ColumnName="IsAdminAuthorized" />
+          <ScalarProperty Name="IsStatus" ColumnName="IsStatus" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="CustomerIndustryType" ColumnName="CustomerIndustryType" />
+          <ScalarProperty Name="DisApproveReason" ColumnName="DisApproveReason" />
+          <ScalarProperty Name="IsAuthorized" ColumnName="IsAuthorized" />
+          <ScalarProperty Name="ExcelName" ColumnName="ExcelName" />
+          <ScalarProperty Name="ExcelPath" ColumnName="ExcelPath" />
+          <ScalarProperty Name="userid" ColumnName="userid" />
+          <ScalarProperty Name="Createdon" ColumnName="Createdon" />
+          <ScalarProperty Name="IsEmail" ColumnName="IsEmail" />
+          <ScalarProperty Name="IsYear" ColumnName="IsYear" />
+          <ScalarProperty Name="IsCountry" ColumnName="IsCountry" />
+          <ScalarProperty Name="IsType" ColumnName="IsType" />
+          <ScalarProperty Name="IsProject" ColumnName="IsProject" />
+          <ScalarProperty Name="IsCustomer" ColumnName="IsCustomer" />
+          <ScalarProperty Name="IsOrganization" ColumnName="IsOrganization" />
+          <ScalarProperty Name="Year" ColumnName="Year" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="OrganizationName" ColumnName="OrganizationName" />
+          <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+          <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="uniqueId" ColumnName="uniqueId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SearchViewVideo2">
+      <EntityTypeMapping TypeName="I4IDBModel.SearchViewVideo2">
+        <MappingFragment StoreEntitySet="SearchViewVideo2">
+          <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+          <ScalarProperty Name="ImageName" ColumnName="ImageName" />
+          <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+          <ScalarProperty Name="Expr1" ColumnName="Expr1" />
+          <ScalarProperty Name="link" ColumnName="link" />
+          <ScalarProperty Name="ProjectCertificates" ColumnName="ProjectCertificates" />
+          <ScalarProperty Name="IsAdminUnAuthorized" ColumnName="IsAdminUnAuthorized" />
+          <ScalarProperty Name="ProjectLocation" ColumnName="ProjectLocation" />
+          <ScalarProperty Name="UserEditFlag" ColumnName="UserEditFlag" />
+          <ScalarProperty Name="IsAdminAuthorized" ColumnName="IsAdminAuthorized" />
+          <ScalarProperty Name="IsStatus" ColumnName="IsStatus" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="CustomerIndustryType" ColumnName="CustomerIndustryType" />
+          <ScalarProperty Name="DisApproveReason" ColumnName="DisApproveReason" />
+          <ScalarProperty Name="IsAuthorized" ColumnName="IsAuthorized" />
+          <ScalarProperty Name="ExcelName" ColumnName="ExcelName" />
+          <ScalarProperty Name="ExcelPath" ColumnName="ExcelPath" />
+          <ScalarProperty Name="userid" ColumnName="userid" />
+          <ScalarProperty Name="Createdon" ColumnName="Createdon" />
+          <ScalarProperty Name="IsEmail" ColumnName="IsEmail" />
+          <ScalarProperty Name="IsYear" ColumnName="IsYear" />
+          <ScalarProperty Name="IsCountry" ColumnName="IsCountry" />
+          <ScalarProperty Name="IsType" ColumnName="IsType" />
+          <ScalarProperty Name="IsProject" ColumnName="IsProject" />
+          <ScalarProperty Name="IsCustomer" ColumnName="IsCustomer" />
+          <ScalarProperty Name="IsOrganization" ColumnName="IsOrganization" />
+          <ScalarProperty Name="Year" ColumnName="Year" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="OrganizationName" ColumnName="OrganizationName" />
+          <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+          <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="uniqueId" ColumnName="uniqueId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="GetTrainerName" FunctionName="I4IDBModel.Store.GetTrainerName">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="I4IDBModel.GetTrainerName_Result">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="userno" ColumnName="userno" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_CheckVisitUserLog" FunctionName="I4IDBModel.Store.sp_CheckVisitUserLog" />
+    <FunctionImportMapping FunctionImportName="sp_GetAssociateIndustryProducts" FunctionName="I4IDBModel.Store.sp_GetAssociateIndustryProducts">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="I4IDBModel.sp_GetAssociateIndustryProducts_Result">
+          <ScalarProperty Name="userName" ColumnName="userName" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="userNo" ColumnName="userNo" />
+          <ScalarProperty Name="prodName" ColumnName="prodName" />
+          <ScalarProperty Name="indusName" ColumnName="indusName" />
+          <ScalarProperty Name="countryName" ColumnName="countryName" />
+          <ScalarProperty Name="region" ColumnName="region" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_GetAssociateReferrals" FunctionName="I4IDBModel.Store.sp_GetAssociateReferrals">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="I4IDBModel.sp_GetAssociateReferrals_Result">
+          <ScalarProperty Name="userName" ColumnName="userName" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="userNo" ColumnName="userNo" />
+          <ScalarProperty Name="prodName" ColumnName="prodName" />
+          <ScalarProperty Name="indusName" ColumnName="indusName" />
+          <ScalarProperty Name="contactNo" ColumnName="contactNo" />
+          <ScalarProperty Name="region" ColumnName="region" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_GetData" FunctionName="I4IDBModel.Store.sp_GetData">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="I4IDBModel.sp_GetData_Result">
+          <ScalarProperty Name="iso" ColumnName="iso" />
+          <ScalarProperty Name="ohsos" ColumnName="ohsos" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_GetTrainerDetails" FunctionName="I4IDBModel.Store.sp_GetTrainerDetails">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="I4IDBModel.sp_GetTrainerDetails_Result">
+          <ScalarProperty Name="industriesName" ColumnName="industriesName" />
+          <ScalarProperty Name="userName" ColumnName="userName" />
+          <ScalarProperty Name="trainerImage" ColumnName="trainerImage" />
+          <ScalarProperty Name="userName1" ColumnName="userName1" />
+          <ScalarProperty Name="iam" ColumnName="iam" />
+          <ScalarProperty Name="Organisation" ColumnName="Organisation" />
+          <ScalarProperty Name="designation" ColumnName="designation" />
+          <ScalarProperty Name="age" ColumnName="age" />
+          <ScalarProperty Name="country" ColumnName="country" />
+          <ScalarProperty Name="locatedat" ColumnName="locatedat" />
+          <ScalarProperty Name="speaklanguages" ColumnName="speaklanguages" />
+          <ScalarProperty Name="fluentenglish" ColumnName="fluentenglish" />
+          <ScalarProperty Name="answerquery" ColumnName="answerquery" />
+          <ScalarProperty Name="helthissue" ColumnName="helthissue" />
+          <ScalarProperty Name="PreferredCountry" ColumnName="PreferredCountry" />
+          <ScalarProperty Name="passport" ColumnName="passport" />
+          <ScalarProperty Name="passportnumber" ColumnName="passportnumber" />
+          <ScalarProperty Name="issueplace" ColumnName="issueplace" />
+          <ScalarProperty Name="issuedate" ColumnName="issuedate" />
+          <ScalarProperty Name="expirydate" ColumnName="expirydate" />
+          <ScalarProperty Name="citizenship" ColumnName="citizenship" />
+          <ScalarProperty Name="keyword" ColumnName="keyword" />
+          <ScalarProperty Name="topicList" ColumnName="topicList" />
+          <ScalarProperty Name="priceList" ColumnName="priceList" />
+          <ScalarProperty Name="timedurationlist" ColumnName="timedurationlist" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_insert_update_Iso" FunctionName="I4IDBModel.Store.sp_insert_update_Iso" />
+    <FunctionImportMapping FunctionImportName="sp_insert_update_OHSAS" FunctionName="I4IDBModel.Store.sp_insert_update_OHSAS" />
+    <FunctionImportMapping FunctionImportName="sp_insert_update_UserProfile_Edit" FunctionName="I4IDBModel.Store.sp_insert_update_UserProfile_Edit" />
+    <FunctionImportMapping FunctionImportName="sp_search_Image" FunctionName="I4IDBModel.Store.sp_search_Image" />
+    <FunctionImportMapping FunctionImportName="sp_search_Project" FunctionName="I4IDBModel.Store.sp_search_Project">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="I4IDBModel.sp_search_Project_Result">
+          <ScalarProperty Name="pId" ColumnName="pId" />
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+          <ScalarProperty Name="SearchKeyword" ColumnName="SearchKeyword" />
+          <ScalarProperty Name="OrganizationName" ColumnName="OrganizationName" />
+          <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+          <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+          <ScalarProperty Name="CustomerIndustryType" ColumnName="CustomerIndustryType" />
+          <ScalarProperty Name="year" ColumnName="year" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+          <ScalarProperty Name="IsOrganization" ColumnName="IsOrganization" />
+          <ScalarProperty Name="IsCustomer" ColumnName="IsCustomer" />
+          <ScalarProperty Name="IsProject" ColumnName="IsProject" />
+          <ScalarProperty Name="IsType" ColumnName="IsType" />
+          <ScalarProperty Name="IsYear" ColumnName="IsYear" />
+          <ScalarProperty Name="IsCountry" ColumnName="IsCountry" />
+          <ScalarProperty Name="IsEmail" ColumnName="IsEmail" />
+          <ScalarProperty Name="userid" ColumnName="userid" />
+          <ScalarProperty Name="ExcelPath" ColumnName="ExcelPath" />
+          <ScalarProperty Name="IsAuthorized" ColumnName="IsAuthorized" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="IsStatus" ColumnName="IsStatus" />
+          <ScalarProperty Name="IsAdminUnAuthorized" ColumnName="IsAdminUnAuthorized" />
+          <ScalarProperty Name="IsAdminAuthorized" ColumnName="IsAdminAuthorized" />
+          <ScalarProperty Name="ProjectLocation" ColumnName="ProjectLocation" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_search_ProjectDat" FunctionName="I4IDBModel.Store.sp_search_ProjectDat" />
+    <FunctionImportMapping FunctionImportName="sp_search_Videos" FunctionName="I4IDBModel.Store.sp_search_Videos" />
+    <FunctionImportMapping FunctionImportName="SP_SendI4IMail" FunctionName="I4IDBModel.Store.SP_SendI4IMail">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="I4IDBModel.SP_SendI4IMail_Result">
+          <ScalarProperty Name="SuppName" ColumnName="SuppName" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="UQueryNum" ColumnName="UQueryNum" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_topicDetails" FunctionName="I4IDBModel.Store.sp_topicDetails">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="I4IDBModel.sp_topicDetails_Result">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="TrainerImage" ColumnName="TrainerImage" />
+          <ScalarProperty Name="topicList" ColumnName="topicList" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SplitStringI4I" FunctionName="I4IDBModel.Store.SplitStringI4I" />
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,350 @@
+﻿ header {
+        padding: 0;
+    }
+
+    .Newheader {
+           width: 100%;
+    background-color: #175B6A;
+    position: relative;
+    box-shadow: 0 2px 3px rgba(95, 94, 94, 0.68);
+    float: left;
+    height: 44px;
+    }
+
+    .NewHwrapper {
+        width: 90%;
+        margin: 0 auto;
+            min-height: 100%;
+    margin-bottom: -67px;
+    }
+
+
+    .NewsearchBox {
+        width: 38%;
+        float: left;
+        text-align: left;
+    }
+
+    .div_form_search {
+        width: 100%;
+        position: relative;
+        margin-left: 0;
+        margin-top:7px;
+    }
+
+    input.search_field {
+        min-width: 200px;
+        width: 100%;
+        height: 31px;
+        outline: 0;
+        border: 0;
+        padding: 0 124px 0 10px;
+        background-color: #4A8A98;
+        border-radius: 3px;
+        color: #F9F9F9;
+    }
+
+    .Newbtn_div {
+        position: absolute;
+        top: 0;
+        right: 0;
+        display: flex;
+    }
+
+    .search-btns {
+     position: relative;
+    top: 1px;
+    right: 1px;
+    width: 38px;
+    height: 29px;
+    border: 0;
+    margin: 0px;
+    padding: 0px;
+    cursor: pointer;
+    background: #378090;
+    background-repeat: no-repeat;
+    background-position: 9px 7px;
+    border-radius: 0;
+    border-right: 1px solid #4E909E;
+    }
+
+        .search-btns:last-child {
+            border-right: 0px;
+        }
+
+    /*button#search_btn {
+        background-image: url("../Content/WorldRef/images/search_.png");
+    }
+
+    button#search_btn1 {
+        background-image: url("../Content/WorldRef/images/search_img.png");
+    }
+
+    button#search_btn2 {
+        background-image: url("../Content/WorldRef/images/search_vdo.png");
+    }*/
+
+    input.search_field::-webkit-input-placeholder {
+        color: #CCCCCC;
+    }
+
+    .NewFieldBox {
+        width: 9%;
+        float: right;
+            margin-top: 7px;
+    }
+
+    .NewHbottom {
+        width: 100%;
+        float: left;
+    }
+
+    .NewDrop {
+    }
+
+        .NewDrop > span {
+            float: right;
+            display: flex;
+        }
+
+            .NewDrop > span:last-child {
+                padding: 0 10px 0 0;
+            }
+
+        .NewDrop span a img {
+            width: 22px;
+            position: absolute;
+            left: 0;
+            top: 8px;
+            opacity: 1;
+        }
+
+        .NewDrop span a {
+            display: inline-block;
+            position: relative;
+            height: 31px;
+            width: 31px;
+        }
+
+            .NewDrop span a:hover img {
+                opacity: 0.8;
+            }
+
+            .NewDrop span a i {
+                font-size: 18px;
+                color: #fff;
+                position: absolute;
+                right: -1px;
+                top: 9px;
+                display: inline-block;
+            }
+
+            .NewDrop span a i.fa-bell{
+                    left: 0;
+    text-align: left;
+            }
+
+            .NewDrop span a span {
+                color: #fff;
+                background-color: #13B3FF;
+                padding: 1px 3px;
+                border-radius: 2px;
+                box-shadow: 0 1px 3px rgba(8, 8, 8, 0.68);
+                position: absolute;
+                right: -1px;
+                top: 0;
+                font-size: 10px;
+                display: inline-block;
+                line-height: 12px;
+            }
+
+    .Newlogo {
+        width: 13%;
+        float: left;
+        text-align: left;
+    }
+
+        .Newlogo img {
+            width: 138px;
+            margin-top:7px;
+        }
+
+    .NewNav {
+        width: 40%;
+        float: left;
+        position:relative;
+    }
+
+    .NewnavClass {
+        /*margin-top: 5px;*/
+    }
+
+        .NewnavClass ul li {
+               display: inline-block;
+    margin-left: 0px;
+    line-height: 44px;
+            float: left;
+
+        }
+
+            .NewnavClass ul li a {
+          color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    display: block;
+    text-transform: capitalize;
+    height: 44px;
+    padding: 0 10px;
+    font-weight: normal;
+    letter-spacing: 0.025em;
+    white-space: nowrap;
+            }
+
+        .NewnavClass ul {
+            text-align: left;
+        }
+
+            .NewnavClass ul li a.highlight_T {
+                   color: #FFFFFF;
+    background: #04B75C;
+    text-shadow: none;
+            }
+            .NewnavClass ul li a.highlight_T i {
+                color: #fff;
+            }
+
+    .experinceImg {
+        background: url('../Content/WorldRef/images/nav1%20(1).png') no-repeat;
+    }
+
+    .exploreImg {
+        background: url('../Content/WorldRef/images/nav1%20(4).png') no-repeat;
+    }
+
+    .newsImg {
+        background: url('../Content/WorldRef/images/nav1%20(3).png') no-repeat;
+    }
+
+    .Newnav1 {
+        width: 25px;
+        height: 19px;
+        display: block;
+        float: left;
+        background-size: 18px;
+        opacity: 0.8;
+    }
+
+    .customI {
+        color: white;
+        padding: 0 6px 0 0;
+        opacity: 1;
+    }
+
+    .NewnavClass ul li:hover .customI {
+        /*opacity: 0.8;*/
+    }
+
+    .NewnavClass ul li:hover a {
+         color: #fff;
+    background: #297586;
+    text-shadow: 0px 0px 1px #D2D2D2;
+    }
+    .NewnavClass ul li a.activebg {
+        background-color: #2D7282;
+    }
+    .action-field {
+        right: 25px;
+        top: 44PX;
+        min-width: 200px;
+    }
+
+        .action-field ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            -webkit-box-shadow: 0 2px 25px rgba(0,0,0,0.2);
+            box-shadow: 0 2px 25px rgba(0,0,0,0.2);
+            height: 100%;
+            background-color: white;
+            -webkit-border-radius: 3px;
+            border-radius: 3px;
+            border: 2px solid rgba(160,160,160,0.4);
+            z-index: auto;
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .action-field > ul:after {
+            position: absolute;
+            left: 70%;
+            top: -6px;
+            width: 0;
+            height: 0;
+            content: '';
+            border-left: 7px solid transparent;
+            border-right: 7px solid transparent;
+            border-bottom: 7px solid #FFFFFF;
+            margin-top: -3px;
+        }
+
+        .action-field ul li {
+            border-bottom: 0px solid #D2CFCF;
+                padding: 5px 2px;
+            line-height: 1.8em;
+        }
+
+            .action-field ul li a {
+                   color: #656262;
+    font-size: 13px;
+    padding: 0 15px;
+    width:auto;
+            }
+
+            .action-field ul li:nth-child(3) {
+                border-bottom: 1px solid rgba(34,34,34,0.1);
+            }
+
+            .action-field ul li a i {
+                display:none;
+                padding-right: 8px;
+                font-size: 16px;
+                padding-left: 0;
+                width: 20px;
+            }
+
+            .action-field ul li a .fa-bolt {
+                padding-right: 0;
+                padding-left: 0;
+            }
+
+            .action-field ul li a .fa-level-down {
+                padding-right: 0px;
+                padding-left: 0px;
+            }
+
+            .action-field ul li:hover {
+                background-color: #0094B5;
+            }
+             .action-field ul li:hover a {
+                color:#fff;
+            }
+
+    .customBtnI {
+        color: #fff;
+        font-size: 14px;
+        padding: 0;
+    }
+
+    .clearfix2:after {
+        visibility: hidden;
+        display: block;
+        font-size: 0;
+        content: " ";
+        clear: both;
+        height: 0;
+    }
+    .NewnavClass ul li:hover a.highlight_T {
+    /*color: #00DCFB;*/
+    background: #04B75C;
+}

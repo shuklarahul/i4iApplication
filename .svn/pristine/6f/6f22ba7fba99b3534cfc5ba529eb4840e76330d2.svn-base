@@ -1,0 +1,1906 @@
+﻿
+@model WorldRef.DataLayer.SignUpWorldRefModel
+@*@model IEnumerable<WorldRef.Models.WorldRefSearchModel>*@
+@using System.Configuration;
+@{
+    ViewBag.Title = "Search";
+    Layout = "~/Views/Shared/LayoutSearch.cshtml";
+}
+@{
+    var RecordCount = ViewBag.count;
+
+}
+@{
+    var msg = TempData["ErrorMessage"] ?? string.Empty;
+    TempData["ErrorMessage"] = "";
+    var displayMessage = TempData["DisplayMessage"] ?? string.Empty;
+    TempData["DisplayMessage"] = "";
+}
+<script src="~/Content/js/jquery-1.10.1.min.js"></script>
+<script src="~/Content/WorldRef/js/jquery.hashchange.min.js"></script>
+<script src="~/Content/WorldRef/js/jquery.easytabs.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#SearchValue").focus();
+
+    });
+
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".content-3").mCustomScrollbar({
+            scrollButtons: { enable: true },
+            theme: "light-thick",
+            scrollbarPosition: "outside"
+        });
+        CallCountrySearchHome();
+        $("html5-prev").hide();
+        $("html5-next").hide();
+    });
+    window.onload = function () {
+        $('.projectsbysearch').show();
+    };
+</script>
+
+<script>
+        function signlinkedin(Projtid) {
+            document.getElementById("projectId").value = Projtid;
+            var foo = $("#credit111").html();
+            $.fancybox(foo);
+        }
+        function MovetoSignUpTab() {//e2
+            $("#tabs1-html").removeClass("active");
+            $("#tabs1-js").addClass("active");
+            $("#e1").removeClass("active");
+            $("#e2").addClass("active");
+            $("#tabs1-html").css("display", "none");
+            $("#tabs1-js").css("display", "block");
+            $("#into1").addClass("active");
+            $("#into2").removeClass("active");
+            $("#into3").removeClass("active");
+            $("#intoOpen1").addClass("active");
+            $("#intoOpen2").removeClass("active");
+            $("#intoOpen3").removeClass("active");
+            $("#intoOpen1").css("display", "block");
+            $("#intoOpen2").css("display", "none");
+            $("#intoOpen3").css("display", "none");
+            openFancybox();
+        }
+        function MovetoLoginTab() {//e1
+            $("#tabs1-html").addClass("active");
+            $("#tabs1-js").removeClass("active");
+            $("#e1").addClass("active");
+            $("#e2").removeClass("active");
+            $("#tabs1-html").css("display", "block");
+            $("#tabs1-js").css("display", "none");
+            $("#intoOpen1").css("display", "none");
+            $("#intoOpen2").css("display", "none");
+            $("#intoOpen3").css("display", "none");
+            openFancybox();
+        }
+        function byd() {//into1
+            $("#into1").addClass("active");
+            $("#into2").removeClass("active");
+            $("#into3").removeClass("active");
+            $("#intoOpen1").addClass("active");
+            $("#intoOpen2").removeClass("active");
+            $("#intoOpen3").removeClass("active");
+            $("#intoOpen1").css("display", "block");
+            $("#intoOpen2").css("display", "none");
+            $("#intoOpen3").css("display", "none");
+        }
+        function MovetoGeneralTab() {//into2
+            $("#into1").removeClass("active");
+            $("#into2").addClass("active");
+            $("#into3").removeClass("active");
+            $("#intoOpen1").removeClass("active");
+            $("#intoOpen2").addClass("active");
+            $("#intoOpen3").removeClass("active");
+            $("#intoOpen1").css("display", "none");
+            $("#intoOpen2").css("display", "block");
+            $("#intoOpen3").css("display", "none");
+        }
+        function MovetoRecruitersTab() {//into3
+            $("#into1").removeClass("active");
+            $("#into2").removeClass("active");
+            $("#into3").addClass("active");
+            $("#intoOpen1").removeClass("active");
+            $("#intoOpen2").removeClass("active");
+            $("#intoOpen3").addClass("active");
+            $("#intoOpen1").css("display", "none");
+            $("#intoOpen2").css("display", "none");
+            $("#intoOpen3").css("display", "block");
+        }
+
+        $(document).ready(function () {
+            var message = '@displayMessage';
+            $('#Industry').multipleSelect();
+            $('#IndustriesID').multipleSelect();
+            if (message != "") {
+                $.fancybox("#ModelpopUp");
+            }
+            CountryList();
+            IndustryList();
+            $('#SearchValue').keypress(function (e) {
+                var key = e.which;
+                if (key == 13)  // the enter key code
+                {
+                    CallCountrySearchHome();
+                    return false;
+                }
+            });
+            $('.fancybox').fancybox();
+            $('#tab-container').easytabs({ updateHash: false });
+            $(".various").fancybox({
+                maxWidth: 800,
+                maxHeight: 600,
+                fitToView: false,
+                width: '70%',
+                height: '70%',
+
+                autoSize: false,
+                closeClick: false,
+                openEffect: 'none',
+                closeEffect: 'none'
+            });
+            $(".fancybox").fancybox({
+                padding: 0 // optional etc.
+            });
+            $(".fancybox").fancybox({
+            });
+            $("#OtherType").hide();
+            $("#DropdownType").change(function () {
+                if ($(this).val() == "Others") {
+                    $("#OtherType").show();
+                }
+                else {
+                    $("#OtherType").hide();
+                }
+            });
+            $("#OtherIndustryName").hide();
+            $("#Industry").change(function () {
+                if ($("#Industry option:selected").text() == "Other") {
+                    $("#OtherIndustryName").show();
+                }
+                else {
+                    $("#OtherIndustryName").hide();
+                }
+            });
+            $("#Country").change(function () {
+                getCountryCode($('option:selected', $(this)).text());
+            });
+            $(".html5lightbox").html5lightbox();
+            $('#ContactNumber').keypress(function (evt) {
+                var charCode = 0;
+                charCode = (evt.which) ? evt.which : event.keyCode;
+                if (((charCode > 47) && (charCode < 58)) || (charCode == 8) || (charCode == 9) || (charCode == 46) || (charCode == 0))
+                    return true;
+                return false;
+            });
+            $('#Contact').keypress(function (evt) {
+                var charCode = 0;
+                charCode = (evt.which) ? evt.which : event.keyCode;
+                if (((charCode > 47) && (charCode < 58)) || (charCode == 8) || (charCode == 9) || (charCode == 46) || (charCode == 0))
+                    return true;
+                return false;
+            });
+            $('#Contacti4i').keypress(function (evt) {
+                var charCode = 0;
+                charCode = (evt.which) ? evt.which : event.keyCode;
+                if (((charCode > 47) && (charCode < 58)) || (charCode == 8) || (charCode == 9) || (charCode == 46) || (charCode == 0))
+                    return true;
+                return false;
+            });
+            $('#ContactReg').keypress(function (evt) {
+                var charCode = 0;
+                charCode = (evt.which) ? evt.which : event.keyCode;
+                if (((charCode > 47) && (charCode < 58)) || (charCode == 8) || (charCode == 9) || (charCode == 46) || (charCode == 0))
+                    return true;
+
+                return false;
+            });
+            document.title = "WorldRef -" + document.getElementById("SearchValue").value;
+
+        });
+        function getCountryCode(countryname) {
+            $.ajax({
+                url: "/WorldRef/GetCountryCode",
+                type: 'POST',
+                data: JSON.stringify({ "Countryname": countryname }),
+                contentType: 'application/json; charset=utf-8',
+                success: function (response) {
+                    $('#ContactCode').val(response);
+                },
+                error: function () {
+                    alert("Failed! Please try again.");
+                }
+            });
+        }
+        var message = '@msg';
+
+        if (message != "") {
+            alert(message);
+        }
+
+        function popEx(id) {
+            $.ajax({
+                url: "/WorldRef/DownloadProfile",
+                type: 'POST',
+                data: JSON.stringify({ "ProjectId": id }),
+                contentType: 'application/json; charset=utf-8',
+                success: function (response) {
+                    var foo = $("#inline6").html(response);
+                    $.fancybox(foo);
+                },
+                error: function () {
+                }
+            });
+        }
+
+        @*script for open certificates in popup *@
+        function popExCertificates(id) {
+            $.ajax({
+                url: "/WorldRef/DownloadCertificates",
+                type: 'POST',
+                data: JSON.stringify({ "ProjectId": id }),
+                contentType: 'application/json; charset=utf-8',
+                success: function (response) {
+                    var foo = $("#inline6").html(response);
+                    $.fancybox(foo);
+                },
+                error: function () {
+                }
+            });
+        }
+        @*End sript certificate*@
+
+        function GetAllCommentsOfProject(projectId,uID) {
+            $.ajax({
+                type: "POST",
+                url: '/WorldRef/GetAllComents',
+                data: JSON.stringify({ "projectId": projectId,"usrId":uID }),
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    if (data == "login") {
+                        $.fancybox("#inline1");
+                    }
+                    else if(data=="userProject")
+                    {
+                        //$("#inline4").css("display","none");
+                        alert("Can not give the testimonial to own project.");
+                        $(".fancybox-overlay").hide();
+                        $(".fancybox-wrap").hide();
+                    }
+                    else {
+                        $("#CommentList").html("");
+                        var Result = "";
+                        Result += '<div id="loading" style="display: none;"><img id="loading-image" src="/Content/WorldRef/images/ringUploader.gif" alt="Loading..." /></div>';
+
+                        for (i = 0; i < data.length; i++) {
+                            if (i % 2 == 0) {
+                                Result += '<li class="mbColor2">';
+                            }
+                            else {
+                                Result += '<li class="mbColor1">';
+                            }
+                            if (data[i].ContactPerson == "i4i Testimonial") {
+                                Result += "<span style='font-weight:bold;color: green'>" + data[i].ContactPerson + "</span> : <span style='font-weight:600;'> " + data[i].Review + " </span></li>";
+                            }
+                            else {
+                                Result += "<span style='font-weight:bold;color: blue'>" + data[i].ContactPerson + "</span> : " + data[i].Review + "</li>";
+                            }
+                        }
+                        Result += "<li><textarea id=txtTextarea" + projectId + "  class='text-box single-line' width='100%' rows='4' placeholder='Enter Testimonial'></textarea></li><div class='centreAlign'><input class='pEButton' type='button' value='Add Comment' onclick='AddComment(" + projectId + ")' ></input></div>";
+                        $("#CommentList").html(Result);
+                    }
+                },
+                error: function () {
+                    alert("Failed! Please try again.");
+                }
+            });
+        }
+
+        function SignUpFormValidation() {
+            if ($("#DropdownType").val() == "0") {
+                alert("Please Select Type");
+                document.getElementById("DropdownType").focus();
+                return false;
+            }
+            if ($("#DropdownType").val() == "Others") {
+                var y1;
+                y1 = document.getElementById("OtherType").value;
+                if (y1 == null || y1 == "") {
+                    alert("Please enter Type ");
+                    document.getElementById("OtherType").focus();
+                    return false;
+                }
+            }
+            var y;
+            y = document.getElementById("Name").value;
+            if (y == null || y == "") {
+                alert("Please enter Name");
+                document.getElementById("Name").focus();
+                return false;
+            }
+            var Contain = "";
+            $("#TextBoxContain :text").each(function () {
+                Contain += $(this).val();
+            });
+            y = document.getElementById("Industry").value;
+            if ((y == null || y == "") && Contain == "") {
+                alert("Please select  Industry or Add your Industry");
+                document.getElementById("Industry").focus();
+                return false;
+            }
+            var x;
+            x = document.getElementById("ProfileUrl").value;
+            if (x == null || x == "") {
+                alert("Please enter ProfileUrl");
+                document.getElementById("ProfileUrl").focus();
+                return false;
+            }
+            var y;
+            y = document.getElementById("Email").value;
+            if (y == null || y == "") {
+                alert("Please enter Email");
+                document.getElementById("Email").focus();
+                return false;
+            }
+            var y;
+            y = document.getElementById("AlternateEmail").value;
+            if (y == null || y == "") {
+                alert("Please enter Alternate Email");
+                document.getElementById("AlternateEmail").focus();
+                return false; panel - container
+            }
+
+            if (document.getElementById('Country').selectedIndex == 0) {
+                alert("Please Select Country");
+                return false;
+            }
+            var y;
+
+            y = document.getElementById("ContactNumber").value;
+            if (y == null || y == "") {
+                alert("Please enter Contact Number");
+                document.getElementById("ContactNumber").focus();
+                return false;
+            }
+
+            var y = document.getElementById("fileUp").value;
+            if (y == null || y == "") {
+                alert("Please Select Company Profile");
+                document.getElementById("fileUp").focus();
+                return false;
+            }
+            var y = document.getElementById("Logo").value;
+            if (y == null || y == "") {
+                alert("Please Select Company Logo");
+                document.getElementById("Logo").focus();
+                return false;
+            }
+        }
+        function ValidateUserProfile() {
+            var textValue = document.getElementById("ProfileUrl").value;
+            if (textValue == "") {
+                alert('Please enter profile name.');
+                document.getElementById('ProfileUrl').focus();
+                return false;
+            }
+            $.ajax({
+                url: "/WorldRef/SaveProfileUrlFromSignUp",
+                type: 'POST',
+                data: JSON.stringify({ "txtUrl": textValue }),
+                contentType: 'application/json; charset=utf-8',
+                success: function (response) {
+                    if (response == "exist") {
+                        alert("Profile name already exist. Please try another profile name.");
+                        document.getElementById("ProfileUrl").value = "";
+                        return false;
+                    }
+                    else if (response == "done") {
+                        return true;
+                    }
+                    else {
+                        document.getElementById("ProfileUrl").value = "";
+                        alert("There have been some error. Please try again.");
+                        document.getElementById("ProfileUrl").value = "";
+                        return false;
+                    }
+                },
+                error: function () {
+                    alert("Failed! Please try again.");
+                    document.getElementById("ProfileUrl").value = "";
+                    return false;
+                }
+            });
+
+        }
+        function AddComment(projectId) {
+            $("#loading").show();
+            var review = document.getElementById('txtTextarea' + projectId).value;
+            $.ajax({
+                type: "POST",
+                url: '/WorldRef/AddLikeDislikeComment',
+                data: JSON.stringify({ "ProjectId": projectId, "Review": review }),
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    alert(data);
+                    $("#loading").hide();
+                    $.fancybox.close();
+                }
+            });
+        }
+        function GetAllLikeOnImage (imgId,projId,usrId)
+        {
+
+            $.ajax({
+                type: "POST",
+                url: '/WorldRef/AllLikesOnImage',
+                data: JSON.stringify({ "Imageid": parseInt(imgId),"ProjectId":parseInt(projId),"usrId":parseInt(usrId)}),
+                contentType: 'application/json; charset=utf-8',
+                success: function (response) {
+                    var Result="";
+                    $.each(response, function (id, model) {
+                        //alert(model.UserFirstName);
+
+                        Result+='<div style="margin:0 0 10px 0;background-color: #FFF9F0;"><span style="display: inline-block;margin-right: 5px;width: 27%; vertical-align: top;"><img src="/uploads/'+model.ProfileAttach+'" width="50px"></span>'+
+                        '<span style="display: inline-block;width: 70%;">'+model.UserFirstName+'</span></div>';
+
+                    });
+                    var foo = $("#ShowImageDetailsData").html(Result);
+                    $("#ShowImageDetailsData").show();
+                }
+            });
+
+
+        }
+        function GetAllCommentsOnImage(imgId,projId,usrId)
+        {
+            $("#ShowImageDetailsData").innerHTML="";
+            $.ajax({
+                type: "POST",
+                url: '/WorldRef/AllCommentsOnImage',
+                data: JSON.stringify({ "Imageid": parseInt(imgId),"ProjectId":parseInt(projId),"usrId":parseInt(usrId)}),
+                contentType: 'application/json; charset=utf-8',
+                success: function (response) {
+                    var Result="";
+                    $.each(response, function (id, model) {
+                        Result+='<div style="margin:0 0 10px 0;background-color: #FFF9F0;"><span style="display: inline-block;margin-right: 5px;width: 27%; vertical-align: top;"><img src="/uploads/'+model.ProfileAttach+'" width="50px"></span>'+
+                       '<span style="display: inline-block;width: 70%;">'+model.ImageTestimonials+'</span></div>';
+
+                    });
+                    var foo = $("#ShowImageDetailsData").html(Result);
+                    $("#ShowImageDetailsData").show();
+                }
+            });
+
+        }
+
+        //Add like on image on home page
+        function LikeSearchImageHome(projectId,ProjectImageId,uId) {
+            $.ajax({
+                type: "POST",
+                url: '/WorldRef/AddLikeSearchImage',
+                data: JSON.stringify({ "ProjectId": projectId,"UserID":uId, "LikeOrDisLike": "Like", "UserIp": "0","ProjectImageId": ProjectImageId }),
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    if (data == "login") {
+
+                        $.fancybox("#inline1");
+                    }
+                    else if (data == "userProject")
+                    {
+                        alert("You Can not like to own project Image.");
+                    }
+                    else if (data == "Success") {
+
+                        alert("You have successfully liked.");
+                    }
+                    else if (data == "You Already Liked this Project") {
+                        alert("You already liked this project image.");
+                    }
+                    else if (data == "Fail") {
+                        alert("There have been some error. Please try again.");
+                    }
+                    else {
+                        //  CallCountrySearchHome();
+                    }
+                }
+            });
+
+        }
+        //end like on image.
+
+        //code for like videos on search home page.
+        function LikeSearchVideosHome(projectId,ProjectImageId,uId) {
+            $.ajax({
+                type: "POST",
+                url: '/WorldRef/AddLikeSearchVideos',
+                data: JSON.stringify({ "ProjectId": projectId,"UserID":uId, "LikeOrDisLike": "Like", "UserIp": "0","ProjectImageId": ProjectImageId }),
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    //alert(data);
+                    if (data == "login") {
+                        //  alert(data);
+                        $.fancybox("#inline1");
+                    }
+                    else if (data == "userProject")
+                    {
+                        alert("You Can not like to own project Videos.");
+                    }
+                    else if (data == "Success") {
+
+                        alert("You have successfully liked.");
+                    }
+                    else if (data == "You Already Liked this Project Videos.") {
+                        alert("You Already Liked this Project Videos.");
+                    }
+                    else if (data == "Fail") {
+                        alert("There have been some error. Please try again.");
+                    }
+                    else {
+                        //  CallCountrySearchHome();
+                    }
+                }
+            });
+
+        }
+        //end code
+
+        //add comment on image on home page
+        function AddCommentOnProjectImageOnHome(projectId,imgid,usrId,event) {
+            if(event.keyCode==13)
+            {
+                var review = document.getElementById("TextArea1").value;
+                if (review == null || review == "" || review.length < 2) {
+                    alert("Please enter Testimonials.");
+                    document.getElementById("txt" + projectId).focus();
+                    return false;
+                }
+                var all = (review.trim()).split(' ');
+
+                for(var i=0;i<all.length;i++)
+                {
+                    if(!isNaN(all[i]))
+                    {
+                        if (all[i].length >= 5) {
+                            alert("The comment should not contain any phone no or email id !");
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        var re = /(([^<>()[\]\\.,;:\s@@\"]+(\.[^<>()[\]\\.,;:\s@@\"]+)*)|(\".+\"))@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/;
+                        if(re.test(all[i])==true)
+                        {
+                            alert("The comment should not contain any phone no. or email id !");
+                            return false;
+                        }
+                    }
+                }
+                $.ajax({
+                    type: "POST",
+                    url: '/WorldRef/AddCommentOnImage',
+                    data: JSON.stringify({ "projectId": projectId ,"ImageId":imgid,"UserId":usrId,"UserIp": "0","Review": review}),
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (data) {
+                        if(data=="login")
+                        {
+
+                            $.fancybox("#inline1");
+                        }
+                        else if(data=="userProject")
+                        {
+                            alert("You can't Add Testimonials to own Project Image.")
+
+                        }
+                        else if(data!="")
+                        {
+                            var Result="";
+                            //Result+='<div style="width:60%;float:left;margin-right:1%;" ><img src="/uploads/' + data[0].ImagePath + '" style="width: 477px;"></div>';
+                            Result+='<div style="margin:0 0 10px 0;background-color: #FFF9F0;padding: 2px;"><span style="display: inline-block;margin-right: 5px;width: 18%; vertical-align: top;">'+
+                                '<img src="/uploads/'+data[0].ProfileAttach+'" width="50px"></span><span style="display: inline-block;width: 80%;">'+data[0].ImageTestimonials+'</span></div>';
+                            $(".mCSB_container").append(Result);
+                            document.getElementById("TextArea1").value="";
+                            var height=($("#ShowImageDetailsData").height())-48;
+                            $(".mCSB_dragger").css('top', height);
+                            $(".mCSB_container").css('top', $(".mCSB_container").height()-271);
+                        }
+                    },
+                    error: function () {
+                        $("#loading").hide();
+                        alert("Failed! Please try again.");
+                    }
+                });
+            }
+        }
+        //end coment on home page
+
+        //code for add comments on videos in search home page.
+
+        function AddCommentOnProjectVideosOnHome(projectId,imgid,usrId,event) {
+            if(event.keyCode==13)
+            {
+                var review = document.getElementById("TextArea1").value;
+                if (review == null || review == "" || review.length < 2) {
+                    alert("Please enter Testimonials.");
+                    document.getElementById("txt" + projectId).focus();
+                    return false;
+                }
+                var all = (review.trim()).split(' ');
+
+                for(var i=0;i<all.length;i++)
+                {
+                    if(!isNaN(all[i]))
+                    {
+                        if (all[i].length >= 5) {
+                            alert("The comment should not contain any phone no or email id !");
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        var re = /(([^<>()[\]\\.,;:\s@@\"]+(\.[^<>()[\]\\.,;:\s@@\"]+)*)|(\".+\"))@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/;
+                        if(re.test(all[i])==true)
+                        {
+                            alert("The comment should not contain any phone no. or email id !");
+                            return false;
+                        }
+                    }
+                }
+                $.ajax({
+                    type: "POST",
+                    url: '/WorldRef/AddCommentOnVideos',
+                    data: JSON.stringify({ "projectId": projectId ,"ImageId":imgid,"UserId":usrId,"UserIp": "0","Review": review}),
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (data) {
+                        if(data=="login")
+                        {
+
+                            $.fancybox("#inline1");
+                        }
+                        else if(data=="userProject")
+                        {
+                            alert("You can't Add Testimonials to own Project Image.")
+
+                        }
+                        else if(data!="")
+                        {
+                            var Result="";
+
+                            Result+='<div style="margin:0 0 10px 0;background-color: #FFF9F0;padding: 2px;"><span style="display: inline-block;margin-right: 5px;width: 18%; vertical-align: top;">'+
+                                '<img src="/uploads/'+data[0].ProfileAttach+'" width="50px"></span><span style="display: inline-block;width: 80%;">'+data[0].VideosTestimonials+'</span></div>';
+                            $(".mCSB_container").append(Result);
+                            document.getElementById("TextArea1").value="";
+                            var height=($("#ShowVideosDetailsData").height())-48;
+                            $(".mCSB_dragger").css('top', height);
+                            $(".mCSB_container").css('top', $(".mCSB_container").height()-271);
+                        }
+                    },
+                    error: function () {
+                        $("#loading").hide();
+                        alert("Failed! Please try again.");
+                    }
+                });
+            }
+        }
+
+        //end code
+
+        //code for show like and comment on image
+        function ShowUserLikeAndComments(imgId,projId,usrId) {
+            $("#loading").show();
+
+            $.ajax({
+                type: "POST",
+                url: '/WorldRef/ShowLikeComments',
+                data: JSON.stringify({ "Imageid": imgId,"ProjectId":projId,"UserId":usrId}),
+                contentType: 'application/json; charset=utf-8',
+                success: function (response) {
+                    var Result="";
+                    if(response=="login")
+                    {
+                        $.fancybox("#inline1");
+                        CallCountrySearchHome();
+                    }
+                    else
+                    {
+                        Result+='<div class="img-cnt" ><img src="/uploads/' + response[0].imgPath + '" style="width: 477px;"></div>';
+                        Result+='<div style="width:38%;float:left;"><div style="width:100%;float:left;"><span class="projectimg-icon Vicon marginX"><a><img src="/Content/WorldRef/images/like-20.png" title="Like" onclick="LikeSearchImageHome('+projId+','+imgId+','+usrId+')" /></a></span></div>';
+                        Result+='<div id="ShowImageDetailsData" class="content content-3" style="float: left;width: 100%;background-color: #ECECEC;padding: 3px 3px;overflow-y: auto;">'+
+                        '<a><label class="likeGen">Rahul Shukla and ' + response[0].TotalLikeCount + ' others like this. </label></a>';
+                        $.each(response, function (id, model) {
+                            Result+='<div style="margin:0 0 10px 0;background-color: #FFF9F0;padding: 2px;"><span style="display: inline-block;margin-right: 5px;width: 18%; vertical-align: top;"><img src="/uploads/'+model.ProfileAttach+'" width="50px"></span>'+
+                            '<span style="display: inline-block;width: 80%;">'+model.ImageTestimonials+'</span></div>';
+                        });
+                        Result+="</div>";
+                        Result+='<div style="float: left;width: 100%;background-color: #ECECEC;padding: 3px 3px;"><div style="margin:0 0 0px 0;padding: 3px;background-color: #FFF9F0;"><span style="display: inline-block;margin-right: 5px;width: 18%; vertical-align: top;"></span>'+
+                            '<span style="display: inline-block;width: 80%;"><textarea id="TextArea1" placeholder="Enter text" onkeypress="return AddCommentOnProjectImageOnHome('+projId+','+imgId+','+usrId+',event)"></textarea></span></div></div></div>';
+
+                        var foo = $("#ShowImageDetails").html(Result);
+
+                        $.fancybox(foo);
+                        $.fancybox.open();
+
+                        $("#ShowImageDetails").show();
+                    }
+                    $("#loading").hide();
+                    var height1=(($(".img-cnt").height())-74)+"px";
+                    $("#ShowImageDetailsData").css('height',height1);
+                    $(".content-3").mCustomScrollbar({
+                        scrollButtons: { enable: true },
+                        theme: "light-thick",
+                        scrollbarPosition: "outside"
+                    });
+
+                    $('textarea').on('keydown', function(e){
+                        //if(e.which == 13) {e.preventDefault();}
+                    }).on('input', function(){
+                        $(this).height(1);
+                        var totalHeight = $(this).prop('scrollHeight') - parseInt($(this).css('padding-top')) - parseInt($(this).css('padding-bottom'));
+                        $(this).height(totalHeight);
+                    });
+                }
+
+            });
+
+
+        }
+        //end code.
+
+        //code for show like and comment on videos
+
+        function ShowUserLikeAndCommentsOnVideos(imgId,projId,usrId) {
+            $("#loading").show();
+            $.ajax({
+                type: "POST",
+                url: '/WorldRef/ShowLikeCommentsOnVideos',
+                data: JSON.stringify({ "Imageid": imgId,"ProjectId":projId,"UserId":usrId}),
+                contentType: 'application/json; charset=utf-8',
+                success: function (response) {
+                    var Result="";
+                    if(response=="login")
+                    {
+                        $.fancybox("#inline1");
+                        CallCountrySearchHome();
+                    }
+                    else
+                    {
+                        if((response[0].imgPath).indexOf("https://") > -1)
+                        {
+                            Result+='<div class="img-cnt"><object style="width:477px;height:358px;" data="' + response[0].imgPath + '"></object></div>';
+                        }
+                        else{
+                            Result+='<div class="img-cnt"><video controls style="width:477px;"><source src="/uploads/' + response[0].imgPath + '" type="video/mp4"></video></div>';
+                        }
+                        Result+='<div style="width:38%;float:left;"><div style="width:100%;"><span class="projectimg-icon Vicon marginX"><a><img src="/Content/WorldRef/images/like-20.png" title="Like" onclick="LikeSearchVideosHome('+projId+','+imgId+','+usrId+')" /></a></span></div>';
+                        Result+='<div id="ShowVideosDetailsData" class="content content-3" style="float: left;width: 100%;background-color: #ECECEC;padding: 3px 3px;overflow-y: auto;">'+
+                        '<a><label class="likeGen">Rahul Shukla and ' + response[0].TotalLikeCount + ' others like this. </label></a>';
+                        $.each(response, function (id, model) {
+                            Result+='<div style="margin:0 0 10px 0;background-color: #FFF9F0;padding: 2px;"><span style="display: inline-block;margin-right: 5px;width: 18%; vertical-align: top;"><img src="/uploads/'+model.ProfileAttach+'" width="50px"></span>'+
+                            '<span style="display: inline-block;width: 80%;">'+model.VideosTestimonials+'</span></div>';
+                        });
+                        Result+="</div>";
+                        Result+='<div style="float: left;width: 100%;background-color: #ECECEC;padding: 3px 3px;"><div style="margin:0 0 0px 0;padding: 3px;background-color: #FFF9F0;"><span style="display: inline-block;margin-right: 5px;width: 18%; vertical-align: top;"></span>'+
+                            '<span style="display: inline-block;width: 80%;"><textarea id="TextArea1" placeholder="Enter text" onkeypress="return AddCommentOnProjectVideosOnHome('+projId+','+imgId+','+usrId+',event)"></textarea></span></div></div></div>';
+
+                        var foo = $("#ShowImageDetails").html(Result);
+
+                        $.fancybox(foo);
+                        $.fancybox.open();
+
+                        $("#ShowImageDetails").show();
+                    }
+                    $("#loading").hide();
+                    var height1=($("#ShowImageDetails").height()-45)+"px";
+                    $("#ShowVideosDetailsData").css('height',height1);
+                    $(".content-3").mCustomScrollbar({
+                        scrollButtons: { enable: true },
+                        theme: "light-thick",
+                        scrollbarPosition: "outside"
+                    });
+
+                    $('textarea').on('keydown', function(e){
+
+                    }).on('input', function(){
+                        $(this).height(1);
+                        var totalHeight = $(this).prop('scrollHeight') - parseInt($(this).css('padding-top')) - parseInt($(this).css('padding-bottom'));
+                        $(this).height(totalHeight);
+                    });
+                }
+            });
+        }
+
+
+        //end code.
+        //code for approve contribution
+        function ApproveContribution(linkedinUid)
+        {
+
+            $.ajax({
+                type: "POST",
+                url: '/WorldRef/ApproveContributionsByRecruiter',
+                data: JSON.stringify({ "LuserId":parseInt(linkedinUid)}),
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    if(data=="")
+                        {}
+                 else
+                    {
+                        alert("Approved.");
+                    }
+                    $("#ApproveContri").show();
+
+
+
+                }
+
+
+
+
+            });
+
+        }
+
+        //end code for approve contributions
+
+        //code for view credit request
+        function ViewContributionRequest(projectId , userId)
+        {
+            $.ajax({
+                type: "POST",
+                url: '/WorldRef/ViewContributions',
+                data: JSON.stringify({ "projectId":parseInt(projectId),"UserId":parseInt(userId)}),
+                contentType: 'application/json; charset=utf-8',
+                success: function (response) {
+                    var Result="";
+                    if(response=="")
+                    {
+                        Result+='<div><span>No Contributor Yet.</span></div>';
+                    }
+                    else
+                    {
+                        $.each(response, function (id, model) {
+                            Result+='<div><img src="/uploads/'+model.picUrl+'" width="50px">'+
+                           '<span style="display: inline-block;width: 70%;">'+model.FirstName+'</span><input type="button" value="Approve" onclick="ApproveContribution('+model.LinkedinUserID+')"/></div>';
+                        });
+                    }
+                    var foo = $("#ApproveContri").html(Result);
+                    $.fancybox(foo);
+                },
+                error: function () {
+                    CallCountrySearchHome();
+                    alert("Failed! Please try again.");
+                }
+            });
+        }
+
+            // end code for credit request
+
+
+
+        function CallCountrySearchHome() {
+            alert('12213');
+            $("#loading").show();
+            var cookieUserRole = '@ViewBag.cookieUserRole';
+            if (cookieUserRole == null || cookieUserRole == "") {
+                cookieUserRole = "";
+            }
+            document.getElementById('BindModel').innerHTML = "";
+            document.title = "WorldRef -" + document.getElementById("SearchValue").value;
+            y = document.getElementById("SearchValue").value;
+            var selectedCountry = [];
+            selectedCountry = getAllSelectedCheckBox();
+            var selectedIndustry = [];
+            selectedIndustry = getAllSelectedCheckBoxIndustry();
+            $.ajax({
+                url: "/WorldRef/SearchCountryWise",
+                type: 'POST',
+                data: JSON.stringify({ "searchString": y, "ArrayIndustry": selectedIndustry, "ArrayCountry": selectedCountry }),
+                contentType: 'application/json; charset=utf-8',
+                success: function (response) {
+                    var Result = '<ul class="projects-slider projectsbysearch">';
+                    var i = 0;
+                    $.each(response, function (id, model) {
+                        var a = 0, j = 0;
+                        var x = 0;
+                        debugger;
+                        var flag = 0; Result += '<li class="project one-fourth search-cnt"><div class="box1"><div class="galcontainer">';
+                        
+                        var students = model.ListOfImage;
+
+                        if (students.length == 1) {
+                            if ((students[j].ImagePath.toString().indexOf(".png") > -1) || (students[j].ImagePath.toString().indexOf('.bmp') > -1) || (students[j].ImagePath.toString().indexOf('.jpg') > -1) || (students[j].ImagePath.toString().indexOf('.jpeg') > -1)) {
+                                Result += '<div class="galler-projgrid">';
+                                Result += '<a href="javascript:void(0)" onclick="ShowUserLikeAndComments(' + students[j].id + ' ,' + model.id + ',' + model.userid + ')" class="fancybox" data-group="set0" data-width="600" data-height="400" ><img src="/uploads/' + students[j].ImagePath + '" class="projgallery" ></a>';
+                                Result += '</div>';
+
+                            } else if (students[j].Link == false) {
+                                Result += '<div class="galler-projgrid">';
+                                //Result += '<a href="/uploads/' + students[j].ImagePath + '" data-thumbnail="/uploads/' + students[j].ImagePath + '" class="html5lightbox" data-group="set0" data-width="600" data-height="400" ><img src="/uploads/video-play-2.gif" class="projgallery" style="margin-right: 2px;" > </a>';
+                                Result += '<a href="javascript:void(0)" onclick="ShowUserLikeAndCommentsOnVideos(' + students[j].id + ' ,' + model.id + ',' + model.userid + ')" class="fancybox" data-thumbnail="/uploads/' + students[j].ImagePath + '" data-width="600" data-height="400" ><img src="/uploads/video-play-2.gif" class="projgallery" ></a>';
+                                Result += '</div>';
+
+                            } else {
+                                Result += '<div class="galler-projgrid">';
+
+                                Result += '<a href="javascript:void(0)" onclick="ShowUserLikeAndCommentsOnVideos(' + students[j].id + ' ,' + model.id + ',' + model.userid + ')" class="fancybox" data-thumbnail="' + students[j].ImagePath + '" data-width="600" data-height="400" ><img src="/uploads/video-play-2.gif" class="projgallery" ></a>';
+
+
+
+                                Result += '</div>';
+                            }
+                        } else if (students.length == 2) {
+                            Result += '<div class="galler-projgrid">';
+                            for (var k = 0; k < 2; k++) {
+                                if (k == 0) {
+                                    if ((students[k].ImagePath.toString().indexOf(".png") > -1) || (students[k].ImagePath.toString().indexOf('.bmp') > -1) || (students[k].ImagePath.toString().indexOf('.jpg') > -1) || (students[k].ImagePath.toString().indexOf('.jpeg') > -1)) {
+                                        Result += '<a href="javascript:void(0)" onclick="ShowUserLikeAndComments(' + students[k].id + ' ,' + model.id + ',' + model.userid + ')" class="fancybox" data-group="set0" data-width="600" data-height="400" ><img src="/uploads/' + students[k].ImagePath + '" class="projgallery" ></a>';
+
+                                    }
+                                    else if (students[k].Link == false) {
+
+                                        Result += '<a href="javascript:void(0)" onclick="ShowUserLikeAndCommentsOnVideos(' + students[k].id + ' ,' + model.id + ',' + model.userid + ')" class="fancybox" data-thumbnail="/uploads/' + students[k].ImagePath + '" data-width="600" data-height="400" ><img src="/uploads/video-play-2.gif" class="projgallery" ></a>';
+
+                                    }
+                                    else {
+
+                                        Result += '<a href="javascript:void(0)" onclick="ShowUserLikeAndCommentsOnVideos(' + students[k].id + ' ,' + model.id + ',' + model.userid + ')" class="fancybox" data-thumbnail="' + students[k].ImagePath + '" data-width="600" data-height="400" ><img src="/uploads/video-play-2.gif" class="projgallery" ></a>';
+
+
+                                    }
+                                }
+                                else {
+                                    if ((students[k].ImagePath.toString().indexOf(".png") > -1) || (students[k].ImagePath.toString().indexOf('.bmp') > -1) || (students[k].ImagePath.toString().indexOf('.jpg') > -1) || (students[k].ImagePath.toString().indexOf('.jpeg') > -1)) {
+                                        Result += '<a href="javascript:void(0)" onclick="ShowUserLikeAndComments(' + students[k].id + ' ,' + model.id + ',' + model.userid + ')" class="fancybox" data-group="set0" data-width="600" data-height="400" ><img src="/uploads/' + students[k].ImagePath + '" class="projgallery" ></a>';
+
+                                    }
+                                    else if (students[k].Link == false) {
+
+                                        Result += '<a href="javascript:void(0)" onclick="ShowUserLikeAndCommentsOnVideos(' + students[k].id + ' ,' + model.id + ',' + model.userid + ')" class="fancybox" data-thumbnail="/uploads/' + students[k].ImagePath + '" data-width="600" data-height="400" ><img src="/uploads/video-play-2.gif" class="projgallery" ></a>';
+
+                                    }
+                                    else {
+
+                                        Result += '<a href="javascript:void(0)" onclick="ShowUserLikeAndCommentsOnVideos(' + students[k].id + ' ,' + model.id + ',' + model.userid + ')" class="fancybox" data-thumbnail="' + students[k].ImagePath + '" data-width="600" data-height="400" ><img src="/uploads/video-play-2.gif" class="projgallery" ></a>';
+
+                                    }
+                                }
+                            }
+                            Result += '</div>';
+                        }
+                        else if (students.length > 2) {
+
+                            Result += '<div class="galler-projgrid">';
+                            for (var l = 0; l < students.length; l++) {
+                                if (l == 0) {
+                                    if ((students[l].ImagePath.toString().indexOf(".png") > -1) || (students[l].ImagePath.toString().indexOf('.bmp') > -1) || (students[l].ImagePath.toString().indexOf('.jpg') > -1) || (students[l].ImagePath.toString().indexOf('.jpeg') > -1)) {
+
+                                        Result += '<a href="javascript:void(0)" onclick="ShowUserLikeAndComments(' + students[l].id + ' ,' + model.id + ',' + model.userid + ')" class="fancybox" data-group="set0" data-width="600" data-height="400" ><img src="/uploads/' + students[l].ImagePath + '" class="projgallery" ></a>';
+
+                                    }
+                                    else if (students[l].Link == false) {
+                                        Result += '<a href="javascript:void(0)" onclick="ShowUserLikeAndCommentsOnVideos(' + students[l].id + ' ,' + model.id + ',' + model.userid + ')" class="fancybox" data-thumbnail="/uploads/' + students[l].ImagePath + '" data-width="600" data-height="400" ><img src="/uploads/video-play-2.gif" class="projgallery" ></a>';
+
+                                    }
+                                    else {
+                                        Result += '<a href="javascript:void(0)" onclick="ShowUserLikeAndCommentsOnVideos(' + students[l].id + ' ,' + model.id + ',' + model.userid + ')" class="fancybox" data-thumbnail="' + students[l].ImagePath + '" data-width="600" data-height="400" ><img src="/uploads/video-play-2.gif" class="projgallery" ></a>';
+
+                                    }
+                                }
+                                else if (l == 1) {
+                                    if ((students[l].ImagePath.toString().indexOf(".png") > -1) || (students[l].ImagePath.toString().indexOf('.bmp') > -1) || (students[l].ImagePath.toString().indexOf('.jpg') > -1) || (students[l].ImagePath.toString().indexOf('.jpeg') > -1)) {
+                                        Result += '<a href="javascript:void(0)" onclick="ShowUserLikeAndComments(' + students[l].id + ' ,' + model.id + ',' + model.userid + ')" class="fancybox" data-group="set0" data-width="600" data-height="400" ><img src="/uploads/' + students[l].ImagePath + '" class="projgallery" ></a>';
+
+                                    }
+                                    else if (students[l].Link == false) {
+                                        Result += '<a href="javascript:void(0)" onclick="ShowUserLikeAndCommentsOnVideos(' + students[l].id + ' ,' + model.id + ',' + model.userid + ')" class="fancybox" data-thumbnail="/uploads/' + students[l].ImagePath + '" data-width="600" data-height="400" ><img src="/uploads/video-play-2.gif" class="projgallery" ></a>';
+
+
+                                    }
+                                    else {
+
+                                        Result += '<a href="javascript:void(0)" onclick="ShowUserLikeAndCommentsOnVideos(' + students[l].id + ' ,' + model.id + ',' + model.userid + ')" class="fancybox" data-thumbnail="' + students[l].ImagePath + '" data-width="600" data-height="400" ><img src="/uploads/video-play-2.gif" class="projgallery" ></a>';
+
+                                    }
+                                    Result += '</div>';
+                                }
+                                else {
+                                    if (l % 2 == 0) {
+                                        if ((students[l].ImagePath.toString().indexOf(".png") > -1) || (students[l].ImagePath.toString().indexOf('.bmp') > -1) || (students[l].ImagePath.toString().indexOf('.jpg') > -1) || (students[l].ImagePath.toString().indexOf('.jpeg') > -1)) {
+
+                                            Result += '<a href="javascript:void(0)" onclick="ShowUserLikeAndComments(' + students[l].id + ' ,' + model.id + ',' + model.userid + ')" class="fancybox" data-group="set0" data-width="600" data-height="400" ><img src="/uploads/' + students[l].ImagePath + '" class="projgallery" ></a>';
+
+                                        } else if (students[l].Link == false) {
+                                            Result += '<div class="galler-projgrid"><a href="javascript:void(0)" onclick="ShowUserLikeAndCommentsOnVideos(' + students[j].id + ' ,' + model.id + ',' + model.userid + ')" class="fancybox" data-thumbnail="/uploads/' + students[j].ImagePath + '" data-width="600" data-height="400" ><img src="/uploads/video-play-2.gif" class="projgallery" ></a>';
+                                        } else {
+                                            Result += '<div class="galler-projgrid"><a href="javascript:void(0)" onclick="ShowUserLikeAndCommentsOnVideos(' + students[l].id + ' ,' + model.id + ',' + model.userid + ')" class="fancybox" data-thumbnail="/uploads/' + students[l].ImagePath + '" data-width="600" data-height="400" ><img src="/uploads/video-play-2.gif" class="projgallery" ></a>';
+                                        }
+                                    } else {
+                                        if ((students[l].ImagePath.toString().indexOf(".png") > -1) || (students[l].ImagePath.toString().indexOf('.bmp') > -1) || (students[l].ImagePath.toString().indexOf('.jpg') > -1) || (students[l].ImagePath.toString().indexOf('.jpeg') > -1)) {
+                                            Result += '<a href="javascript:void(0)" onclick="ShowUserLikeAndComments(' + students[l].id + ' ,' + model.id + ',' + model.userid + ')" class="fancybox" data-group="set0" data-width="600" data-height="400" ><img src="/uploads/' + students[l].ImagePath + '" class="projgallery" ></a>';
+
+                                        } else if (students[l].Link == false) {
+                                            Result += '<a href="javascript:void(0)" onclick="ShowUserLikeAndCommentsOnVideos(' + students[l].id + ' ,' + model.id + ',' + model.userid + ')" class="fancybox" data-thumbnail="/uploads/' + students[l].ImagePath + '" data-width="600" data-height="400" ><img src="/uploads/video-play-2.gif" class="projgallery" ></a>';
+
+                                        } else {
+
+                                            Result += '<a href="javascript:void(0)" onclick="ShowUserLikeAndCommentsOnVideos(' + students[l].id + ' ,' + model.id + ',' + model.userid + ')" class="fancybox" data-thumbnail="' + students[l].ImagePath + '" data-width="600" data-height="400" ><img src="/uploads/video-play-2.gif" class="projgallery" ></a>';
+
+                                        }
+                                        Result += '</div>';
+                                    }
+                                }
+                            }
+                        }
+
+                        if (students.length > 2) {
+                            if (students.length % 2 == 1) {
+                                Result += '</div>';
+                            }
+                            Result += '<div class="bx-controls-direction"><div class="bx-prev">Prev</div><div class="bx-next">Next</div></div>';
+                        }
+
+                        if (students.length == 0) {
+
+                            Result += '<div class="galler-projgrid activeclass">';
+                            Result += '<img src="/Content/WorldRef/images/no-image.png" class="projgallery" style="margin-right: 2px;">';
+                            Result += '<img src="/Content/WorldRef/images/no-image.png" class="projgallery noMargin_right">';
+                            Result += '</div>';
+                        }
+                        Result += '<div class="proj-description responsiveQ">  <div class="title-hydro"> <div class="search-info"><div class="logomain-box">';
+                        Result += '<img src="/uploads/' + model.CompanyLogo + '" class="onHover_img"></div>';
+                        Result += '<div class="prj-decr">';
+                        Result += '<span class="projectuser-text">Reference Name </span>:  ' + model.ProjectName + ' <br> ';
+                        Result += ' <span class="projectuser-text">By </span>: ' + model.OrganizationName + '  <br> ';
+                        Result += ' <span class="projectuser-text">For </span>:  ' + model.CustomerName + ' <br> ';
+                        Result += ' <span class="projectuser-text">For Industry</span>:  ' + model.CustomerIndustryType + '  <br>';
+                        Result += '<span class="projectuser-text">Contribution </span>:  ' + model.Type + ' <br> ';
+                        Result += '<span class="projectuser-text">Country of Execution </span>:  ' + model.Country + ' <br> ';
+                        Result += '<span class="projectuser-text">Status </span>: ' + model.Status + '  <br>';
+                        Result += '<span class="projectuser-text">Year of Execution </span>:  ' + model.Year + ' <br> ';
+                        if (model.Description == null) {
+                            model.Description = "";
+                        }
+                        Result += '<span class="projectuser-text">Description </span>:   ' + model.Description;
+                        var strmake = "SetProjectId('" + model.id + "','" + model.UserType + "')";
+                        Result += '</div></div> ';
+
+
+                        Result += '<span class="projectimg-icon Vicon"> <a href="/WorldRef/Projects?ID=' + model.id + '" target="_blank"><img src="/Images/link.png" title="View Link" /></a></div></div></div></div>';
+                        // Result += '</div></div></div></div>';
+                        //Result += '<div class="user_t"><div class="user_innerbox"><span class="projectuser-text" style="margin-top:0px;">Uploaded by</span>  : ' + model.UserType + ' </div></div></div></div></div>';
+                        console.log(cookieUserRole);
+                        if (cookieUserRole == "P") {
+                            Result += '<div class="user_t"><div class="user_innerbox"><a href="javascript:void(0)" onclick="ViewContributionRequest(' + model.id + ',' + model.userid + ')" class="fancybox"<span class="projectuser-text" style="margin-top:0px;">Contributions Requests</span></a></div>';
+                            if (model.ListOfApprovedCredits.length > 0) {
+                                var path = model.ListOfApprovedCredits[a].picUrl == null ? "/uploads/" + model.CompanyLogo : model.ListOfApprovedCredits[a].picUrl;
+
+                                Result += '<div class="creditDes"><h4>Contributors</h4>';
+                                for (var a = 0; a < (model.ListOfApprovedCredits).length; a++) {
+                                    Result += '<div class="image_tn src-img"><img id="" title="' + model.ListOfApprovedCredits[a].firstName + ' ' + model.ListOfApprovedCredits[a].Designation + ' ' + model.ListOfApprovedCredits[a].Industry + '  " src="' + path + '"></div>';
+                                  //  Result += '<div class="image_tn src-img"><img id="" title="' + model.ListOfApprovedCredits[a].firstName + ' ' + model.ListOfApprovedCredits[a].Designation + ' ' + model.ListOfApprovedCredits[a].Industry + '  " src="' + path + '"></div>';
+                                }
+                                Result += '</div>';
+                            }
+                        }
+                        else
+                        {
+                            Result += '<div class="projcnt box2"><div class="proj_resticon"><div> ';
+                            Result += '<span class="projectimg-icon Vicon">    <a href="#inline6" onclick="popEx(' + model.id + ')" class="fancybox" data-fancybox-type="iframe"> <img src="/Content/WorldRef/images/CompanyProfile.png" title="View Company Profile" /> </a></span>';
+                            Result += '<span class="projectimg-icon Vicon" ><a href="javascript:void(0)"  onclick="AddLikeOrDisLike(' + model.id + ',' + model.userid + ')"> <img src="/Content/WorldRef/images/like-20.png" title="Like This"><label title="Likes" class="like-color" id=' + model.id + 'Like onclick="GetProjectLikedUser(' + model.id + ')">' + model.TotalLikes + '</label></a></span> ';
+
+                            Result += '<span class="projectimg-icon Vicon"> <a href="#inline4" class="fancybox" onclick="GetAllCommentsOfProject(' + model.id + ',' + model.userid + ')"><img src="/Content/WorldRef/images/Comment.png" title="Testimonial" /></a> </span>';
+
+                            Result += ' <span class="projectimg-icon Vicon"><a href="#inline5" class="fancybox" onclick="' + strmake + '"><img src="/Content/WorldRef/images/connect.png" title="Connect with the ' + model.UserType + '"> </a> </span>';
+
+                            Result += '<span class="projectimg-icon Vicon"><a href="javascript:void(0)"onclick="AddCredit(' + model.id + ',' + model.userid + ')"><img src="/Content/images/creditm.png" alt="" title="Mark your Contribution" /></a></span>';
+
+                            Result += '<span class="projectimg-icon Vicon GetLocate" ><span style="display:none">' + model.id + '</span><a href="#dvMap" class="fancybox"><img  src="/Content/images/map.png" alt="" title="Project Location" class="GetLocate-' + model.id + '"/></a></span>';
+
+                            Result += '</div></div></div>';
+                        }
+                        Result += '</div></li>';
+
+                        i++;
+                    });
+
+                    Result += '</ul>';
+                    $("#BindModel").html(Result);
+                    $("#loading").hide();
+                    $(".html5lightbox").html5lightbox();
+                    var count = "";
+                    document.getElementById('viewBagResult').innerHTML = "";
+                    count += '<li class="searchmenu " id="countRecord">Total Results Found: ' + i + '</li>';
+                    $("#viewBagResult").html(count);
+                    $('.projectsbysearch').show();
+                    $(".html5lightbox").html5lightbox();
+
+                    var currentIndex = 0,
+                        items = $('.galcontainer .galler-projgrid'),
+                        itemAmt = items.length;
+                    //cycleItems();
+                    $(".project .galcontainer .galler-projgrid:nth-child(1)").addClass('activeclass');
+                    //jquery grid
+                    $('.bx-next').click(function () {
+                        if ($(this).parent().parent().find('.galler-projgrid.activeclass').next().attr("class") == "galler-projgrid") {
+                            $(this).parent().parent().find('.galler-projgrid.activeclass').next().addClass("activeclass");
+                            $(this).parent().parent().find('.galler-projgrid.activeclass').prev().removeClass("activeclass");
+                            //alert($(this).parent().parent().find('.galler-projgrid.active').next().attr("class"));
+                            if ($(this).parent().parent().find('.galler-projgrid.activeclass').next().attr("class") == "bx-controls-direction") {
+                                $(this).parent().find('.bx-next').hide();
+                                $(this).parent().find('.bx-prev').show();
+                            } else {
+                                $(this).parent().find('.bx-next').show();
+                                $(this).parent().find('.bx-prev').show();
+                            }
+                        }
+                    });
+                    $('.bx-prev').click(function () {
+                        $(this).parent().parent().find('.galler-projgrid.activeclass').prev().addClass("activeclass");
+                        $(this).parent().parent().find('.galler-projgrid.activeclass').next().removeClass("activeclass");
+                        if ($(this).parent().parent().find('.galler-projgrid.activeclass').prev().attr("class") == undefined) {
+                            $(this).parent().find('.bx-prev').hide();
+                            $(this).parent().find('.bx-next').show();
+                        } else {
+                            $(this).parent().find('.bx-prev').show();
+                            $(this).parent().find('.bx-next').show();
+                        }
+                    });
+                    $(".box1").hover(function () {
+                        $(this).children().find(".proj_resticon").stop(true, true).fadeIn(2000);
+                    }, function () {
+                        $(this).children().find(".proj_resticon").stop(true, true).fadeOut(500);
+                    });
+
+                    $(document).on("click", ".GetLocate", function () {
+                        var id = $(this).find("span").html();
+                        GetRouteLocation(id);
+                    });
+                },
+                error: function () {
+                  
+                    alert("Failed! Please try again.");
+                    $("#loading").hide();
+                }
+            });
+        }
+
+</script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $('#Password').keypress(function (e) {
+            if (e.keyCode == 13) {
+                Login();
+            }
+        });
+        $('#PasswordRegGU').keypress(function (e) {
+            if (e.keyCode == 13) {
+                CommonUserSignUp();
+            }
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $("#info").click(function () {
+            $(".action-field").toggle();
+        });
+        $(document).click(function(e) {
+            if (e.target.id != 'info' && !$('#info').find(e.target).length) {
+                $(".action-field").hide();
+            }
+        });
+    });
+
+</script>
+<style>
+    .user_innerbox {
+        padding-top: 0px !important;
+    }
+
+    .dvMap {
+        height: 300px;
+        width: 100%;
+    }
+
+    .corner-menu > ul li a {
+        padding-top: 6px;
+    }
+
+    .blurBackground; {
+        opacity: 0.5;
+    }
+
+    #html5-next img {
+        display: none !important;
+    }
+
+    #html5-prev img {
+        display: none !important;
+    }
+
+    .activeclass {
+        display: inline-block !important;
+    }
+
+    .deactive {
+        display: none !important;
+    }
+
+    span.projectimg-icon img {
+        width: 20px;
+        padding: 0px !important;
+        margin: 0 !important;
+    }
+
+    .like-color {
+        color: #fff;
+        background-color: #52CAD4;
+        padding: 0px 5px;
+        border-radius: 4px;
+        vertical-align: 0px;
+        margin-left: -5px;
+        position: absolute;
+        margin-top: -6px;
+    }
+
+    span.projectimg-icon img {
+        opacity: 1;
+    }
+
+        span.projectimg-icon img:hover {
+            opacity: 0.8;
+        }
+
+    span#li_ui_li_gen_1433911356704_0-title-text {
+        display: none !important;
+    }
+
+    .dislike-color {
+        color: red;
+    }
+
+    .user_t {
+        margin-top: 2%;
+        width: 100%;
+        float: left;
+    }
+
+    li.project.one-fourth:hover {
+        box-shadow: none !important;
+    }
+
+    .Vicon {
+    }
+
+    .user_innerbox {
+        padding-top: 0%;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    .slideshow {
+        position: relative; /* necessary to absolutely position the images inside */
+        width: 500px; /* same as the images inside */
+        height: 100px;
+    }
+
+        .slideshow img {
+            position: absolute;
+            display: none;
+        }
+
+            .slideshow img:first-child {
+                display: block; /* overrides the previous style */
+            }
+
+    .profile_part2 {
+        float: left;
+        padding: 0px;
+        width: 50%;
+        margin: 0;
+    }
+
+    ul.pE {
+        padding: 10px;
+        border: 1px solid #E4E4E4;
+        background-color: #fff;
+        float: left;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        color: #404040;
+        font-family: "Open Sans", Arial, sans-serif;
+        font-weight: 600;
+        line-height: 1.5em;
+        margin: 7px 0;
+        text-transform: capitalize;
+        font-size: 16px;
+    }
+
+    .button, button, input[type=button], input[type=reset].pEButton {
+        background: rgb(34, 89, 104);
+        color: white;
+        padding: 4px 14px;
+        font-size: 12px;
+        border: 1px solid rgb(34, 89, 104);
+        transition: all 0.5s ease-in-out;
+        -webkit-transition: all 0.5s ease-in-out;
+        -moz-transition: all 0.5s ease-in-out;
+        -o-transition: all 0.5s ease-in-out;
+        border-radius: 3px;
+        display: inline-block;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .centreAlign {
+        width: 100%;
+        float: left;
+        text-align: center;
+    }
+
+    span.projectimg-icon {
+        margin: 4px !important;
+    }
+
+    .box1 {
+        width: 87%;
+        float: left;
+        background-color: #fff;
+        position: relative;
+        border-top: 1px solid #E8E7E6;
+        box-shadow: 0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);
+    }
+
+    .box2 {
+        width: 12%;
+        float: left;
+        position: absolute;
+        top: 0;
+        right: -35px;
+    }
+
+    .forWidth1 {
+        width: 13%;
+        margin-right: 1%;
+    }
+
+    .forWidth2 {
+        width: 86%;
+    }
+
+    .selected-tab {
+        background: #fff;
+    }
+
+    span.projectimg-icon {
+        display: inline-block;
+        margin: 3px;
+    }
+
+    .src-img > img, .src-img > a > img {
+        width: 100%;
+        height: auto;
+    }
+
+    .proj-description {
+        width: 100%;
+        float: left;
+    }
+
+    .title-hydro {
+        float: left;
+        width: 100%;
+    }
+
+    .creditDes {
+        width: 100%;
+        float: left;
+        padding: 5px;
+        background-color: white;
+        border: 1px solid #ddd;
+        margin-top: 10px;
+        position: relative;
+    }
+
+        .creditDes h4 {
+            margin: 5px 0;
+        }
+
+        .creditDes img {
+            width: 40px;
+            margin-right: 5px;
+        }
+
+    .onHover_img {
+        width: 53px;
+    }
+
+    .logomain-box {
+        float: left;
+        width: 20%;
+        height: inherit;
+        margin-top: 5px;
+    }
+
+    .prj-decr {
+        float: left;
+        padding-left: 2%;
+        width: 80%;
+    }
+
+    .proj_resticon {
+        display: none;
+        padding-left: 9px;
+        margin-top: 106px;
+    }
+
+    .imgcolumnth {
+        width: 39%;
+        float: left;
+        margin-right: 3.6%;
+        margin-top: 11px;
+    }
+
+    .thumb {
+        float: left;
+    }
+
+    .big {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 100%;
+        width: 100%;
+        background-color: #FFFFFF;
+        box-shadow: 0px 0px 4px 3px #EAEAEA;
+        padding: 1%;
+    }
+
+    .proj-description img.onHover_img {
+        transition: all 0.5s ease-in-out;
+    }
+
+    .fullInputWidth {
+        width: 100%;
+        padding: 6px;
+        outline: 0;
+    }
+
+    .rightDropdown {
+        text-align: right;
+        width: 35%;
+        position: absolute;
+        right: 30px;
+        top: 10px;
+    }
+
+    .corner-menu > ul > li:hover ul {
+        margin-left: 0px;
+        margin-top: -4px;
+    }
+
+    .projgallery {
+        width: 49% !important;
+        margin: 0 auto;
+        float: none !important;
+        height: 100px;
+        box-sizing: border-box;
+        border-radius: 4px;
+        border: 1px solid #F4F4F4;
+    }
+
+    .marginX {
+        margin: 5px 7px !important;
+    }
+
+    textarea {
+        width: 234px;
+        height: 23px;
+        line-height: 18px;
+        transition: width 0.25s;
+        resize: none;
+        overflow: hidden;
+        padding: 0 0 0 3px;
+    }
+
+    label.likeGen {
+        display: inline-block;
+        margin-bottom: 8px;
+        padding: 0 0 0 5px;
+    }
+
+    #loading {
+        width: 100%;
+        height: 100%;
+        top: 0px;
+        left: 0px;
+        position: fixed;
+        display: block;
+        opacity: 0.8;
+        background-color: #fff;
+        z-index: 99;
+        text-align: center;
+    }
+
+    #loading-image {
+        position: absolute;
+        top: 40%;
+        left: 50%;
+        z-index: 100;
+    }
+
+    .one-fourth {
+        width: 31% !important;
+        height: 295px !important;
+        background-color: #F4F4F4 !important;
+    }
+
+    .img-cnt {
+        width: 60%;
+        float: left;
+        margin-right: 1%;
+    }
+
+    .welcome-bar {
+        padding: 2px;
+    }
+
+    .action-field {
+        top: 45px;
+        right: 0;
+    }
+
+        .action-field > ul {
+            right: 46px;
+        }
+</style>
+
+
+<div id="main">
+    <div id="loading" style="display: none;">
+        <img id="loading-image" src="/Content/WorldRef/images/ringUploader.gif" alt="Loading..." />
+    </div>
+    <div id="searchrow" class="navbar">
+        <a href="/WorldRef/WorldrefIndex" title="i4i Home" id="menu_logo"></a>
+        <div class="wrapper_div_form_search">
+            <div class="div_form_search">
+                <form action="#" method="post">
+                    <div class="search_field">
+                        <div class="typeahead-widget" id="typeahead_widget">
+                            <span class="white" id="typeahead_white"></span>
+                            <span class="grey" id="typeahead_grey"></span>
+                        </div>
+                        @Html.TextBox("SearchValue", (string)ViewBag.SearchString, new { @class = "search_field" })
+
+                        <div id="lastSearch">
+
+                            <div id="popmenuLastSearch"></div>
+                        </div>
+                    </div>
+                    <button type="button" id="search_btn" onclick="CallCountrySearchHome();"></button>
+                </form>
+            </div>
+        </div>
+        <div id="ModelpopUp" style="display: none" title="Thank You">
+            <p id="PModelpopUp" style="padding: 20px; font-size: 16px;">
+                Thank you for Signing Up with us.
+                <br />
+                The Username and Password has been sent to your email address.
+            </p>
+        </div>
+        <div id="popProfile" style="display: none" title="Company Profile">
+        </div>
+        <div id="LikedUser" style="display: none; width: 300px;">
+        </div>
+        @if (Request.Cookies["UserId"] != null)
+        {
+            <div id="top-bar" style="padding-top: 2px; width: 100%">
+                <div class="welcome-bar" id="info">
+                    <span>
+                        @if (Request.Cookies["UserRole"].Value == "P" || Request.Cookies["UserRole"].Value == "L" || Request.Cookies["UserRole"].Value == "C")
+                        {
+                            <img src="../uploads/@Request.Cookies["genuserphoto"].Value">
+                            @Request.Cookies["UserName"].Value
+                        }
+                        else
+                        {
+                            <span style="line-height: 30px;">
+                                <img src="../uploads/af059b9b-2019-462e-bb35-639091c3fc02.jpg">
+                                @Request.Cookies["UserName"].Value
+                            </span>
+                        }
+                    </span><i class="fa fa-caret-down"></i>
+                </div>
+            </div>
+            <div class="action-field" style="display: none;">
+                <ul style="">
+                    @if (Request.Cookies["UserRole"].Value == "P" || Request.Cookies["UserRole"].Value == "L" || Request.Cookies["UserRole"].Value == "C")
+                    {
+                        <li><a href=""><i class="fa fa-user"></i>My Profile</a></li>
+                        <li><a href=""><i class="fa fa-globe"></i>My Refworld</a></li>
+                        <li><a href=""><i class="fa fa-bolt"></i>My Wref Watts</a></li>
+                        <li><a href=""><i class="fa fa-level-down"></i>Refer / Add</a></li>
+                        <li><a href=""><i class="fa fa-cogs"></i>Settings</a></li>
+                        <li><a href="/WorldRef/ChangeUserNameAndPassword"><i class="fa fa-lock"></i>Change Username / Password</a></li>
+                        <li><a href="/WorldRef/SignOut"><i class="fa fa-power-off"></i>Sign Out</a></li>
+                    }
+                    else
+                    {
+                        <li><a href=""><i class="fa fa-user"></i>My Profile</a></li>
+                        <li><a href=""><i class="fa fa-globe"></i>My Refworld</a></li>
+                        <li><a href=""><i class="fa fa-bolt"></i>My Wref Watts</a></li>
+                        <li><a href=""><i class="fa fa-level-down"></i>Refer / Add</a></li>
+                        <li><a href=""><i class="fa fa-cogs"></i>Settings</a></li>
+                        <li><a href="/WorldRef/ChangeUserNameAndPassword"><i class="fa fa-lock"></i>Change Username / Password</a></li>
+                        <li><a href="/WorldRef/SignOut"><i class="fa fa-power-off"></i>Sign Out</a></li>
+                    }
+                </ul>
+            </div>
+        }
+        else if (Request.Cookies["CUserId"] != null)
+        {
+            <div id="top-bar" style="padding-top: 2px; width: 100%">
+                <div class="welcome-bar">
+                    <span>
+                        <img src="../uploads/af059b9b-2019-462e-bb35-639091c3fc02.jpg">
+                        @Request.Cookies["CUserName"].Value
+                    </span><i class="fa fa-caret-down"></i>
+                </div>
+                }
+            </div>
+            <div class="action-field" style="display: none;">
+                <ul style="">
+                    <li><a href=""><i class="fa fa-user"></i>My Profile</a></li>
+                    <li><a href=""><i class="fa fa-globe"></i>My Refworld</a></li>
+                    <li><a href=""><i class="fa fa-bolt"></i>My Wref Watts</a></li>
+                    <li><a href=""><i class="fa fa-level-down"></i>Refer / Add</a></li>
+                    <li><a href=""><i class="fa fa-cogs"></i>Settings</a></li>
+                    <li><a href="/WorldRef/SignOut"><i class="fa fa-power-off"></i>Sign Out</a></li>
+                </ul>
+            </div>
+        }
+        else
+        {
+            <div class="rightDropdown" style="top: 9px;">
+                <div class="corner-menu" style="float: right;">
+                    <ul id="drop-nav" style="float: right; margin-right: 20px;">
+                        <li><a href="/WorldRef/WorldrefIndexImageSearch">Images</a></li>
+                        <li><a href="/WorldRef/WorldrefIndexVideosSearch">Videos</a></li>
+                        <li style=" margin-right: 14px; margin-left: 7px;">
+                            <input type="submit" value="Sign in" class="lgButton signin" onclick="return MovetoLoginTab();" style="width:74px;">
+                        </li>
+                        <li>
+                            <input type="submit" value="Sign up" class="lgButton signin" onclick="return MovetoSignUpTab();" style="width:74px;">
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        }
+
+    </div>
+    <div id="mygallery1" data-skin="gallery" data-width="480" data-height="270" style="display: none;"></div>
+    <div id="searchmenu">
+
+        <div class="found">&nbsp;</div>
+
+        <ul id="viewBagResult">
+            <li class="searchmenu " id="countRecord">Total Results Found: @ViewBag.count</li>
+        </ul>
+    </div>
+    
+    <div class="wrapper">
+        <div id="navfiltericon">
+            <div id="resultfilter">
+                <div class="xxx">
+                    <div class="filterheadline filter-border">
+                        <span class="Cnt-title">Search by Country </span>
+                        <div id="country" class="filter-country">
+                        </div>
+                    </div>
+                    <div class="filterheadline filter-border">
+                        <span class="Cnt-title">Search by Industry </span>
+                        <div id="industry" class="filter-country">
+                        </div>
+                    </div>
+                    <br />
+                </div>
+            </div>
+        </div>
+        <div id="resultlist">
+            <div id="searchTpp" style="font-size: 120%; display: none;"></div>
+            <div id="ShowImageDetails" style="display:none;overflow-x:hidden; float:left;width:800px;"></div>
+            <div id="BindModel">
+
+            </div>
+            <div id="ApproveContri">
+
+            </div>
+            <div id="inline2" style="display: none;">
+
+                <div class="profile_part2" style="width: 100%;">
+
+                    @Html.Hidden("projectId")
+                    @Html.Hidden("LikesOrDislikes")
+                    <ul class="pE">
+                        <h3>Enter the details to engineer the best for you.</h3>
+                        <br />
+                        <li class="pE">
+                            <label class="lp">
+                                <input class="text-box single-line" id="Organization" name="OrganizationName" type="text" placeholder="Organization Name">
+                            </label>
+                            <span class="field-validation-valid" data-valmsg-for="OrganizationName" data-valmsg-replace="true"></span>
+                        </li>
+                        <li class="pE">
+                            <label class="lp">
+                                <input class="text-box single-line" id="CPerson" name="CPerson" type="text" placeholder="Contact Person">
+                            </label>
+                            <span class="field-validation-valid" data-valmsg-for="CPerson" data-valmsg-replace="true"></span>
+                        </li>
+                        <li class="pE">
+                            <label class="lp">
+                                <input class="text-box single-line" id="Contact" name="CustomerName" type="text" placeholder="Contact Number">
+                            </label>
+                            <span class="field-validation-valid" data-valmsg-for="CustomerName" data-valmsg-replace="true"></span>
+                        </li>
+                        <li class="pE">
+                            <label class="lp">
+                                <input class="text-box single-line" id="email" name="ProjectName" type="text" placeholder="Email Address">
+                            </label>
+                            <span class="field-validation-valid" data-valmsg-for="ProjectName" data-valmsg-replace="true"></span>
+                        </li>
+                        <li class="pE">
+                            <label class="lp">
+                                <textarea rows="4" cols="35" class="text-box single-line" id="Query" name="Query" placeholder="Enter query"></textarea>
+                            </label>
+                            <span class="field-validation-valid" data-valmsg-for="Query" data-valmsg-replace="true"></span>
+                        </li>
+                        <li>
+                            <span class="pEdit manage-search"></span>
+                            <label class="lp">
+                                <button class="search-btn" onclick="AskCustomer()">SEND</button>
+                            </label>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div id="inline6" style="display: none;"></div>
+
+            <div id="inline5" style="display: none; width: 550px;">
+
+                <div class="profile_part2" style="width: 50%; float: left;">
+                    <h4 class="fW" style="margin: 7px 0;">Connect With The Contractor</h4>
+                    <ul class="pE">
+
+                        <li class="pE">
+                            <label class="lp">
+                                <input class="text-box fullInputWidth" id="Organizationi4i" name="OrganizationName" type="text" placeholder="Organization Name">
+                            </label>
+                            <span class="field-validation-valid" data-valmsg-for="OrganizationName" data-valmsg-replace="true"></span>
+                        </li>
+
+                        <li class="pE">
+                            <label class="lp">
+                                <input class="text-box fullInputWidth" id="Cpersoni4i" name="Cpersoni4i" type="text" placeholder="Name">
+                            </label>
+                            <span class="field-validation-valid" data-valmsg-for="Cperson" data-valmsg-replace="true"></span>
+
+                        </li>
+                        <li class="pE">
+                            <label class="lp">
+                                <input class="text-box fullInputWidth" id="Contacti4i" name="CustomerName" type="text" placeholder="Contact Number">
+                            </label>
+                            <span class="field-validation-valid" data-valmsg-for="CustomerName" data-valmsg-replace="true"></span>
+
+                        </li>
+                        <li class="pE">
+
+                            <label class="lp">
+                                <input class="text-box fullInputWidth" id="emaili4i" name="ProjectName" type="text" placeholder="Email Address">
+                            </label>
+                            <span class="field-validation-valid" data-valmsg-for="ProjectName" data-valmsg-replace="true"></span>
+                        </li>
+
+
+                        <li class="pE">
+                            <label class="lp">
+                                <input class="text-box fullInputWidth" id="Designationi4i" name="Designationi4i" type="text" placeholder="Designation">
+                            </label>
+                            @*<span class="field-validation-valid" data-valmsg-for="CustomerName" data-valmsg-replace="true"></span>*@
+
+                        </li>
+                        <li>
+                            <span class="pEdit manage-search"></span>
+                            <label class="lp">
+                                <button class="search-btn" onclick="AskI4I()">SEND</button>
+                            </label>
+                        </li>
+                    </ul>
+                </div>
+                <div class="connect-popup" style="margin-top: 40px;">
+                    <ul>
+                        <li>
+                            <a href="/Training/TrainingHome" target="_blank">
+                                <img src="~/Content/NewDesign/images/tr.jpg" />
+                                <span>I4iTraining</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/I4IKnowledge/QuestionsIndustry" target="_blank">
+                                <img src="~/Content/NewDesign/images/kn.jpg" />
+                                <span>i4iKnowledge</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="http://www.i4i.co.in/collaborate-us/" target="_blank">
+                                <img src="~/Content/NewDesign/images/with.jpg" />
+                                <span>Collaborate with us</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="http://www.i4i.co.in/i4i-associate/" target="_blank">
+                                <img src="~/Content/NewDesign/images/be.jpg" />
+                                <span>Be an i4iAssociate</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div id="creditm" style="display: none; padding: 20px;">
+
+                <h3>For getting credit you have to sign in with Linkdin</h3>
+                <br />
+                <script type="in/Login">
+                </script>
+            </div>
+
+            <div id="credit111" style="display: none; padding: 20px;">
+
+                <h3>For getting credit you have to sign in with Linkdin</h3>
+                <br />
+                <script type="in/Login">
+                </script>
+            </div>
+            <div id="inline4" style="display: none; width: 500px;">
+
+                <div class="profile_part2" style="width: 100%;">
+                    <h4 class='fW' style='margin: 0 0 7px 0;'>Testimonial</h4>
+                    <ul class="pE heigt" id="CommentList"></ul>
+                </div>
+            </div>
+        </div>
+        <div id="abc1" style="display: none; width: 300px !important; height: 300px !important;">
+            <div id="dvMap" style="width: 300px !important; height: 300px !important;"></div>
+        </div>
+        <span id="noresultsadvice" style="margin-left: 0px; display: none;">
+            No results.
+            Try broadening your searchterm.
+
+        </span>
+        <div id="PartialView">
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+

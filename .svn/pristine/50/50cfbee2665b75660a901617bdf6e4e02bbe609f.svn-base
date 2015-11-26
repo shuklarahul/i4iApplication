@@ -1,0 +1,397 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <link href="~/Content/css/font-awesome-4.1.0/css/font-awesome.css" rel="stylesheet" />
+    <link rel="shortcut icon" type="image/x-icon" href="~/Content/WorldRef/images/favicon.png">
+    <link href="~/Content/css/css/css.css" rel="stylesheet" />
+  
+    <script type="text/javascript" src="http://platform.linkedin.com/in.js">
+        api_key: 75ngf8ppx3c4pk
+        authorize: true
+        onLoad: onLinkedInLoad
+        scope: r_basicprofile r_emailaddress
+    </script>
+    <script type="text/javascript">
+        function onLinkedInLoad() {
+
+            try {
+            } catch (err) {
+                console.log(err);
+            }
+            var lkInAuth = IN.User.isAuthorized();
+            if (lkInAuth == false) {
+                IN.Event.on(IN, "auth", onLinkedInAuth);
+            }
+
+
+        }
+        function onLinkedInAuth() {
+            IN.API.Profile("me")
+            .fields("firstName", "lastName", "industry", "location:(name)", "pictureUrl", "headline", "summary", "num-connections", "publicProfileUrl", "distance", "positions", "email-address", "educations", "date-of-birth")
+            .result(displayProfiles)
+            .error(displayProfilesErrors);
+        }
+        function displayProfiles(profiles) {
+            member = profiles.values[0];
+            var txtFirstName = member.firstName;
+            var txtLastName = member.lastName;
+            var txtEmail = member.emailAddress;
+            var txtindustry = member.industry;
+            var picture = member.pictureUrl;
+            $.ajax({
+                url: "/WorldRef/SignInwithLinkedin",
+                type: 'POST',
+                data: JSON.stringify({ "firstName": txtFirstName, "email": txtEmail, "lastName": txtLastName, "Industry": txtindustry, "picUrl": picture }),
+                contentType: "application/json; charset=utf-8",
+                success: function (response) {
+                    if (response == "Success") {
+                        $.fancybox.close();
+                        window.location.href = '/WorldRef/WorldrefIndex';
+
+                    }
+                    else {
+                        $.fancybox.close();
+                        window.location.href = '/WorldRef/WorldrefIndex';
+                    }
+                },
+                error: function (response) {
+                    alert(response.status + ' ' + response.statusText);
+                }
+            });
+        }
+        function displayProfilesErrors(error) {
+            profilesDiv = document.getElementById("profiles");
+            profilesDiv.innerHTML = error.message;
+            console.log(error);
+        }
+    </script>
+    <script type="text/javascript">
+        function Login() {
+            if (FormValidation() == true) {
+                var uName = document.getElementById("UserName").value;
+                var uPassword = document.getElementById("Password").value;
+
+                $.ajax({
+                    url: "/WorldRef/LoginIndex",
+                    type: 'POST',
+                    async: false,
+                    data: JSON.stringify({ "UserName": uName, "Password": uPassword }),
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (response) {
+                        // alert(response);
+                        if (response == "wi") {
+                            window.location.href = '/WorldRef/WorldrefIndex';
+                        }
+                        else if (response == "ue") {
+                            window.location.href = '/uploader/UploadExcel';
+                        }
+                        else if (response == "re") {
+                            window.location.href = '/WorldRef/WorldrefIndex';
+                        }
+                        else if (response == "nr") {
+                            alert("Invalid username/password.");
+                            // document.getElementById("UserName").value = "";
+                            document.getElementById("Password").value = "";
+                        }
+                        else {
+
+                        }
+                    },
+
+                    error: function () {
+                        alert("Failed! Please try again.");
+                    }
+                });
+            }
+            else { return false; }
+        }
+        function FormValidation() {
+            var y;
+            y = document.getElementById("UserName").value;
+            if (y == null || y == "") {
+                alert("Please enter User Name");
+                document.getElementById("UserName").focus();
+                return false;
+            }
+            var y;
+            y = document.getElementById("Password").value;
+            if (y == null || y == "") {
+                alert("Please enter Password");
+                document.getElementById("Password").focus();
+                return false;
+            }
+            return true;
+        }
+    </script>
+
+    <link href="~/Content/css/css/login.css" rel="stylesheet" />
+    <link href="~/Content/css/css/form-css.css" rel="stylesheet" />
+    <link href="~/Content/WorldRef/WorldRef/css/StyleSheet1.css" rel="stylesheet" />
+    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600,700&#038;subset=latin,latin-ext' type='text/css' media='all' />
+    <link rel="stylesheet" media="screen and (max-width: 940px)" href="~/Content/WorldRef/WorldRefSearch/css/search.css" />
+    <link href="~/Content/scrollbar/style.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome-4.1.0/css/font-awesome.css" rel="stylesheet" />
+    <link rel="shortcut icon" type="image/x-icon" href="~/Content/WorldRef/images/favicon.png">
+    @*<link href="~/Content/WorldRef/WorldRefSearch/css/search.css" rel="stylesheet" />*@
+    <script src="~/Content/js/SearchFunction.js"></script>
+    <script src="~/Content/js/jquery-1.10.1.min.js"></script>
+    <script src="~/Content/js/CheckCookie.js"></script>
+    <script src="~/Content/WorldRef/js/jquery-ui.js"></script>
+    <script src="~/Content/WorldRef/worldRefInner/js/html5lightbox.js"></script>
+    <script src="~/Content/js/JavaScript1.js"></script>
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places"></script>    
+</head>
+<body style="height: 100%; overflow: hidden;background-color:#fff;">
+    <section class="stiky">    
+        <div class="mainWrapper">
+            <header>
+                <div id="ModelpopUp" style="display: none" title="Thank You">
+                    <p id="PModelpopUp">
+                        <h4 class="thnku">Thank you for Signing Up with us.The Username and Password has been sent to your email address.</h4>
+                    </p>
+                </div>
+                @if (Request.Cookies["UserId"] != null)
+                {
+                    <div class="Newheader">
+
+                    <div class="NewHbottom">
+                        <div class="NewHwrapper">
+                            <div class="Newlogo">
+                                <img src="/Content/images/worldref-logo1.png">
+                            </div>
+                            <div class="NewNav">
+                                <nav class="NewnavClass">
+                                    <ul>
+                                        <li><a class="highlight_T" href="/WorldRef/uploadexcel">UPLOAD REFERENCE</a></li>
+                                        <li><a href="/WorldRef/listexcelprojectsuser">EXPERIENCE</a></li>
+                                        <li><a href="/PromotionLibrary/promotionlibraryform" target="_blank">EXPLORE</a></li>
+                                    </ul>
+                                </nav>
+                            </div>
+                             <div class="NewsearchBox">
+                                <div class="div_form_search">
+                                    <form action="#" method="post" style="margin: 0;">
+                                        <div class="search_field">
+                                            <div class="typeahead-widget" id="typeahead_widget">
+                                                <span class="white" id="typeahead_white"></span>
+                                                <span class="grey" id="typeahead_grey"></span>
+                                            </div>
+                                            @Html.TextBox("SearchValue", (string)ViewBag.SearchString, new { @class = "search_field" })
+
+                                            <div id="lastSearch">
+
+                                                <div id="popmenuLastSearch"></div>
+                                            </div>
+                                        </div>
+                                        <div class="Newbtn_div">
+                                        <button type="button" class="search-btns" id="search_btn" onclick="CallCountrySearchHome();"></button>
+                                         <button type="button" class="search-btns" id="search_btn1" onclick=""></button>
+                                         <button type="button" class="search-btns" id="search_btn2" onclick=""></button>
+                                            </div>
+                                    </form>
+                                </div>
+                            </div>
+                             <div class="NewFieldBox">
+                                <div class="NewDrop clearfix2">
+                                     <span>
+                                        <a href="#" id="info" style="width: 35px;">
+                                            <img src="~/Content/images/user.png" />
+                                            <i class="fa fa-caret-down"></i></a>
+                                    </span>
+                                   
+                                    <span>
+                                        <a href="#">
+                                            <img src="~/Content/images/notify.png" />
+                                            <span>10</span>
+                                        </a>
+                                    </span>
+                                     <span>
+                                        <a href="#">
+                                            <img src="~/Content/images/news.png" />
+                                            <span>2</span>
+                                        </a>
+                                    </span>
+                                   
+                                </div>
+                                <div class="action-field" style="display:none;">
+                                    <ul style="">
+                                        <li><a href="#"><i class="fa fa-user"></i>My Profile</a></li>
+                                        <li><a href="#"><i class="fa fa-globe"></i>My Refworld</a></li>
+                                        <li><a href="#"><i class="fa fa-bolt"></i>My Wref Watts</a></li>
+                                        <li><a href="#"><i class="fa fa-level-down"></i>Refer / Add</a></li>
+                                        <li><a href="#"><i class="fa fa-cogs"></i>Settings</a></li>
+                                        <li><a href="/WorldRef/ChangeUserNameAndPassword"><i class="fa fa-lock"></i>Change Username / Password</a></li>
+                                        <li><a href="/WorldRef/SignOut"><i class="fa fa-power-off"></i>Sign Out</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                }
+                else if (Request.Cookies["CUserId"] != null)
+                {
+                    <div class="Newheader">
+
+                    <div class="NewHbottom">
+                        <div class="NewHwrapper">
+                            <div class="Newlogo">
+                                <img src="/Content/images/worldref-logo1.png">
+                            </div>
+                            <div class="NewNav">
+                                <nav class="NewnavClass">
+                                    <ul>
+                                        <li><a class="highlight_T" href="/WorldRef/uploadexcel">UPLOAD REFERENCE</a></li>
+                                        <li><a href="/WorldRef/listexcelprojectsuser">EXPERIENCE</a></li>
+                                        <li><a href="/PromotionLibrary/promotionlibraryform" target="_blank">EXPLORE</a></li>
+                                    </ul>
+                                </nav>
+                            </div>
+                             <div class="NewsearchBox">
+                                <div class="div_form_search">
+                                    <form action="#" method="post" style="margin: 0;">
+                                        <div class="search_field">
+                                            <div class="typeahead-widget" id="typeahead_widget">
+                                                <span class="white" id="typeahead_white"></span>
+                                                <span class="grey" id="typeahead_grey"></span>
+                                            </div>
+                                            @Html.TextBox("SearchValue", (string)ViewBag.SearchString, new { @class = "search_field" })
+
+                                            <div id="lastSearch">
+
+                                                <div id="popmenuLastSearch"></div>
+                                            </div>
+                                        </div>
+                                        <div class="Newbtn_div">
+                                        <button type="button" class="search-btns" id="search_btn" onclick="CallCountrySearchHome();"></button>
+                                         <button type="button" class="search-btns" id="search_btn1" onclick=""></button>
+                                         <button type="button" class="search-btns" id="search_btn2" onclick=""></button>
+                                            </div>
+                                    </form>
+                                </div>
+                            </div>
+                             <div class="NewFieldBox">
+                                <div class="NewDrop clearfix2">
+                                     <span>
+                                        <a href="#" id="info" style="width: 35px;">
+                                            <img src="~/Content/images/user.png" />
+                                            <i class="fa fa-caret-down"></i></a>
+                                    </span>
+                                   
+                                    <span>
+                                        <a href="#">
+                                            <img src="~/Content/images/notify.png" />
+                                            <span>10</span>
+                                        </a>
+                                    </span>
+                                     <span>
+                                        <a href="#">
+                                            <img src="~/Content/WorldRef/images/news.png" />
+                                            <span>2</span>
+                                        </a>
+                                    </span>
+                                   
+                                </div>
+                                <div class="action-field" style="display:none;">
+                                    <ul style="">
+                                        <li><a href="#"><i class="fa fa-user"></i>My Profile</a></li>
+                                        <li><a href="#"><i class="fa fa-globe"></i>My Refworld</a></li>
+                                        <li><a href="#"><i class="fa fa-bolt"></i>My Wref Watts</a></li>
+                                        <li><a href="#"><i class="fa fa-level-down"></i>Refer / Add</a></li>
+                                        <li><a href="#"><i class="fa fa-cogs"></i>Settings</a></li>
+                                        <li><a href="/WorldRef/ChangeUserNameAndPassword"><i class="fa fa-lock"></i>Change Username / Password</a></li>
+                                        <li><a href="/WorldRef/SignOut"><i class="fa fa-power-off"></i>Sign Out</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                }
+                else
+                {
+                    <div class="rightDropdown">
+                        <div class="corner-menu" style="float: right;">
+                            <ul id="drop-nav" style="float: right; margin-right: 20px;">
+                                <li><a href="/WorldRef/WorldrefIndexImageSearch">Images</a></li>
+                                <li><a href="/WorldRef/WorldrefIndexVideosSearch">Videos</a></li>
+                                <li style=" margin-right: 14px; margin-left: 7px;">
+                                    <input type="submit" value="Sign in" class="lgButton signin" onclick="return MovetoLoginTab();" style="width:74px;">
+                                </li>
+                                <li>
+                                    <input type="submit" value="Sign up" class="lgButton signin" onclick="return MovetoSignUpTab();" style="width:74px;">
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                }
+
+            </header>
+        </div>    
+    <div>
+            @RenderBody()
+        </div>
+    <div class="footer_social">
+            <ul>
+                <li><span></span></li>
+                <li><span></span></li>
+                <li><span></span></li>
+            </ul>
+        </div>
+    </section>
+    <div id="about" style="display: none; width: 500px;">
+        <h2 class="about-popup_title">About WorldRef</h2>
+        <p class="about-popup_content" style="">
+            <span style="font-weight: 600;">For the Project Owners:</span> WorldRef is a tool to search and find the rightmost possible partners for your Industrial needs. Also they can tell the world about the projects they have accomplished along with the partners’ review with whom they have accomplished it.
+            <br />
+            <br />
+            <span style="font-weight: 600;">For the Manufacturers, Contractors, Consultants, Developers, Investors, Fabricators & Trading Companies;</span>
+            WorldRef is a place to glorify their contribution for the worldwide projects they have executed.
+
+        </p>
+    </div>
+    <div class="footer-bottom fo_stiky">
+        <div class="block">
+            <ul>
+                <li><a href="#about" class="fancybox" id="footer-hyp">About WorldRef </a></li>
+                |
+                <li><a href="#" class="" id="footer-hyp">Advertise & Get Featured</a></li>
+                |
+                <li><a href="#" class="" id="footer-hyp">Terms</a></li>
+                |
+                <li><a href="#" class="" id="footer-hyp">Policy & Guidelines</a></li>
+                |
+                <li><a href="#" class="" id="footer-hyp">Help & Support</a></li>
+            </ul>
+        </div>
+        <div>
+            <p style="font-style: italic; font-size: 11px; text-align: center; margin: 0;">
+                &copy; 2015 i4i. &nbsp;&nbsp; | &nbsp;&nbsp;
+                <span>Worldref is a tool for search and promotion of engineering products and Services.  </span>&nbsp;&nbsp; | &nbsp;&nbsp;<span><b>Powered by : </b>i4i engineering</span>
+            </p>
+        </div>
+    </div>
+    <div id="inline1" class="lightbox-wid" style="display: none;">
+        @Html.Partial("_SignIN")
+    </div>    
+    <script>
+        $(document).ready(function () {
+            $("#info").click(function () {
+                $(".action-field").toggle();
+            });
+            $(document).click(function (e) {
+                if (e.target.id != 'info' && !$('#info').find(e.target).length) {
+                    $(".action-field").hide();
+                }
+            });
+        });
+
+    </script>
+
+</body>
+</html>

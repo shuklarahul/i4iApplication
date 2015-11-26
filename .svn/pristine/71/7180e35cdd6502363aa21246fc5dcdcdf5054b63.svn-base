@@ -1,0 +1,123 @@
+﻿
+@model WorldRef.Models.ProjectImageModel
+<script>
+    $(document).ready(function () {
+        AddDynamicTxtbox();
+    });
+    function ValidateForm() {
+        var y = document.getElementById("files").value;
+        var Contain = document.getElementById("txt0").value;
+        //$("#TextBoxContain :text").each(function () {
+        //    Contain += $(this).val();
+        //});
+
+        if ((y == null || y == "") && Contain == "") {
+            alert("Please Select Image Or Video");
+            document.getElementById("files").focus();
+            return false;
+        }
+        return true;
+    }
+    var txtCounter = 1;
+    var fileCounter = 1;
+    function AddDynamicTxtbox() {
+
+        var str;
+        str = "<div id = 'spacetxt'  class='fW'><input style='width: 82%;' type='text' class='file-upload fW' name='txt" + txtCounter + "' id='txt" + txtCounter + "' /><a><input style='padding-left:10px;    margin-top: 10px;' type = 'Image' src='/Content/WorldRef/images/delete.png' alt='Delete' id = 'img" + txtCounter + "' onclick = 'return DeleteCompanyTab(" + txtCounter + ")' /></a></div>";
+        var newApnd = document.getElementById("TextBoxContain");
+        $("#TextBoxContain").append(str);
+        txtCounter++;
+    }
+
+    function DeleteCompanyTab(imgid) {
+
+        // document.getElementById("TextBoxContainer").removeChild(imgid.parentNode);
+        var imgId = "img" + (imgid).toString();
+        var imgId1 = "img" + (imgid - 1).toString();
+        var child = document.getElementById(imgId);
+        var parent = document.getElementById('TextBoxContain');
+        parent.removeChild(child.parentNode);
+        var child1 = document.getElementById("txt" + imgid)
+        parent.removeChild(child1.parentNode);
+        if (imgid != 0) {
+            document.getElementById(imgId1).style.display = "block";
+            document.getElementById('ContentPlaceHolder1_hdniValue').value = imgid;
+        }
+        else {
+            document.getElementById('ContentPlaceHolder1_hdniValue').value = 0;
+        }
+        //   txtCounter--;
+        return false;
+
+    }
+    function AddDynamicTxtboxImages() {
+        var str;
+        str = "<div id = 'spacetxt' class='fW' style = 'width:100%;'><input class='file-upload fW' style='width: 82%;' type='file' name='file" + fileCounter + "' id='file" + fileCounter + "' multiple='multiple'/><a><input style='padding-left:10px;    margin-top: 10px;' type='Image' src='/Content/WorldRef/images/delete.png' alt='Delete' id = 'img" + fileCounter + "' onclick = 'return DeleteCompanyTabImages(" + fileCounter + ")'/></a></div>";
+        var newApnd = document.getElementById("TextBoxContainImages");
+        $("#TextBoxContainImages").append(str);
+        fileCounter++;
+    }
+    function DeleteCompanyTabImages(imgid) {
+        // debugger;
+        // document.getElementById("TextBoxContainer").removeChild(imgid.parentNode);
+        var imgId = "img" + (imgid).toString();
+        var imgId1 = "img" + (imgid - 1).toString();
+        var child = document.getElementById(imgId);
+        var parent = document.getElementById('TextBoxContainImages');
+        parent.removeChild(child.parentNode);
+        var child1 = document.getElementById("file" + imgid)
+        parent.removeChild(child1.parentNode);
+        if (imgid != 0) {
+            document.getElementById(imgId1).style.display = "block";
+            document.getElementById('ContentPlaceHolder1_hdniValue').value = imgid;
+        }
+        else {
+            document.getElementById('ContentPlaceHolder1_hdniValue').value = 0;
+        }
+        //  fileCounter--;
+        return false;
+
+    }
+</script>
+@using (Html.BeginForm("AddProjectImages", "WorldRef", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.HiddenFor(x => x.ProjectId, Model.ProjectId);
+    <div class="profile_part2" style="float: right;">
+        <h4 class="fW" style="  margin:0 0 7px 0;">Upload Images/Videos</h4>
+        <ul class="pE i4iknow-bor fW">
+            <li style="margin-bottom: 0px;" class="fW">
+                <div class="fW">
+                    <input type="file" id="files" name="files" multiple="multiple" class="fW" style="width: 82%;">
+                    <a href="javascript:void(0)" onclick="AddDynamicTxtboxImages()">
+                        <img src="/Content/WorldRef/images/more.png" title="Add More" style="vertical-align: middle; margin: 0% 0 0 2%;">
+                    </a>
+                </div>
+                <div id="TextBoxContainImages" class="fW"></div>
+            </li>
+        </ul>
+        <h4 style="margin: 7px 0;" class="fW">Add Video Links</h4>
+        <ul class="pE i4iknow-bor fW">
+            <li style="margin-bottom: 0;" class="fW">
+                <div class="fW">
+                    <input class="fW" type='text' name='txt0' id='txt0' style="width: 82%;" />
+                    <a href="javascript:void(0)" onclick="AddDynamicTxtbox()">
+                        <img src="/Content/WorldRef/images/more.png" title="Add More" style="padding-left: 10px;">
+                    </a>
+                </div>
+                <div id="TextBoxContain" class="fW"></div>
+            </li>
+        </ul>
+        <ul style="padding-top:10px;" class="fW">
+            <li style="text-align:center; margin:0;">
+                <button class="pEButton" value="Submit" onclick=" return ValidateForm()">Submit</button>
+            </li>
+        </ul>
+    </div>
+
+}
+
+<style>
+    .file-upload {
+        margin-top: 10px !important;
+    }
+</style>

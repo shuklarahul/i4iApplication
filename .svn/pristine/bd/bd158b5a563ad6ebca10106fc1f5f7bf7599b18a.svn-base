@@ -1,0 +1,282 @@
+﻿@model WorldRef.DataLayer.SignUpWorldRefModel
+
+<style type="text/css">
+    .body {
+        background: none repeat scroll 0 0 rgb(218, 218, 218);
+    }
+
+    .boxCircle:hover {
+        background-color: #E16C6C !important;
+        color: #fff;
+    }
+
+    ul.menu a:hover {
+        color: #000 !important;
+    }
+
+    div.content p, div.content ul {
+        padding: 0 !important;
+    }
+
+    #adown-test {
+    }
+
+    .fancybox-inner {
+        overflow-y: auto;
+    }
+
+    .lightbox-wid {
+        width: 500px;
+        overflow-y: auto;
+    }
+
+    .image-back {
+        background-image: url('http://www.i4i.co.in/wp-content/themes/i4i/images/body-bg.jpg');
+        background-repeat: repeat;
+        background-position: top left;
+        background-attachment: scroll;
+    }
+
+    *, *:before, *:after {
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+    header::before {
+        content: "";
+        position: absolute;
+        height: 5px;
+        width: 100%;
+        top: 0;
+        left: 0;
+    }
+
+    nav ul li li {
+        padding: 2px 10px 5px 10px !important;
+    }
+
+    .forWidth1 {
+        width: 15%;
+        margin-right: 1%;
+    }
+
+    .forWidth2 {
+        width: 84%;
+    }
+
+
+    .fancybox-skin {
+    }
+
+    .divsubmain2 {
+        margin: 0px;
+    }
+
+    li.pE.main-test {
+        /*margin-bottom: 10px;*/
+    }
+
+    .single-line {
+        width: 100%;
+        padding: 6px;
+        outline: 0;
+    }
+
+    ul.pE {
+        list-style: none;
+        padding: 0;
+    }
+
+    .thnku {
+        color: #404040;
+        font-weight: 600;
+        line-height: 1.5em;
+        margin-bottom: 1em;
+        text-transform: capitalize;
+        font-size: 16px;
+        text-align: center;
+    }
+
+    a.indexAnchor {
+        color: #446FD6;
+    }
+
+        a.indexAnchor:hover {
+            color: #000;
+        }
+</style>
+<div id="tab-container" class='tab-container'>
+    <ul class='etabs'>
+        <li id="e1" class='tab'><a href="#tabs1-html" class="sign-up-title">Login</a></li>
+        <li id="e2" class='tab'><a href="#tabs1-js" onclick="byd()" class="sign-up-title">Sign up</a></li>
+    </ul>
+    <div class='panel-container'>
+        <div id="tabs1-html">
+            <div style="margin-top:20px;">
+                @Html.TextBoxFor(x => x.UserName, new { @class = "sign-up-input", placeholder = "Username or Email" })
+                @Html.PasswordFor(x => x.Password, new { @class = "sign-up-input", placeholder = "Password" })
+                @Html.Hidden("returnUrl", ViewContext.HttpContext.Request.Url.PathAndQuery)
+                <input type="submit" name="Submit" id="Submit" value="Sign in" class="lgButton" onclick=" return Login()" />
+                <span class="forget_pass"><a href="/WorldRef/ForgetPassword">Forgot password?</a></span>
+            </div>
+            <div style="float:left;width:100%;margin:10px 0px;">
+                <div style="width: 45%; border: 1px solid #E8E8E8; float: left; margin-top: 10px; "></div>
+                <div class="spanOr">OR</div>
+                <div style="width: 45%; border: 1px solid #E8E8E8; float: right; margin-top: 10px; "></div>
+            </div>
+            @*<div class="social">
+                    <div class="login linkedin">
+                        <script type="in/Login">
+                        </script>
+                    </div>
+                    <div class="fb login">
+                        <a href="http://182.73.96.52:94/WorldRef/FacebookWorldRef">
+                            <i class="fa fa-facebook"></i>
+                            <span>Sign in with Facebook</span>
+                        </a>
+                    </div>
+                    <div class="google login">
+                        <a href="https://accounts.google.com/o/oauth2/auth?response_type=code&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile+https%3A%2F%2Fwww.google.com/m8/feeds/contacts/default/full&redirect_uri=@(ConfigurationManager.AppSettings["gmailredirecturl"].ToString().Trim())&client_id=@(ConfigurationManager.AppSettings["gmailclientid"].ToString().Trim())&state=%2Fprofile">
+                            <i class="fa fa-google"></i>
+                            <span>Sign in with Google</span>
+                        </a>
+                    </div>
+                </div>*@
+
+        </div>
+        <div id="tabs1-js">
+            <ul class="intom">
+                <li id="into1" class='intab'><a href="#intoOpen1" onclick="byd()" class="sign-up-title">Create Your RefWorld</a></li>
+                <li id="into2" class='intab'><a href="#intoOpen2" onclick="MovetoGeneralTab()" class="sign-up-title">As General User</a></li>
+                <li id="into3" class='intab'><a href="#intoOpen3" onclick="MovetoRecruitersTab()" class="sign-up-title">As Recruiter</a></li>
+            </ul>
+            <div>
+                <div id="intoOpen1">
+                    <div class="content content-3" style="height:405px;width:100%;text-align:left;">
+                        <input type="hidden" id="areacode" />
+                        @using (Html.BeginForm("SignUp", "WorldRef", FormMethod.Post, new { enctype = "multipart/form-data", @class = "marginBottom" }))
+                        {
+                            <input type="radio" id="rdoCompany" name="ProfileReason" checked="checked" />
+                            <span>Company</span>
+                            <input type="radio" id="rdoBusiness" name="ProfileReason" />
+                            <span>Business unit</span>
+                            @Html.TextBoxFor(model => model.ParentOrganisationName, new { @class = "sign-up-input", placeholder = "Parent Organisation Name" })
+                            @Html.TextBoxFor(model => model.BusinessUnitName, new { @class = "sign-up-input", placeholder = "Business Unit Name", @style = "display:none" })<br />
+                            @Html.DropDownListFor(model => model.Type, new SelectList(Model.TypeList, "Value", "Text"), new { @class = "sign-up-input mul-drop", multiple = "multiple", data_placeholder = "My Company is" })
+                            @Html.TextBoxFor(model => model.OtherType, new { @class = "sign-up-input", placeholder = "Please Mention" })
+                            @*@Html.TextBoxFor(model => model.Name, new { @class = "sign-up-input", placeholder = "Name of the Organisation" })<br />*@
+                            @*@Html.DropDownListFor(model => model.Industry, new MultiSelectList(Model.IndustryList, "Value", "Text"), new { @class = "sign-up-input mul-drop", multiple = "multiple", data_placeholder = "Select Industry" })*@
+                            <span>If you can't find in the dropdown above</span>
+                            <a href="javascript:void(0)" class="indexAnchor" onclick="AddDynamicTxtbox()">Add Another Industry</a>
+                            @*<input type="button" value="Add Another Industry" onclick="AddDynamicTxtbox()" style="margin-bottom: 10px;" />*@
+                            <br />
+                            <div id="TextBoxContain" style="display: block; width: 100%;">
+                            </div>
+                            @Html.TextBoxFor(model => model.OtherIndustryName, new { @class = "sign-up-input", placeholder = "Industry" });
+                            @*<div><span>WorldRef Profile URL :&nbsp;</span> <span>www.worldref.org/ </span>@Html.TextBoxFor(model => model.ProfileUrl, new { style = "margin-right:0;width: 48%;", @class = "sign-up-input marginR", placeholder = "e.g Thomos", onchange = "return ValidateUserProfile();", title = "You personalised WorldRef URL will showcase your professional experience. You may also use it in your email signatures." })</div>*@
+                            @Html.TextBoxFor(model => model.Email, new { @class = "sign-up-input halfinput", placeholder = "Official Email ID", @style = "margin-right: 6px;" });
+                            @Html.TextBoxFor(model => model.AlternateEmail, new { @class = "sign-up-input halfinput", placeholder = "Recovery Email Id" });
+                            <i class="fa fa-plus-circle" style="cursor: pointer; font-size: 24px; vertical-align: -4px;padding:0;" id="AddEmailID" title="Add More EmailID"></i>
+                            <div id="EmailCnt"></div>
+                            @Html.DropDownListFor(model => model.Country, new SelectList(Model.CountryList, "Value", "Text"), new { @class = "sign-up-input" })<br />
+                            @Html.TextBoxFor(model => model.ContactCode, new { @class = "sign-up-input forWidth1 area", placeholder = "Area Code", @readonly = "readonly" })
+                            @Html.TextBoxFor(model => model.ContactNumber, new { @class = "sign-up-input forWidth2", placeholder = "Official Contact Number" })
+                            @Html.TextBoxFor(model => model.ContactCode, new { @class = "sign-up-input forWidth1 area", placeholder = "Area Code", @readonly = "readonly" })
+                            @Html.TextBoxFor(model => model.ContactNumber, new { @class = "sign-up-input forWidth2", placeholder = "Mobile Number", @style = "width: 77%;" })
+                            <i class="fa fa-plus-circle" style="cursor: pointer; font-size: 24px; vertical-align: -4px;padding:0;" id="AddContactNo" title="Add More Contact No."></i>
+                            <div id="addMoreNo"></div>
+                            @*<div class="mbottom">
+                                    <div class="formmain_text">
+                                        <label>Company Profile :</label>
+                                        <span style="color: green; font-size: 11px;">Select File Upto 90 MB (Only PDF)</span></div>
+                                    <input type="file" id="fileUp" name="Company Profile" class="fileInput" onchange="ValidateSingleInput(this);" autofocus>
+                                </div>*@
+                            <div class="mbottom">
+                                <div class="formmain_text">
+                                    <label>Company Logo :</label>
+                                    <span style="color: green; font-size: 11px;">Select File Upto 10 MB</span>
+                                </div>
+                                <input type="file" id="Logo" name="Company Profile" class="fileInput" onchange="ValidateSingleInput1(this);" autofocus>
+                            </div>
+                            <input type="submit" value="Get Your WorldRef Profile URL" class="lgButton" onclick="return SignUpFormValidation();">
+                        }
+                    </div>
+                </div>
+                @*<div id="intoOpen2">
+                        @Html.Partial("GeneralUserSignUp")
+                    </div>
+                    <div id="intoOpen3">
+                        @Html.Partial("SignUpAsRecruiters")
+
+                    </div>*@
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function MovetoSignUpTab() {//e2
+        $("#tabs1-html").removeClass("active");
+        $("#tabs1-js").addClass("active");
+        $("#e1").removeClass("active");
+        $("#e2").addClass("active");
+        $("#tabs1-html").css("display", "none");
+        $("#tabs1-js").css("display", "block");
+        $("#into1").addClass("active");
+        $("#into2").removeClass("active");
+        $("#into3").removeClass("active");
+        $("#intoOpen1").addClass("active");
+        $("#intoOpen2").removeClass("active");
+        $("#intoOpen3").removeClass("active");
+        $("#intoOpen1").css("display", "block");
+        $("#intoOpen2").css("display", "none");
+        $("#intoOpen3").css("display", "none");
+        openFancybox();
+    }
+    function MovetoLoginTab() {//e1
+
+        $("#tabs1-html").addClass("active");
+        $("#tabs1-js").removeClass("active");
+        $("#e1").addClass("active");
+        $("#e2").removeClass("active");
+        $("#tabs1-html").css("display", "block");
+        $("#tabs1-js").css("display", "none");
+        $("#intoOpen1").css("display", "none");
+        $("#intoOpen2").css("display", "none");
+        $("#intoOpen3").css("display", "none");
+        openFancybox();
+    }
+    function byd() {//into1
+        $("#into1").addClass("active");
+        $("#into2").removeClass("active");
+        $("#into3").removeClass("active");
+        $("#intoOpen1").addClass("active");
+        $("#intoOpen2").removeClass("active");
+        $("#intoOpen3").removeClass("active");
+        $("#intoOpen1").css("display", "block");
+        $("#intoOpen2").css("display", "none");
+        $("#intoOpen3").css("display", "none");
+    }
+    function MovetoGeneralTab() {//into2
+        $("#into1").removeClass("active");
+        $("#into2").addClass("active");
+        $("#into3").removeClass("active");
+        $("#intoOpen1").removeClass("active");
+        $("#intoOpen2").addClass("active");
+        $("#intoOpen3").removeClass("active");
+        $("#intoOpen1").css("display", "none");
+        $("#intoOpen2").css("display", "block");
+        $("#intoOpen3").css("display", "none");
+    }
+    function MovetoRecruitersTab() {//into3
+        $("#into1").removeClass("active");
+        $("#into2").removeClass("active");
+        $("#into3").addClass("active");
+        $("#intoOpen1").removeClass("active");
+        $("#intoOpen2").removeClass("active");
+        $("#intoOpen3").addClass("active");
+        $("#intoOpen1").css("display", "none");
+        $("#intoOpen2").css("display", "none");
+        $("#intoOpen3").css("display", "block");
+    }
+</script>
